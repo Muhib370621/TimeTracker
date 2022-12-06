@@ -1,0 +1,1 @@
+enum ViewState {init, loading, completed, error, empty}
