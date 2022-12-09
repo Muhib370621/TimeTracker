@@ -1,0 +1,176 @@
+{
+  "projectList": [
+    {
+      "projectId": "GUID1",
+      "name": "Paul Mauer",
+      "address": "Paul Weller Ave, Beacon, NY 12508",
+      "startDateTime": "5/1/2022 8:30:52 AM",
+      "endDateTime": "5/1/2022 4:30:00 PM",
+      "notes": [
+        {
+          "noteId": "1",
+          "note": "text"
+        },
+        {
+          "noteId": "2",
+          "note": "text"
+        }
+      ],
+      "images": [
+        {
+          "imageId": "1",
+          "img_link1": ""
+        },
+        {
+          "imageId": "2",
+          "img_link2": ""
+        }
+      ],
+      "totalTime": 165,
+      "tasks": [
+        {
+          "taskId": 1,
+          "taskDescription": "task desc",
+          "startDateTime": "5/1/2022 9:30:52 AM",
+          "endDateTime": "5/1/2022 11:30:52 AM",
+          "totalTime": 2,
+          "note": "Mount missing panels",
+          "images": [
+            {
+              "imageId": "1",
+              "img_link1": ""
+            },
+            {
+              "imageId": "2",
+              "img_link2": ""
+            }
+          ]
+        },
+        {
+          "taskId": 2,
+          "taskDescription": "task desc",
+          "startDateTime": "5/1/2022 11:30:52 AM",
+          "endDateTime": "5/1/2022 3:30:52 PM",
+          "totalTime": 4,
+          "note": "Replace broken converters",
+          "images": [
+            {
+              "imageId": "1",
+              "img_link1": ""
+            },
+            {
+              "imageId": "2",
+              "img_link2": ""
+            }
+          ]
+        }
+      ],
+      "breaks": [
+        {
+          "id": 1,
+          "btype": "breakfast",
+          "fromTime": "",
+          "toTime": ""
+        },
+        {
+          "id": 2,
+          "btype": "lunch",
+          "fromTime": "",
+          "toTime": ""
+        },
+        {
+          "id": 3,
+          "btype": "other",
+          "fromTime": "",
+          "toTime": ""
+        }
+      ]
+    },
+    {
+      "projectId": "GUID2",
+      "name": "Herman van Wen",
+      "address": "Mainstreet 4, Beacon, NY 12508",
+      "startDateTime": "5/1/2022 8:30:52 AM",
+      "endDateTime": "5/1/2022 4:30:00 PM",
+      "notes": [
+        {
+          "noteId": "1",
+          "note": "text"
+        },
+        {
+          "noteId": "2",
+          "note": "text"
+        }
+      ],
+      "images": [
+        {
+          "imageId": "1",
+          "img_link1": ""
+        },
+        {
+          "imageId": "2",
+          "img_link2": ""
+        }
+      ],
+      "totalTime": 165,
+      "tasks": [
+        {
+          "taskId": 1,
+          "taskDescription": "task desc",
+          "startDateTime": "5/1/2022 9:30:52 AM",
+          "endDateTime": "5/1/2022 11:30:52 AM",
+          "totalTime": 2,
+          "note": "Mount missing panels",
+          "images": [
+            {
+              "imageId": "1",
+              "img_link1": ""
+            },
+            {
+              "imageId": "2",
+              "img_link2": ""
+            }
+          ]
+        },
+        {
+          "taskId": 2,
+          "taskDescription": "task desc",
+          "startDateTime": "5/1/2022 11:30:52 AM",
+          "endDateTime": "5/1/2022 3:30:52 PM",
+          "totalTime": 4,
+          "note": "Replace broken converters",
+          "images": [
+            {
+              "imageId": "1",
+              "img_link1": ""
+            },
+            {
+              "imageId": "2",
+              "img_link2": ""
+            }
+          ]
+        }
+      ],
+      "breaks": [
+        {
+          "id": 1,
+          "btype": "breakfast",
+          "fromTime": "",
+          "toTime": ""
+        },
+        {
+          "id": 2,
+          "btype": "lunch",
+          "fromTime": "",
+          "toTime": ""
+        },
+        {
+          "id": 3,
+          "btype": "other",
+          "fromTime": "",
+          "toTime": ""
+        }
+      ]
+    }
+  ]
+}

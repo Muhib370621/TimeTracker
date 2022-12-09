@@ -35,7 +35,7 @@ class _AppLoaderState extends State<AppLoader> {
         builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
           if (snapshot.hasData) {
             if ((snapshot.data?[0] ?? true) == false) {
-              return const LoginScreen();
+              return const HomeScreen();
             } else {
               return const HomeScreen();
             }
