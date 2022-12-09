@@ -1,6 +1,7 @@
 import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
+import 'package:blu_time/screens/onboarding/verification_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,9 @@ class RouteFactories{
        case RouteNames.home:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const HomeScreen());
+       case RouteNames.verification:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const VerificationScreen(email: "email"));
        default:
          return errorRoute;
      }

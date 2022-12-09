@@ -1,3 +1,4 @@
+import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_client.dart';
@@ -13,7 +14,7 @@ class ApiServices {
 
   Future<APIClient> getAPIClient() async {
     // if (client == null) {
-    client = APIClient(BaseOptions(baseUrl: "",followRedirects:false));
+    client = APIClient(BaseOptions(baseUrl: AppUrls.path,followRedirects:false));
     final interceptors = [
       AuthInterceptor(
           client,

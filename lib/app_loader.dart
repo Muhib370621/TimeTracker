@@ -1,3 +1,4 @@
+import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_gradients.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
@@ -13,7 +14,6 @@ class AppLoader extends StatefulWidget {
 }
 
 class _AppLoaderState extends State<AppLoader> {
-
   Future<bool> isTokenValid() async {
     return false;
     var token = locator<StoreServices>().getAccessToken();
@@ -33,20 +33,22 @@ class _AppLoaderState extends State<AppLoader> {
           dummyTimer(),
         ]),
         builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
-          if (snapshot.hasData){
+          if (snapshot.hasData) {
             if ((snapshot.data?[0] ?? true) == false) {
               return const LoginScreen();
             } else {
               return const HomeScreen();
             }
-          }
-          else {
-            return Container(
-              decoration: const BoxDecoration(gradient: AppGradients.login),
-              child: const Align(
+          } else {
+            return Scaffold(
+              body: Align(
                 alignment: Alignment.center,
-                child: Material(child: Text("bluTime")),
-            ));
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 100),
+                  child: Image.asset(AppAssets.appLogo,fit: BoxFit.cover,),
+                ),
+              ),
+            );
           }
         });
   }
