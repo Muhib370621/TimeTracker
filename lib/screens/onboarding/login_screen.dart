@@ -6,49 +6,12 @@ import 'package:blu_time/screens/views/time_card.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
+import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 
-// class LoginScreen extends StatefulWidget {
-//   const LoginScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<LoginScreen> createState() => _LoginScreenState();
-// }
-//
-// class _LoginScreenState extends State<LoginScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Padding(
-//         padding: const EdgeInsets.all(15.0),
-//         child: Column(
-//           children: [
-//             Spacer(),
-//             Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 180,),
-//
-//             SizedBox(height: 100,),
-//             AppCommonTextField(),
-//             SizedBox(height: 20,),
-//             AppCommonButton(title: "LOG IN",onPressed: (){
-//               Navigator.of(context).pushNamed(RouteNames.verification);
-//             },),
-//             TimeCard(),
-//             ProjectCard(),
-//             TaskCard(),
-//             Spacer(),
-//             Spacer(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+  LoginScreen({super.key});
+  OnboardingViewModel viewModel = OnboardingViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,20 +19,24 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 180,),
+            const SizedBox(height: 100,),
+            const AppCommonTextField(
+              hintText: "Enter mobile number or email",
+            ),
+            const SizedBox(height: 20,),
+            AppCommonButton(title: "LOG IN",onPressed: () async {
+             // Navigator.of(context).pushNamed(RouteNames.verification);
 
-            SizedBox(height: 100,),
-            AppCommonTextField(),
-            SizedBox(height: 20,),
-            AppCommonButton(title: "LOG IN",onPressed: (){
-              Navigator.of(context).pushNamed(RouteNames.verification);
+              await viewModel.testApi();
+
+
+
+
             },),
-            TimeCard(),
-            ProjectCard(),
-            TaskCard(),
-            Spacer(),
-            Spacer(),
+            const Spacer(),
+            const Spacer(),
           ],
         ),
       ),

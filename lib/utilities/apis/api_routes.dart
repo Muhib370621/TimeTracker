@@ -4,7 +4,8 @@ enum APIType {
   register,
   login,
   verify,
-  resendCode
+  resendCode,
+  suiteql
 }
 
 class APIRoute implements APIRouteConfigurable {
@@ -36,6 +37,16 @@ class APIRoute implements APIRouteConfigurable {
       case APIType.resendCode:
         return RequestOptions(
           path: '${apiVersion}resend-verification',
+          method: APIMethod.post,
+        );
+      case APIType.resendCode:
+        return RequestOptions(
+          path: '${apiVersion}resend-verification',
+          method: APIMethod.post,
+        );
+      case APIType.suiteql:
+        return RequestOptions(
+          path: '${apiVersion}query/v1/suiteql?limit=10',
           method: APIMethod.post,
         );
     }

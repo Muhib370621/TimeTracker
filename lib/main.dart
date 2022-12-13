@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:device_preview/device_preview.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
     home: DevicePreview(

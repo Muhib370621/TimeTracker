@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:stacked/stacked.dart';
+
 class VerificationScreen extends StatefulWidget {
   final String email;
   const VerificationScreen({Key? key, required this.email}) : super(key: key);
@@ -22,6 +24,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
+        title: Text("Verify your number"),
       ),
       body: ViewModelBuilder<OnboardingViewModel>.reactive(
           viewModelBuilder: () => OnboardingViewModel(),
@@ -35,11 +38,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      const Align(
                         alignment: Alignment.center,
                         child: Padding(
-                          padding:
-                          const EdgeInsets.symmetric(vertical: 25.0),
+                          padding: EdgeInsets.symmetric(vertical: 25.0),
                           // child: SvgPicture.asset(
                           //   "assets/svgs/logo.svg",
                           //   height: 79,
@@ -53,64 +55,48 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       //     child: SvgPicture.asset("assets/svgs/bubble_login.svg"),
                       //   ),
                       // ),
-                      const Spacer(flex: 1,),
-                      const Text(
-                        "Account\nVerification",
-                        style: TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
+                      const Spacer(
+                        flex: 1,
                       ),
-                       Text(
-                        "Please enter the verification pin sent to ${widget.email}",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "A code has been sent to ${widget.email}",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                        ),
                       ),
-                      const Spacer(flex: 2,),
-                      // OtpTextField(
-                      //   textStyle: const TextStyle(
-                      //         fontSize: 30,
-                      //         fontWeight: FontWeight.w600,
-                      //         color: Colors.white),
-                      //   numberOfFields: 4,
-                      //   cursorColor: Colors.white,
-                      //   fieldWidth: 60,
-                      //   showFieldAsBox: false,
-                      //   onCodeChanged: (String verificationCode) {
-                      //     debugPrint("onCodeChanged $verificationCode");
-                      //     viewModel.setVerificationCode(verificationCode);
-                      //
-                      //   },
-                      //   onSubmit: (String verificationCode) {
-                      //     debugPrint("onSubmit $verificationCode");
-                      //     viewModel.setVerificationCode(verificationCode);
-                      //   },
-                      // ),
-                Align(
-                  alignment: Alignment.center,
-                  child: OTPTextField(
-                    fieldStyle: FieldStyle.box,
-                      //controller: otpController,
-                      length: 4,
-                      width: 300,
-                      textFieldAlignment: MainAxisAlignment.spaceAround,
-                      fieldWidth: 60,
-                      otpFieldStyle: OtpFieldStyle(borderColor: const Color(0xFFE7E7E7),enabledBorderColor: const Color(0xFFE7E7E7),focusBorderColor: Colors.blue),
-                      outlineBorderRadius: 0,
-                      style:  const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                      onChanged: (pin) {
-                       // viewModel.setVerificationCode(pin);
-                      },
-                      onCompleted: (pin) {
-                       // viewModel.setVerificationCode(pin);
-                      }),
-                ),
-                      const Spacer(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: OTPTextField(
+                            fieldStyle: FieldStyle.box,
+                            //controller: otpController,
+                            length: 4,
+                            width: 300,
+                            textFieldAlignment: MainAxisAlignment.spaceAround,
+                            fieldWidth: 60,
+                            otpFieldStyle: OtpFieldStyle(
+                                borderColor: const Color(0xFFE7E7E7),
+                                enabledBorderColor: const Color(0xFFE7E7E7),
+                                focusBorderColor: Colors.blue),
+                            outlineBorderRadius: 0,
+                            style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                            onChanged: (pin) {
+                              // viewModel.setVerificationCode(pin);
+                            },
+                            onCompleted: (pin) {
+                              // viewModel.setVerificationCode(pin);
+                            }),
+                      ),
                       const SizedBox(
                         height: 50,
                       ),
@@ -132,19 +118,25 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           const SizedBox(
                             height: 15,
                           ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Resend code",
+                                style: AppTextStyles.medium
+                                    .copyWith(color: AppColors.buttonCyan),
+                              )),
                           GestureDetector(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12.0),
                                 child: RichText(
                                   text: const TextSpan(
-                                      text: "Didn't receive code? ",
+                                      text: "Not receiving the code? ",
                                       style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 16),
+                                          color: Colors.grey, fontSize: 16),
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: 'Resend code',
+                                          text: 'Contact us',
                                           style: TextStyle(
                                               color: AppColors.buttonCyan,
                                               fontSize: 16),

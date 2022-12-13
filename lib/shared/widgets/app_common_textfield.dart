@@ -56,7 +56,7 @@ class AppCommonTextField extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: suffixIcon,
           ) : null,
-          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: borderWidth, color: borderColor),
             borderRadius: BorderRadius.circular(radius),

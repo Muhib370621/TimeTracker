@@ -3,6 +3,7 @@ import 'package:blu_time/constants/app_gradients.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
+import 'package:blu_time/screens/playground.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ class _AppLoaderState extends State<AppLoader> {
         builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
           if (snapshot.hasData) {
             if ((snapshot.data?[0] ?? true) == false) {
-              return const HomeScreen();
+              return LoginScreen();
             } else {
               return const HomeScreen();
             }

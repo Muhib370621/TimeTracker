@@ -14,7 +14,7 @@ class RouteFactories{
              settings: settings, builder: (context) => const AppLoader());
        case RouteNames.login:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const LoginScreen());
+             settings: settings, builder: (context) => LoginScreen());
        case RouteNames.home:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const HomeScreen());
