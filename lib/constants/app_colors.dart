@@ -9,6 +9,7 @@ class AppColors {
   static const Color textFieldBackground = Color(0xFFE4E4E4);
   static const Color hintTextColor = Color(0xFF626262);
   static const Color timerColor = Color(0xFF8F8F8F);
-  static  Color gradientUpperTop = Color(0xFF413595);
-  static  Color gradientUpperBottom = Color(0xFF6C5DD3);
+  static const Color gradientUpperTop = Color(0xFF413595);
+  static const Color gradientUpperBottom = Color(0xFF6C5DD3);
+  static const Color listBackground = Color(0XFFEFEEF2);
 }
