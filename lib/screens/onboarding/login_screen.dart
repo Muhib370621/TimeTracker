@@ -20,21 +20,27 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 180,),
-            const SizedBox(height: 100,),
+            Image.asset(
+              AppAssets.appLogo,
+              fit: BoxFit.cover,
+              width: 180,
+            ),
+            const SizedBox(
+              height: 100,
+            ),
             const AppCommonTextField(
               hintText: "Enter mobile number or email",
             ),
-            const SizedBox(height: 20,),
-            AppCommonButton(title: "LOG IN",onPressed: () async {
-             // Navigator.of(context).pushNamed(RouteNames.verification);
-
-              await viewModel.testApi();
-
-
-
-
-            },),
+            const SizedBox(
+              height: 20,
+            ),
+            AppCommonButton(
+              title: "LOG IN",
+              onPressed: () async {
+                 Navigator.of(context).pushNamed(RouteNames.verification);
+               // await viewModel.testApi();
+              },
+            ),
             const Spacer(),
             const Spacer(),
           ],

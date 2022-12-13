@@ -18,8 +18,8 @@ class APIClient {
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
-    final config = route.getConfig();
-    config?.baseUrl = options.baseUrl;
+    RequestOptions? config = route.getConfig();
+    config?.baseUrl = (config.baseUrl != null) ? config.baseUrl : options.baseUrl;
     config?.data = data;
 
     bool isOnline = await ConnectivityManager.instance.isOnline();

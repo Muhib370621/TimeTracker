@@ -1,3 +1,4 @@
+import 'package:blu_time/constants/app_urls.dart';
 import 'package:dio/dio.dart';
 
 enum APIType {
@@ -5,7 +6,9 @@ enum APIType {
   login,
   verify,
   resendCode,
-  suiteql
+  suiteql,
+  issueToken,
+  roles,
 }
 
 class APIRoute implements APIRouteConfigurable {
@@ -39,15 +42,22 @@ class APIRoute implements APIRouteConfigurable {
           path: '${apiVersion}resend-verification',
           method: APIMethod.post,
         );
-      case APIType.resendCode:
-        return RequestOptions(
-          path: '${apiVersion}resend-verification',
-          method: APIMethod.post,
-        );
       case APIType.suiteql:
         return RequestOptions(
           path: '${apiVersion}query/v1/suiteql?limit=10',
           method: APIMethod.post,
+        );
+      case APIType.issueToken:
+        return RequestOptions(
+          path: apiVersion,
+          method: APIMethod.get,
+          baseUrl: AppUrls.issueToken
+        );
+      case APIType.roles:
+        return RequestOptions(
+            path: apiVersion,
+            method: APIMethod.get,
+            baseUrl: AppUrls.roles
         );
     }
   }

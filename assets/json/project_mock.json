@@ -31,7 +31,7 @@
         {
           "taskId": 1,
           "taskDescription": "task desc",
-          "startDateTime": "5/1/2022 9:30:52 AM",
+          "startDateTime": "6/1/2022 9:30:52 AM",
           "endDateTime": "5/1/2022 11:30:52 AM",
           "totalTime": 2,
           "note": "Mount missing panels",
@@ -90,7 +90,7 @@
       "projectId": "GUID2",
       "name": "Herman van Wen",
       "address": "Mainstreet 4, Beacon, NY 12508",
-      "startDateTime": "5/1/2022 8:30:52 AM",
+      "startDateTime": "6/1/2022 8:30:52 AM",
       "endDateTime": "5/1/2022 4:30:00 PM",
       "notes": [
         {
@@ -112,7 +112,7 @@
           "img_link2": ""
         }
       ],
-      "totalTime": 165,
+      "totalTime": 265,
       "tasks": [
         {
           "taskId": 1,

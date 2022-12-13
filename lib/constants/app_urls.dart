@@ -8,5 +8,7 @@ class AppUrls {
   static const String secret = "fb145ab0a20149828a07c06902482dec8b8661b3e43ad90f03902dcc52c5f14a";
 
   static const String _companyURL = "https://$_accountID.suitetalk.api.netsuite.com";
-  static String path = "$_companyURL/services/rest";
+  static const String path = "$_companyURL/services/rest";
+  static String roles = "https://rest.netsuite.com/rest/roles";
+  static String issueToken = "https://$_accountID.restlets.api.netsuite.com/rest/issuetoken?consumerKey=${AppUrls.consumerKey}&name=<optional name>";
 }

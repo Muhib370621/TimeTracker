@@ -7,14 +7,14 @@ import 'package:blu_time/utilities/apis/interceptors/log_interceptor.dart';
 import 'package:dio/dio.dart';
 
 class ApiServices {
-  ApiServices() {
-    getAPIClient();
+  ApiServices({String baseUrl =  AppUrls.path}) {
+    getAPIClient(baseUrl);
   }
   late APIClient client;
 
-  Future<APIClient> getAPIClient() async {
+  Future<APIClient> getAPIClient(String baseUrl) async {
     // if (client == null) {
-    client = APIClient(BaseOptions(baseUrl: AppUrls.path,followRedirects:false));
+    client = APIClient(BaseOptions(baseUrl: baseUrl,followRedirects:false));
     final interceptors = [
       AuthInterceptor(
           client,

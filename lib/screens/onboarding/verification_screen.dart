@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
@@ -106,13 +107,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             title: "Verify",
                             fontSize: 17,
                             onPressed: () async {
-                              // try {
-                              // //  await viewModel.verifyCode(widget.email);
-                              //   Utilities.showSnack(context,"Your email was verified successfully.");
-                              //     Navigator.of(context).popUntil((route) => route.isFirst);
-                              // } on ErrorResponse catch (e) {
-                              //   Utilities.showSnack(context, e.message);
-                              // }
+                              Navigator.pushNamedAndRemoveUntil(context, RouteNames.home, (_) => false);
                             },
                           ),
                           const SizedBox(
