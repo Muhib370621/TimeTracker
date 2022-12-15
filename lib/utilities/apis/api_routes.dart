@@ -16,7 +16,7 @@ class APIRoute implements APIRouteConfigurable {
   final String? routeParams;
   final String apiVersion;
 
-  APIRoute(this.type, {this.routeParams, this.apiVersion = '/'});
+  APIRoute(this.type, {this.routeParams = "", this.apiVersion = '/'});
 
   /// Return config of api (method, url, header)
   @override
@@ -44,7 +44,7 @@ class APIRoute implements APIRouteConfigurable {
         );
       case APIType.suiteql:
         return RequestOptions(
-          path: '${apiVersion}query/v1/suiteql?limit=10',
+          path: '${apiVersion}query/v1/suiteql$routeParams',
           method: APIMethod.post,
         );
       case APIType.issueToken:
