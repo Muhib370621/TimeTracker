@@ -37,8 +37,8 @@ class LoginScreen extends StatelessWidget {
             AppCommonButton(
               title: "LOG IN",
               onPressed: () async {
-                // Navigator.of(context).pushNamed(RouteNames.verification);
-                await viewModel.testApi();
+                 Navigator.of(context).pushNamed(RouteNames.verification);
+               // await viewModel.testApi();
               },
             ),
             const Spacer(),

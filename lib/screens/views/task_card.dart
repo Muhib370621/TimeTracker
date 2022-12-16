@@ -1,9 +1,10 @@
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({Key? key}) : super(key: key);
-
+  const TaskCard({Key? key, required this.task}) : super(key: key);
+  final Tasks task;
   @override
   State<TaskCard> createState() => _TaskCardState();
 }
@@ -18,15 +19,15 @@ class _TaskCardState extends State<TaskCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Mon 21 Nov 2022",
+            "${widget.task.startDateTime} - ${widget.task.endDateTime}",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(
-            "Mon 21 Nov 2022",
+            widget.task.taskDescription ?? "",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(
-            "Mon 21 Nov 2022",
+            "Address",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           ClipRRect(
@@ -34,19 +35,21 @@ class _TaskCardState extends State<TaskCard> {
             clipBehavior: Clip.hardEdge,
             child: Container(
               color: Colors.red,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: Text('HIGH',style: AppTextStyles.bold.copyWith(color: Colors.white),),
             ),
           ),
+          const SizedBox(height: 5,),
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
             clipBehavior: Clip.hardEdge,
             child: Container(
               color: Colors.yellow,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: Text('REPAIR',style: AppTextStyles.bold.copyWith(color: Colors.white),),
             ),
           ),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,16 +65,18 @@ class _TaskCardState extends State<TaskCard> {
                   Row(
                     children: [
                       Icon(Icons.checklist),
+                      const SizedBox(width: 5,),
                       Text(
                         "22",
                         style: AppTextStyles.medium.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Row(
                     children: [
-                      Icon(Icons.message),
+                      const Icon(Icons.message),
+                      const SizedBox(width: 5,),
                       Text(
                         "1",
                         style: AppTextStyles.medium.copyWith(color: Colors.black),

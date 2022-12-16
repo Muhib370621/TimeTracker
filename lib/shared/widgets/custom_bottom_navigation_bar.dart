@@ -25,11 +25,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           label: "Clock",
           icon: Icon(
-            Icons.watch_later_outlined,
+            Icons.watch_later,
             size: 24,
           ),
           activeIcon: Icon(
-            Icons.watch_later_outlined,
+            Icons.watch_later,
             size: 24,
             color: AppColors.background,
           ),
@@ -37,11 +37,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           label: "Time Cards",
           icon: Icon(
-            Icons.list_alt,
+            Icons.list_alt_outlined,
             size: 24,
           ),
           activeIcon: Icon(
-            Icons.list_alt,
+            Icons.list_alt_outlined,
             size: 24,
             color: AppColors.background,
           ),
@@ -49,11 +49,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           label: "Tasks",
           icon: Icon(
-            Icons.watch_later_outlined,
+            Icons.task_sharp,
             size: 24,
           ),
           activeIcon: Icon(
-            Icons.watch_later_outlined,
+            Icons.task_sharp,
             size: 24,
             color: AppColors.background,
           ),
@@ -61,11 +61,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           label: "Projects",
           icon: Icon(
-            Icons.watch_later_outlined,
+            Icons.on_device_training,
             size: 24,
           ),
           activeIcon: Icon(
-            Icons.watch_later_outlined,
+            Icons.on_device_training,
             size: 24,
             color: AppColors.background,
           ),
