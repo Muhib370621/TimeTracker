@@ -1,3 +1,4 @@
+import 'package:blu_time/models/error_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/connectivity_manager.dart';
@@ -12,9 +13,69 @@ class APIClient {
   APIClient(this.options) {
     instance = Dio(options);
   }
-  Future<ResponseWrapper<T>> request<T extends Decodable>({
+
+ Future<ResponseWrapper<T>> request<T extends Decodable>({
+   required APIRouteConfigurable route,
+   required Create<T> create,
+   dynamic data,
+   Map<String, dynamic>? queryParameters,
+ }) async {
+   RequestOptions? config = route.getConfig();
+   config?.baseUrl = (config.baseUrl != null) ? config.baseUrl : options.baseUrl;
+   config?.data = data;
+
+   bool isOnline = await ConnectivityManager.instance.isOnline();
+   if (!isOnline) {
+     throw ErrorResponse(message: 'No Internet connection available.');
+   }
+   if (config == null) {
+     throw ErrorResponse(message: 'Wrong input');
+   }
+   if (queryParameters != null) {
+     config.queryParameters = queryParameters;
+   }
+   try {
+     instance.options.method = config.method;
+     final response = await instance.request(config.path,
+         data: data, queryParameters: config.queryParameters);
+     final responseData = response.data;
+     // handleErrors(responseData);
+     if (response.statusCode == 200) {
+       return ResponseWrapper.init(
+           create: create, json: (responseData == null) ? [] : responseData, error: null);
+     } else {
+       return ResponseWrapper.init(
+           create: create, json: responseData, error: null);
+     }
+   } on DioError catch (e) {
+     debugPrint(e.response?.statusCode.toString());
+     if (e.response?.statusCode == 200) {
+       return ResponseWrapper.init(create: create, json: {}, error: null);
+     }
+     if (e.response?.statusCode == 502 || e.response?.statusCode == 400) {
+       ResponseWrapper<BTErrorResponse> errorResponse1 = ResponseWrapper.init(create: () => BTErrorResponse(), json: e.response?.data, error: null) ;
+       final errorResponse = ErrorResponse(message: errorResponse1.response?.error?.code ?? "Server error");
+       throw errorResponse;
+     } else {
+       //debugPrint('Error: ${e.response?.data}');
+       //debugPrint(e.requestOptions.baseUrl);
+     }
+     //
+     // if (e.response?.statusCode == 403) {
+
+     // }
+     // else  if (e.response?.statusCode == 401){
+
+     // }
+     handleErrors(e.response?.data);
+     final errorResponse = ErrorResponse.fromJson(e.response?.data);
+     throw errorResponse;
+   }
+ }
+
+  Future<dynamic> requestList({
     required APIRouteConfigurable route,
-    required Create<T> create,
+    required Create<List<dynamic>> create,
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -38,17 +99,11 @@ class APIClient {
           data: data, queryParameters: config.queryParameters);
       final responseData = response.data;
       // handleErrors(responseData);
-      if (response.statusCode == 200) {
-        return ResponseWrapper.init(
-            create: create, json: (responseData == null) ? [] : responseData, error: null);
-      } else {
-        return ResponseWrapper.init(
-            create: create, json: responseData, error: null);
-      }
+      return response;
     } on DioError catch (e) {
       debugPrint(e.response?.statusCode.toString());
       if (e.response?.statusCode == 200) {
-        return ResponseWrapper.init(create: create, json: {}, error: null);
+        return e.response;
       }
       if (e.response?.statusCode == 502 || e.response?.statusCode == 400) {
         final errorResponse = ErrorResponse(message: 'Server error');

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
@@ -17,26 +18,22 @@ class OnboardingViewModel extends BaseModel {
 
   getRoles() async {
     try {
-      final result = await _rolesClient.request<EmptyResponse>(
+      final result = await _rolesClient.requestList(
           route: APIRoute(APIType.roles),
           data: null,
-          create: () => EmptyResponse());
-      return result.response;
+          create: () => <RoleResponse>[]);
+      return result;
     } on ErrorResponse {
       rethrow;
     }
   }
 
   getToken() async {
-    try {
       final result = await _issueTokenClient.request<EmptyResponse>(
           route: APIRoute(APIType.issueToken),
           data: null,
           create: () => EmptyResponse());
       return result.response;
-    } on ErrorResponse {
-      // rethrow;
-    }
   }
 
   testApi()async{

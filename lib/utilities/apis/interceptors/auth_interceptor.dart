@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/utilities/apis/api_client.dart';
+import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,22 @@ class AuthInterceptor extends InterceptorsWrapper {
     if (options.extra['no_auth'] ?? false) {
       return super.onRequest(options, handler);
     }
+
+    if (client.options.baseUrl == AppUrls.issueToken){
+      String rolesHeaders = 'NLAuth nlauth_account=TSTDRV1967913, nlauth_email=t1@bb.com, nlauth_signature=testing@1one, nlauth_role=1172';
+      options.headers['Authorization'] = rolesHeaders;
+      options.headers['Prefer'] = 'transient';
+      options.headers['Accept'] = 'application/json';
+      return super.onRequest(options, handler);
+    }
+    if (client.options.baseUrl == AppUrls.roles){
+      String rolesHeaders = 'NLAuth nlauth_email=t1@bb.com, nlauth_signature=testing@1one';
+      options.headers['Authorization'] = rolesHeaders;
+      options.headers['Prefer'] = 'transient';
+      options.headers['Accept'] = 'application/json';
+      return super.onRequest(options, handler);
+    }
+
     String apiURL = options.baseUrl + options.path;
     String signature = getOAuthSignature(client.options.method.toUpperCase(), apiURL);
 
@@ -63,6 +80,7 @@ class AuthInterceptor extends InterceptorsWrapper {
       client.instance.unlock();
       debugPrint('Refresh token completed!');
     }
+
     String headers1 = 'OAuth oauth_consumer_key="${AppUrls.consumerKey}",'
         'oauth_nonce="$nonce",'
         'oauth_signature="${signature}",'

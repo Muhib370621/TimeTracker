@@ -16,7 +16,7 @@ class APIRoute implements APIRouteConfigurable {
   final String? routeParams;
   final String apiVersion;
 
-  APIRoute(this.type, {this.routeParams = "", this.apiVersion = '/'});
+  APIRoute(this.type, {this.routeParams = "", this.apiVersion = ''});
 
   /// Return config of api (method, url, header)
   @override
