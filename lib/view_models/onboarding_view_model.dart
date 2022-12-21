@@ -1,19 +1,23 @@
-import 'dart:io';
 
 import 'package:blu_time/constants/app_urls.dart';
-import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:oauth1/oauth1.dart' as oauth1;
 class OnboardingViewModel extends BaseModel {
   final _issueTokenClient = ApiServices(baseUrl: AppUrls.issueToken).client;
   final _rolesClient = ApiServices(baseUrl: AppUrls.roles).client;
   final _queryClient = ApiServices().client;
+
+
+  bool _obscureText = true;
+  bool get obscureText => _obscureText;
+  set setObscureText(bool val) {
+    _obscureText = val;
+    notifyListeners();
+  }
 
 
   getRoles() async {

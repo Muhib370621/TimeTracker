@@ -4,12 +4,13 @@ class AppColors {
   AppColors();
   static const Color gradientTop = Color(0xFF413A70);
   static const Color gradientBottom = Color(0xFF18171D);
-  static const Color buttonCyan = Color(0xFF4BD9C2);
-  static const Color background = Color(0xFF16254F);
-  static const Color textFieldBackground = Color(0xFFE4E4E4);
+  static const Color buttonBlue = Color(0xFF2362BD);
+  static const Color background = Color(0xFF0B2E4A);
+  static const Color textFieldBackground = Color(0xFFF6F6F6);
   static const Color hintTextColor = Color(0xFF626262);
   static const Color timerColor = Color(0xFF8F8F8F);
   static const Color gradientUpperTop = Color(0xFF413595);
   static const Color gradientUpperBottom = Color(0xFF6C5DD3);
   static const Color listBackground = Color(0XFFEFEEF2);
+  static const Color textButton = Color(0XFF2A76C5);
 }

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'bluTime',
       theme: ThemeData(
         backgroundColor: Colors.red,
-        scaffoldBackgroundColor: AppColors.background,
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: "Poppins",
       ),
       debugShowCheckedModeBanner: false,

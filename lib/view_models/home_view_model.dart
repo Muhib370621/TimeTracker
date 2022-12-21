@@ -5,8 +5,8 @@ class HomeViewModel extends BaseModel {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
 
-  onTapItem(int index){
-    _selectedIndex = index;
+  onTapItem(int? index){
+    _selectedIndex = index ?? 0;
     notifyListeners();
   }
 

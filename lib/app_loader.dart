@@ -1,5 +1,7 @@
 import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_gradients.dart';
+import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
@@ -42,11 +44,34 @@ class _AppLoaderState extends State<AppLoader> {
             }
           } else {
             return Scaffold(
-              body: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 100),
-                  child: Image.asset(AppAssets.appLogo,fit: BoxFit.cover,),
+              backgroundColor: AppColors.background,
+              body: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 100),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 200,),
+                      const Spacer(),
+                      Column(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                                text: "blu ",
+                                style: AppTextStyles.bold.copyWith(fontSize: 35),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Time',
+                                    style: AppTextStyles.medium.copyWith(fontSize: 35),
+                                  )
+                                ]),
+                          ),
+                          const SizedBox(height: 10,),
+                          const Text("Because Your Time is Valuable",style: AppTextStyles.normal,),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             );

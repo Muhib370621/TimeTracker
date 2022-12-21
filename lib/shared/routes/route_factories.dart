@@ -1,5 +1,7 @@
 import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
+import 'package:blu_time/screens/onboarding/change_password.dart';
+import 'package:blu_time/screens/onboarding/forgot_password.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
 import 'package:blu_time/screens/onboarding/verification_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -21,6 +23,12 @@ class RouteFactories{
        case RouteNames.verification:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const VerificationScreen(email: "email"));
+       case RouteNames.forgotPassword:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const ForgotPassword());
+       case RouteNames.changePassword:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const ChangePassword());
        default:
          return errorRoute;
      }

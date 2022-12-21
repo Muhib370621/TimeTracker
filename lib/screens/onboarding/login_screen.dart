@@ -1,9 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/models/error_response.dart';
-import 'package:blu_time/screens/views/project_card.dart';
-import 'package:blu_time/screens/views/task_card.dart';
-import 'package:blu_time/screens/views/time_card.dart';
+import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
@@ -11,10 +8,11 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -30,39 +28,126 @@ class _LoginScreenState extends State<LoginScreen> {
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Image.asset(
-                    AppAssets.appLogo,
-                    fit: BoxFit.cover,
-                    width: 180,
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  const AppCommonTextField(
-                    hintText: "Enter mobile number or email",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AppCommonButton(
-                    title: "LOG IN",
-                    onPressed: () async {
-                      try {
-                        await viewModel.getToken();
-                      } on ErrorResponse catch (e) {
-                        Utilities.showSnack(context, e.toString());
-                         debugPrint(e.toString());
-                      }
-                      Navigator.of(context).pushNamed(
-                          RouteNames.verification);
-                    },
-                  ),
-                  const Spacer(),
-                  const Spacer(),
-                ],
+              child: SafeArea(
+                top: true,
+                child: ListView(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          text: "Log In ",
+                          style: AppTextStyles.bold
+                              .copyWith(fontSize: 20, color: Colors.black),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'To Join Your',
+                              style: AppTextStyles.medium
+                                  .copyWith(fontSize: 20, color: Colors.black),
+                            )
+                          ]),
+                    ),
+                    const SizedBox(height: 50,),
+                    Align(
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: TextSpan(
+                            text: "blu ",
+                            style: AppTextStyles.bold
+                                .copyWith(fontSize: 35, color: Colors.black),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Time',
+                                style: AppTextStyles.medium
+                                    .copyWith(fontSize: 35, color: Colors.black),
+                              )
+                            ]),
+                      ),
+                    ),
+                    Image.asset(
+                      AppAssets.login1,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Username / Email",style: AppTextStyles.medium.copyWith(color: Colors.black),),
+                        ),
+                        AppCommonTextField(
+                          prefixIcon: Image.asset(AppAssets.username),
+                          backgroundColor: AppColors.textFieldBackground,
+                          hintText: "Enter Your Username / Email",
+                          textInputType: TextInputType.emailAddress,
+                          // controller: viewModel.emailController,
+                          // validator: viewModel.validateEmail,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Password",style: AppTextStyles.medium.copyWith(color: Colors.black),),
+                        ),
+                        Selector<OnboardingViewModel, bool>(
+                            selector: (context, model) => model.obscureText,
+                            builder: (context, value, child) =>
+                                AppCommonTextField(
+                                  prefixIcon: Image.asset(AppAssets.password),
+                                  backgroundColor:
+                                      AppColors.textFieldBackground,
+                                  hintText: "Enter Your Password",
+                                  obscureText: value, suffixIcon: IconButton(
+                                  constraints: const BoxConstraints(),
+                                  padding: EdgeInsets.zero,
+                                      icon: Icon(
+                                        value
+                                            ?Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: Theme.of(context).primaryColorDark,
+                                      ),
+                                      onPressed: () {
+                                        viewModel.setObscureText = !viewModel.obscureText;
+                                      },
+                                    )
+                                  // validator: viewModel.validatePassword,
+                                  //  controller: viewModel.passwordController,
+                                )),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteNames.forgotPassword);
+                              },
+                              child: const Text("Forgot Password?",
+                                  style: TextStyle(
+                                      color: AppColors.textButton,
+                                      fontSize: 16))),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppCommonButton(
+                      title: "LOG IN",
+                      onPressed: () async {
+                        try {
+                          await viewModel.getToken();
+                        } on ErrorResponse catch (e) {
+                          Utilities.showSnack(context, e.toString());
+                          debugPrint(e.toString());
+                        }
+                        Navigator.of(context)
+                            .pushNamed(RouteNames.verification);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

@@ -1,3 +1,4 @@
+import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -25,7 +26,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        title: Text("Verify your number"),
+        title: const Text("Verify your number"),
       ),
       body: ViewModelBuilder<OnboardingViewModel>.reactive(
           viewModelBuilder: () => OnboardingViewModel(),
@@ -34,123 +35,109 @@ class _VerificationScreenState extends State<VerificationScreen> {
               width: double.infinity,
               height: double.infinity,
               //decoration: const BoxDecoration(gradient: AppGradients.login),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 25.0),
-                          // child: SvgPicture.asset(
-                          //   "assets/svgs/logo.svg",
-                          //   height: 79,
-                          // ),
+              child: SafeArea(
+                bottom: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 25.0),
+                            // child: SvgPicture.asset(
+                            //   "assets/svgs/logo.svg",
+                            //   height: 79,
+                            // ),
+                          ),
                         ),
-                      ),
-                      // Align(
-                      //   alignment: Alignment.centerRight,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(right: 40.0),
-                      //     child: SvgPicture.asset("assets/svgs/bubble_login.svg"),
-                      //   ),
-                      // ),
-                      const Spacer(
-                        flex: 1,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "A code has been sent to ${widget.email}",
+                        Image.asset(
+                          AppAssets.confirmPage,
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Make sure That's You",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.bold.copyWith(
+                                fontSize: 25, color: AppColors.buttonBlue),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Please check your inbox and make sure that it's you or not, and reset your password",
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white),
+                          style: AppTextStyles.medium
+                              .copyWith(fontSize: 15, color: Colors.black),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: OTPTextField(
-                            fieldStyle: FieldStyle.box,
-                            //controller: otpController,
-                            length: 4,
-                            width: 300,
-                            textFieldAlignment: MainAxisAlignment.spaceAround,
-                            fieldWidth: 60,
-                            otpFieldStyle: OtpFieldStyle(
-                                borderColor: const Color(0xFFE7E7E7),
-                                enabledBorderColor: const Color(0xFFE7E7E7),
-                                focusBorderColor: Colors.blue),
-                            outlineBorderRadius: 0,
-                            style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                            onChanged: (pin) {
-                              // viewModel.setVerificationCode(pin);
-                            },
-                            onCompleted: (pin) {
-                              // viewModel.setVerificationCode(pin);
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Column(
-                        children: [
-                          AppCommonButton(
-                            title: "Verify",
-                            fontSize: 17,
-                            onPressed: () async {
-                              Navigator.pushNamedAndRemoveUntil(context, RouteNames.home, (_) => false);
-                            },
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Resend code",
-                                style: AppTextStyles.medium
-                                    .copyWith(color: AppColors.buttonCyan),
-                              )),
-                          GestureDetector(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12.0),
-                                child: RichText(
-                                  text: const TextSpan(
-                                      text: "Not receiving the code? ",
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: OTPTextField(
+                              fieldStyle: FieldStyle.box,
+                              //controller: otpController,
+                              length: 4,
+                              width: 300,
+                              textFieldAlignment: MainAxisAlignment.spaceAround,
+                              fieldWidth: 60,
+                              otpFieldStyle: OtpFieldStyle(
+                                  borderColor: const Color(0xFFE7E7E7),
+                                  enabledBorderColor: const Color(0xFFE7E7E7),
+                                  focusBorderColor: Colors.blue),
+                              outlineBorderRadius: 0,
+                              style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                              onChanged: (pin) {
+                                // viewModel.setVerificationCode(pin);
+                              },
+                              onCompleted: (pin) {
+                                // viewModel.setVerificationCode(pin);
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        AppCommonButton(
+                          title: "VERIFY",
+                          fontSize: 17,
+                          onPressed: () async {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, RouteNames.home, (_) => false);
+                          },
+                        ),
+                        Spacer(),
+                        TextButton(
+                            onPressed: () {},
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: const TextSpan(
+                                  text:
+                                  "Did you receive this email? Check your inbox or ",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'Resend Email',
                                       style: TextStyle(
-                                          color: Colors.grey, fontSize: 16),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'Contact us',
-                                          style: TextStyle(
-                                              color: AppColors.buttonCyan,
-                                              fontSize: 16),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                              onTap: () async {
-                                // try {
-                                //   EmptyResponse? userResponse = await viewModel.resendVerificationCode(widget.email);
-                                //   Utilities.showSnack(context, "Verification code sent to ${widget.email}");
-                                // } on ErrorResponse catch (e) {
-                                //   Utilities.showSnack(context, e.message);
-                                // }
-                              })
-                        ],
-                      ),
-                      const Spacer()
-                    ]),
+                                          color: AppColors.buttonBlue,
+                                          fontSize: 16),
+                                    )
+                                  ]),
+                            )),
+                      ]),
+                ),
               ),
             );
           }),
