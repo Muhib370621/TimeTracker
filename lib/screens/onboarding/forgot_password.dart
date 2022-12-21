@@ -38,8 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   );
                 },
               ),
-              title: RichText(
-                text: TextSpan(
+              title:  Text.rich( TextSpan(
                     text: "Forgot ",
                     style: AppTextStyles.bold
                         .copyWith(fontSize: 20, color: Colors.black),

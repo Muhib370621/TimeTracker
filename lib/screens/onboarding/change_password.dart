@@ -39,8 +39,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   );
                 },
               ),
-              title: RichText(
-                text: TextSpan(
+              title:  Text.rich( TextSpan(
                     text: "Create ",
                     style: AppTextStyles.bold
                         .copyWith(fontSize: 20, color: Colors.black),

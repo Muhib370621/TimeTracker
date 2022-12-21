@@ -55,8 +55,7 @@ class _AppLoaderState extends State<AppLoader> {
                       const Spacer(),
                       Column(
                         children: [
-                          RichText(
-                            text: TextSpan(
+                          Text.rich( TextSpan(
                                 text: "blu ",
                                 style: AppTextStyles.bold.copyWith(fontSize: 35),
                                 children: <TextSpan>[

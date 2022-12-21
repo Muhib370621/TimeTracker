@@ -1,4 +1,5 @@
 import 'package:blu_time/models/error_response.dart';
+import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/connectivity_manager.dart';
@@ -73,9 +74,9 @@ class APIClient {
    }
  }
 
-  Future<dynamic> requestList({
+  Future<dynamic> requestList<T extends Decodable>({
     required APIRouteConfigurable route,
-    required Create<List<dynamic>> create,
+    required Create<List<T>> create,
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -97,13 +98,11 @@ class APIClient {
       instance.options.method = config.method;
       final response = await instance.request(config.path,
           data: data, queryParameters: config.queryParameters);
-      final responseData = response.data;
-      // handleErrors(responseData);
-      return response;
+      return  response.data ?? [];
     } on DioError catch (e) {
       debugPrint(e.response?.statusCode.toString());
       if (e.response?.statusCode == 200) {
-        return e.response;
+        //return e.response;
       }
       if (e.response?.statusCode == 502 || e.response?.statusCode == 400) {
         final errorResponse = ErrorResponse(message: 'Server error');

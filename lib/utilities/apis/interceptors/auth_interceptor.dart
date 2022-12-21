@@ -1,4 +1,6 @@
 import 'package:blu_time/constants/app_urls.dart';
+import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_client.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
@@ -56,14 +58,16 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
 
     if (client.options.baseUrl == AppUrls.issueToken){
-      String rolesHeaders = 'NLAuth nlauth_account=TSTDRV1967913, nlauth_email=t1@bb.com, nlauth_signature=testing@1one, nlauth_role=1172';
+    //  String rolesHeaders = 'NLAuth nlauth_account=TSTDRV1967913, nlauth_email=t1@bb.com, nlauth_signature=testing@1one, nlauth_role=1172';
+      String rolesHeaders = 'NLAuth nlauth_account=${locator<StoreServices>().getAccountID()}, nlauth_email=${locator<StoreServices>().getUsername()}, nlauth_signature=${locator<StoreServices>().getPassword()}, nlauth_role=1172';
       options.headers['Authorization'] = rolesHeaders;
       options.headers['Prefer'] = 'transient';
       options.headers['Accept'] = 'application/json';
       return super.onRequest(options, handler);
     }
     if (client.options.baseUrl == AppUrls.roles){
-      String rolesHeaders = 'NLAuth nlauth_email=t1@bb.com, nlauth_signature=testing@1one';
+     // String rolesHeaders = 'NLAuth nlauth_email=t1@bb.com, nlauth_signature=testing@1one';
+      String rolesHeaders = 'NLAuth nlauth_email=${locator<StoreServices>().getUsername()}, nlauth_signature=${locator<StoreServices>().getPassword()}';
       options.headers['Authorization'] = rolesHeaders;
       options.headers['Prefer'] = 'transient';
       options.headers['Accept'] = 'application/json';

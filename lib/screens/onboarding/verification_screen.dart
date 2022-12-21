@@ -63,7 +63,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Make sure That's You",
+                            "Make sure That's You Join",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bold.copyWith(
                                 fontSize: 25, color: AppColors.buttonBlue),
@@ -120,9 +120,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Spacer(),
                         TextButton(
                             onPressed: () {},
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: const TextSpan(
+                            child:  Text.rich( TextSpan(
                                   text:
                                   "Did you receive this email? Check your inbox or ",
                                   style: TextStyle(

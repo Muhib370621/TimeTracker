@@ -1,9 +1,11 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
@@ -19,11 +21,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController(text: "t1@bb.com");
+  final TextEditingController passwordController = TextEditingController(text: "testing@1one");
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<OnboardingViewModel>.reactive(
         viewModelBuilder: () => OnboardingViewModel(),
-        onModelReady: (OnboardingViewModel model) => model.getRoles(),
         builder: (context, viewModel, child) {
           return Scaffold(
             body: Padding(
@@ -32,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: true,
                 child: ListView(
                   children: [
-                    RichText(
-                      text: TextSpan(
+                    Text.rich(
+                      TextSpan(
                           text: "Log In ",
                           style: AppTextStyles.bold
                               .copyWith(fontSize: 20, color: Colors.black),
@@ -48,8 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 50,),
                     Align(
                       alignment: Alignment.center,
-                      child: RichText(
-                        text: TextSpan(
+                      child:  Text.rich( TextSpan(
                             text: "blu ",
                             style: AppTextStyles.bold
                                 .copyWith(fontSize: 35, color: Colors.black),
@@ -82,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: AppColors.textFieldBackground,
                           hintText: "Enter Your Username / Email",
                           textInputType: TextInputType.emailAddress,
-                          // controller: viewModel.emailController,
+                          controller: emailController,
                           // validator: viewModel.validateEmail,
                         ),
                         const SizedBox(
@@ -112,9 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onPressed: () {
                                         viewModel.setObscureText = !viewModel.obscureText;
                                       },
-                                    )
+                                    ),
                                   // validator: viewModel.validatePassword,
-                                  //  controller: viewModel.passwordController,
+                                    controller: passwordController,
                                 )),
                         Align(
                           alignment: Alignment.centerRight,
@@ -137,7 +140,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       title: "LOG IN",
                       onPressed: () async {
                         try {
-                          await viewModel.getToken();
+                          await locator<StoreServices>().setUsername(emailController.text);
+                          await locator<StoreServices>().setPassword(passwordController.text);
+                          await viewModel.getRoles();
                         } on ErrorResponse catch (e) {
                           Utilities.showSnack(context, e.toString());
                           debugPrint(e.toString());

@@ -7,7 +7,7 @@ import 'package:blu_time/utilities/apis/interceptors/log_interceptor.dart';
 import 'package:dio/dio.dart';
 
 class ApiServices {
-  ApiServices({String baseUrl =  AppUrls.path}) {
+  ApiServices({String baseUrl =  ""}) {
     getAPIClient(baseUrl);
   }
   late APIClient client;

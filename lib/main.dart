@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.red,
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: "Poppins",
+        fontFamily: "Montserrat",
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: RouteNames.appLoader,
