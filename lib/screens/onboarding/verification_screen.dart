@@ -1,6 +1,7 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/utilities/utilities.dart';
@@ -114,7 +115,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           fontSize: 17,
                           onPressed: () async {
                             Navigator.pushNamedAndRemoveUntil(
-                                context, RouteNames.home, (_) => false);
+                                context, RouteNames.startScreen, (_) => false);
                           },
                         ),
                         Spacer(),

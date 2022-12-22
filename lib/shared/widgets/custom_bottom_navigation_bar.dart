@@ -13,6 +13,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: index,
+      backgroundColor: AppColors.bottomBar,
       onTap: onTap,
       iconSize: 24,
       selectedItemColor: AppColors.background,
@@ -21,13 +22,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
       unselectedLabelStyle: AppTextStyles.semiBold.copyWith(fontSize: 12),
       type: BottomNavigationBarType.fixed,
       elevation: 0,
-      items: const [
+      items: [
         BottomNavigationBarItem(
           label: "Clock",
-          icon: Icon(
-            Icons.watch_later,
-            size: 24,
-          ),
+          icon: Image.asset("assets/images/clock.png", height: 20),
           activeIcon: Icon(
             Icons.watch_later,
             size: 24,
@@ -36,11 +34,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           label: "Time Cards",
-          icon: Icon(
-            Icons.list_alt_outlined,
-            size: 24,
-          ),
-          activeIcon: Icon(
+          icon: Image.asset("assets/images/timecard.png", height: 20),
+          activeIcon: const Icon(
             Icons.list_alt_outlined,
             size: 24,
             color: AppColors.background,
@@ -48,10 +43,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           label: "Tasks",
-          icon: Icon(
-            Icons.task_sharp,
-            size: 24,
-          ),
+          icon: Image.asset("assets/images/task.png", height: 20),
+
           activeIcon: Icon(
             Icons.task_sharp,
             size: 24,
@@ -59,12 +52,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          label: "Projects",
-          icon: Icon(
-            Icons.on_device_training,
-            size: 24,
-          ),
-          activeIcon: Icon(
+          label: "Chat",
+          icon: Image.asset("assets/images/chat.png", height: 20),
+          activeIcon: const Icon(
             Icons.on_device_training,
             size: 24,
             color: AppColors.background,
