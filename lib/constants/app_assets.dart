@@ -11,6 +11,7 @@ class AppAssets {
   static const changePassword = "$_imagesPath/change_password.png";
   static const confirmPage = "$_imagesPath/confirm.png";
   static const back = "$_imagesPath/back.png";
+  static const profilePlaceholder = "$_imagesPath/profile_placeholder.png";
 
   static const projectJson = "$_jsonPath/project_mock.json";
 

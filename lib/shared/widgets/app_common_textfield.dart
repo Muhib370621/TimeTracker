@@ -53,7 +53,7 @@ class AppCommonTextField extends StatelessWidget {
             child: prefixIcon,
           ) : null,
           suffixIcon: (suffixIcon != null) ? Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(0.0),
             child: suffixIcon,
           ) : null,
           contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),

@@ -3,7 +3,12 @@ class RouteNames{
   static const String appLoader = "app_loader";
   static const String login = "/login_screen";
   static const String home = "/home_screen";
+  static const String clock = "/clock_screen";
+  static const String timeCard = "/time_card_screen";
+  static const String task = "/tasks_screen";
+  static const String project = "/projects_screen";
   static const String verification = "/verification_screen";
   static const String forgotPassword = "/forgot_password";
   static const String changePassword = "/change_password";
+  static const String timeCardDetail = "time_card_detail_screen";
 }

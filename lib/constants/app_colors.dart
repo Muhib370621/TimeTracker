@@ -13,4 +13,7 @@ class AppColors {
   static const Color gradientUpperBottom = Color(0xFF6C5DD3);
   static const Color listBackground = Color(0XFFEFEEF2);
   static const Color textButton = Color(0XFF2A76C5);
+  static const Color orange = Color(0XFFEC6315);
+
+
 }

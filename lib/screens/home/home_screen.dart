@@ -7,6 +7,8 @@ import 'package:blu_time/screens/home/projects_screen.dart';
 import 'package:blu_time/screens/home/tasks_screen.dart';
 import 'package:blu_time/screens/home/time_card_screen.dart';
 import 'package:blu_time/screens/views/time_card.dart';
+import 'package:blu_time/shared/routes/route_factories.dart';
+import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/view_models/clock_view_model.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
@@ -49,21 +51,33 @@ class _HomeScreenState extends State<HomeScreen> {
       index: viewModel.selectedIndex,
       children: [
         Navigator(
+          key: RouteFactories.clockKey,
+          onGenerateRoute: RouteFactories.generateRoute,
+          initialRoute: RouteNames.clock,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
             MaterialPageRoute(builder: (context) => const ClockScreen())
           ],
         ),
         Navigator(
+          key: RouteFactories.timeCardKey,
+          onGenerateRoute: RouteFactories.generateRoute,
+          initialRoute: RouteNames.timeCard,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
-            MaterialPageRoute(builder: (context) => const TimecardScreen())
+            MaterialPageRoute(builder: (context) => const TimeCardScreen())
           ],
         ),
         Navigator(
+          key: RouteFactories.tasksKey,
+          onGenerateRoute: RouteFactories.generateRoute,
+          initialRoute: RouteNames.task,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
             MaterialPageRoute(builder: (context) => const TasksScreen())
           ],
         ),
         Navigator(
+          key: RouteFactories.projectsKey,
+          onGenerateRoute: RouteFactories.generateRoute,
+          initialRoute: RouteNames.project,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
             MaterialPageRoute(builder: (context) => const ProjectsScreen())
           ],

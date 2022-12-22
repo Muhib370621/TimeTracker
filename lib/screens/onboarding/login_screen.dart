@@ -12,7 +12,6 @@ import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

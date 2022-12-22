@@ -24,15 +24,15 @@ class OnboardingViewModel extends BaseModel {
 
   getRoles() async {
     try {
-      final result = await _rolesClient.requestList<RoleResponse>(
+      List<dynamic> result = await _rolesClient.requestList<RoleResponse>(
           route: APIRoute(APIType.roles),
           data: null,
-          create: () => <RoleResponse>[]);
-      List roles = result.map((e) => RoleResponse.fromJson(e)).toList();
-      if (roles.isNotEmpty) {
-        locator<StoreServices>().setAccountID(
-            roles[0].account?.internalId ?? "");
-      }
+          create: () => RoleResponse());
+     // List roles = result.map((e) => RoleResponse.fromJson(e)).toList();
+     //  if (roles.isNotEmpty) {
+     //    locator<StoreServices>().setAccountID(
+     //        roles[0].account?.internalId ?? "");
+     //  }
       return result;
     } on ErrorResponse {
       rethrow;

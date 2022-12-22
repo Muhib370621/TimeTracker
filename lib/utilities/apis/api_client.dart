@@ -76,7 +76,7 @@ class APIClient {
 
   Future<dynamic> requestList<T extends Decodable>({
     required APIRouteConfigurable route,
-    required Create<List<T>> create,
+    required Create<T> create,
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -98,7 +98,8 @@ class APIClient {
       instance.options.method = config.method;
       final response = await instance.request(config.path,
           data: data, queryParameters: config.queryParameters);
-      return  response.data ?? [];
+     // List<Ro> roles = response.data.map((e) => RoleResponse.fromJson(e)).toList;
+      return  response.data;
     } on DioError catch (e) {
       debugPrint(e.response?.statusCode.toString());
       if (e.response?.statusCode == 200) {
