@@ -22,7 +22,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           itemBuilder: (context, index) => Container(
             margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: GestureDetector(child: const ProjectCard(),onTap: (){
-              Navigator.of(context).pushNamed(RouteNames.projectDetail);
+              Navigator.of(context).pushNamed(RouteNames.projectDetailHolder);
             },),
           )
       ),

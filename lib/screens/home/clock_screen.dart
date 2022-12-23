@@ -176,7 +176,8 @@ class _ClockScreenState extends State<ClockScreen> {
                     ],
                   ),
                 ),
-              ));
+              )
+          );
         });
   }
 }

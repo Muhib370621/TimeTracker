@@ -11,7 +11,7 @@ class SiteMapScreen extends StatefulWidget {
   State<SiteMapScreen> createState() => MapSampleState();
 }
 
-class MapSampleState extends State<SiteMapScreen> {
+class MapSampleState extends State<SiteMapScreen>  with AutomaticKeepAliveClientMixin {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 
@@ -51,5 +51,9 @@ class MapSampleState extends State<SiteMapScreen> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
 }
