@@ -1,4 +1,5 @@
 import 'package:blu_time/app_loader.dart';
+import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/home/projects_screen.dart';
@@ -86,6 +87,9 @@ class RouteFactories{
        case RouteNames.timeCardDetail:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const TimeCardDetailScreen());
+       case RouteNames.startScreen:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const StartingScreen());
        default:
          return errorRoute;
      }

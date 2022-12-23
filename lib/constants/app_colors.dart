@@ -6,6 +6,7 @@ class AppColors {
   static const Color gradientBottom = Color(0xFF18171D);
   static const Color buttonBlue = Color(0xFF2362BD);
   static const Color background = Color(0xFF0B2E4A);
+  static const Color bottomBar = Color(0xFF002D4B);
   static const Color textFieldBackground = Color(0xFFF6F6F6);
   static const Color hintTextColor = Color(0xFF626262);
   static const Color timerColor = Color(0xFF8F8F8F);

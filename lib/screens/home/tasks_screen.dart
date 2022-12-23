@@ -36,7 +36,7 @@ class _TasksScreenState extends State<TasksScreen> {
       body: ListView.builder(
           itemCount: clockViewModel.currentProject?.tasks?.length,
           itemBuilder: (context, index) => Container(
-            margin: EdgeInsets.fromLTRB(15, 15, 15, 0),
+            margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
             child: TaskCard(task: clockViewModel.currentProject!.tasks![index],),
           )
       ),
