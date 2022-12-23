@@ -15,6 +15,11 @@ class AppAssets {
   static const projectIcon = "$_imagesPath/project_icon.png";
   static const addNote = "$_imagesPath/add_note.png";
   static const addImage = "$_imagesPath/add_image.png";
+  static const add = "$_imagesPath/add_icon.png";
+
+
+
+
 
   static const projectJson = "$_jsonPath/project_mock.json";
 

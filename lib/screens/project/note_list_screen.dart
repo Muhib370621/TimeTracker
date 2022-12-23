@@ -20,6 +20,25 @@ class _NoteListScreenState extends State<NoteListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        elevation: 10.0,
+        child: const SizedBox(
+          width: 70,
+          height: 70,
+          child: Card(
+            color: AppColors.buttonBlue,
+            shape: CircleBorder(),
+            child: Icon(Icons.add,size: 40,color: Colors.white,),
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouteNames.addNote);
+        },
+      ),
       body: ViewModelBuilder.reactive(
         onModelReady: (NoteViewModel model) => model.fetchNotes(),
         viewModelBuilder: () => NoteViewModel(),
@@ -51,7 +70,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
 
   _buildNotes(NoteViewModel model) {
     return ListView.builder(
-      shrinkWrap: true,
+        shrinkWrap: true,
         itemCount: model.notes.length,
         itemBuilder: (context, index) => Container(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -63,19 +82,31 @@ class _NoteListScreenState extends State<NoteListScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, t mollit anim id est laborum.",style: AppTextStyles.semiBold.copyWith(color: Colors.black,fontSize: 12)),
-                        const SizedBox(height: 10,),
+                        Text(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, t mollit anim id est laborum.",
+                            style: AppTextStyles.semiBold
+                                .copyWith(color: Colors.black, fontSize: 12)),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
-                            Image.asset(AppAssets.addImage,width: 40,),
-                            const SizedBox(width: 10,),
-                            Image.asset(AppAssets.addImage,width: 40,),
+                            Image.asset(
+                              AppAssets.addImage,
+                              width: 40,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Image.asset(
+                              AppAssets.addImage,
+                              width: 40,
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-
                 ),
                 onTap: () {
                   Navigator.of(context).pushNamed(RouteNames.noteList);
@@ -112,12 +143,12 @@ class _NoteListScreenState extends State<NoteListScreen> {
           const SizedBox(
             height: 40,
           ),
-           AppCommonButton(
+          AppCommonButton(
             title: 'Add Notes',
             width: 150,
             height: 35,
             radius: 10,
-            onPressed: (){
+            onPressed: () {
               viewModel.addNote();
             },
           ),
