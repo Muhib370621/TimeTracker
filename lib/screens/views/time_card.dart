@@ -1,8 +1,10 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/shared/enums/app_localizations_context.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeCard extends StatefulWidget {
   const TimeCard({Key? key}) : super(key: key);
@@ -53,7 +55,8 @@ class _TimeCardState extends State<TimeCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.timeCard_projectName,
+                  context.loc.timeCard_projectName,
+                 // AppStrings.timeCard_projectName,
                   style: AppTextStyles.medium,
                 ),
                 const SizedBox(

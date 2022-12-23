@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
+import 'package:blu_time/utilities/navigation_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,9 +15,9 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: EasyLocalization(
-      supportedLocales: const [Locale('en', ''), Locale('es', '')],
+      supportedLocales: const [Locale('en', ''), Locale('es', ''), Locale('pt', '')],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en', ''),
+      //fallbackLocale: const Locale('en', ''),
       child: const MyApp(),
     ),
   ));
@@ -28,22 +29,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: locator<NavigationService>().navigatorKey,
       useInheritedMediaQuery: true,
-      // localizationsDelegates: const [
-      //   AppLocalizations.delegate, // Add this line
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // //locale:Locale('en', ''),
-      // supportedLocales: const [
-      //   Locale('en', ''), // English, no country code
-      //   Locale('es', ''), // Spanish, no country code
-      // ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       //locale:Locale('en', ''),
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      supportedLocales: const [
+        Locale('en', ''), // English, no country code
+        Locale('es', ''),
+        Locale('pt', ''),// Spanish, no country code
+      ],
+      //locale:Locale('en', ''),
+      // localizationsDelegates: context.localizationDelegates,
+      // supportedLocales: context.supportedLocales,
+      // locale: context.locale,
       // builder: DevicePreview.appBuilder,
       // locale: DevicePreview.,
       // locale: DevicePreview.locale(context),

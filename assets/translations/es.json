@@ -1,3 +1,4 @@
 {
-  "timeCard_clockedIn": "registrado"
+  "timeCard_clockedIn": "Registrado",
+  "timeCard_projectName": "Nombre del proyecto"
 }

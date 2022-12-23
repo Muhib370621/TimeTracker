@@ -1,3 +1,4 @@
 {
-    "helloWorl": "¡Hola Mundo!"
+  "timeCard_clockedIn": "Registrado",
+  "timeCard_projectName": "Nombre del proyecto"
 }

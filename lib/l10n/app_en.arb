@@ -1,6 +1,4 @@
 {
-    "helloWorl": "Hello World!dfdffdfd111111",
-    "@helloWorl": {
-      "description": "The conventional newborn programmer greeting"
-    }
+  "timeCard_clockedIn": "Clocked In",
+  "timeCard_projectName": "Project Name"
 }
