@@ -12,6 +12,9 @@ class AppAssets {
   static const confirmPage = "$_imagesPath/confirm.png";
   static const back = "$_imagesPath/back.png";
   static const profilePlaceholder = "$_imagesPath/profile_placeholder.png";
+  static const projectIcon = "$_imagesPath/project_icon.png";
+  static const addNote = "$_imagesPath/add_note.png";
+  static const addImage = "$_imagesPath/add_image.png";
 
   static const projectJson = "$_jsonPath/project_mock.json";
 

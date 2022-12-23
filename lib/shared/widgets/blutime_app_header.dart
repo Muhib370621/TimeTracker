@@ -13,7 +13,6 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      elevation: 0,
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(

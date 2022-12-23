@@ -12,4 +12,6 @@ class RouteNames{
   static const String forgotPassword = "/forgot_password";
   static const String changePassword = "/change_password";
   static const String timeCardDetail = "time_card_detail_screen";
+  static const String projectDetail = "project_detail_screen";
+  static const String noteList = "note_list_screen";
 }

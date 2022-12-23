@@ -1,3 +1,5 @@
+import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -11,52 +13,32 @@ class ProjectCard extends StatefulWidget {
 class _ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Sample Project 1",
-                style: AppTextStyles.medium.copyWith(color: Colors.black),
-              ),
-              Text(
-                "8h 0m",
-                style: AppTextStyles.medium.copyWith(color: Colors.black),
-              ),
-            ],
+    return Card(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: AppColors.cellBackground,
+      child: ListTile(
+       // leading: Image.asset(AppAssets.projectIcon),
+        title: Row(
+          children: [
+            Image.asset(AppAssets.projectIcon),
+            SizedBox(width: 12,),
+            Text("Sample Project 1",style: AppTextStyles.bold.copyWith(color: Colors.black,fontSize: 13)),
+          ],
+        ),
+        trailing: Container(
+          decoration: BoxDecoration(
+            color: AppColors.buttonBlue,
+            borderRadius: BorderRadius.circular(4.0)
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "SAMPLE CUSTOMER 1",
-                style: AppTextStyles.medium.copyWith(color: Colors.black),
-              ),
-              Text(
-                "\$140.00",
-                style: AppTextStyles.medium.copyWith(color: Colors.black),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
           ),
-          Text(
-            "Mon 21 Nov 2022",
-            style: AppTextStyles.medium.copyWith(color: Colors.black),
-          ),
-          Text(
-            "Mon 21 Nov 2022",
-            style: AppTextStyles.medium.copyWith(color: Colors.black),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
-
-

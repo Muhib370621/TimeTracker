@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
-import 'package:blu_time/screens/home/projects_screen.dart';
+import 'package:blu_time/screens/project/projects_screen.dart';
 import 'package:blu_time/screens/home/tasks_screen.dart';
-import 'package:blu_time/screens/home/time_card_screen.dart';
+import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/screens/views/time_card.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -67,19 +67,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         Navigator(
-          key: RouteFactories.tasksKey,
-          onGenerateRoute: RouteFactories.generateRoute,
-          initialRoute: RouteNames.task,
-          onGenerateInitialRoutes: (navigator,initialRoute) => [
-            MaterialPageRoute(builder: (context) => const TasksScreen())
-          ],
-        ),
-        Navigator(
           key: RouteFactories.projectsKey,
           onGenerateRoute: RouteFactories.generateRoute,
           initialRoute: RouteNames.project,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
             MaterialPageRoute(builder: (context) => const ProjectsScreen())
+          ],
+        ),
+        Navigator(
+          key: RouteFactories.tasksKey,
+          onGenerateRoute: RouteFactories.generateRoute,
+          initialRoute: RouteNames.task,
+          onGenerateInitialRoutes: (navigator,initialRoute) => [
+            MaterialPageRoute(builder: (context) => const TasksScreen())
           ],
         ),
       ],

@@ -2,14 +2,16 @@ import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
-import 'package:blu_time/screens/home/projects_screen.dart';
+import 'package:blu_time/screens/project/note_list_screen.dart';
+import 'package:blu_time/screens/project/project_detail_screen.dart';
+import 'package:blu_time/screens/project/projects_screen.dart';
 import 'package:blu_time/screens/home/tasks_screen.dart';
-import 'package:blu_time/screens/home/time_card_detail_screen.dart';
-import 'package:blu_time/screens/home/time_card_screen.dart';
+import 'package:blu_time/screens/time_card/time_card_detail_screen.dart';
 import 'package:blu_time/screens/onboarding/change_password.dart';
 import 'package:blu_time/screens/onboarding/forgot_password.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
 import 'package:blu_time/screens/onboarding/verification_screen.dart';
+import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:flutter/material.dart';
 
@@ -90,6 +92,12 @@ class RouteFactories{
        case RouteNames.startScreen:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const StartingScreen());
+       case RouteNames.projectDetail:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const ProjectDetailScreen());
+       case RouteNames.noteList:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const NoteListScreen());
        default:
          return errorRoute;
      }
