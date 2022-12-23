@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
-import 'package:blu_time/screens/home/projects_screen.dart';
 import 'package:blu_time/screens/home/tasks_screen.dart';
-import 'package:blu_time/screens/home/time_card_screen.dart';
+import 'package:blu_time/screens/project/projects_screen.dart';
+import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';

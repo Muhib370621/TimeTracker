@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project.dart';
+import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/project/projects_screen.dart';
 import 'package:blu_time/screens/home/tasks_screen.dart';
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onGenerateRoute: RouteFactories.generateRoute,
           initialRoute: RouteNames.clock,
           onGenerateInitialRoutes: (navigator,initialRoute) => [
-            MaterialPageRoute(builder: (context) => const ClockScreen())
+            MaterialPageRoute(builder: (context) => const StartingScreen())
           ],
         ),
         Navigator(

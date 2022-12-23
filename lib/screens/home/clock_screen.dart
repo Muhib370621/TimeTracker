@@ -1,7 +1,7 @@
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
-import 'package:blu_time/screens/home/site_map_screen.dart';
+import 'package:blu_time/screens/project/site_map_screen.dart';
 import 'package:blu_time/view_models/clock_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
