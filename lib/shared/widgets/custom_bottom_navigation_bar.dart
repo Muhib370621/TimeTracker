@@ -26,11 +26,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           label: "Clock",
           icon: Image.asset("assets/images/clock.png", height: 20),
-          activeIcon: Icon(
-            Icons.watch_later,
-            size: 24,
-            color: AppColors.background,
-          ),
+          activeIcon: Image.asset("assets/images/selectedClock.png", height: 30),
         ),
         BottomNavigationBarItem(
           label: "Time Cards",

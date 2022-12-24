@@ -20,14 +20,16 @@ import 'package:flutter/material.dart';
 class RouteFactories{
 
   static final GlobalKey<NavigatorState> clockKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> clockStartKey = GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> timeCardKey = GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> tasksKey = GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> projectsKey = GlobalKey<NavigatorState>();
 
   static const int clockIndex = 0;
-  static const int timeCardIndex = 1;
-  static const int taskIndex = 2;
-  static const int projectIndex = 3;
+  static const int clockStartIndex = 1;
+  static const int timeCardIndex = 2;
+  static const int taskIndex = 3;
+  static const int projectIndex =4;
 
   static GlobalKey<NavigatorState> _currentNavigator = clockKey;
   static GlobalKey<NavigatorState> get currentNavigator => _currentNavigator;
@@ -36,6 +38,9 @@ class RouteFactories{
     switch (currentIndex) {
       case clockIndex:
         _currentNavigator = clockKey;
+        break;
+      case clockStartIndex:
+        _currentNavigator = clockStartKey;
         break;
       case timeCardIndex:
         _currentNavigator = timeCardKey;
