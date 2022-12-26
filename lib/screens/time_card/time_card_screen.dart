@@ -47,23 +47,25 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 5,
-                  child: Container(
-                    height: 35,
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.calendar_month,color: AppColors.buttonBlue,),
-                        SizedBox(width: 5,),
-                        Text("Tue 06 Dec - Fri 09 Dec"),
-                        SizedBox(width: 5,),
-                        Icon(Icons.arrow_forward_ios,color: AppColors.buttonBlue,)
-                      ],
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      //height: 35,
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.calendar_month,color: AppColors.buttonBlue,),
+                          SizedBox(width: 5,),
+                          Expanded(child: Text("Tue 06 Dec - Fri 09 Dec")),
+                          SizedBox(width: 5,),
+                          Icon(Icons.arrow_forward_ios,color: AppColors.buttonBlue,)
+                        ],
+                      ),
                     ),
                   ),
                 ),

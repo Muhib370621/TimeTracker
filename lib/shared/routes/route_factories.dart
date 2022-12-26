@@ -2,6 +2,7 @@ import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
+import 'package:blu_time/screens/profile/profile_screen.dart';
 import 'package:blu_time/screens/project/add_note_screen.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_holder_screen.dart';
@@ -111,6 +112,9 @@ class RouteFactories{
        case RouteNames.addNote:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const AddNoteScreen());
+       case RouteNames.profile:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const ProfileScreen());
        default:
          return errorRoute;
      }

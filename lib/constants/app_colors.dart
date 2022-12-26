@@ -16,5 +16,5 @@ class AppColors {
   static const Color textButton = Color(0XFF2A76C5);
   static const Color orange = Color(0XFFEC6315);
   static const Color cellBackground = Color(0XFFFCFCFC);
-
+  static const Color blueLightBackground = Color(0XFF225FB7);
 }

@@ -29,20 +29,53 @@ class MapSampleState extends State<SiteMapScreen>  with AutomaticKeepAliveClient
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-          Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer(),),
-        },
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            GoogleMap(
+              gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer(),),
+              },
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                  elevation: 10,
+                  color: Colors.white,
+                  child: Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(8),
+                    height: 100,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.pin_drop),
+                            Text("Location address")
+                          ],
+                        ),
+
+
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

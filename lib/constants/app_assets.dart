@@ -16,8 +16,8 @@ class AppAssets {
   static const addNote = "$_imagesPath/add_note.png";
   static const addImage = "$_imagesPath/add_image.png";
   static const add = "$_imagesPath/add_icon.png";
-
-
+  static const aboutUs = "$_imagesPath/about_us.png";
+  static const getHelp = "$_imagesPath/get_help.png";
 
 
 

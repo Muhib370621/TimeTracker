@@ -16,4 +16,5 @@ class RouteNames{
   static const String projectDetail = "project_detail_screen";
   static const String noteList = "note_list_screen";
   static const String addNote = "add_note_screen";
+  static const String profile = "profile_screen";
 }
