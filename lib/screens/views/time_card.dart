@@ -1,19 +1,16 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/shared/enums/app_localizations_context.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TimeCard extends StatefulWidget {
-  const TimeCard({Key? key}) : super(key: key);
+class TimeCard extends StatelessWidget {
+  final TimeEntry timeEntry;
+  const TimeCard({Key? key, required this.timeEntry}) : super(key: key);
 
-  @override
-  State<TimeCard> createState() => _TimeCardState();
-}
-
-class _TimeCardState extends State<TimeCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -63,7 +60,7 @@ class _TimeCardState extends State<TimeCard> {
                   height: 3,
                 ),
                 Text(
-                  "Project Sample 1",
+                  timeEntry.displayfield ?? "",
                   style: AppTextStyles.bold
                       .copyWith(color: AppColors.orange, fontSize: 20),
                 ),

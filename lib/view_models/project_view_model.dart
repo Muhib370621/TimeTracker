@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/models/project.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -8,11 +9,16 @@ import 'package:blu_time/view_models/base_view_model.dart';
 
 class ProjectViewModel extends BaseModel {
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
-  int tabIndex = 0;
-
   List<Project> projects = [];
+  Project? selectedProject;
+  int tabIndex = 0;
   set setTabIndex(int tabIndex) {
     this.tabIndex = tabIndex;
+    notifyListeners();
+  }
+
+  set setSelectedProject(Project selectedProject) {
+    this.selectedProject = selectedProject;
     notifyListeners();
   }
 

@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class ProjectDetailHolderScreen extends StatefulWidget {
-  const ProjectDetailHolderScreen({Key? key}) : super(key: key);
+  final ProjectViewModel viewModel;
+  const ProjectDetailHolderScreen({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   State<ProjectDetailHolderScreen> createState() =>
@@ -34,7 +35,8 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
     return Scaffold(
       appBar: const BluTimeAppHeader(),
       body: ViewModelBuilder<ProjectViewModel>.reactive(
-          viewModelBuilder: () => ProjectViewModel(),
+          viewModelBuilder: () => widget.viewModel,
+          disposeViewModel: false,
           builder: (context, viewModel, child) {
             return Stack(
               children: [

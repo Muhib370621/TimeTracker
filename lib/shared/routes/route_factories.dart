@@ -17,6 +17,7 @@ import 'package:blu_time/screens/onboarding/login_screen.dart';
 import 'package:blu_time/screens/onboarding/verification_screen.dart';
 import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
+import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 
 class RouteFactories{
@@ -103,7 +104,7 @@ class RouteFactories{
              settings: settings, builder: (context) => const StartingScreen());
        case RouteNames.projectDetailHolder:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const ProjectDetailHolderScreen());
+             settings: settings, builder: (context) => ProjectDetailHolderScreen(viewModel: settings.arguments as ProjectViewModel,));
        case RouteNames.projectDetail:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const ProjectDetailScreen());

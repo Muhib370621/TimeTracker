@@ -27,11 +27,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         body: SizedBox(
           width: double.infinity,
           height: double.infinity,
-          child: ViewModelBuilder.reactive(
+          child: ViewModelBuilder.nonReactive(
               onModelReady: (ProjectViewModel model) => model.fetchProjects(),
               viewModelBuilder: () => ProjectViewModel(),
-              builder:
-                  (BuildContext context, ProjectViewModel model, Widget? child) {
+              builder: (BuildContext context, ProjectViewModel model, Widget? child) {
                 return _buildBody(model);
               }),
         ));
@@ -45,7 +44,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             case ViewState.init:
               return const EmptyView();
             case ViewState.loading:
-              return const EmptyView();
+              return const Center(child: CircularProgressIndicator());
             case ViewState.completed:
               return _buildDataView(model);
             case ViewState.error:
@@ -60,15 +59,18 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return ListView.builder(
         itemCount: model.projects.length,
         itemBuilder: (context, index) => Container(
-          margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-          child: GestureDetector(
-            child: ProjectCard( project: model.projects[index],),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed(RouteNames.projectDetailHolder);
-            },
-          ),
-        ));
+              margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: GestureDetector(
+                child: ProjectCard(
+                  project: model.projects[index],
+                ),
+                onTap: () {
+                  model.setSelectedProject = model.projects[index];
+                  Navigator.of(context).pushNamed(
+                      RouteNames.projectDetailHolder,
+                      arguments: model);
+                },
+              ),
+            ));
   }
-
 }

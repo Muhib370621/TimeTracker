@@ -19,7 +19,7 @@ class EmptyView extends StatelessWidget {
             height: 15,
           ),
           Text(
-            "No Projects available",
+            "No data available",
             style: AppTextStyles.bold
                 .copyWith(color: AppColors.buttonBlue, fontSize: 20),
           ),

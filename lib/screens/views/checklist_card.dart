@@ -1,9 +1,12 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/action_checklist.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistCard extends StatelessWidget {
-  const ChecklistCard({Key? key}) : super(key: key);
+  final ActionChecklist actionChecklist;
+  const ChecklistCard({Key? key, required this.actionChecklist})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class ChecklistCard extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Pick up new through bolt",
+              Text(actionChecklist.custrecordBbPachklistTitle ?? "",
                   style: AppTextStyles.bold
                       .copyWith(color: Colors.black, fontSize: 16)),
               const SizedBox(
@@ -33,7 +36,8 @@ class ChecklistCard extends StatelessWidget {
           ),
           subtitle: Row(
             children: [
-              Icon(Icons.calendar_month),
+              const Icon(Icons.calendar_month,color: AppColors.buttonBlue,),
+              const SizedBox(width: 5,),
               Text("Task Complete Date here",
                   style: AppTextStyles.normal
                       .copyWith(color: Colors.black, fontSize: 13)),

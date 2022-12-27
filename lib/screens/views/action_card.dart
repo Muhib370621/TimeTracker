@@ -1,12 +1,14 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:flutter/material.dart';
 
 class ActionCard extends StatefulWidget {
-  const ActionCard({Key? key}) : super(key: key);
+  final ProjectAction projectAction;
+  const ActionCard({Key? key, required this.projectAction}) : super(key: key);
 
   @override
   State<ActionCard> createState() => _ActionCardState();
@@ -30,7 +32,7 @@ class _ActionCardState extends State<ActionCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Pick up new through bolt",
+                    Text(widget.projectAction.custrecordBbBludocsPath ?? "",
                         style: AppTextStyles.bold
                             .copyWith(color: Colors.black, fontSize: 15)),
                     const SizedBox(
