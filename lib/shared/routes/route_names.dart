@@ -17,4 +17,5 @@ class RouteNames{
   static const String noteList = "note_list_screen";
   static const String addNote = "add_note_screen";
   static const String profile = "profile_screen";
+  static const String checklist = "checklist_screen";
 }

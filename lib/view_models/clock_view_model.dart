@@ -56,7 +56,7 @@ class ClockViewModel extends BaseModel {
   }
 
   String calculateElapsedTime() {
-    return '${(Duration(seconds: currentProject?.totalTime ?? 0))}'.split('.')[0].padLeft(8, '0');
+    return '${(Duration(seconds:  0))}'.split('.')[0].padLeft(8, '0');
   }
 
 }

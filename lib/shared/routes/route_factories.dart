@@ -4,6 +4,7 @@ import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/profile/profile_screen.dart';
 import 'package:blu_time/screens/project/add_note_screen.dart';
+import 'package:blu_time/screens/project/checklist_screen.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_holder_screen.dart';
 import 'package:blu_time/screens/project/project_detail_screen.dart';
@@ -115,6 +116,9 @@ class RouteFactories{
        case RouteNames.profile:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const ProfileScreen());
+       case RouteNames.checklist:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) => const CheckListScreen());
        default:
          return errorRoute;
      }

@@ -34,10 +34,10 @@ class _TasksScreenState extends State<TasksScreen> {
       backgroundColor: AppColors.listBackground,
       appBar: AppBar(),
       body: ListView.builder(
-          itemCount: clockViewModel.currentProject?.tasks?.length,
+          itemCount: 0 ,//clockViewModel.currentProject?.tasks?.length,
           itemBuilder: (context, index) => Container(
             margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-            child: TaskCard(task: clockViewModel.currentProject!.tasks![index],),
+            child: Container(),//TaskCard(task: clockViewModel.currentProject!.tasks![index],),
           )
       ),
     );

@@ -41,15 +41,31 @@ class ResponseWrapper<T> extends GenericObject<T> {
   }
 }
 
-class APIResponse<T> extends GenericObject<T>
-    implements Decodable<APIResponse<T>> {
-  T? responseData;
+class QueryResponse<T> extends GenericObject<T>
+    implements Decodable<QueryResponse<T>> {
+    T? responseData;
+    List<dynamic>? links;
+    int? count;
+    bool? hasMore;
+    List<T>? items;
+    int? offset;
+    int? totalResults;
 
-  APIResponse({required Create<Decodable> create}) : super(create: create);
+  QueryResponse({required Create<Decodable> create}) : super(create: create);
 
   @override
-  APIResponse<T> decode(dynamic json) {
+  QueryResponse<T> decode(dynamic json) {
     responseData = genericObject(json);
+    count = json['count'];
+    hasMore = json['hasMore'];
+    if (json['items'] != null) {
+      items = <T>[];
+      json['items'].forEach((v) {
+        items!.add(genericObject(v));
+      });
+    }
+    offset = json['offset'];
+    totalResults = json['totalResults'];
     return this;
     // status = json['status'];
     // if (json['ResponseData'] == null) {

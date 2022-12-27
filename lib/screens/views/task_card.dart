@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
   const TaskCard({Key? key, required this.task}) : super(key: key);
-  final Tasks task;
+  final Project task;
   @override
   State<TaskCard> createState() => _TaskCardState();
 }
@@ -19,11 +19,11 @@ class _TaskCardState extends State<TaskCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${widget.task.startDateTime} - ${widget.task.endDateTime}",
+            "${widget.task.startdate} - ${widget.task.datecreated}",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(
-            widget.task.taskDescription ?? "",
+            widget.task.datecreated ?? "",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(

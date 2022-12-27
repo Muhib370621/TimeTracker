@@ -1,6 +1,7 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:flutter/material.dart';
 
@@ -67,12 +68,14 @@ class _ActionCardState extends State<ActionCard> {
                 width: 5,
               ),
               Row(
-                children: const [
-                  Icon(Icons.check_circle,size: 30,),
-                  SizedBox(
+                children: [
+                  const Icon(Icons.check_circle,size: 30,),
+                  const SizedBox(
                     width: 5,
                   ),
-                  AppCommonButton(title: "Checklist",height: 30,radius: 10,)
+                  AppCommonButton(title: "Checklist",height: 30,radius: 10,onPressed: (){
+                    Navigator.of(context).pushNamed(RouteNames.checklist);
+                  },)
                 ],
               )
             ],

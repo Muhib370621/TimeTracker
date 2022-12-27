@@ -44,7 +44,7 @@ class APIRoute implements APIRouteConfigurable {
         );
       case APIType.suiteql:
         return RequestOptions(
-          path: '${apiVersion}query/v1/suiteql$routeParams',
+          path: '$apiVersion/query/v1/suiteql$routeParams',
           method: APIMethod.post,
         );
       case APIType.issueToken:

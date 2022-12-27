@@ -30,6 +30,7 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: const BluTimeAppHeader(),
       body: ViewModelBuilder<ProjectViewModel>.reactive(

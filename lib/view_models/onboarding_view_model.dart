@@ -62,18 +62,6 @@ class OnboardingViewModel extends BaseModel {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
 }
