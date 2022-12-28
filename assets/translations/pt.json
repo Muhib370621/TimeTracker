@@ -29,5 +29,15 @@
   "breakTime": "Intervalo",
   "endTime": "Fim do tempo",
   "startDateTime": "Data de início",
-  "breakString": "Pausa"
+  "breakString": "Pausa",
+  "firstName": "Primeiro nome",
+  "lastName": "Último nome",
+  "emailAddress": "Endereço de email",
+  "mobileNumber": "Número de telemóvel",
+  "saveChanges": "Salvar alterações",
+  "aboutUs": "Sobre nós",
+  "getHelp": "Obter ajuda",
+  "logOut": "SAIR",
+  "enterEmailAddress": "Insira o seu endereço de e-mail aqui",
+  "enterMobileNumber": "Digite seu número de celular aqui"
 }

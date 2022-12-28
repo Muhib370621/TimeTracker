@@ -29,5 +29,15 @@
   "breakTime": "Break Time",
   "endTime": "End Time",
   "startDateTime": "Start Date & Time",
-  "breakString": "Break"
+  "breakString": "Break",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "emailAddress": "Email Address",
+  "mobileNumber": "Mobile Number",
+  "saveChanges": "Save Changes",
+  "aboutUs": "About Us",
+  "getHelp": "Get Help",
+  "logOut": "LOG OUT",
+  "enterEmailAddress": "Enter Your Email Address Here",
+  "enterMobileNumber": "Enter Your Mobile Number Here"
 }

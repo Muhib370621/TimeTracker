@@ -41,7 +41,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppStrings.details,
+                    AppStrings.details.tr(),
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),
@@ -62,7 +62,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.startTime,
+                                AppStrings.startTime.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -90,7 +90,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.finishTime,
+                                AppStrings.finishTime.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -118,7 +118,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.location,
+                                AppStrings.location.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -146,7 +146,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                     height: 40,
                   ),
                   Text(
-                    AppStrings.action,
+                    AppStrings.action.tr(),
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),

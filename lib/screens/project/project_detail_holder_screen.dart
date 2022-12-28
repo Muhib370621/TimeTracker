@@ -56,9 +56,9 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
                         _tabController?.animateTo(index);
                       },
                       tabs: [
-                        buildTab(viewModel, 0, AppStrings.detail),
-                        buildTab(viewModel, 1, AppStrings.site),
-                        buildTab(viewModel, 2, AppStrings.notes),
+                        buildTab(viewModel, 0, AppStrings.detail.tr()),
+                        buildTab(viewModel, 1, AppStrings.site.tr()),
+                        buildTab(viewModel, 2, AppStrings.notes.tr()),
                       ],
                     ),
                   ),

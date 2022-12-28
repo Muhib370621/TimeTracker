@@ -1,12 +1,9 @@
-import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/utilities/navigation_service.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 Future<void> main() async {

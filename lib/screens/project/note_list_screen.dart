@@ -128,7 +128,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 15,
           ),
           Text(
-            AppStrings.notes,
+            AppStrings.notes.tr(),
             style: AppTextStyles.bold
                 .copyWith(color: AppColors.buttonBlue, fontSize: 20),
           ),
@@ -136,7 +136,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 10,
           ),
           Text(
-            AppStrings.noteSample,
+            AppStrings.noteSample.tr(),
             textAlign: TextAlign.center,
             style: AppTextStyles.semiBold
                 .copyWith(color: Colors.black, fontSize: 12),
@@ -145,7 +145,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 40,
           ),
           AppCommonButton(
-            title: AppStrings.addNote,
+            title: AppStrings.addNote.tr(),
             width: 150,
             height: 35,
             radius: 10,

@@ -37,7 +37,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                         )
                       ), child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(AppStrings.startDateTime,style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                        child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                       ),),
                       const SizedBox(width: 10,),
                       Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)
@@ -53,7 +53,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                             )
                         ), child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(AppStrings.startDateTime,style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                          child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
                       Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)
@@ -69,7 +69,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                             )
                         ), child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(AppStrings.startDateTime,style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                          child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
                       Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)

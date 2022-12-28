@@ -33,7 +33,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10),
-                  hintText: "${AppStrings.writeNote}...",
+                  hintText: "${AppStrings.writeNote.tr()}...",
                   hintStyle: AppTextStyles.normal.copyWith(color: Colors.grey)
                 ),
               ),
@@ -58,14 +58,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AppAssets.addImage),
-                      Text(AppStrings.addImages,style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
+                      Text(AppStrings.addImages.tr(),style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
                     ],
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 25,),
-             AppCommonButton(title:AppStrings.addNote,radius: 10,height: 40),
+             AppCommonButton(title:AppStrings.addNote.tr(),radius: 10,height: 40),
 
           ],
         ),
