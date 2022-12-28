@@ -49,7 +49,7 @@ class _ActionCardState extends State<ActionCard> {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: Text("${AppStrings.assignedBy} sample w.",
+                                  child: Text("${AppStrings.assignedBy.tr()} sample w.",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.black, fontSize: 11))),
                               const SizedBox(
@@ -76,7 +76,7 @@ class _ActionCardState extends State<ActionCard> {
                   const SizedBox(
                     width: 5,
                   ),
-                  AppCommonButton(title: AppStrings.checklist,height: 30,radius: 10,onPressed: (){
+                  AppCommonButton(title: AppStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
                     Navigator.of(context).pushNamed(RouteNames.checklist);
                   },)
                 ],

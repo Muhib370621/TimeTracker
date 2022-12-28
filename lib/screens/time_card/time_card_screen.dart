@@ -85,7 +85,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                   color: AppColors.buttonBlue,
                 ),
                 backgroundColor: Colors.white,
-                hintText: AppStrings.searchProject,
+                hintText: AppStrings.searchProject.tr(),
                 hintColor: Colors.grey,
               ),
             ),

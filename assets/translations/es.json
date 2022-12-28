@@ -29,5 +29,15 @@
   "breakTime": "Descanso",
   "endTime": "Hora de finalización",
   "startDateTime": "Fecha de inicio",
-  "breakString": "Rotura"
+  "breakString": "Rotura",
+  "firstName": "Primer nombre",
+  "lastName": "Apellido",
+  "emailAddress": "Dirección de correo electrónico",
+  "mobileNumber": "Número de teléfono móvil",
+  "saveChanges": "Guardar cambios",
+  "aboutUs": "Sobre nosotros",
+  "getHelp": "Consigue ayuda",
+  "logOut": "CERRAR SESIÓN",
+  "enterEmailAddress": "Ingrese su dirección de correo electrónico aquí",
+  "enterMobileNumber": "Ingrese su número de móvil aquí"
 }

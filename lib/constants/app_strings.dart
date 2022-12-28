@@ -1,36 +1,50 @@
-
 import 'package:easy_localization/easy_localization.dart';
+enum AppStrings {
+  timeCardClockedIn,
+  timeCardProjectName,
+  startTime,
+  finishTime,
+  location,
+  detail,
+  site,
+  notes,
+  details,
+  action,
+  checklist,
+  assignedBy,
+  addNote,
+  noteSample,
+  writeNote,
+  addImages,
+  searchProject,
+  total,
+  complete,
+  remaining,
+  perDayTime,
+  all,
+  approved,
+  notApproved,
+  clockedOut,
+  workTime,
+  breakTime,
+  endTime,
+  startDateTime,
+  completed,
+  breakString,
+  firstName,
+  lastName,
+  emailAddress,
+  mobileNumber,
+  saveChanges,
+  aboutUs,
+  getHelp,
+  logOut,
+  enterEmailAddress,
+  enterMobileNumber;
 
-class AppStrings {
-  static String timeCardClockedIn = "timeCardClockedIn".tr();
-  static String timeCardProjectName = "timeCardProjectName".tr();
-  static String startTime = "startTime".tr();
-  static String finishTime = "finishTime".tr();
-  static String location = "location".tr();
-  static String detail = "detail".tr();
-  static String site = "site".tr();
-  static String notes = "notes".tr();
-  static String details = "details".tr();
-  static String action = "action".tr();
-  static String checklist = "checklist".tr();
-  static String assignedBy = "assignedBy".tr();
-  static String addNote = "addNote".tr();
-  static String noteSample = "noteSample".tr();
-  static String writeNote = "writeNote".tr();
-  static String addImages = "addImages".tr();
-  static String searchProject = "searchProject".tr();
-  static String total = "total".tr();
-  static String complete = "complete".tr();
-  static String remaining = "remaining".tr();
-  static String perDayTime = "perDayTime".tr();
-  static String all = "all".tr();
-  static String approved = "approved".tr();
-  static String notApproved = "notApproved".tr();
-  static String clockedOut = "clockedOut".tr();
-  static String workTime = "workTime".tr();
-  static String breakTime = "breakTime".tr();
-  static String endTime = "endTime".tr();
-  static String startDateTime = "startDateTime".tr();
-  static String completed = "completed".tr();
-  static String breakString = "breakString".tr();
+  String tr() {
+    AppStrings.firstName.name;
+    return toString().split('.').last.tr();
+  }
 }
+

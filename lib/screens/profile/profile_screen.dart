@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
@@ -78,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            "First Name",
+                                            AppStrings.firstName.tr(),
                                             style: AppTextStyles.bold.copyWith(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -86,12 +87,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          const SizedBox(
+                                           SizedBox(
                                             height: 45,
                                             child: AppCommonTextField(
                                               backgroundColor:
                                                   AppColors.textFieldBackground,
-                                              hintText: "Enter Your First Name",
+                                              hintText: AppStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -107,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Last Name",
+                                            AppStrings.lastName.tr(),
                                             style: AppTextStyles.bold.copyWith(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -115,12 +116,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          const SizedBox(
+                                           SizedBox(
                                             height: 45,
                                             child: AppCommonTextField(
                                               backgroundColor:
                                                   AppColors.textFieldBackground,
-                                              hintText: "Enter Your Last Name",
+                                              hintText: AppStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -136,20 +137,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Email Number",
+                                      AppStrings.emailAddress.tr(),
                                       style: AppTextStyles.bold.copyWith(
                                           fontSize: 15, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    const SizedBox(
+                                     SizedBox(
                                       height: 45,
                                       child: AppCommonTextField(
                                         backgroundColor:
                                             AppColors.textFieldBackground,
                                         hintText:
-                                            "Enter Your Email Address Here",
+                                        AppStrings.enterEmailAddress.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -162,20 +163,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Mobile Number",
+                                      AppStrings.mobileNumber.tr(),
                                       style: AppTextStyles.bold.copyWith(
                                           fontSize: 15, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    const SizedBox(
+                                     SizedBox(
                                       height: 45,
                                       child: AppCommonTextField(
                                         backgroundColor:
                                             AppColors.textFieldBackground,
                                         hintText:
-                                            "Enter Your Mobile Number Here",
+                                        AppStrings.enterMobileNumber.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -187,11 +188,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   width: 190,
                                   child: Column(
-                                    children: const [
+                                    children: [
                                       AppCommonButton(
-                                        title: "Save Changes",
+                                        title: AppStrings.saveChanges.tr(),
                                       ),
-                                      Divider(
+                                      const Divider(
                                         color: Colors.black,
                                         thickness: 2,
                                         height: 40,
@@ -217,7 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       width: 8,
                                     ),
                                     Text(
-                                      "About Us",
+                                      AppStrings.aboutUs.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
                                           fontSize: 18, color: Colors.black),
                                     )
@@ -242,17 +243,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       width: 8,
                                     ),
                                     Text(
-                                      "Get Help",
+                                      AppStrings.getHelp.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
                                           fontSize: 18, color: Colors.black),
                                     )
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 40,
                                 ),
-                                AppCommonButton(title: "LOG OUT"),
-                                SizedBox(
+                                AppCommonButton(title: AppStrings.logOut.tr()),
+                                const SizedBox(
                                   height: 40,
                                 ),
                               ],

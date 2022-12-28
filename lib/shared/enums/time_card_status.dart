@@ -10,15 +10,15 @@ enum TimeCardStatus {
   String get title {
     switch(this){
       case TimeCardStatus.all:
-        return AppStrings.all;
+        return AppStrings.all.tr();
       case TimeCardStatus.approved:
-        return AppStrings.approved;
+        return AppStrings.approved.tr();
       case TimeCardStatus.notApproved:
-        return AppStrings.notApproved;
+        return AppStrings.notApproved.tr();
       case TimeCardStatus.clockedIn:
-        return AppStrings.timeCardClockedIn;
+        return AppStrings.timeCardClockedIn.tr();
       case TimeCardStatus.clockedOut:
-        return AppStrings.clockedOut;
+        return AppStrings.clockedOut.tr();
     }
 
   }
