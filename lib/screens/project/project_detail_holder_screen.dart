@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/project/site_map_screen.dart';
@@ -55,9 +56,9 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
                         _tabController?.animateTo(index);
                       },
                       tabs: [
-                        buildTab(viewModel, 0, "Detail"),
-                        buildTab(viewModel, 1, "Site"),
-                        buildTab(viewModel, 2, "Notes"),
+                        buildTab(viewModel, 0, AppStrings.detail),
+                        buildTab(viewModel, 1, AppStrings.site),
+                        buildTab(viewModel, 2, AppStrings.notes),
                       ],
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -48,7 +49,7 @@ class _ActionCardState extends State<ActionCard> {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: Text("Assign by sample w.",
+                                  child: Text("${AppStrings.assignedBy} sample w.",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.black, fontSize: 11))),
                               const SizedBox(
@@ -75,7 +76,7 @@ class _ActionCardState extends State<ActionCard> {
                   const SizedBox(
                     width: 5,
                   ),
-                  AppCommonButton(title: "Checklist",height: 30,radius: 10,onPressed: (){
+                  AppCommonButton(title: AppStrings.checklist,height: 30,radius: 10,onPressed: (){
                     Navigator.of(context).pushNamed(RouteNames.checklist);
                   },)
                 ],

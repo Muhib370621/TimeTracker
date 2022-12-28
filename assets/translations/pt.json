@@ -1,7 +1,7 @@
 {
   "timeCardClockedIn": "Programado",
   "timeCardProjectName": "Nome do Projeto",
-  "startTime": "hora de início",
+  "startTime": "Hora de início",
   "finishTime": "Hora de término",
   "location": "Localização",
   "detail": "Detalhe",
@@ -22,7 +22,7 @@
   "remaining": "Restante",
   "perDayTime": "Tempo total por dia",
   "all": "Todo",
-  "approved": "aprovado",
+  "approved": "Aprovado",
   "notApproved": "Não aprovado",
   "clockedOut": "Cronometrado",
   "workTime": "Tempo de trabalho",

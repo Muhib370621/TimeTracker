@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -127,7 +128,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 15,
           ),
           Text(
-            "Notes",
+            AppStrings.notes,
             style: AppTextStyles.bold
                 .copyWith(color: AppColors.buttonBlue, fontSize: 20),
           ),
@@ -135,7 +136,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 10,
           ),
           Text(
-            "Use Notes To Tag Projects With Comments, Photos of Work And Receipts",
+            AppStrings.noteSample,
             textAlign: TextAlign.center,
             style: AppTextStyles.semiBold
                 .copyWith(color: Colors.black, fontSize: 12),
@@ -144,7 +145,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
             height: 40,
           ),
           AppCommonButton(
-            title: 'Add Notes',
+            title: AppStrings.addNote,
             width: 150,
             height: 35,
             radius: 10,
