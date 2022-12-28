@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/screens/views/time_card.dart';
 import 'package:blu_time/shared/enums/time_card_status.dart';
@@ -76,15 +77,15 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 3,
-            child: const SizedBox(
+            child: SizedBox(
               height: 45,
               child: AppCommonTextField(
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.search,
                   color: AppColors.buttonBlue,
                 ),
                 backgroundColor: Colors.white,
-                hintText: "Search Project Name Here",
+                hintText: AppStrings.searchProject,
                 hintColor: Colors.grey,
               ),
             ),

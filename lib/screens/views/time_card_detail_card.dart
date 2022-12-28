@@ -47,7 +47,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   width: 10,
                 ),
                 Text(
-                  "Completed",
+                  AppStrings.completed,
                   style: AppTextStyles.bold
                       .copyWith(color: AppColors.orange, fontSize: 12),
                 )
@@ -57,7 +57,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
               height: 25,
             ),
             Text(
-              "Work Time",
+              AppStrings.workTime,
               style: AppTextStyles.normal
                   .copyWith(color: Colors.white, fontSize: 14),
             ),
@@ -68,7 +68,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Start Time",
+                    AppStrings.startTime,
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),
@@ -98,7 +98,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Finish Time",
+                    AppStrings.finishTime,
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),
@@ -131,7 +131,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Break Time",
+                      AppStrings.breakTime,
                       style: AppTextStyles.normal
                           .copyWith(color: Colors.white, fontSize: 14),
                     ),
@@ -139,7 +139,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                       height: 5,
                     ),
                     Text(
-                      "Start Time",
+                      AppStrings.startTime,
                       style: AppTextStyles.bold
                           .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                     ),
@@ -147,7 +147,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                       height: 5,
                     ),
                     Text(
-                      "End Time",
+                      AppStrings.endTime,
                       style: AppTextStyles.bold
                           .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                     )
@@ -157,7 +157,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Break 1",
+                      "${AppStrings.breakString} 1",
                       style: AppTextStyles.normal
                           .copyWith(color: AppColors.orange, fontSize: 14),
                     ),

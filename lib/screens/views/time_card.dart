@@ -42,7 +42,7 @@ class TimeCard extends StatelessWidget {
                       ),
                       side: const BorderSide(width: 1.0, color: Colors.red),
                     ),
-                    child: Text(AppStrings.timeCard_clockedIn,style: AppTextStyles.bold.copyWith(color: Colors.white),),
+                    child: Text(AppStrings.timeCardClockedIn,style: AppTextStyles.bold.copyWith(color: Colors.white),),
                   ),
                 )
               ],
@@ -52,8 +52,7 @@ class TimeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.loc.timeCard_projectName,
-                 // AppStrings.timeCard_projectName,
+                 AppStrings.timeCardProjectName,
                   style: AppTextStyles.medium,
                 ),
                 const SizedBox(
@@ -73,7 +72,7 @@ class TimeCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    "Actions",
+                    AppStrings.action,
                     style: AppTextStyles.bold.copyWith(),
                   ),
                   Text.rich(TextSpan(
@@ -82,7 +81,7 @@ class TimeCard extends StatelessWidget {
                           .copyWith(fontSize: 20, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
-                          text: ' Total',
+                          text: ' ${AppStrings.total}',
                           style: AppTextStyles.medium.copyWith(fontSize: 12),
                         )
                       ])),
@@ -92,7 +91,7 @@ class TimeCard extends StatelessWidget {
                           .copyWith(fontSize: 20, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
-                          text: ' Complete',
+                          text: ' ${AppStrings.complete}',
                           style: AppTextStyles.medium.copyWith(fontSize: 12),
                         )
                       ])),
@@ -102,7 +101,7 @@ class TimeCard extends StatelessWidget {
                           .copyWith(fontSize: 20, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
-                          text: ' Remaining',
+                          text: ' ${AppStrings.remaining}',
                           style: AppTextStyles.medium.copyWith(fontSize: 12),
                         )
                       ]))
@@ -112,7 +111,7 @@ class TimeCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Per Day Total Time",
+                  AppStrings.perDayTime,
                   style: AppTextStyles.normal
                       .copyWith(color: Colors.white, fontSize: 16),
                 ),
