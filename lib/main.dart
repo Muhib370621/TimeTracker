@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:get/get.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       navigatorKey: locator<NavigationService>().navigatorKey,
       useInheritedMediaQuery: true,
       // localizationsDelegates: const [

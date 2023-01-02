@@ -118,7 +118,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 context, RouteNames.startScreen, (_) => false);
                           },
                         ),
-                        Spacer(),
+                        // Spacer(),
+                        SizedBox(height: 115,),
                         TextButton(
                             onPressed: () {},
                             child:  Text.rich( TextSpan(
