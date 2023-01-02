@@ -19,9 +19,7 @@ class ProjectDetailViewModel extends BaseModel {
     if (isLoading){
       return;
     }
-    if (refresh) {
-      actions.clear();
-    } else if (actions.length == totalCount && totalCount !=0) {
+    else if (actions.length == totalCount && totalCount !=0) {
       return;
     }
     setIsLoading = true;
@@ -36,7 +34,13 @@ class ProjectDetailViewModel extends BaseModel {
               routeParams: "?limit=10&offset=${actions.length}"),
           data: body,
           create: () => QueryResponse(create: () => ProjectAction()));
-      actions = List.from(actions)..addAll(result.response?.items ?? []);
+      if (refresh) {
+        actions = result.response?.items ?? [];
+      }
+      else {
+        actions = List.from(actions)
+          ..addAll(result.response?.items ?? []);
+      }
       totalCount = result.response?.totalResults ?? 0;
       setIsLoading = false;
       if (actions.isEmpty) {

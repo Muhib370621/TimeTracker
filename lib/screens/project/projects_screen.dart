@@ -4,6 +4,7 @@ import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/shared/widgets/empty_view.dart';
+import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,21 +57,21 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   _buildDataView(ProjectViewModel model) {
-    return ListView.builder(
-        itemCount: model.projects.length,
-        itemBuilder: (context, index) => Container(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: GestureDetector(
-                child: ProjectCard(
-                  project: model.projects[index],
-                ),
-                onTap: () {
-                  model.setSelectedProject = model.projects[index];
-                  Navigator.of(context).pushNamed(
-                      RouteNames.projectDetailHolder,
-                      arguments: model);
-                },
-              ),
-            ));
+    return PagedList(itemCount: model.projects.length, itemBuilder: (context,index){
+      return Container(
+        margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+        child: GestureDetector(
+          child: ProjectCard(
+            project: model.projects[index],
+          ),
+          onTap: () {
+            model.setSelectedProject = model.projects[index];
+            Navigator.of(context).pushNamed(
+                RouteNames.projectDetailHolder,
+                arguments: model);
+          },
+        ),
+      );
+    });
   }
 }
