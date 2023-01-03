@@ -4,6 +4,10 @@ class AppAssets {
   static const String _jsonPath = "assets/json";
 
   static const appLogo = "$_imagesPath/app_logo.png";
+  static const chatIcon = "$_imagesPath/chat.png";
+  static const clockIcon = "$_imagesPath/clock.png";
+  static const timeCardIcon = "$_imagesPath/timecard.png";
+  static const taskIcon = "$_imagesPath/task.png";
   static const electrician = "$_imagesPath/electrician.png";
   static const plumber = "$_imagesPath/plumber.png";
   static const disclaimerIcon = "$_imagesPath/disclaimer.png";

@@ -243,6 +243,7 @@ class _StartingScreenState extends State<StartingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return ViewModelBuilder<HomeViewModel>.reactive(
         viewModelBuilder: () => HomeViewModel(),
         builder: (context, viewModel, child) {
@@ -252,18 +253,15 @@ class _StartingScreenState extends State<StartingScreen> {
               leadingImage: AppAssets.profilePlaceholder,
               backEnabled: false,
             ),
-            bottomNavigationBar: CustomBottomNavigationBar(
-              index: viewModel.selectedIndex,
-              onTap: viewModel.onTapItem,
-            ),
+            // bottomNavigationBar: BottomNavBarV2(),
             body: Stack(
               children: [
                 Center(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 55,
+                     SizedBox(
+                      height: 0.06*size.height,
                     ),
                     Column(
                       children: [
@@ -368,7 +366,7 @@ class _StartingScreenState extends State<StartingScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(left: 85, top: 80),
+                      padding:  EdgeInsets.only(left: 0.1*size.height, top: 80),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -472,8 +470,8 @@ class _StartingScreenState extends State<StartingScreen> {
                         ),
                         Container(
                           // color: Color(0xffE4E4E4),
-                          width: 392,
-                          padding: const EdgeInsets.only(top: 105, bottom: 475),
+                          width: 1*size.width,
+                          padding:  EdgeInsets.only(top: 105, bottom: 0.42*size.height),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -576,7 +574,7 @@ class _StartingScreenState extends State<StartingScreen> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 100, bottom: 465),
+                          margin:  EdgeInsets.only(top: 100, bottom: 0.4*size.height),
                           // padding: const EdgeInsets.only(top: 105, bottom: 475),
                           decoration: BoxDecoration(
                             color: const Color(0xff0062BD),
@@ -853,7 +851,7 @@ class _StartingScreenState extends State<StartingScreen> {
                     : Container(
                         // color: Color(0xffE4E4E4),
                         width: 90,
-                        padding: const EdgeInsets.only(top: 105, bottom: 475),
+                        padding:  EdgeInsets.only(top: 105, bottom: 0.42*size.height),
                         child: Row(
                           children: [
                             Expanded(

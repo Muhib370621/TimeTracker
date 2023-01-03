@@ -19,6 +19,8 @@ import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
+
 
 class RouteFactories{
 
@@ -69,6 +71,9 @@ class RouteFactories{
        case RouteNames.appLoader:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const AppLoader());
+       case RouteNames.forgotPassword:
+         return MaterialPageRoute(
+             settings: settings, builder: (context) =>  BottomNavBarV2());
        case RouteNames.clock:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const ClockScreen());

@@ -1,6 +1,7 @@
 class RouteNames{
   RouteNames._();
   static const String appLoader = "app_loader";
+  static const String bottomNav = "bottom_nav";
   static const String login = "/login_screen";
   static const String home = "/home_screen";
   static const String startScreen = "/starting_screen";

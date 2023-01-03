@@ -4,9 +4,11 @@ import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
+import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:stacked/stacked.dart';
@@ -22,6 +24,7 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -107,19 +110,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 // viewModel.setVerificationCode(pin);
                               }),
                         ),
-                        const SizedBox(
-                          height: 50,
+                         SizedBox(
+                          height: 0.04* size.height,
                         ),
                         AppCommonButton(
                           title: "VERIFY",
                           fontSize: 17,
                           onPressed: () async {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, RouteNames.startScreen, (_) => false);
+                            Get.to(BottomNavBarV2());
+                            // Navigator.pushNamedAndRemoveUntil(
+                            //     context, RouteNames.bottomNav, (_) => false);
                           },
                         ),
                         // Spacer(),
-                        SizedBox(height: 115,),
+                        SizedBox(height: 0.07*size.height,),
                         TextButton(
                             onPressed: () {},
                             child:  Text.rich( TextSpan(
