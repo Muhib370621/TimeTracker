@@ -1,5 +1,4 @@
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/screens/views/task_card.dart';
 import 'package:blu_time/view_models/clock_view_model.dart';
 import 'package:flutter/material.dart';
 

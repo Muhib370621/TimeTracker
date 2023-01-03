@@ -1,4 +1,3 @@
-import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';

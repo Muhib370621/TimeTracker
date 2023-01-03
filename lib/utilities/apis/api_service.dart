@@ -1,4 +1,3 @@
-import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_client.dart';

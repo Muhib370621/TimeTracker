@@ -1,18 +1,17 @@
+import 'dart:async';
+import 'dart:collection';
+import 'dart:convert';
+import 'dart:core';
+import 'dart:math';
+
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_client.dart';
-import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
+import 'package:crypto/crypto.dart' as crypto;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-import 'dart:core';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-import 'dart:collection';
-import 'package:crypto/crypto.dart' as crypto;
 
 class AuthToken implements Decodable<AuthToken> {
 

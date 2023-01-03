@@ -1,7 +1,6 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TimeCardDetailCard extends StatefulWidget {

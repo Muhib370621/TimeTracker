@@ -4,7 +4,12 @@ class AppAssets {
   static const String _jsonPath = "assets/json";
 
   static const appLogo = "$_imagesPath/app_logo.png";
+  static const taskCompleted = "$_imagesPath/taskCompleted.png";
+
   static const chatIcon = "$_imagesPath/chat.png";
+  static const startWork = "$_imagesPath/Group 196.png";
+  static const finishWork = "$_imagesPath/Group 197.png";
+  static const breakTime = "$_imagesPath/Group 198.png";
   static const clockIcon = "$_imagesPath/clock.png";
   static const timeCardIcon = "$_imagesPath/timecard.png";
   static const taskIcon = "$_imagesPath/task.png";

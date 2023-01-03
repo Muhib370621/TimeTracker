@@ -1,5 +1,4 @@
 import 'package:blu_time/models/error_response.dart';
-import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/connectivity_manager.dart';

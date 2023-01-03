@@ -1,11 +1,8 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
-import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
-import 'package:blu_time/shared/routes/route_names.dart';
+import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
-import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
-import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -117,7 +114,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           title: "VERIFY",
                           fontSize: 17,
                           onPressed: () async {
-                            Get.to(BottomNavBarV2());
+                            Get.offAll(()=>const HomeScreen());
                             // Navigator.pushNamedAndRemoveUntil(
                             //     context, RouteNames.bottomNav, (_) => false);
                           },

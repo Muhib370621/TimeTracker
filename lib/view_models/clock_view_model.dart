@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/project.dart';
@@ -10,7 +11,6 @@ import 'package:blu_time/utilities/apis/decodable.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class ClockViewModel extends BaseModel {
 

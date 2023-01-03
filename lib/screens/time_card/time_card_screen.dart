@@ -1,7 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
-import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/screens/views/time_card.dart';
 import 'package:blu_time/shared/enums/time_card_status.dart';
 import 'package:blu_time/shared/enums/view_states.dart';

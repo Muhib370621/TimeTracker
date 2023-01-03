@@ -1,6 +1,5 @@
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/models/project.dart';
-import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';

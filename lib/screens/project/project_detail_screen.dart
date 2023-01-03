@@ -1,16 +1,10 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
-import 'package:blu_time/models/project.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/views/action_card.dart';
-import 'package:blu_time/screens/views/project_card.dart';
-import 'package:blu_time/shared/enums/view_states.dart';
-import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
-import 'package:blu_time/utilities/extensions.dart';
 import 'package:blu_time/view_models/project_detail_view_model.dart';
-import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
