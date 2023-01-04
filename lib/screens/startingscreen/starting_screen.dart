@@ -1,17 +1,21 @@
 import 'dart:async';
 import 'dart:ui';
-import '';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
-// import 'lib/constants/app_colors.dart';
+// import 'package:permission_handler/permission_handler.dart';
+//
+// import 'package:geocoder/geocoder.dart';
+// import 'package:location/location.dart';
+//
+// // import 'lib/constants/app_colors.dart';
 
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
@@ -21,22 +25,79 @@ class StartingScreen extends StatefulWidget {
 }
 
 class _StartingScreenState extends State<StartingScreen> {
-  Permission _permissionStatus = Permission.unknown;
+  // Permission _permissionStatus = Permission.unknown;
+   Position? _currentPosition;
   late DateTime dateTime;
   String _timeString = '';
   DateTime today = DateTime.now().toLocal();
+   Future<Position?> determinePosition() async {
+     LocationPermission permission;
+     permission = await Geolocator.checkPermission();
+     if (permission == LocationPermission.denied) {
+       permission = await Geolocator.requestPermission();
+       if (permission == LocationPermission.deniedForever) {
+         return Future.error('Location Not Available');
+       }
+     } else {
+       throw Exception('Error');
+     }
+     return await Geolocator.getCurrentPosition();
+   }
+
+   // _getCurrentLocation() {
+   //   Geolocator
+   //       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+   //       .then((Position position) {
+   //     setState(() {
+   //       _currentPosition = position;
+   //     });
+   //   }).catchError((e) {
+   //     print(e);
+   //   });
+   // }
+   _getCurrentLocation() {
+     Geolocator
+         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+         .then((Position position) {
+       setState(() {
+         _currentPosition = position;
+         _getAddressFromLatLng();
+       });
+     }).catchError((e) {
+       print(e);
+     });
+   }
+
+   _getAddressFromLatLng() async {
+     try {
+       List<Placemark> placemarks = await placemarkFromCoordinates(
+           _currentPosition!.latitude,
+           _currentPosition!.longitude
+       );
+
+       Placemark place = placemarks[0];
+
+       setState(() {
+         _currentAddress = "${place.locality}, ${place.subLocality}, ${place.street}";
+       });
+     } catch (e) {
+       print(e);
+     }
+   }
 
   // var day = today.day;
 
   @override
   void initState() {
+    determinePosition();
+    // _getCurrentLocation();
     // TODO: implement initState
     setState(() {
       isLoading == false;
       _timeString = _formatDateTime(DateTime.now());
       Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
     });
-    _checkPermission();
+    // _checkPermission();
     super.initState();
   }
 
@@ -45,9 +106,10 @@ class _StartingScreenState extends State<StartingScreen> {
   }
 // method to check the location permission
 //   void _checkPermission() async {
-//     final permissionStatus = await Permission.;
+//     // final permissionStatus = await location.toString();
 //     setState(() {
-//       _permissionStatus = permissionStatus;
+//       // print(_permissionStatus);
+//       // _permissionStatus = permissionStatus;
 //     });
 //   }
   void _getTime() {
@@ -57,7 +119,7 @@ class _StartingScreenState extends State<StartingScreen> {
       _timeString = formattedDateTime;
     });
   }
-
+  String? _currentAddress;
   String role = "";
   bool isLoading = false;
   bool sliderOpen = true;
@@ -332,57 +394,62 @@ class _StartingScreenState extends State<StartingScreen> {
                         SizedBox(
                           height: 0.15 * size.height,
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          // Below is the code for Linear Gradient.
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.9),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(
-                                    0, 4), // changes position of shadow
-                              ),
-                            ],
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [
-                                const Color(0xff0062BD),
-                                const Color(0xff002D4B).withOpacity(0.9)
+                        GestureDetector(
+                          onTap: (){
+                            _getCurrentLocation();
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.25,
+                            width: MediaQuery.of(context).size.width * 0.57,
+                            // Below is the code for Linear Gradient.
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.9),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 4), // changes position of shadow
+                                ),
                               ],
-                              begin: Alignment.bottomLeft,
-                              // end: Alignment.topRight,
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [
+                                  const Color(0xff0062BD),
+                                  const Color(0xff002D4B).withOpacity(0.9)
+                                ],
+                                begin: Alignment.bottomLeft,
+                                // end: Alignment.topRight,
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 0.04 * size.height,
-                              ),
-                              Image.asset(
-                                'assets/images/Group 137.png',
-                                scale: 3,
-                              ),
-                              Text(
-                                '00:00:00',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: const Color(0xffFFFFFF),
-                                    fontSize: 10.2 * textsize),
-                              ),
-                              SizedBox(
-                                height: 0.015 * size.height,
-                              ),
-                              Text(
-                                'Start Work',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: const Color(0xffFFFFFF),
-                                    fontSize: 5.5 * textsize),
-                              ),
-                            ],
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 0.04 * size.height,
+                                ),
+                                Image.asset(
+                                  'assets/images/Group 137.png',
+                                  scale: 3,
+                                ),
+                                Text(
+                                  '00:00:00',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color(0xffFFFFFF),
+                                      fontSize: 10.2 * textsize),
+                                ),
+                                SizedBox(
+                                  height: 0.015 * size.height,
+                                ),
+                                Text(
+                                  'Start Work',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color(0xffFFFFFF),
+                                      fontSize: 5.5 * textsize),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -402,11 +469,14 @@ class _StartingScreenState extends State<StartingScreen> {
                               color: AppColors.orange,
                             ),
                           ),
-                          const Text(
-                            'User Current Location Here',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 14),
-                          ),
+                          if (_currentAddress != null) Text(
+                            _currentAddress.toString()
+                          ,style: TextStyle(color: Colors.black),),
+                          // const Text(
+                          //   'User Current Location Here',
+                          //   style: TextStyle(
+                          //       fontWeight: FontWeight.w400, fontSize: 14),
+                          // ),
                         ],
                       ),
                     ),
