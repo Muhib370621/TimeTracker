@@ -27,60 +27,64 @@ class _ActionCardState extends State<ActionCard> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
         child: ListTile(
-          title: Row(
+          title: Column(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.projectAction.custrecordBbBludocsPath ?? "",
-                        style: AppTextStyles.bold
-                            .copyWith(color: Colors.black, fontSize: 15)),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(AppAssets.profilePlaceholder),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: Text("${AppStrings.assignedBy.tr()} sample w.",
-                                      style: AppTextStyles.medium.copyWith(
-                                          color: Colors.black, fontSize: 11))),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                              Expanded(
-                                  child: Text("12/06/23, 09:43",
-                                      style: AppTextStyles.medium.copyWith(
-                                          color: Colors.black, fontSize: 11))),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              Text(widget.projectAction.custrecordBbBludocsPath ?? "",
+                  style: AppTextStyles.bold
+                      .copyWith(color: Colors.black, fontSize: 15)),
               const SizedBox(
-                width: 5,
+                height: 10,
               ),
               Row(
                 children: [
-                  const Icon(Icons.check_circle,size: 30,),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(AppAssets.profilePlaceholder),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Text("${AppStrings.assignedBy.tr()} sample w.",
+                                          style: AppTextStyles.medium.copyWith(
+                                              color: Colors.black, fontSize: 11))),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  Expanded(
+                                      child: Text("12/06/23, 09:43",
+                                          style: AppTextStyles.medium.copyWith(
+                                              color: Colors.black, fontSize: 11))),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
-                  AppCommonButton(title: AppStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
-                    Navigator.of(context).pushNamed(RouteNames.checklist);
-                  },)
+                  Row(
+                    children: [
+                      const Icon(Icons.check_circle,size: 30,),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      AppCommonButton(title: AppStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
+                        Navigator.of(context).pushNamed(RouteNames.checklist);
+                      },)
+                    ],
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),

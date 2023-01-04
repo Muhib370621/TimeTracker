@@ -1,8 +1,10 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,20 +45,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 25.0),
-                            // child: SvgPicture.asset(
-                            //   "assets/svgs/logo.svg",
-                            //   height: 79,
-                            // ),
+                        Expanded(
+                          child: Image.asset(
+                            AppAssets.confirmPage,
+                            fit: BoxFit.fitWidth,
+                           // height: MediaQuery.of(context).size.height * 0.6,
                           ),
-                        ),
-                        Image.asset(
-                          AppAssets.confirmPage,
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width * 0.6,
                         ),
                         const SizedBox(
                           height: 30,
@@ -64,7 +58,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Make sure That's You Join",
+                            "Make sure That's You",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bold.copyWith(
                                 fontSize: 25, color: AppColors.buttonBlue),
@@ -114,6 +108,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           title: "VERIFY",
                           fontSize: 17,
                           onPressed: () async {
+                            locator<StoreServices>().setAccessToken("notnull");
                             Get.offAll(()=>const HomeScreen());
                             // Navigator.pushNamedAndRemoveUntil(
                             //     context, RouteNames.bottomNav, (_) => false);
@@ -137,6 +132,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     )
                                   ]),
                             )),
+                        const SizedBox(
+                          height: 30,
+                        ),
                       ]),
                 ),
               ),

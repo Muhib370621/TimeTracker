@@ -16,13 +16,12 @@ class AppLoader extends StatefulWidget {
 
 class _AppLoaderState extends State<AppLoader> {
   Future<bool> isTokenValid() async {
-    return false;
     var token = locator<StoreServices>().getAccessToken();
     return token.isNotEmpty;
   }
 
   Future<bool> dummyTimer() async {
-    await Future.delayed(const Duration(milliseconds: 2500));
+    await Future.delayed(const Duration(milliseconds: 1200));
     return true;
   }
 
@@ -36,7 +35,7 @@ class _AppLoaderState extends State<AppLoader> {
         builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
           if (snapshot.hasData) {
             if ((snapshot.data?[0] ?? true) == false) {
-              return LoginScreen();
+              return const LoginScreen();
             } else {
               return const HomeScreen();
             }

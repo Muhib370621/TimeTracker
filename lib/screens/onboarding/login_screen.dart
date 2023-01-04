@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(15.0),
               child: SafeArea(
                 top: true,
-                child: ListView(
+                child: Column(
                   children: [
                     Text.rich(
                       TextSpan(
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           ]),
                     ),
-                    const SizedBox(height: 50,),
+                    SizedBox(height: 50.width,),
                     Align(
                       alignment: Alignment.center,
                       child:  Text.rich( TextSpan(
@@ -64,10 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ]),
                       ),
                     ),
-                    Image.asset(
-                      AppAssets.login1,
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.7,
+                    Expanded(
+                      child: Image.asset(
+                        AppAssets.login1,
+                        fit: BoxFit.cover,
+                       // height: MediaQuery.of(context).size.width * 0.4,
+                      ),
                     ),
                     const SizedBox(
                       height: 30,

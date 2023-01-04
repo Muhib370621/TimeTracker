@@ -1,11 +1,15 @@
+import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -32,8 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         body: Column(
           children: [
-            SizedBox(
-              height: profileIconSize,
+            const SizedBox(
+              height: 10,
             ),
             Expanded(
               child: Stack(
@@ -252,7 +256,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                AppCommonButton(title: AppStrings.logOut.tr()),
+                                AppCommonButton(title: AppStrings.logOut.tr(),onPressed: (){
+                                  locator<StoreServices>().setAccessToken("");
+                                  Get.offAll(()=>const AppLoader());
+                                },),
                                 const SizedBox(
                                   height: 40,
                                 ),

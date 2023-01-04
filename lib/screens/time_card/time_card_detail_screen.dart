@@ -39,7 +39,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                         child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                       ),),
                       const SizedBox(width: 10,),
-                      Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)
+                      Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))
                     ],
                   ),
                   Row(
@@ -55,7 +55,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                           child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
-                      Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)
+                      Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))
                     ],
                   ),
                   Row(
@@ -71,7 +71,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                           child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
-                      Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)
+                      Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))
                     ],
                   ),
                 ],
