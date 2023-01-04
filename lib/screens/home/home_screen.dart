@@ -32,9 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, viewModel, child) {
           return Scaffold(
             backgroundColor: Colors.white,
-            bottomNavigationBar: CustomBottomNavigationBar(
-              index: viewModel.selectedIndex,
-              onTap: viewModel.onTapItem,
+            bottomNavigationBar: PreferredSize(
+              preferredSize: const Size.fromHeight(10),
+              child: CustomBottomNavigationBar(
+                index: viewModel.selectedIndex,
+                onTap: viewModel.onTapItem,
+              ),
             ),
             body: bodyTab(viewModel),
           );
@@ -103,13 +106,13 @@ class TimeScreen extends StatelessWidget {
                 "Projects",
                 style: AppTextStyles.bold.copyWith(color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(project?.altname ?? ""),
             ],
           ),
-          trailing: Icon(Icons.arrow_forward_ios),
+          trailing: const Icon(Icons.arrow_forward_ios),
           onTap: onTap,
         ),
         ListTile(
@@ -119,7 +122,7 @@ class TimeScreen extends StatelessWidget {
                 "Start",
                 style: AppTextStyles.bold.copyWith(color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(project?.startdate ?? ""),
