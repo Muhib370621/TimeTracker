@@ -108,7 +108,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           title: "VERIFY",
                           fontSize: 17,
                           onPressed: () async {
-                            locator<StoreServices>().setAccessToken("notnull");
+                           // locator<StoreServices>().setAccessToken("notnull");
                             Get.offAll(()=>const HomeScreen());
                             // Navigator.pushNamedAndRemoveUntil(
                             //     context, RouteNames.bottomNav, (_) => false);

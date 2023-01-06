@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
@@ -5,6 +7,8 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TimeEntryViewModel extends BaseModel{
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
@@ -47,6 +51,9 @@ class TimeEntryViewModel extends BaseModel{
       notifyListeners();
     } on ErrorResponse {
       rethrow;
-    }
+    } on SocketException{
+      Get.defaultDialog(title: "Internet Not Available",
+          content: Text("Please check your internet connection"));
+  }
   }
 }

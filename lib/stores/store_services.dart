@@ -4,6 +4,8 @@ abstract class StoreServices {
 
   String getAccessToken();
   Future<bool> setAccessToken(String value);
+  String getTokenSecret();
+  Future<bool> setTokenSecret(String value);
   String getUsername();
   Future<bool> setUsername(String value);
   String getPassword();
@@ -23,6 +25,7 @@ class StoreServicesImpl extends StoreServices {
   late SharedPreferences _prefs;
 
   final String _kAccessTokenPrefs = "accessToken";
+  final String _kTokenSecretPrefs = "_kTokenSecretPrefs";
   final String _kUsername = "_kUsername";
   final String _password = "_password";
   final String _accountID = "_accountID";
@@ -77,6 +80,16 @@ class StoreServicesImpl extends StoreServices {
   Future<bool> setUserProfile(value) {
     // TODO: implement setUserProfile
     throw UnimplementedError();
+  }
+
+  @override
+  String getTokenSecret() {
+    return _prefs.getString(_kTokenSecretPrefs) ?? '';
+  }
+
+  @override
+  Future<bool> setTokenSecret(String value) {
+    return _prefs.setString(_kTokenSecretPrefs, value);
   }
 
 }

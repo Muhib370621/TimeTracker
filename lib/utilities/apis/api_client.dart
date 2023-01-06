@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blu_time/models/error_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -5,6 +7,8 @@ import 'package:blu_time/utilities/apis/connectivity_manager.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class APIClient {
  late final BaseOptions options;
@@ -26,7 +30,8 @@ class APIClient {
 
    bool isOnline = await ConnectivityManager.instance.isOnline();
    if (!isOnline) {
-     throw ErrorResponse(message: 'No Internet connection available.');
+     throw Get.defaultDialog(title: "Internet Not Available",
+         content: Text("Please check your internet connection"));;
    }
    if (config == null) {
      throw ErrorResponse(message: 'Wrong input');
@@ -54,7 +59,7 @@ class APIClient {
      }
      if (e.response?.statusCode == 502 || e.response?.statusCode == 400) {
        ResponseWrapper<BTErrorResponse> errorResponse1 = ResponseWrapper.init(create: () => BTErrorResponse(), json: e.response?.data, error: null) ;
-       final errorResponse = ErrorResponse(message: errorResponse1.response?.error?.code ?? "Server error");
+       final errorResponse = ErrorResponse(message: errorResponse1.response?.error?.message ?? "Server error");
        throw errorResponse;
      } else {
        //debugPrint('Error: ${e.response?.data}');
@@ -71,12 +76,17 @@ class APIClient {
      final errorResponse = ErrorResponse.fromJson(e.response?.data);
      throw errorResponse;
    }
+ //   on SocketException{
+ //     throw
+ // }
  }
 
   Future<dynamic> requestList<T extends Decodable>({
     required APIRouteConfigurable route,
     required Create<T> create,
     dynamic data,
+    dynamic dataCopy,
+
     Map<String, dynamic>? queryParameters,
   }) async {
     RequestOptions? config = route.getConfig();

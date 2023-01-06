@@ -10,16 +10,16 @@ import 'package:get/get.dart';
 class StartingScreenController extends GetxController {
   @override
   void onInit() {
-    _gpsService(context);
+    // _gpsService(context);
     // TODO: implement initState
     // setState(() {
-    isLoading == false;
+    isLoading.value = false;
     _timeString.value = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-    locationLoading == true;
+    locationLoading.value = true;
     // determinePosition();
     _getCurrentLocation();
-    locationLoading == false;
+    locationLoading.value = false;
     // });
     // if(_gpsService()==true){
     //
@@ -27,7 +27,7 @@ class StartingScreenController extends GetxController {
     // _checkPermission();
     super.onInit();
   }
-  var context;
+  // var context;
   final RxString _currentAddress = "".obs;
   RxString role = "".obs;
   RxBool isLoading = false.obs;
@@ -46,7 +46,7 @@ class StartingScreenController extends GetxController {
 
   // DateTime dateTime.obs;
   final RxString _timeString = ''.obs;
-  RxBool GPS = false.obs;
+  // RxBool GPS = false.obs;
   Rx<DateTime> today = DateTime.now().toLocal().obs;
 
   Future<Position?> determinePosition() async {
@@ -60,7 +60,6 @@ class StartingScreenController extends GetxController {
     } else {
       throw Exception('Error');
     }
-    // Geolocator.ena;
     return await Geolocator.getCurrentPosition();
   }
 
@@ -80,7 +79,7 @@ class StartingScreenController extends GetxController {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text(
-                  "Can't get gurrent location",
+                  "Can't get current location",
                   style: TextStyle(color: Colors.black, fontSize: 25),
                 ),
                 content:

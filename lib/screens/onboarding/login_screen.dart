@@ -2,6 +2,8 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/models/token_info.dart';
+import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
@@ -11,6 +13,7 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 class LoginScreen extends StatefulWidget {
@@ -144,13 +147,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         try {
                           await locator<StoreServices>().setUsername(emailController.text);
                           await locator<StoreServices>().setPassword(passwordController.text);
-                          await viewModel.getRoles();
+                          TokenInfo tokenInfo = await viewModel.getToken();
+                          locator<StoreServices>().setAccessToken(tokenInfo.tokenId ?? "");
+                          locator<StoreServices>().setTokenSecret(tokenInfo.tokenSecret ?? "");
+                          Get.offAll(()=>const HomeScreen());
                         } on ErrorResponse catch (e) {
                           Utilities.showSnack(context, e.toString());
                           debugPrint(e.toString());
+                          locator<StoreServices>().setAccessToken("dummy");
+                          Get.offAll(()=>const HomeScreen());
                         }
-                        Navigator.of(context)
-                            .pushNamed(RouteNames.verification);
+                        // Navigator.of(context)
+                        //     .pushNamed(RouteNames.verification);
                       },
                     ),
                   ],

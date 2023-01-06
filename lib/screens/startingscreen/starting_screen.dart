@@ -33,10 +33,7 @@ class _StartingScreenState extends State<StartingScreen> {
       isLoading == false;
       _timeString = _formatDateTime(DateTime.now());
       Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-      locationLoading == true;
-      // determinePosition();
-      _getCurrentLocation();
-      locationLoading == false;
+
     });
     // if(_gpsService()==true){
     //
@@ -44,6 +41,11 @@ class _StartingScreenState extends State<StartingScreen> {
 
     // _checkPermission();
     super.initState();
+  }
+  void dispose(){
+    //...
+    super.dispose();
+    //...
   }
 
   String? _currentAddress;
@@ -236,7 +238,10 @@ class _StartingScreenState extends State<StartingScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            locationLoading == true;
+                            // determinePosition();
                             _getCurrentLocation();
+                            locationLoading == false;
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.25,

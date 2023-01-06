@@ -1,6 +1,7 @@
 
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/models/roles_response.dart';
+import 'package:blu_time/models/token_info.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
@@ -26,11 +27,6 @@ class OnboardingViewModel extends BaseModel {
           route: APIRoute(APIType.roles),
           data: null,
           create: () => RoleResponse());
-     // List roles = result.map((e) => RoleResponse.fromJson(e)).toList();
-     //  if (roles.isNotEmpty) {
-     //    locator<StoreServices>().setAccountID(
-     //        roles[0].account?.internalId ?? "");
-     //  }
       return result;
     } on ErrorResponse {
       rethrow;
@@ -38,10 +34,10 @@ class OnboardingViewModel extends BaseModel {
   }
 
   getToken() async {
-      final result = await _issueTokenClient.request<EmptyResponse>(
+      final result = await _issueTokenClient.request<TokenInfo>(
           route: APIRoute(APIType.issueToken),
           data: null,
-          create: () => EmptyResponse());
+          create: () => TokenInfo());
       return result.response;
   }
 
