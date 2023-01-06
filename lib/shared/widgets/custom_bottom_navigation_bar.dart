@@ -1,10 +1,9 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
-import 'package:blu_time/screens/chat/chatScreen.dart';
-import 'package:blu_time/screens/project/projects_screen.dart';
-import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/BottomNavigationController.dart';
 
 // class CustomBottomNavigationBar extends StatelessWidget {
 //   final int index;
@@ -70,267 +69,270 @@ import 'package:flutter/material.dart';
 //   }
 // }
 
-class CustomBottomNavigationBar extends StatefulWidget {
-  final int index;
-  final Function(int) onTap;
+class CustomBottomNavigationBar extends StatelessWidget {
+  // final int index;
+  // final Function(int) onTap;
+   CustomBottomNavigationBar({
+    super.key,
+  });
 
-  const CustomBottomNavigationBar({super.key, required this.index, required this.onTap});
-
-  @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState(onTap, index);
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  final int index;
-  final Function(int) onTap;
-  int currentIndex = 0;
-  final List pages = [
-    const StartingScreen(),
-    const TimeCardScreen(),
-    const ProjectsScreen(),
-    const ChatScreen(),
-  ];
-
-  _CustomBottomNavigationBarState(this.onTap, this.index);
-
-  setBottomBarIndex(index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
+  final BottomNavController controller = Get.put(BottomNavController());
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: pages[currentIndex],
-      bottomNavigationBar: SizedBox(
-        width: size.width,
-        height: 0.119*size.height,
-        child: Stack(
-          // clipBehavior: Clip.none,
-          // overflow: Overflow.visible,
-          children: [
-            Stack(
-                children: [
-              Positioned(
-                top: 0.036*size.height,
-                child: Container(
-                  // margin: const EdgeInsets.only(top: 30),
-                  decoration: const BoxDecoration(
-                    color: AppColors.bottomBar,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+    return Obx(() => Scaffold(
+          body: controller.pages[controller.currentIndex.value],
+          bottomNavigationBar: SizedBox(
+            width: size.width,
+            height: 0.119 * size.height,
+            child: Stack(
+              children: [
+                Stack(children: [
+                  Positioned(
+                    top: 0.036 * size.height,
+                    child: Container(
+                      // margin: const EdgeInsets.only(top: 30),
+                      decoration: const BoxDecoration(
+                        color: AppColors.bottomBar,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                      ),
+                      width: size.width,
+                      height: 0.2 * size.height,
                     ),
                   ),
-                  width: size.width,
-                  height: 0.2*size.height,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: currentIndex == 0 ? 10 : 35.2),
-                      child: GestureDetector(
-                          onTap: () {
-                            setBottomBarIndex(0);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                height: currentIndex == 0
-                                    ? size.height * 0.07
-                                    : size.height * 0.03,
-                                width: currentIndex == 0
-                                    ? size.width * 0.15
-                                    : size.width * 0.10,
-                                decoration: BoxDecoration(
-                                    color: currentIndex == 0
-                                        ? AppColors.buttonBlue
-                                        : AppColors.bottomBar,
-                                    shape: BoxShape.circle),
-                                child: Image.asset(
-                                  AppAssets.clockIcon,
-                                  scale: currentIndex == 0 ? 2.5 : 2.6,
-                                  color: currentIndex == 0
-                                      ? Colors.white
-                                      : Colors.blueAccent,
-                                ),
-                              ),
-                              SizedBox(
-                                height: currentIndex == 0
-                                    ? 0
-                                    : size.height * 0.008,
-                              ),
-                              Text(
-                                "Clock",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: currentIndex == 0 ? 14 : 13),
-                              )
-                            ],
-                          )
-
-                          // splashColor: Colors.white,
-
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: controller.currentIndex.value == 0 ? 10 : 35.2,
                           ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: currentIndex == 1 ? 10 : 35.2),
-                      child: GestureDetector(
-                          onTap: () {
-                            setBottomBarIndex(1);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                height: currentIndex == 1
-                                    ? size.height * 0.07
-                                    : size.height * 0.03,
-                                width: currentIndex == 1
-                                    ? size.width * 0.15
-                                    : size.width * 0.10,
-                                decoration: BoxDecoration(
-                                    color: currentIndex == 1
-                                        ? AppColors.buttonBlue
-                                        : AppColors.bottomBar,
-                                    shape: BoxShape.circle),
-                                child: Image.asset(
-                                  AppAssets.timeCardIcon,
-                                  scale: currentIndex == 1 ? 2.5 : 2.6,
-                                  color: currentIndex == 1
-                                      ? Colors.white
-                                      : Colors.blueAccent,
-                                ),
-                              ),
-                              SizedBox(
-                                height: currentIndex == 1
-                                    ? 0
-                                    : size.height * 0.008,
-                              ),
-                              Text(
-                                "Time Cards",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: currentIndex == 1 ? 14 : 13),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.setBottomBarIndex(0);
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: controller.currentIndex.value == 0
+                                        ? size.height * 0.07
+                                        : size.height * 0.03,
+                                    width: controller.currentIndex.value == 0
+                                        ? size.width * 0.15
+                                        : size.width * 0.10,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            controller.currentIndex.value == 0
+                                                ? AppColors.buttonBlue
+                                                : AppColors.bottomBar,
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      AppAssets.clockIcon,
+                                      scale: controller.currentIndex.value == 0
+                                          ? 2.5
+                                          : 2.6,
+                                      color: controller.currentIndex.value == 0
+                                          ? Colors.white
+                                          : Colors.blueAccent,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: controller.currentIndex.value == 0
+                                        ? 0
+                                        : size.height * 0.008,
+                                  ),
+                                  Text(
+                                    "Clock",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            controller.currentIndex.value == 0
+                                                ? 14
+                                                : 13),
+                                  )
+                                ],
                               )
-                            ],
-                          )
 
-                          // splashColor: Colors.white,
+                              // splashColor: Colors.white,
 
-                          ),
-                    ),
-                    // SizedBox(
-                    //   width: size.width * 0.20,
-                    // ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: currentIndex == 2 ? 10 : 35),
-                      child: GestureDetector(
-                          onTap: () {
-                            setBottomBarIndex(2);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                height: currentIndex == 2
-                                    ? size.height * 0.07
-                                    : size.height * 0.03,
-                                width: currentIndex == 2
-                                    ? size.width * 0.15
-                                    : size.width * 0.10,
-                                decoration: BoxDecoration(
-                                    color: currentIndex == 2
-                                        ? AppColors.buttonBlue
-                                        : AppColors.bottomBar,
-                                    shape: BoxShape.circle),
-                                child: Image.asset(
-                                  AppAssets.taskIcon,
-                                  scale: currentIndex == 2 ? 2.5 : 2.6,
-                                  color: currentIndex == 2
-                                      ? Colors.white
-                                      : Colors.blueAccent,
-                                ),
                               ),
-                              SizedBox(
-                                height: currentIndex == 2
-                                    ? 0
-                                    : size.height * 0.008,
-                              ),
-                              Text(
-                                "Projects",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: currentIndex == 2 ? 14 : 13),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: controller.currentIndex.value == 1
+                                  ? 10
+                                  : 35.2),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.setBottomBarIndex(1);
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: controller.currentIndex.value == 1
+                                        ? size.height * 0.07
+                                        : size.height * 0.03,
+                                    width: controller.currentIndex.value == 1
+                                        ? size.width * 0.15
+                                        : size.width * 0.10,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            controller.currentIndex.value == 1
+                                                ? AppColors.buttonBlue
+                                                : AppColors.bottomBar,
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      AppAssets.timeCardIcon,
+                                      scale: controller.currentIndex.value == 1
+                                          ? 2.5
+                                          : 2.6,
+                                      color: controller.currentIndex.value == 1
+                                          ? Colors.white
+                                          : Colors.blueAccent,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: controller.currentIndex.value == 1
+                                        ? 0
+                                        : size.height * 0.008,
+                                  ),
+                                  Text(
+                                    "Time Cards",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            controller.currentIndex.value == 1
+                                                ? 14
+                                                : 13),
+                                  )
+                                ],
                               )
-                            ],
-                          )
 
-                          // splashColor: Colors.white,
+                              // splashColor: Colors.white,
 
-                          ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: currentIndex == 3 ? 10 : 35),
-                      child: GestureDetector(
-                          onTap: () {
-                            setBottomBarIndex(3);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                height: currentIndex == 3
-                                    ? size.height * 0.07
-                                    : size.height * 0.03,
-                                width: currentIndex == 3
-                                    ? size.width * 0.15
-                                    : size.width * 0.10,
-                                decoration: BoxDecoration(
-                                    color: currentIndex == 3
-                                        ? AppColors.buttonBlue
-                                        : AppColors.bottomBar,
-                                    shape: BoxShape.circle),
-                                child: Image.asset(
-                                  AppAssets.chatIcon,
-                                  scale: currentIndex == 3 ? 2.5 : 2.6,
-                                  color: currentIndex == 3
-                                      ? Colors.white
-                                      : Colors.blueAccent,
-                                ),
                               ),
-                              SizedBox(
-                                height: currentIndex == 3
-                                    ? 0
-                                    : size.height * 0.008,
-                              ),
-                              Text(
-                                "Chat",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: currentIndex == 3 ? 14 : 13),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top:
+                                  controller.currentIndex.value == 2 ? 10 : 35),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.setBottomBarIndex(2);
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: controller.currentIndex.value == 2
+                                        ? size.height * 0.07
+                                        : size.height * 0.03,
+                                    width: controller.currentIndex.value == 2
+                                        ? size.width * 0.15
+                                        : size.width * 0.10,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            controller.currentIndex.value == 2
+                                                ? AppColors.buttonBlue
+                                                : AppColors.bottomBar,
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      AppAssets.taskIcon,
+                                      scale: controller.currentIndex.value == 2
+                                          ? 2.5
+                                          : 2.6,
+                                      color: controller.currentIndex.value == 2
+                                          ? Colors.white
+                                          : Colors.blueAccent,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: controller.currentIndex.value == 2
+                                        ? 0
+                                        : size.height * 0.008,
+                                  ),
+                                  Text(
+                                    "Projects",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            controller.currentIndex.value == 2
+                                                ? 14
+                                                : 13),
+                                  )
+                                ],
                               )
-                            ],
-                          )
 
-                          // splashColor: Colors.white,
+                              // splashColor: Colors.white,
 
-                          ),
+                              ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top:
+                                  controller.currentIndex.value == 3 ? 10 : 35),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.setBottomBarIndex(3);
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: controller.currentIndex.value == 3
+                                        ? size.height * 0.07
+                                        : size.height * 0.03,
+                                    width: controller.currentIndex.value == 3
+                                        ? size.width * 0.15
+                                        : size.width * 0.10,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            controller.currentIndex.value == 3
+                                                ? AppColors.buttonBlue
+                                                : AppColors.bottomBar,
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      AppAssets.chatIcon,
+                                      scale: controller.currentIndex.value == 3
+                                          ? 2.5
+                                          : 2.6,
+                                      color: controller.currentIndex.value == 3
+                                          ? Colors.white
+                                          : Colors.blueAccent,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: controller.currentIndex.value == 3
+                                        ? 0
+                                        : size.height * 0.008,
+                                  ),
+                                  Text(
+                                    "Chat",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            controller.currentIndex.value == 3
+                                                ? 14
+                                                : 13),
+                                  )
+                                ],
+                              )
+
+                              // splashColor: Colors.white,
+
+                              ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ])
-          ],
-        ),
-      ),
-    );
+                  ),
+                ])
+              ],
+            ),
+          ),
+        ));
   }
 }

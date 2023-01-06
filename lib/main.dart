@@ -6,6 +6,7 @@ import 'package:blu_time/utilities/navigation_service.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 Future<void> main() async {
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent,
+    ));
     return GetMaterialApp(
       navigatorKey: locator<NavigationService>().navigatorKey,
       useInheritedMediaQuery: true,

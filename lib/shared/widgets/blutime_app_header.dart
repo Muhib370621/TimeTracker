@@ -22,44 +22,37 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return AppBar(
       elevation: elevation,
       backgroundColor: backgroundColor,
-      leading: Padding(
-        padding: const EdgeInsets.only(top: 15),
-        child: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Image.asset(leadingImage), // Put icon of your preference.
-              onPressed: () {
-                if (backEnabled) {
-                  Navigator.of(context).pop();
-                } else {
-                  Navigator.of(context).pushNamed(RouteNames.profile);
-                }
-              },
-            );
-          },
-        ),
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: Image.asset(leadingImage), // Put icon of your preference.
+            onPressed: () {
+              if (backEnabled) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pushNamed(RouteNames.profile);
+              }
+            },
+          );
+        },
       ),
       title: (title == null)
-          ? Padding(
-            padding:const EdgeInsets.only(top: 20),
-            child: Text.rich(
-                TextSpan(
-                    text: "blu ",
-                    style: AppTextStyles.bold
-                        .copyWith(fontSize: 20, color: Colors.black),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Time',
-                        style: AppTextStyles.medium
-                            .copyWith(fontSize: 20, color: Colors.black),
-                      )
-                    ]),
-              ),
-          )
+          ? Text.rich(
+              TextSpan(
+                  text: "blu ",
+                  style: AppTextStyles.bold
+                      .copyWith(fontSize: 20, color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Time',
+                      style: AppTextStyles.medium
+                          .copyWith(fontSize: 20, color: Colors.black),
+                    )
+                  ]),
+            )
           : title,
       centerTitle: centerTitle,
     );
@@ -67,6 +60,8 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    return const Size.fromHeight(60);
+    return const Size.fromHeight(40);
+
+      // AppBar().preferredSize;
   }
 }

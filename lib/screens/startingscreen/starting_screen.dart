@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'dart:ui';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-import 'package:geolocator/geolocator.dart';
+
 // import 'package:permission_handler/permission_handler.dart';
 //
 // import 'package:geocoder/geocoder.dart';
@@ -25,93 +25,125 @@ class StartingScreen extends StatefulWidget {
 }
 
 class _StartingScreenState extends State<StartingScreen> {
-  // Permission _permissionStatus = Permission.unknown;
-   Position? _currentPosition;
-  late DateTime dateTime;
-  String _timeString = '';
-  DateTime today = DateTime.now().toLocal();
-   Future<Position?> determinePosition() async {
-     LocationPermission permission;
-     permission = await Geolocator.checkPermission();
-     if (permission == LocationPermission.denied) {
-       permission = await Geolocator.requestPermission();
-       if (permission == LocationPermission.deniedForever) {
-         return Future.error('Location Not Available');
-       }
-     } else {
-       throw Exception('Error');
-     }
-     return await Geolocator.getCurrentPosition();
-   }
-
-   // _getCurrentLocation() {
-   //   Geolocator
-   //       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
-   //       .then((Position position) {
-   //     setState(() {
-   //       _currentPosition = position;
-   //     });
-   //   }).catchError((e) {
-   //     print(e);
-   //   });
-   // }
-   _getCurrentLocation() {
-     Geolocator
-         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
-         .then((Position position) {
-       setState(() {
-         _currentPosition = position;
-         _getAddressFromLatLng();
-       });
-     }).catchError((e) {
-       print(e);
-     });
-   }
-
-   _getAddressFromLatLng() async {
-     try {
-       List<Placemark> placemarks = await placemarkFromCoordinates(
-           _currentPosition!.latitude,
-           _currentPosition!.longitude
-       );
-
-       Placemark place = placemarks[0];
-
-       setState(() {
-         _currentAddress = "${place.locality}, ${place.subLocality}, ${place.street}";
-       });
-     } catch (e) {
-       print(e);
-     }
-   }
-
-  // var day = today.day;
-
   @override
   void initState() {
-    determinePosition();
-    // _getCurrentLocation();
+    _gpsService();
     // TODO: implement initState
     setState(() {
       isLoading == false;
       _timeString = _formatDateTime(DateTime.now());
       Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
+      locationLoading == true;
+      // determinePosition();
+      _getCurrentLocation();
+      locationLoading == false;
     });
+    // if(_gpsService()==true){
+    //
+    // };
+
     // _checkPermission();
     super.initState();
+  }
+
+  String? _currentAddress;
+  String role = "";
+  bool isLoading = false;
+  bool sliderOpen = true;
+  bool locationLoading = false;
+  Position? _currentPosition;
+  late DateTime dateTime;
+  String _timeString = '';
+  bool GPS = false;
+  DateTime today = DateTime.now().toLocal();
+
+  Future<Position?> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    } else {
+      throw Exception('Error');
+    }
+    // Geolocator.ena;
+    return await Geolocator.getCurrentPosition();
+  }
+
+  /*Check if gps service is enabled or not*/
+  Future _gpsService() async {
+    if (!(await Geolocator.isLocationServiceEnabled())) {
+      _checkGps();
+      return true;
+    }
+  }
+
+  Future _checkGps() async {
+    if (!(await Geolocator.isLocationServiceEnabled())) {
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text(
+                  "Can't get gurrent location",
+                  style: TextStyle(color: Colors.black, fontSize: 25),
+                ),
+                content:
+                    const Text('Please make sure you enable GPS and try again'),
+                actions: <Widget>[
+                  TextButton(
+                      child: const Text('Ok'),
+                      onPressed: () {
+                        const AndroidIntent intent = AndroidIntent(
+                            action:
+                                'android.settings.LOCATION_SOURCE_SETTINGS');
+                        // Future.delayed(const Duration(seconds: 3));
+                        intent.launch();
+                        Navigator.of(context, rootNavigator: true).pop();
+                        _gpsService();
+                      })
+                ],
+              );
+            });
+      }
+    }
+  }
+
+  _getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        _getAddressFromLatLng();
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _currentPosition!.latitude, _currentPosition!.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        _currentAddress =
+            "${place.locality}, ${place.subLocality}, ${place.street}";
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   String _formatDateTime(DateTime dateTime) {
     return DateFormat('hh:mm').format(dateTime);
   }
-// method to check the location permission
-//   void _checkPermission() async {
-//     // final permissionStatus = await location.toString();
-//     setState(() {
-//       // print(_permissionStatus);
-//       // _permissionStatus = permissionStatus;
-//     });
-//   }
+
   void _getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
@@ -119,194 +151,9 @@ class _StartingScreenState extends State<StartingScreen> {
       _timeString = formattedDateTime;
     });
   }
-  String? _currentAddress;
-  String role = "";
-  bool isLoading = false;
-  bool sliderOpen = true;
-
-  // Widget onTapSlider() {
-  //   return Slidable(
-  //     // Specify a key if the Slidable is dismissible.
-  //     // key: const ValueKey(0),
-  //
-  //     // The start action pane is the one at the left or the top side.
-  //     startActionPane: ActionPane(
-  //       // A motion is a widget used to control how the pane animates.
-  //       motion: const ScrollMotion(),
-  //
-  //       // A pane can dismiss the Slidable.
-  //       dismissible: DismissiblePane(onDismissed: () {}),
-  //
-  //       // All actions are defined in the children parameter.
-  //       children: [
-  //         // A SlidableAction can have an icon and/or a label.
-  //         SlidableAction(
-  //           flex: 1,
-  //           onPressed: doNothing,
-  //           backgroundColor: Color(0xFFFE4A49),
-  //           foregroundColor: Colors.white,
-  //           icon: Icons.delete,
-  //           label: 'Delete',
-  //         ),
-  //         SlidableAction(
-  //           onPressed: doNothing,
-  //           backgroundColor: Color(0xFF21B7CA),
-  //           foregroundColor: Colors.white,
-  //           icon: Icons.share,
-  //           label: 'Share',
-  //         ),
-  //       ],
-  //     ),
-  //
-  //     // The end action pane is the one at the right or the bottom side.
-  //     // endActionPane: ActionPane(
-  //     //   motion: ScrollMotion(),
-  //     //   children: [
-  //     //     SlidableAction(
-  //     //       // An action can be bigger than the others.
-  //     //       flex: 2,
-  //     //       onPressed: doNothing,
-  //     //       backgroundColor: Color(0xFF7BC043),
-  //     //       foregroundColor: Colors.white,
-  //     //       icon: Icons.archive,
-  //     //       label: 'Archive',
-  //     //     ),
-  //     //     SlidableAction(
-  //     //       onPressed: doNothing,
-  //     //       backgroundColor: Color(0xFF0392CF),
-  //     //       foregroundColor: Colors.white,
-  //     //       icon: Icons.save,
-  //     //       label: 'Save',
-  //     //     ),
-  //     //   ],
-  //     // ),
-  //
-  //     // The child of the Slidable is what the user sees when the
-  //     // component is not dragged.
-  //     child: Container(
-  //       // color: Color(0xffE4E4E4),
-  //       width: 280,
-  //       padding: const EdgeInsets.only(top: 115, bottom: 405),
-  //       child: Row(
-  //         children: [
-  //           Expanded(
-  //             child: Container(
-  //               decoration: const BoxDecoration(
-  //                 color: Color(0xffE4E4E4),
-  //                 borderRadius: BorderRadius.only(
-  //                   topRight: Radius.circular(30),
-  //                   bottomRight: Radius.circular(30),
-  //                 ),
-  //               ),
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: [
-  //                   const SizedBox(
-  //                     height: 20,
-  //                   ),
-  //                   Container(
-  //                       child: Image.asset(
-  //                     "assets/images/FZSnPc.png",
-  //                     height: 30,
-  //                   )),
-  //                   Container(
-  //                     child: const RotatedBox(
-  //                       quarterTurns: 3,
-  //                       child: Text(
-  //                         'Select Role  ',
-  //                         style: TextStyle(
-  //                             color: Color(0xff000000),
-  //                             fontSize: 14,
-  //                             fontWeight: FontWeight.w500),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //
-  //             // ElevatedButton(
-  //             //     style: ElevatedButton.styleFrom(
-  //             //       backgroundColor: const Color(0xffE4E4E4),
-  //             //         shape: const RoundedRectangleBorder(
-  //             //           borderRadius: BorderRadius.only(
-  //             //             topRight: Radius.circular(30),
-  //             //             bottomRight: Radius.circular(30),
-  //             //           ),
-  //             //         )
-  //             //     ),
-  //             //     onPressed: () {
-  //             //       setState(() {
-  //             //         // load=true;
-  //             //       });
-  //             //     },
-  //             //     child: Column(
-  //             //       children: [
-  //             //         const SizedBox(
-  //             //           height: 20,
-  //             //         ),
-  //             //         Container(
-  //             //             child: Image.asset("assets/images/FZSnPc.png")),
-  //             //         Container(
-  //             //           child: const RotatedBox(
-  //             //             quarterTurns: 3,
-  //             //             child: Text(
-  //             //               'Select Role  ',
-  //             //               style: TextStyle(
-  //             //                   color: Color(0xff000000),
-  //             //                   fontSize: 14,
-  //             //                   fontWeight: FontWeight.w500),
-  //             //             ),
-  //             //           ),
-  //             //         ),
-  //             //       ],
-  //             //     )),
-  //           ),
-  //           Expanded(
-  //             child: ElevatedButton(
-  //               style: ElevatedButton.styleFrom(
-  //                   backgroundColor: const Color(0xff0062BD),
-  //                   shape: const RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.only(
-  //                       topRight: Radius.circular(30),
-  //                       bottomRight: Radius.circular(30),
-  //                     ),
-  //                   )),
-  //               onPressed: () {
-  //                 setState(() {
-  //                   isLoading = !isLoading;
-  //                   onTapSlider();
-  //                 });
-  //               },
-  //               child: Container(
-  //                 // decoration: BoxDecoration(
-  //                 //   borderRadius: BorderRadius.circular(10.0),),
-  //                 // padding: const EdgeInsets.only(left: 10),
-  //                 height: 45,
-  //                 width: 50,
-  //                 // color: const Color(0xff0062BD),
-  //                 // child: Image.asset("assets/images/cuTOBs.png"),
-  //                 child: isLoading == false
-  //                     ? const Icon(
-  //                         Icons.arrow_forward_ios_outlined,
-  //                         color: Color(0xffffffff),
-  //                       )
-  //                     : Icon(
-  //                         Icons.arrow_back_ios_outlined,
-  //                         color: Color(0xffffffff),
-  //                       ),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // final safePad = MediaQuery.of(context).padding;
     final Size size = MediaQuery.of(context).size;
     var textsize = size.height / size.width;
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -314,15 +161,9 @@ class _StartingScreenState extends State<StartingScreen> {
         builder: (context, viewModel, child) {
           return Scaffold(
             // backgroundColor: Colors.white,
-            appBar: const PreferredSize(
-              preferredSize: Size.fromHeight(60),
-              child: Padding(
-                padding: EdgeInsets.only(top: 7),
-                child: BluTimeAppHeader(
-                  leadingImage: AppAssets.profilePlaceholder,
-                  backEnabled: false,
-                ),
-              ),
+            appBar: const BluTimeAppHeader(
+              leadingImage: AppAssets.profilePlaceholder,
+              backEnabled: false,
             ),
             body: Stack(
               children: [
@@ -390,12 +231,11 @@ class _StartingScreenState extends State<StartingScreen> {
                                 fontSize: 6.8 * textsize),
                           ),
                         ),
-                        // Text(DateFormat('EEEE').format(now)),
                         SizedBox(
                           height: 0.15 * size.height,
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             _getCurrentLocation();
                           },
                           child: Container(
@@ -430,6 +270,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                 Image.asset(
                                   'assets/images/Group 137.png',
                                   scale: 3,
+                                ),
+                                SizedBox(
+                                  height: 0.04 * size.height,
                                 ),
                                 Text(
                                   '00:00:00',
@@ -469,19 +312,21 @@ class _StartingScreenState extends State<StartingScreen> {
                               color: AppColors.orange,
                             ),
                           ),
-                          if (_currentAddress != null) Text(
-                            _currentAddress.toString()
-                          ,style: TextStyle(color: Colors.black),),
-                          // const Text(
-                          //   'User Current Location Here',
-                          //   style: TextStyle(
-                          //       fontWeight: FontWeight.w400, fontSize: 14),
-                          // ),
+                          if (_currentAddress != null)
+                            Text(
+                              _currentAddress.toString(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          if (_currentAddress == null)
+                            const Text(
+                              "Loading Address...",
+                              style: TextStyle(color: Colors.black),
+                            ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 0.06 * size.height,
+                      height: 0.056 * size.height,
                     ),
                     Center(
                       child: Row(
@@ -584,16 +429,18 @@ class _StartingScreenState extends State<StartingScreen> {
                           ),
                         ),
                         Positioned(
-                          top: 0.15 * size.height,
-                          left: 0.07 * size.width,
+                          top: 0.142 * size.height,
+                          left: 0.063 * size.width,
                           child: SizedBox(
                             // color: Color(0xffE4E4E4),
                             width: 0.98 * size.width,
-                            height: 0.16 * size.height,
+                            height: 0.17 * size.height,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
+                                  padding:
+                                      const EdgeInsets.only(right: 4, top: 3),
                                   // width: 290,
                                   decoration: const BoxDecoration(
                                     color: Color(0xffE4E4E4),
@@ -622,7 +469,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       //   ],
                                       // ),
                                       SizedBox(
-                                        width: 0.029 * size.width,
+                                        width: 0.01 * size.width,
                                       ),
                                       Column(
                                         mainAxisAlignment:
@@ -630,18 +477,22 @@ class _StartingScreenState extends State<StartingScreen> {
                                         // crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
                                           SizedBox(
-                                            height: 0.01 * size.height,
+                                            height: 0.015 * size.height,
                                           ),
                                           Image.asset(
                                             "assets/images/FZSnPc.png",
                                             height: 0.029 * size.height,
+                                          ),
+                                          SizedBox(
+                                            height: 0.005 * size.height,
                                           ),
                                           RotatedBox(
                                             quarterTurns: 3,
                                             child: Text(
                                               'Select Role  ',
                                               style: TextStyle(
-                                                  color: const Color(0xff000000),
+                                                  color:
+                                                      const Color(0xff000000),
                                                   fontSize: 6 * textsize,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -649,7 +500,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                         ],
                                       ),
                                       SizedBox(
-                                        width: 0.03 * size.width,
+                                        width: 0.01 * size.width,
                                       ),
                                     ],
                                   ),
@@ -719,6 +570,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
+                                        // controller.roleSelected.value==true;
+
                                         // Get.defaultDialog(
                                         //   title:
                                         //   "Are You Sure You Want To Finish This Action?",
@@ -911,9 +764,15 @@ class _StartingScreenState extends State<StartingScreen> {
                                         // sliderOpen==true;
                                         setState(() {
                                           role = "Electrician";
+                                          // roleSelected==true;
+                                          isLoading = false;
+
+                                          // Get.to(()=>CustomBottomNavigationBar());
                                           // print(role);
                                         });
+
                                         // setState(() { isLoading == false;});
+                                        // print(isLoading);
                                       },
                                       child: Container(
                                         height: 0.04 * size.height,
@@ -1091,6 +950,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           //     ));
 
                                           role = "Technician";
+                                          isLoading = false;
                                           // print(role);
                                         });
                                       },
@@ -1150,6 +1010,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           //       ],
                                           //     ));
                                           role = "Plumber";
+                                          isLoading = false;
                                           // print(role);
                                         });
                                       },
@@ -1201,7 +1062,7 @@ class _StartingScreenState extends State<StartingScreen> {
                         top: 0.15 * size.height,
                         child: Container(
                           // color: Color(0xffE4E4E4),
-                          width: 0.22 * size.width,
+                          width: 0.24 * size.width,
                           height: 0.22 * size.height,
                           // padding: EdgeInsets.only(
                           //     top: 0.15 * size.height, bottom: 0.5 * size.height),
@@ -1209,6 +1070,8 @@ class _StartingScreenState extends State<StartingScreen> {
                             children: [
                               Expanded(
                                   child: Container(
+                                padding:
+                                    const EdgeInsets.only(left: 6, right: 6),
                                 decoration: const BoxDecoration(
                                   color: Color(0xffE4E4E4),
                                   borderRadius: BorderRadius.only(
@@ -1218,20 +1081,20 @@ class _StartingScreenState extends State<StartingScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    const SizedBox(
-                                      height: 20,
+                                    SizedBox(
+                                      height: 0.03 * size.height,
                                     ),
                                     Image.asset(
                                       "assets/images/FZSnPc.png",
-                                      height: 30,
+                                      height: 0.05 * size.height,
                                     ),
                                     RotatedBox(
                                       quarterTurns: 3,
                                       child: Text(
                                         'Select Role  ',
                                         style: TextStyle(
-                                            color: Color(0xff000000),
-                                            fontSize: 6.8 * textsize,
+                                            color: const Color(0xff000000),
+                                            fontSize: 0.02 * size.height,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),

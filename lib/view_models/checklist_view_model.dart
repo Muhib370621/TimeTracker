@@ -6,13 +6,16 @@ import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
 
-class ChecklistViewModel extends BaseModel{
+class ChecklistViewModel extends BaseModel {
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
   List<ActionChecklist> checklist = [];
 
   fetchCheckList() async {
     setState(ViewState.loading);
-    Map<String,String> body = {'q':"SELECT * FROM customrecord_bb_project_action_checklist WHERE custrecord_bb_pachklist_project_action='355251'"};
+    Map<String, String> body = {
+      'q':
+          "SELECT * FROM customrecord_bb_project_action_checklist WHERE custrecord_bb_pachklist_project_action='355251'"
+    };
     try {
       final result = await _queryClient.request<QueryResponse<ActionChecklist>>(
           route: APIRoute(APIType.suiteql, routeParams: "?limit=10"),
@@ -21,8 +24,7 @@ class ChecklistViewModel extends BaseModel{
       checklist = result.response?.items ?? [];
       if (checklist.isEmpty) {
         setState(ViewState.empty);
-      }
-      else {
+      } else {
         setState(ViewState.completed);
       }
       notifyListeners();
@@ -30,5 +32,4 @@ class ChecklistViewModel extends BaseModel{
       rethrow;
     }
   }
-
 }

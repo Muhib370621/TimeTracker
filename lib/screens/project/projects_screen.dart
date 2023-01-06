@@ -21,15 +21,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Padding(
-            padding: EdgeInsets.only(top: 7),
-            child:  BluTimeAppHeader(
-              leadingImage: AppAssets.profilePlaceholder,
-              backEnabled: false,
-            ),
-          ),
+        appBar: const BluTimeAppHeader(
+          leadingImage: AppAssets.profilePlaceholder,
+          backEnabled: false,
         ),
         body: SizedBox(
           width: double.infinity,

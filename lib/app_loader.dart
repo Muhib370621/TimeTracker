@@ -2,8 +2,8 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
-import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/screens/onboarding/login_screen.dart';
+import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class _AppLoaderState extends State<AppLoader> {
             if ((snapshot.data?[0] ?? true) == false) {
               return const LoginScreen();
             } else {
-              return const HomeScreen();
+              return  CustomBottomNavigationBar();
             }
           } else {
             return Scaffold(
