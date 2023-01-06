@@ -54,7 +54,7 @@ class APIClient {
      }
      if (e.response?.statusCode == 502 || e.response?.statusCode == 400) {
        ResponseWrapper<BTErrorResponse> errorResponse1 = ResponseWrapper.init(create: () => BTErrorResponse(), json: e.response?.data, error: null) ;
-       final errorResponse = ErrorResponse(message: errorResponse1.response?.error?.code ?? "Server error");
+       final errorResponse = ErrorResponse(message: errorResponse1.response?.error?.message ?? "Server error");
        throw errorResponse;
      } else {
        //debugPrint('Error: ${e.response?.data}');
