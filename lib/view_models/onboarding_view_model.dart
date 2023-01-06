@@ -54,8 +54,6 @@ class OnboardingViewModel extends BaseModel {
     } on ErrorResponse {
      // rethrow;
     }
-
-
   }
 
 }

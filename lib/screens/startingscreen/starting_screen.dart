@@ -7,6 +7,7 @@ import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
@@ -24,16 +25,17 @@ class StartingScreen extends StatefulWidget {
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
-class _StartingScreenState extends State<StartingScreen> {
+class _StartingScreenState extends State<StartingScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     _gpsService();
+    // _getCurrentLocation();
     // TODO: implement initState
     setState(() {
       isLoading == false;
       _timeString = _formatDateTime(DateTime.now());
       Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-
     });
     // if(_gpsService()==true){
     //
@@ -41,13 +43,21 @@ class _StartingScreenState extends State<StartingScreen> {
 
     // _checkPermission();
     super.initState();
+    reset();
   }
-  void dispose(){
+
+  bool get wantKeepAlive => true;
+
+  void dispose() {
     //...
     super.dispose();
     //...
   }
 
+  static const countdownDuration = Duration();
+  Duration duration = const Duration();
+  Timer? timer;
+  bool countDown = false;
   String? _currentAddress;
   String role = "";
   bool isLoading = false;
@@ -57,6 +67,42 @@ class _StartingScreenState extends State<StartingScreen> {
   late DateTime dateTime;
   String _timeString = '';
   bool GPS = false;
+  bool timerStatus = false;
+  bool clockRunning = false;
+
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+  }
+
+  void addTime() {
+    final addSeconds = countDown ? -1 : 1;
+    setState(() {
+      final seconds = duration.inSeconds + addSeconds;
+      if (seconds < 0) {
+        timer?.cancel();
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  void reset() {
+    if (countDown) {
+      setState(() => duration = countdownDuration);
+    } else {
+      setState(() => duration = const Duration());
+    }
+  }
+
+  void stopTimer({bool resets = true}) {
+    if (resets) {
+      reset();
+    }
+    setState(() => timer?.cancel());
+  }
+
   DateTime today = DateTime.now().toLocal();
 
   Future<Position?> determinePosition() async {
@@ -79,6 +125,9 @@ class _StartingScreenState extends State<StartingScreen> {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       _checkGps();
       return true;
+    } else {
+      determinePosition();
+      _getCurrentLocation();
     }
   }
 
@@ -90,7 +139,7 @@ class _StartingScreenState extends State<StartingScreen> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text(
-                  "Can't get gurrent location",
+                  "Can't get current location",
                   style: TextStyle(color: Colors.black, fontSize: 25),
                 ),
                 content:
@@ -105,7 +154,7 @@ class _StartingScreenState extends State<StartingScreen> {
                         // Future.delayed(const Duration(seconds: 3));
                         intent.launch();
                         Navigator.of(context, rootNavigator: true).pop();
-                        _gpsService();
+                        // _gpsService();
                       })
                 ],
               );
@@ -238,10 +287,29 @@ class _StartingScreenState extends State<StartingScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            locationLoading == true;
-                            // determinePosition();
-                            _getCurrentLocation();
-                            locationLoading == false;
+                            if (_currentAddress == null && role != "") {
+                              Get.defaultDialog(
+                                  title: "Oops !!",
+                                  content: const Text(
+                                      "Please wait we are getting your current Location"));
+                            } else if (role == "" && _currentAddress != null) {
+                              Get.defaultDialog(
+                                  title: "Oops !!",
+                                  content: const Text("Please Your Role"));
+                            } else if (_currentAddress != null && role != "") {
+                              duration.inSeconds.remainder(60) > 0
+                                  ? clockRunning==true?stopTimer(resets:false)
+                                  :
+                              timerStatus = true;
+                              print(timerStatus);
+                              clockRunning=true;
+                              startTimer();
+                            } else {
+                              Get.defaultDialog(
+                                  title: "Oops !!",
+                                  content: const Text(
+                                      "Select your role and let us fetch your current location"));
+                            }
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.25,
@@ -258,10 +326,19 @@ class _StartingScreenState extends State<StartingScreen> {
                                 ),
                               ],
                               shape: BoxShape.circle,
-                              gradient: LinearGradient(
+                              gradient: timerStatus==true?LinearGradient(
+                                colors: [
+                                  AppColors.orange,
+                                  AppColors.orange.withOpacity(0.9)
+                                ],
+                                begin: Alignment.bottomLeft,
+                                // end: Alignment.topRight,
+                              ):
+                              LinearGradient(
                                 colors: [
                                   const Color(0xff0062BD),
                                   const Color(0xff002D4B).withOpacity(0.9)
+
                                 ],
                                 begin: Alignment.bottomLeft,
                                 // end: Alignment.topRight,
@@ -280,7 +357,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                   height: 0.04 * size.height,
                                 ),
                                 Text(
-                                  '00:00:00',
+                                  " ${twoDigits(duration.inHours.remainder(60))}:${twoDigits(duration.inMinutes.remainder(60))}:${twoDigits(duration.inSeconds.remainder(60))}",
+                                  // '00:00:00',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xffFFFFFF),
@@ -290,7 +368,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                   height: 0.015 * size.height,
                                 ),
                                 Text(
-                                  'Start Work',
+                                  timerStatus==true?'Finish Work':'Start Work',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xffFFFFFF),

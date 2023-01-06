@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/models/error_response.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -30,8 +31,18 @@ class APIClient {
 
    bool isOnline = await ConnectivityManager.instance.isOnline();
    if (!isOnline) {
-     throw Get.defaultDialog(title: "Internet Not Available",
-         content: Text("Please check your internet connection"));;
+     throw Get.defaultDialog(
+         title: "Internet Not Available",
+         titlePadding: const EdgeInsets.all(20),
+         contentPadding: const EdgeInsets.all(12),
+         content: Row(
+           children: [
+             const SizedBox(width: 5,),
+             Image.asset(AppAssets.disclaimerIcon,scale: 1.7,),
+             const SizedBox(width: 10,),
+             const Text("Please check your internet connection"),
+           ],
+         ));
    }
    if (config == null) {
      throw ErrorResponse(message: 'Wrong input');
