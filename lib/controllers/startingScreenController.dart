@@ -28,12 +28,12 @@ class StartingScreenController extends GetxController {
     super.onInit();
   }
   var context;
-  RxString _currentAddress = "".obs;
+  final RxString _currentAddress = "".obs;
   RxString role = "".obs;
   RxBool isLoading = false.obs;
   RxBool sliderOpen = true.obs;
   RxBool locationLoading = false.obs;
-  Rx<Position> _currentPosition = const Position(
+  final Rx<Position> _currentPosition = const Position(
     longitude: 0,
     latitude: 0,
     timestamp: null,
@@ -45,7 +45,7 @@ class StartingScreenController extends GetxController {
   ).obs;
 
   // DateTime dateTime.obs;
-  RxString _timeString = ''.obs;
+  final RxString _timeString = ''.obs;
   RxBool GPS = false.obs;
   Rx<DateTime> today = DateTime.now().toLocal().obs;
 
