@@ -17,7 +17,6 @@ import 'package:stacked/stacked.dart';
 // import 'package:location/location.dart';
 //
 // // import 'lib/constants/app_colors.dart';
-
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
 
@@ -25,12 +24,12 @@ class StartingScreen extends StatefulWidget {
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
-class _StartingScreenState extends State<StartingScreen>
-    with AutomaticKeepAliveClientMixin {
+class _StartingScreenState extends State<StartingScreen> {
   @override
   void initState() {
-    _gpsService();
-    // _getCurrentLocation();
+    clockRunning = false;
+    // _gpsService();
+    determinePosition();
     // TODO: implement initState
     setState(() {
       isLoading == false;
@@ -69,11 +68,15 @@ class _StartingScreenState extends State<StartingScreen>
   bool GPS = false;
   bool timerStatus = false;
   bool clockRunning = false;
+  String _startTime = '';
+  String _finishTime = '';
+  String _totalTime = '';
 
   String twoDigits(int n) => n.toString().padLeft(2, '0');
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+    clockRunning = true;
   }
 
   void addTime() {
@@ -101,6 +104,9 @@ class _StartingScreenState extends State<StartingScreen>
       reset();
     }
     setState(() => timer?.cancel());
+    clockRunning = false;
+    _getFinishTime();
+    _subtractTime();
   }
 
   DateTime today = DateTime.now().toLocal();
@@ -110,6 +116,9 @@ class _StartingScreenState extends State<StartingScreen>
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.whileInUse){
+        _getCurrentLocation();
+      }
       if (permission == LocationPermission.deniedForever) {
         return Future.error('Location Not Available');
       }
@@ -126,11 +135,11 @@ class _StartingScreenState extends State<StartingScreen>
       _checkGps();
       return true;
     } else {
-      determinePosition();
+      // determinePosition();
+      // Future.delayed(Duration(seconds: 3));
       _getCurrentLocation();
     }
   }
-
   Future _checkGps() async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       if (Theme.of(context).platform == TargetPlatform.android) {
@@ -154,6 +163,7 @@ class _StartingScreenState extends State<StartingScreen>
                         // Future.delayed(const Duration(seconds: 3));
                         intent.launch();
                         Navigator.of(context, rootNavigator: true).pop();
+
                         // _gpsService();
                       })
                 ],
@@ -161,12 +171,18 @@ class _StartingScreenState extends State<StartingScreen>
             });
       }
     }
+    if ((await Geolocator.isLocationServiceEnabled())) {
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        _getCurrentLocation();
+      }
+    }
   }
-
   _getCurrentLocation() {
     Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
+            forceAndroidLocationManager: true,
+
+    )
         .then((Position position) {
       setState(() {
         _currentPosition = position;
@@ -200,6 +216,37 @@ class _StartingScreenState extends State<StartingScreen>
     final String formattedDateTime = _formatDateTime(now);
     setState(() {
       _timeString = formattedDateTime;
+    });
+  }
+
+  void _getStartTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    setState(() {
+      _startTime = formattedDateTime;
+    });
+  }
+
+  void _subtractTime() {
+    var dateFormat = DateFormat('hh:mm');
+    var hourDiff;
+    var minutes_diff;
+
+    DateTime start = dateFormat.parse(_startTime);
+    DateTime finish = dateFormat.parse(_finishTime);
+    Duration diff = finish.difference(start);
+    print(diff);
+    hourDiff = diff.inHours.toString();
+    minutes_diff = diff.inMinutes.toString();
+    _totalTime = "${hourDiff}h  ${minutes_diff}m";
+    print(_totalTime);
+  }
+
+  void _getFinishTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    setState(() {
+      _finishTime = formattedDateTime;
     });
   }
 
@@ -263,7 +310,7 @@ class _StartingScreenState extends State<StartingScreen>
                               ),
                               child: Center(
                                 child: Text(
-                                  'PM',
+                                  DateFormat('a').format(DateTime.now()),
                                   style: TextStyle(
                                       color: const Color(0xff8B8B8B),
                                       fontWeight: FontWeight.w600,
@@ -295,15 +342,17 @@ class _StartingScreenState extends State<StartingScreen>
                             } else if (role == "" && _currentAddress != null) {
                               Get.defaultDialog(
                                   title: "Oops !!",
-                                  content: const Text("Please Your Role"));
+                                  content:
+                                      const Text("Please Select Your Role"));
                             } else if (_currentAddress != null && role != "") {
-                              duration.inSeconds.remainder(60) > 0
-                                  ? clockRunning==true?stopTimer(resets:false)
-                                  :
-                              timerStatus = true;
-                              print(timerStatus);
-                              clockRunning=true;
-                              startTimer();
+                              clockRunning == true
+                                  ?
+                                  // print(clockRunning);
+                                  stopTimer(resets: false)
+                                  : startTimer();
+                              _startTime == "" ? _getStartTime() : null;
+
+                              // clockRunning = true;
                             } else {
                               Get.defaultDialog(
                                   title: "Oops !!",
@@ -326,23 +375,24 @@ class _StartingScreenState extends State<StartingScreen>
                                 ),
                               ],
                               shape: BoxShape.circle,
-                              gradient: timerStatus==true?LinearGradient(
-                                colors: [
-                                  AppColors.orange,
-                                  AppColors.orange.withOpacity(0.9)
-                                ],
-                                begin: Alignment.bottomLeft,
-                                // end: Alignment.topRight,
-                              ):
-                              LinearGradient(
-                                colors: [
-                                  const Color(0xff0062BD),
-                                  const Color(0xff002D4B).withOpacity(0.9)
-
-                                ],
-                                begin: Alignment.bottomLeft,
-                                // end: Alignment.topRight,
-                              ),
+                              gradient: timerStatus == false &&
+                                      clockRunning == true
+                                  ? LinearGradient(
+                                      colors: [
+                                        AppColors.orange,
+                                        AppColors.orange.withOpacity(0.9)
+                                      ],
+                                      begin: Alignment.bottomLeft,
+                                      // end: Alignment.topRight,
+                                    )
+                                  : LinearGradient(
+                                      colors: [
+                                        const Color(0xff0062BD),
+                                        const Color(0xff002D4B).withOpacity(0.9)
+                                      ],
+                                      begin: Alignment.bottomLeft,
+                                      // end: Alignment.topRight,
+                                    ),
                             ),
                             child: Column(
                               children: [
@@ -368,7 +418,9 @@ class _StartingScreenState extends State<StartingScreen>
                                   height: 0.015 * size.height,
                                 ),
                                 Text(
-                                  timerStatus==true?'Finish Work':'Start Work',
+                                  timerStatus == false && clockRunning == true
+                                      ? 'Finish Work'
+                                      : 'Start Work',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xffFFFFFF),
@@ -426,7 +478,7 @@ class _StartingScreenState extends State<StartingScreen>
                                 height: 0.01 * size.height,
                               ),
                               Text(
-                                '00:00',
+                                _startTime == "" ? '-----' : _startTime,
                                 style: TextStyle(
                                   color: const Color(0xffFF4A00),
                                   fontWeight: FontWeight.w700,
@@ -453,7 +505,9 @@ class _StartingScreenState extends State<StartingScreen>
                                 height: 0.01 * size.height,
                               ),
                               Text(
-                                '00:00',
+                                _finishTime == ""
+                                    ? '-----'
+                                    : _finishTime,
                                 style: TextStyle(
                                     color: const Color(0xffFF4A00),
                                     fontWeight: FontWeight.w700,
@@ -479,7 +533,7 @@ class _StartingScreenState extends State<StartingScreen>
                                 height: 0.01 * size.height,
                               ),
                               Text(
-                                '00:00',
+                                _totalTime == "" ? '-----' : _totalTime,
                                 style: TextStyle(
                                     color: const Color(0xffFF4A00),
                                     fontWeight: FontWeight.w700,
@@ -845,14 +899,19 @@ class _StartingScreenState extends State<StartingScreen>
                                         // );
 
                                         // sliderOpen==true;
-                                        setState(() {
-                                          role = "Electrician";
-                                          // roleSelected==true;
-                                          isLoading = false;
+                                        clockRunning == true
+                                            ? Get.defaultDialog(
+                                                title: "Sorry!!",
+                                                content: const Text(
+                                                    "Cant Switch roles while timer is running"))
+                                            : setState(() {
+                                                role = "Electrician";
+                                                // roleSelected==true;
+                                                isLoading = false;
 
-                                          // Get.to(()=>CustomBottomNavigationBar());
-                                          // print(role);
-                                        });
+                                                // Get.to(()=>CustomBottomNavigationBar());
+                                                // print(role);
+                                              });
 
                                         // setState(() { isLoading == false;});
                                         // print(isLoading);
@@ -895,147 +954,152 @@ class _StartingScreenState extends State<StartingScreen>
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          // Get.defaultDialog(
-                                          //     title: "",
-                                          //     content: SizedBox(
-                                          //       height: 0.26 * size.height,
-                                          //       width: 0.8 * size.width,
-                                          //       child: Column(
-                                          //         children: [
-                                          //           Image.asset(
-                                          //             AppAssets.taskCompleted,
-                                          //             scale: 3,
-                                          //           ),
-                                          //           SizedBox(
-                                          //             height:
-                                          //                 0.01 * size.height,
-                                          //           ),
-                                          //           const Text(
-                                          //             "Time Marked",
-                                          //             style: TextStyle(
-                                          //               fontSize: 16,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //             ),
-                                          //           ),
-                                          //           SizedBox(
-                                          //             height:
-                                          //                 0.05 * size.height,
-                                          //           ),
-                                          //           Row(
-                                          //             mainAxisAlignment:
-                                          //                 MainAxisAlignment
-                                          //                     .spaceEvenly,
-                                          //             children: [
-                                          //               Column(children: [
-                                          //                 Image.asset(
-                                          //                   AppAssets
-                                          //                       .startWork,
-                                          //                   scale: 3,
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "12:00",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 14,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: AppColors
-                                          //                         .orange,
-                                          //                   ),
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "Start Work",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 11,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: Colors
-                                          //                         .black,
-                                          //                   ),
-                                          //                 ),
-                                          //               ]),
-                                          //               Column(children: [
-                                          //                 Image.asset(
-                                          //                   AppAssets
-                                          //                       .finishWork,
-                                          //                   scale: 2,
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "12:00",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 14,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: AppColors
-                                          //                         .orange,
-                                          //                   ),
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "Start Work",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 11,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: Colors
-                                          //                         .black,
-                                          //                   ),
-                                          //                 ),
-                                          //               ]),
-                                          //               Column(children: [
-                                          //                 Image.asset(
-                                          //                   AppAssets
-                                          //                       .breakTime,
-                                          //                   scale: 3,
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "12:00",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 14,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: AppColors
-                                          //                         .orange,
-                                          //                   ),
-                                          //                 ),
-                                          //                 const Text(
-                                          //                   "Start Work",
-                                          //                   style: TextStyle(
-                                          //                     fontSize: 11,
-                                          //                     fontWeight:
-                                          //                         FontWeight
-                                          //                             .bold,
-                                          //                     color: Colors
-                                          //                         .black,
-                                          //                   ),
-                                          //                 ),
-                                          //               ]),
-                                          //             ],
-                                          //           ),
-                                          //           SizedBox(
-                                          //             height:
-                                          //                 0.022*size.height,
-                                          //           ),
-                                          //           const Text(
-                                          //             "User current location here",
-                                          //             style: TextStyle(
-                                          //                 fontSize: 15,
-                                          //                 color:
-                                          //                     Colors.black),
-                                          //           )
-                                          //         ],
-                                          //       ),
-                                          //     ));
+                                        clockRunning == true
+                                            ? Get.defaultDialog(
+                                                title: "Sorry!!",
+                                                content: const Text(
+                                                    "Cant Switch roles while timer is running"))
+                                            : setState(() {
+                                                // Get.defaultDialog(
+                                                //     title: "",
+                                                //     content: SizedBox(
+                                                //       height: 0.26 * size.height,
+                                                //       width: 0.8 * size.width,
+                                                //       child: Column(
+                                                //         children: [
+                                                //           Image.asset(
+                                                //             AppAssets.taskCompleted,
+                                                //             scale: 3,
+                                                //           ),
+                                                //           SizedBox(
+                                                //             height:
+                                                //                 0.01 * size.height,
+                                                //           ),
+                                                //           const Text(
+                                                //             "Time Marked",
+                                                //             style: TextStyle(
+                                                //               fontSize: 16,
+                                                //               fontWeight:
+                                                //                   FontWeight.bold,
+                                                //             ),
+                                                //           ),
+                                                //           SizedBox(
+                                                //             height:
+                                                //                 0.05 * size.height,
+                                                //           ),
+                                                //           Row(
+                                                //             mainAxisAlignment:
+                                                //                 MainAxisAlignment
+                                                //                     .spaceEvenly,
+                                                //             children: [
+                                                //               Column(children: [
+                                                //                 Image.asset(
+                                                //                   AppAssets
+                                                //                       .startWork,
+                                                //                   scale: 3,
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "12:00",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 14,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: AppColors
+                                                //                         .orange,
+                                                //                   ),
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "Start Work",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 11,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: Colors
+                                                //                         .black,
+                                                //                   ),
+                                                //                 ),
+                                                //               ]),
+                                                //               Column(children: [
+                                                //                 Image.asset(
+                                                //                   AppAssets
+                                                //                       .finishWork,
+                                                //                   scale: 2,
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "12:00",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 14,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: AppColors
+                                                //                         .orange,
+                                                //                   ),
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "Start Work",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 11,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: Colors
+                                                //                         .black,
+                                                //                   ),
+                                                //                 ),
+                                                //               ]),
+                                                //               Column(children: [
+                                                //                 Image.asset(
+                                                //                   AppAssets
+                                                //                       .breakTime,
+                                                //                   scale: 3,
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "12:00",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 14,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: AppColors
+                                                //                         .orange,
+                                                //                   ),
+                                                //                 ),
+                                                //                 const Text(
+                                                //                   "Start Work",
+                                                //                   style: TextStyle(
+                                                //                     fontSize: 11,
+                                                //                     fontWeight:
+                                                //                         FontWeight
+                                                //                             .bold,
+                                                //                     color: Colors
+                                                //                         .black,
+                                                //                   ),
+                                                //                 ),
+                                                //               ]),
+                                                //             ],
+                                                //           ),
+                                                //           SizedBox(
+                                                //             height:
+                                                //                 0.022*size.height,
+                                                //           ),
+                                                //           const Text(
+                                                //             "User current location here",
+                                                //             style: TextStyle(
+                                                //                 fontSize: 15,
+                                                //                 color:
+                                                //                     Colors.black),
+                                                //           )
+                                                //         ],
+                                                //       ),
+                                                //     ));
 
-                                          role = "Technician";
-                                          isLoading = false;
-                                          // print(role);
-                                        });
+                                                role = "Technician";
+                                                isLoading = false;
+                                                // print(role);
+                                              });
                                       },
                                       child: Container(
                                         height: 0.04 * size.height,
@@ -1074,28 +1138,33 @@ class _StartingScreenState extends State<StartingScreen>
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          // Get.defaultDialog(
-                                          //     title: "",
-                                          //     content: Column(
-                                          //       children: [
-                                          //         Row(children: const [
-                                          //           Text(
-                                          //             "Motion and Fitness",
-                                          //             style: TextStyle(
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //               fontSize: 16,
-                                          //               color: Colors.black,
-                                          //             ),
-                                          //           ),
-                                          //         ])
-                                          //       ],
-                                          //     ));
-                                          role = "Plumber";
-                                          isLoading = false;
-                                          // print(role);
-                                        });
+                                        clockRunning == true
+                                            ? Get.defaultDialog(
+                                                title: "Sorry!!",
+                                                content: const Text(
+                                                    "Cant Switch roles while timer is running"))
+                                            : setState(() {
+                                                // Get.defaultDialog(
+                                                //     title: "",
+                                                //     content: Column(
+                                                //       children: [
+                                                //         Row(children: const [
+                                                //           Text(
+                                                //             "Motion and Fitness",
+                                                //             style: TextStyle(
+                                                //               fontWeight:
+                                                //                   FontWeight.bold,
+                                                //               fontSize: 16,
+                                                //               color: Colors.black,
+                                                //             ),
+                                                //           ),
+                                                //         ])
+                                                //       ],
+                                                //     ));
+                                                role = "Plumber";
+                                                isLoading = false;
+                                                // print(role);
+                                              });
                                       },
                                       child: Container(
                                         height: 0.04 * size.height,

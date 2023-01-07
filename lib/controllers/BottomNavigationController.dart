@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../screens/StartingScreen/starting_screen.dart';
@@ -8,7 +9,7 @@ import '../screens/time_card/time_card_screen.dart';
 
 
 class BottomNavController extends GetxController{
-  final List pages = [
+  final List <Widget> pages = [
     const StartingScreen(),
     const TimeCardScreen(),
     const ProjectsScreen(),

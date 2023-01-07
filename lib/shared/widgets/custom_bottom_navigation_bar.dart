@@ -72,7 +72,7 @@ import '../../controllers/BottomNavigationController.dart';
 class CustomBottomNavigationBar extends StatelessWidget {
   // final int index;
   // final Function(int) onTap;
-   CustomBottomNavigationBar({
+  CustomBottomNavigationBar({
     super.key,
   });
 
@@ -82,7 +82,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Obx(() => Scaffold(
-          body: controller.pages[controller.currentIndex.value],
+          body:IndexedStack(
+            index: controller.currentIndex.value,
+            children: controller.pages,),
           bottomNavigationBar: SizedBox(
             width: size.width,
             height: 0.119 * size.height,
