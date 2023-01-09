@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

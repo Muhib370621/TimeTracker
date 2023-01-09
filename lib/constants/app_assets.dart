@@ -7,6 +7,7 @@ class AppAssets {
   static const taskCompleted = "$_imagesPath/taskCompleted.png";
 
   static const chatIcon = "$_imagesPath/chat.png";
+  static const breakIcon = "$_imagesPath/breakIcon.png";
   static const startWork = "$_imagesPath/Group 196.png";
   static const finishWork = "$_imagesPath/Group 197.png";
   static const breakTime = "$_imagesPath/Group 198.png";

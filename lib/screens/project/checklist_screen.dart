@@ -3,10 +3,12 @@ import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/screens/views/checklist_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/shared/widgets/empty_view.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/checklist_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -68,10 +70,15 @@ class CheckListScreen extends StatelessWidget {
               child: PagedList(
                   itemCount: model.checklist.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: ChecklistCard(
-                        actionChecklist: model.checklist[index],
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(() => CustomBottomNavigationBar());
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: ChecklistCard(
+                          actionChecklist: model.checklist[index],
+                        ),
                       ),
                     );
                   })

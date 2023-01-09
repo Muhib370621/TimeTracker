@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/screens/project/projects_screen.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../controllers/BottomNavigationController.dart';
 
 // import 'package:permission_handler/permission_handler.dart';
 //
@@ -28,7 +31,7 @@ class _StartingScreenState extends State<StartingScreen> {
   @override
   void initState() {
     clockRunning = false;
-    // _gpsService();
+    _gpsService();
     determinePosition();
     // TODO: implement initState
     setState(() {
@@ -54,8 +57,11 @@ class _StartingScreenState extends State<StartingScreen> {
   }
 
   static const countdownDuration = Duration();
-  Duration duration = const Duration();
+  Duration clockDuration = const Duration();
+  Duration breakDuration = const Duration();
   Timer? timer;
+  Timer? breakTimer;
+
   bool countDown = false;
   String? _currentAddress;
   String role = "";
@@ -68,6 +74,8 @@ class _StartingScreenState extends State<StartingScreen> {
   bool GPS = false;
   bool timerStatus = false;
   bool clockRunning = false;
+  bool breakRunning = false;
+
   String _startTime = '';
   String _finishTime = '';
   String _totalTime = '';
@@ -75,27 +83,47 @@ class _StartingScreenState extends State<StartingScreen> {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
 
   void startTimer() {
+    final BottomNavController controller = Get.put(BottomNavController());
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning = true;
+    // Get.to(() => const ProjectsScreen());
+    if(breakRunning==false) {
+      controller.currentIndex.value = 2;
+    }
+  }
+  void startBreak() {
+    breakTimer = Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
+    breakRunning = true;
+  }
+  void addBreakTime() {
+    final addSeconds = countDown ? -1 : 1;
+    setState(() {
+      final seconds = breakDuration.inSeconds + addSeconds;
+      if (seconds < 0) {
+        timer?.cancel();
+      } else {
+        breakDuration = Duration(seconds: seconds);
+      }
+    });
   }
 
   void addTime() {
     final addSeconds = countDown ? -1 : 1;
     setState(() {
-      final seconds = duration.inSeconds + addSeconds;
+      final seconds = clockDuration.inSeconds + addSeconds;
       if (seconds < 0) {
         timer?.cancel();
       } else {
-        duration = Duration(seconds: seconds);
+        clockDuration = Duration(seconds: seconds);
       }
     });
   }
 
   void reset() {
     if (countDown) {
-      setState(() => duration = countdownDuration);
+      setState(() => clockDuration = countdownDuration);
     } else {
-      setState(() => duration = const Duration());
+      setState(() => clockDuration = const Duration());
     }
   }
 
@@ -108,6 +136,15 @@ class _StartingScreenState extends State<StartingScreen> {
     _getFinishTime();
     _subtractTime();
   }
+  void stopBreak({bool resets = true}) {
+    if (resets) {
+      reset();
+    }
+    setState(() => timer?.cancel());
+    breakRunning = false;
+    // _getFinishTime();
+    // _subtractTime();
+  }
 
   DateTime today = DateTime.now().toLocal();
 
@@ -116,7 +153,7 @@ class _StartingScreenState extends State<StartingScreen> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.whileInUse){
+      if (permission == LocationPermission.whileInUse) {
         _getCurrentLocation();
       }
       if (permission == LocationPermission.deniedForever) {
@@ -140,6 +177,7 @@ class _StartingScreenState extends State<StartingScreen> {
       _getCurrentLocation();
     }
   }
+
   Future _checkGps() async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       if (Theme.of(context).platform == TargetPlatform.android) {
@@ -177,13 +215,12 @@ class _StartingScreenState extends State<StartingScreen> {
       }
     }
   }
+
   _getCurrentLocation() {
     Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true,
-
-    )
-        .then((Position position) {
+      desiredAccuracy: LocationAccuracy.best,
+      forceAndroidLocationManager: true,
+    ).then((Position position) {
       setState(() {
         _currentPosition = position;
         _getAddressFromLatLng();
@@ -231,7 +268,6 @@ class _StartingScreenState extends State<StartingScreen> {
     var dateFormat = DateFormat('hh:mm');
     var hourDiff;
     var minutes_diff;
-
     DateTime start = dateFormat.parse(_startTime);
     DateTime finish = dateFormat.parse(_finishTime);
     Duration diff = finish.difference(start);
@@ -404,10 +440,10 @@ class _StartingScreenState extends State<StartingScreen> {
                                   scale: 3,
                                 ),
                                 SizedBox(
-                                  height: 0.04 * size.height,
+                                  height: 0.02 * size.height,
                                 ),
                                 Text(
-                                  " ${twoDigits(duration.inHours.remainder(60))}:${twoDigits(duration.inMinutes.remainder(60))}:${twoDigits(duration.inSeconds.remainder(60))}",
+                                  " ${twoDigits(clockDuration.inHours.remainder(60))}:${twoDigits(clockDuration.inMinutes.remainder(60))}:${twoDigits(clockDuration.inSeconds.remainder(60))}",
                                   // '00:00:00',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
@@ -415,7 +451,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       fontSize: 10.2 * textsize),
                                 ),
                                 SizedBox(
-                                  height: 0.015 * size.height,
+                                  height: 0.01 * size.height,
                                 ),
                                 Text(
                                   timerStatus == false && clockRunning == true
@@ -439,18 +475,79 @@ class _StartingScreenState extends State<StartingScreen> {
                       // padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Column(
                         children: [
-                          Text(
-                            isLoading && sliderOpen == false ? "" : role,
-                            style: TextStyle(
-                              fontSize: 8.2 * textsize,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.orange,
+                          Visibility(
+                            visible: clockRunning == true || breakRunning==true,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    stopTimer(resets: false);
+                                    if (breakDuration.inSeconds.remainder(60)>0 && breakRunning==true){
+                                      stopBreak(resets:false);
+                                      startTimer();
+                                    }
+                                    else{
+                                      startBreak();
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    height: 0.05 * size.height,
+                                    width: 0.17 * size.width,
+                                    decoration:  BoxDecoration(
+                                        color: breakRunning==true?AppColors.orange:AppColors.buttonBlue,
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      AppAssets.breakIcon,
+                                      scale: 3,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      breakRunning==true?"Tap to End":"Tap to Start",
+                                      style: TextStyle(
+                                        fontSize: 6.2 * textsize,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Break",
+                                      style: TextStyle(
+                                        fontSize: 9.2 * textsize,
+                                        color: breakRunning==true?AppColors.orange:AppColors.buttonBlue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
+                          ),
+                          Visibility(
+                            visible: clockRunning == false && breakRunning==false,
+                            child: Text(
+                              isLoading && sliderOpen == false ? "" : role,
+                              style: TextStyle(
+                                fontSize: 8.2 * textsize,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.orange,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height:
+                                clockRunning == true ? 0.001 * size.height : 0,
                           ),
                           if (_currentAddress != null)
                             Text(
                               _currentAddress.toString(),
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 7.2 * textsize),
                             ),
                           if (_currentAddress == null)
                             const Text(
@@ -461,93 +558,236 @@ class _StartingScreenState extends State<StartingScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 0.056 * size.height,
+                      height: breakRunning == true
+                          ? 0.01 * size.height
+                          : 0.045 * size.height,
                     ),
                     Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: Column(
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                AppAssets.startWork,
-                                scale: 3,
-                              ),
-                              SizedBox(
-                                height: 0.01 * size.height,
-                              ),
-                              Text(
-                                _startTime == "" ? '-----' : _startTime,
-                                style: TextStyle(
-                                  color: const Color(0xffFF4A00),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 6.5 * textsize,
+                          Visibility(
+                            visible: breakRunning == false,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      AppAssets.startWork,
+                                      scale: 3,
+                                    ),
+                                    SizedBox(
+                                      height: 0.01 * size.height,
+                                    ),
+                                    Text(
+                                      _startTime == "" ? '-----' : _startTime,
+                                      style: TextStyle(
+                                        color: const Color(0xffFF4A00),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 6.5 * textsize,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Start Work',
+                                      style: TextStyle(
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 5.2 * textsize),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                'Start Work',
-                                style: TextStyle(
-                                    color: const Color(0xff000000),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 5.2 * textsize),
-                              ),
-                            ],
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      AppAssets.finishWork,
+                                      scale: 2,
+                                    ),
+                                    SizedBox(
+                                      height: 0.01 * size.height,
+                                    ),
+                                    Text(
+                                      _finishTime == "" ? '-----' : _finishTime,
+                                      style: TextStyle(
+                                          color: const Color(0xffFF4A00),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 6.2 * textsize),
+                                    ),
+                                    Text(
+                                      'Finish Work',
+                                      style: TextStyle(
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 5.2 * textsize),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      AppAssets.breakTime,
+                                      scale: 3,
+                                    ),
+                                    SizedBox(
+                                      height: 0.01 * size.height,
+                                    ),
+                                    Text(
+                                      _totalTime == "" ? '-----' : _totalTime,
+                                      style: TextStyle(
+                                          color: const Color(0xffFF4A00),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 6.5 * textsize),
+                                    ),
+                                    Text(
+                                      'Total Work',
+                                      style: TextStyle(
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 5.2 * textsize),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                AppAssets.finishWork,
-                                scale: 2,
-                              ),
-                              SizedBox(
-                                height: 0.01 * size.height,
-                              ),
-                              Text(
-                                _finishTime == ""
-                                    ? '-----'
-                                    : _finishTime,
-                                style: TextStyle(
-                                    color: const Color(0xffFF4A00),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 6.2 * textsize),
-                              ),
-                              Text(
-                                'Finish Work',
-                                style: TextStyle(
-                                    color: const Color(0xff000000),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 5.2 * textsize),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                AppAssets.breakTime,
-                                scale: 3,
-                              ),
-                              SizedBox(
-                                height: 0.01 * size.height,
-                              ),
-                              Text(
-                                _totalTime == "" ? '-----' : _totalTime,
-                                style: TextStyle(
-                                    color: const Color(0xffFF4A00),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 6.5 * textsize),
-                              ),
-                              Text(
-                                'Total Work',
-                                style: TextStyle(
-                                    color: const Color(0xff000000),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 5.2 * textsize),
-                              ),
-                            ],
-                          )
+                          Visibility(
+                              visible: breakRunning == true,
+                              child: Container(
+                                height: 0.11 * size.height,
+                                width: 0.85 * size.width,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 1,
+                                      offset: const Offset(
+                                          0, 2), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 0.01 * size.height,
+                                    ),
+                                    Container(
+                                      height: 0.03 * size.height,
+                                      width: 0.2 * size.width,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.22),
+                                            spreadRadius: 2,
+                                            blurRadius: 1,
+                                            offset: Offset(0,
+                                                1), // changes position of shadow
+                                          ),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Break 1",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 6.2 * textsize,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 0.007 * size.height,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Column(children: [
+                                          const Text(
+                                            "Start Time",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 13.2),
+                                          ),
+                                          Container(
+                                            height: 0.028 * size.height,
+                                            width: 0.15 * size.width,
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.buttonBlue,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(8),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                _startTime,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 6.2 * textsize,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
+                                        Text(
+                                          " ${twoDigits(breakDuration.inHours.remainder(60))}:${twoDigits(breakDuration.inMinutes.remainder(60))}:${twoDigits(breakDuration.inSeconds.remainder(60))}",
+                                          style: TextStyle(
+                                            fontSize: 15.2 * textsize,
+                                            color: AppColors.orange,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Column(
+                                            children: [
+                                          const Text(
+                                            "End Time",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 13.2),
+                                          ),
+                                          Container(
+                                            height: 0.028 * size.height,
+                                            width: 0.15 * size.width,
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.buttonBlue,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(8),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "02:00",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 6.2 * textsize,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 0.01 * size.height,
+                                    ),
+                                  ],
+                                ),
+                              )),
                         ],
                       ),
                     ),

@@ -15,7 +15,7 @@ Future<void> main() async {
   setupLocator();
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => MaterialApp(
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
