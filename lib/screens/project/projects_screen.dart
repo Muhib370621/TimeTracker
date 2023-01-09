@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/views/project_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -31,7 +32,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           child: ViewModelBuilder.nonReactive(
               onModelReady: (ProjectViewModel model) => model.fetchProjects(),
               viewModelBuilder: () => ProjectViewModel(),
-              builder: (BuildContext context, ProjectViewModel model, Widget? child) {
+              builder: (BuildContext context, ProjectViewModel model,
+                  Widget? child) {
                 return _buildBody(model);
               }),
         ));
@@ -57,21 +59,31 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   _buildDataView(ProjectViewModel model) {
-    return PagedList(itemCount: model.projects.length, itemBuilder: (context,index){
-      return Container(
-        margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-        child: GestureDetector(
-          child: ProjectCard(
-            project: model.projects[index],
-          ),
-          onTap: () {
-            model.setSelectedProject = model.projects[index];
-            Navigator.of(context).pushNamed(
-                RouteNames.projectDetailHolder,
-                arguments: model);
-          },
-        ),
-      );
-    });
+    return Selector<ProjectViewModel, List<Project>>(
+        selector: (context, model) => model.projects,
+        builder: (BuildContext context, value, Widget? child) {
+         return PagedList(
+            itemCount: model.projects.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: GestureDetector(
+                  child: ProjectCard(
+                    project: model.projects[index],
+                  ),
+                  onTap: () {
+                    model.setSelectedProject = model.projects[index];
+                    Navigator.of(context).pushNamed(
+                        RouteNames.projectDetailHolder,
+                        arguments: model);
+                  },
+                ),
+              );
+            },
+            onRefresh: () {
+              model.fetchProjects();
+            },
+          );
+        });
   }
 }

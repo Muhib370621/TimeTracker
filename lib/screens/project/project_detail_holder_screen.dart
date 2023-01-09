@@ -1,5 +1,5 @@
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/project/site_map_screen.dart';
@@ -55,9 +55,9 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
                         _tabController?.animateTo(index);
                       },
                       tabs: [
-                        buildTab(viewModel, 0, AppStrings.detail.tr()),
-                        buildTab(viewModel, 1, AppStrings.site.tr()),
-                        buildTab(viewModel, 2, AppStrings.notes.tr()),
+                        buildTab(viewModel, 0, AppLocalizedStrings.detail.tr()),
+                        buildTab(viewModel, 1, AppLocalizedStrings.site.tr()),
+                        buildTab(viewModel, 2, AppLocalizedStrings.notes.tr()),
                       ],
                     ),
                   ),
@@ -90,13 +90,13 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
   }
 
   Widget buildBody() {
-    return TabBarView(controller: _tabController, physics: const NeverScrollableScrollPhysics(),children: const [
+    return TabBarView(controller: _tabController, physics: const NeverScrollableScrollPhysics(),children: [
       Padding(
-        padding: EdgeInsets.only(top: 70.0),
-        child: ProjectDetailScreen(),
+        padding: const EdgeInsets.only(top: 70.0),
+        child: ProjectDetailScreen(project: widget.viewModel.selectedProject!,),
       ),
-      SiteMapScreen(),
-      Padding(
+      const SiteMapScreen(),
+      const Padding(
         padding: EdgeInsets.only(top: 70.0),
         child: NoteListScreen(),
       )

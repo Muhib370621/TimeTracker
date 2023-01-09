@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/views/checklist_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -13,14 +14,15 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class CheckListScreen extends StatelessWidget {
-  const CheckListScreen({Key? key}) : super(key: key);
+  final ProjectAction action;
+  const CheckListScreen({Key? key, required this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BluTimeAppHeader(),
       body: ViewModelBuilder.nonReactive(
-          onModelReady: (ChecklistViewModel model) => model.fetchCheckList(),
+          onModelReady: (ChecklistViewModel model) => model.fetchCheckList(action.id ?? ""),
           viewModelBuilder: () => ChecklistViewModel(),
           builder: (BuildContext context, ChecklistViewModel model, Widget? child) {
             return _buildBody(model);

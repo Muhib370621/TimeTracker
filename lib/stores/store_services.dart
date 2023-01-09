@@ -1,7 +1,9 @@
+import 'package:blu_time/constants/app_storage.dart';
+import 'package:blu_time/utilities/apis/decodable.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class StoreServices {
-
   String getAccessToken();
   Future<bool> setAccessToken(String value);
   String getTokenSecret();
@@ -15,6 +17,9 @@ abstract class StoreServices {
 
   dynamic getUserProfile();
   Future<bool> setUserProfile(value);
+
+  Future<List<T>> getLocal<T extends Decodable>(String key, T type);
+  setLocal(String key,dynamic value);
 }
 
 class StoreServicesImpl extends StoreServices {
@@ -92,4 +97,28 @@ class StoreServicesImpl extends StoreServices {
     return _prefs.setString(_kTokenSecretPrefs, value);
   }
 
+  @override
+  Future<List<T>> getLocal<T extends Decodable>(String key, T type) async {
+    var box = await Hive.openBox(AppStorage.localBox);
+    try {
+      List<dynamic> testing = box.get(key);
+      return (testing.map((e) => type.decode(Map<String, dynamic>.from(e)))).cast<T>().toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+
+   @override
+  setLocal(String key,dynamic value) async {
+    var box = await Hive.openBox(AppStorage.localBox);
+    try {
+     await box.put(key, value.map((e) => e.toJson()).toList());
+    } catch (e) {
+      return [];
+    }
+  }
+
 }
+
+

@@ -1,6 +1,7 @@
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/views/action_card.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
@@ -10,7 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
-  const ProjectDetailScreen({Key? key}) : super(key: key);
+  final Project project;
+  const ProjectDetailScreen({Key? key, required this.project}) : super(key: key);
 
   @override
   State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
@@ -22,7 +24,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return ViewModelBuilder.nonReactive(
-        onModelReady: (ProjectDetailViewModel model) => model.fetchActions(),
+        onModelReady: (ProjectDetailViewModel model) => model.fetchActions(projectID: widget.project.id ?? ""),
         viewModelBuilder: () => ProjectDetailViewModel(),
         builder: (BuildContext context, ProjectDetailViewModel model,
             Widget? child) {
@@ -35,7 +37,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppStrings.details.tr(),
+                    AppLocalizedStrings.details.tr(),
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),
@@ -56,7 +58,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.startTime.tr(),
+                                AppLocalizedStrings.startTime.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -93,7 +95,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.finishTime.tr(),
+                                AppLocalizedStrings.finishTime.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -130,7 +132,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppStrings.location.tr(),
+                                AppLocalizedStrings.location.tr(),
                                 style: AppTextStyles.bold.copyWith(
                                     color: AppColors.buttonBlue, fontSize: 18),
                               ),
@@ -167,7 +169,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                     height: 40,
                   ),
                   Text(
-                    AppStrings.action.tr(),
+                    AppLocalizedStrings.action.tr(),
                     style: AppTextStyles.bold
                         .copyWith(color: AppColors.buttonBlue, fontSize: 16),
                   ),
@@ -219,11 +221,11 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             },
                             itemCount: value.length + 1,
                             onRefresh: () {
-                              model.fetchActions(refresh: true);
+                              model.fetchActions(refresh: true,projectID: "1043028");
                             },
                             onScrollToBottom: () {
                               debugPrint("ScrollNotification");
-                              model.fetchActions();
+                              model.fetchActions(projectID: "1043028");
                             },
                           ));
                         }),

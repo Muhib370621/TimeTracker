@@ -1,6 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -33,7 +33,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10),
-                  hintText: "${AppStrings.writeNote.tr()}...",
+                  hintText: "${AppLocalizedStrings.writeNote.tr()}...",
                   hintStyle: AppTextStyles.normal.copyWith(color: Colors.grey)
                 ),
               ),
@@ -58,14 +58,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AppAssets.addImage),
-                      Text(AppStrings.addImages.tr(),style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
+                      Text(AppLocalizedStrings.addImages.tr(),style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
                     ],
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 25,),
-             AppCommonButton(title:AppStrings.addNote.tr(),radius: 10,height: 40),
+             AppCommonButton(title:AppLocalizedStrings.addNote.tr(),radius: 10,height: 40),
 
           ],
         ),

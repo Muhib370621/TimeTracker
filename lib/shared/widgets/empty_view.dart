@@ -9,24 +9,26 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(40.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Text(
-            "No data available",
-            style: AppTextStyles.bold
-                .copyWith(color: AppColors.buttonBlue, fontSize: 20),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              "No data available",
+              style: AppTextStyles.bold
+                  .copyWith(color: AppColors.buttonBlue, fontSize: 20),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }

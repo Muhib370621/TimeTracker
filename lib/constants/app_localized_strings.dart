@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-enum AppStrings {
+enum AppLocalizedStrings {
   timeCardClockedIn,
   timeCardProjectName,
   startTime,
@@ -43,7 +43,7 @@ enum AppStrings {
   enterMobileNumber;
 
   String tr() {
-    AppStrings.firstName.name;
+    AppLocalizedStrings.firstName.name;
     return toString().split('.').last.tr();
   }
 }

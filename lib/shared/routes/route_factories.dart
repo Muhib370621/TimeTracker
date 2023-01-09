@@ -1,4 +1,6 @@
 import 'package:blu_time/app_loader.dart';
+import 'package:blu_time/models/project.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
@@ -111,7 +113,7 @@ class RouteFactories{
              settings: settings, builder: (context) => ProjectDetailHolderScreen(viewModel: settings.arguments as ProjectViewModel,));
        case RouteNames.projectDetail:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const ProjectDetailScreen());
+             settings: settings, builder: (context) => ProjectDetailScreen(project: Project(),));
          case RouteNames.noteList:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const NoteListScreen());
@@ -123,7 +125,7 @@ class RouteFactories{
              settings: settings, builder: (context) => const ProfileScreen());
        case RouteNames.checklist:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const CheckListScreen());
+             settings: settings, builder: (context) => CheckListScreen(action: settings.arguments as ProjectAction,));
        default:
          return errorRoute;
      }

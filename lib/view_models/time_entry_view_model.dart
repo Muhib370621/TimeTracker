@@ -1,10 +1,14 @@
+import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:hive/hive.dart';
 
 class TimeEntryViewModel extends BaseModel{
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
@@ -24,8 +28,11 @@ class TimeEntryViewModel extends BaseModel{
     } else if (entries.length == totalCount && totalCount !=0) {
       return;
     }
+
+    entries =  await locator<StoreServices>().getLocal(AppStorage.timeEntries, TimeEntry());
+    setState(entries.isNotEmpty ? ViewState.completed : ViewState.loading);
+
     setIsLoading = true;
-    setState(ViewState.loading);
     Map<String, String> body = {
       'q':
       "SELECT * FROM timebill WHERE employee='1043852'"
@@ -39,11 +46,8 @@ class TimeEntryViewModel extends BaseModel{
       entries = List.from(entries)..addAll(result.response?.items ?? []);
       totalCount = result.response?.totalResults ?? 0;
       setIsLoading = false;
-      if (entries.isEmpty) {
-        setState(ViewState.empty);
-      } else {
-        setState(ViewState.completed);
-      }
+      await locator<StoreServices>().setLocal(AppStorage.timeEntries, entries);
+      setState(entries.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();
     } on ErrorResponse {
       rethrow;
