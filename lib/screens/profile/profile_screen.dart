@@ -1,7 +1,7 @@
 import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            AppStrings.firstName.tr(),
+                                            AppLocalizedStrings.firstName.tr(),
                                             style: AppTextStyles.bold.copyWith(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             child: AppCommonTextField(
                                               backgroundColor:
                                                   AppColors.textFieldBackground,
-                                              hintText: AppStrings.enterEmailAddress.tr(),
+                                              hintText: AppLocalizedStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            AppStrings.lastName.tr(),
+                                            AppLocalizedStrings.lastName.tr(),
                                             style: AppTextStyles.bold.copyWith(
                                                 fontSize: 15,
                                                 color: Colors.black),
@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             child: AppCommonTextField(
                                               backgroundColor:
                                                   AppColors.textFieldBackground,
-                                              hintText: AppStrings.enterEmailAddress.tr(),
+                                              hintText: AppLocalizedStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppStrings.emailAddress.tr(),
+                                      AppLocalizedStrings.emailAddress.tr(),
                                       style: AppTextStyles.bold.copyWith(
                                           fontSize: 15, color: Colors.black),
                                     ),
@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         backgroundColor:
                                             AppColors.textFieldBackground,
                                         hintText:
-                                        AppStrings.enterEmailAddress.tr(),
+                                        AppLocalizedStrings.enterEmailAddress.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -167,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppStrings.mobileNumber.tr(),
+                                      AppLocalizedStrings.mobileNumber.tr(),
                                       style: AppTextStyles.bold.copyWith(
                                           fontSize: 15, color: Colors.black),
                                     ),
@@ -180,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         backgroundColor:
                                             AppColors.textFieldBackground,
                                         hintText:
-                                        AppStrings.enterMobileNumber.tr(),
+                                        AppLocalizedStrings.enterMobileNumber.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -194,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Column(
                                     children: [
                                       AppCommonButton(
-                                        title: AppStrings.saveChanges.tr(),
+                                        title: AppLocalizedStrings.saveChanges.tr(),
                                       ),
                                       const Divider(
                                         color: Colors.black,
@@ -222,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       width: 8,
                                     ),
                                     Text(
-                                      AppStrings.aboutUs.tr(),
+                                      AppLocalizedStrings.aboutUs.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
                                           fontSize: 18, color: Colors.black),
                                     )
@@ -247,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       width: 8,
                                     ),
                                     Text(
-                                      AppStrings.getHelp.tr(),
+                                      AppLocalizedStrings.getHelp.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
                                           fontSize: 18, color: Colors.black),
                                     )
@@ -256,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                AppCommonButton(title: AppStrings.logOut.tr(),onPressed: (){
+                                AppCommonButton(title: AppLocalizedStrings.logOut.tr(),onPressed: (){
                                   locator<StoreServices>().setAccessToken("");
                                   Get.offAll(()=>const AppLoader());
                                 },),

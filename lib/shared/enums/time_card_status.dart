@@ -1,4 +1,4 @@
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 
 enum TimeCardStatus {
   all,
@@ -10,15 +10,15 @@ enum TimeCardStatus {
   String get title {
     switch(this){
       case TimeCardStatus.all:
-        return AppStrings.all.tr();
+        return AppLocalizedStrings.all.tr();
       case TimeCardStatus.approved:
-        return AppStrings.approved.tr();
+        return AppLocalizedStrings.approved.tr();
       case TimeCardStatus.notApproved:
-        return AppStrings.notApproved.tr();
+        return AppLocalizedStrings.notApproved.tr();
       case TimeCardStatus.clockedIn:
-        return AppStrings.timeCardClockedIn.tr();
+        return AppLocalizedStrings.timeCardClockedIn.tr();
       case TimeCardStatus.clockedOut:
-        return AppStrings.clockedOut.tr();
+        return AppLocalizedStrings.clockedOut.tr();
     }
 
   }

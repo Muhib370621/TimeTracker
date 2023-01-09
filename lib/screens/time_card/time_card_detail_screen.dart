@@ -1,5 +1,5 @@
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/constants/app_strings.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/screens/views/time_card_detail_card.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -36,7 +36,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                         )
                       ), child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                        child: Text(AppLocalizedStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                       ),),
                       const SizedBox(width: 10,),
                       Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))
@@ -52,7 +52,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                             )
                         ), child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                          child: Text(AppLocalizedStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
                       Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))
@@ -68,7 +68,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                             )
                         ), child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(AppStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
+                          child: Text(AppLocalizedStrings.startDateTime.tr(),style: AppTextStyles.bold.copyWith(fontSize: 16,color: AppColors.buttonBlue)),
                         ),),
                       const SizedBox(width: 10,),
                       Expanded(child: FittedBox(child: Text("12/06/23, 12:00 PM",style: AppTextStyles.medium.copyWith(fontSize: 16,color: Colors.black),)))

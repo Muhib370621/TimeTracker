@@ -1,18 +1,24 @@
 
+import 'dart:io';
+
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/routes/route_factories.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/utilities/navigation_service.dart';
+import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   setupLocator();
+  var path = await findLocalPath() ?? "";
+  Hive.init(path);
   runApp(
     DevicePreview(
       enabled: false,
