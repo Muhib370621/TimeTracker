@@ -8,6 +8,7 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:flutter/foundation.dart';
 
 class ProjectDetailViewModel extends BaseModel {
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
@@ -26,8 +27,8 @@ class ProjectDetailViewModel extends BaseModel {
       return;
     }
     setIsLoading = true;
-    actions =  await locator<StoreServices>().getLocal(AppStorage.actions, ProjectAction());
-    actions = actions.where((element) => element.custrecordBbProject == projectID).toList();
+    List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.actions, projectID) ?? [];
+    actions = jsonList.map((e) => ProjectAction().decode((Map<String, dynamic>.from(e)))).toList();
     setState(actions.isNotEmpty ? ViewState.completed : ViewState.loading);
 
 
@@ -49,7 +50,7 @@ class ProjectDetailViewModel extends BaseModel {
           ..addAll(result.response?.items ?? []);
       }
       totalCount = result.response?.totalResults ?? 0;
-      await locator<StoreServices>().setLocal(AppStorage.actions, actions);
+      await locator<StoreServices>().setLocal(AppStorage.actions,projectID, actions.map((e) => e.toJson()).toList());
       setIsLoading = false;
       setState(actions.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();

@@ -1,5 +1,7 @@
 import 'package:blu_time/constants/app_storage.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,8 +20,9 @@ abstract class StoreServices {
   dynamic getUserProfile();
   Future<bool> setUserProfile(value);
 
-  Future<List<T>> getLocal<T extends Decodable>(String key, T type);
-  setLocal(String key,dynamic value);
+  Future<T?> getLocal<T>(String boxID,String key);
+  setLocal<T>(String boxId,String key,T value);
+  clearAll();
 }
 
 class StoreServicesImpl extends StoreServices {
@@ -98,27 +101,33 @@ class StoreServicesImpl extends StoreServices {
   }
 
   @override
-  Future<List<T>> getLocal<T extends Decodable>(String key, T type) async {
-    var box = await Hive.openBox(AppStorage.localBox);
+  Future<T?> getLocal<T>(String boxID,String key) async {
+    var box = await Hive.openBox(boxID);
     try {
-      List<dynamic> testing = box.get(key);
-      return (testing.map((e) => type.decode(Map<String, dynamic>.from(e)))).cast<T>().toList();
+      final data = box.get(key);
+
+      if (data == null) {
+        throw Exception('$T not in the box.');
+      }
+      return data;
     } catch (e) {
-      return [];
+      return null;
     }
   }
 
-
-   @override
-  setLocal(String key,dynamic value) async {
-    var box = await Hive.openBox(AppStorage.localBox);
+  @override
+  setLocal<T>(String boxId,String key,T value) async {
+    var box = await Hive.openBox(boxId);
     try {
-     await box.put(key, value.map((e) => e.toJson()).toList());
+        await box.put(key, value);
     } catch (e) {
-      return [];
+      debugPrint("Error in saving data: $e");
     }
+  }
+
+  @override
+  clearAll() async {
+     await Hive.deleteFromDisk();
   }
 
 }
-
-

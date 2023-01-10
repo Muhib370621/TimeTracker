@@ -15,7 +15,8 @@ class ChecklistViewModel extends BaseModel {
 
   fetchCheckList(String action) async {
 
-    checklist =  await locator<StoreServices>().getLocal(AppStorage.checklist, ActionChecklist());
+    List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.checklist, action) ?? [];
+    checklist = jsonList.map((e) => ActionChecklist().decode((Map<String, dynamic>.from(e)))).toList();
     setState(checklist.isNotEmpty ? ViewState.completed : ViewState.loading);
 
     Map<String, String> body = {
@@ -28,7 +29,9 @@ class ChecklistViewModel extends BaseModel {
           data: body,
           create: () => QueryResponse(create: () => ActionChecklist()));
       checklist = result.response?.items ?? [];
-      await locator<StoreServices>().setLocal(AppStorage.checklist, checklist);
+      if (checklist.isNotEmpty) {
+        await locator<StoreServices>().setLocal(AppStorage.checklist,action, checklist.map((e) => e.toJson()).toList());
+      }
       if (checklist.isEmpty) {
         setState(ViewState.empty);
       } else {

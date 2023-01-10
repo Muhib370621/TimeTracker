@@ -256,8 +256,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const SizedBox(
                                   height: 40,
                                 ),
-                                AppCommonButton(title: AppLocalizedStrings.logOut.tr(),onPressed: (){
-                                  locator<StoreServices>().setAccessToken("");
+                                AppCommonButton(title: AppLocalizedStrings.logOut.tr(),onPressed: () async {
+                                 await locator<StoreServices>().clearAll();
+                                 await locator<StoreServices>().setAccessToken("");
                                   Get.offAll(()=>const AppLoader());
                                 },),
                                 const SizedBox(

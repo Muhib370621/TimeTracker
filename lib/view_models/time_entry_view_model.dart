@@ -29,7 +29,8 @@ class TimeEntryViewModel extends BaseModel{
       return;
     }
 
-    entries =  await locator<StoreServices>().getLocal(AppStorage.timeEntries, TimeEntry());
+    List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.timeEntries, "userid") ?? [];
+     entries = jsonList.map((e) => TimeEntry().decode((Map<String, dynamic>.from(e)))).toList();
     setState(entries.isNotEmpty ? ViewState.completed : ViewState.loading);
 
     setIsLoading = true;
@@ -46,7 +47,7 @@ class TimeEntryViewModel extends BaseModel{
       entries = List.from(entries)..addAll(result.response?.items ?? []);
       totalCount = result.response?.totalResults ?? 0;
       setIsLoading = false;
-      await locator<StoreServices>().setLocal(AppStorage.timeEntries, entries);
+      await locator<StoreServices>().setLocal(AppStorage.timeEntries, "userid", entries.map((e) => e.toJson()).toList());
       setState(entries.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();
     } on ErrorResponse {
