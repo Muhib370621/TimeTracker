@@ -61,7 +61,6 @@ class _StartingScreenState extends State<StartingScreen> {
   Duration breakDuration = const Duration();
   Timer? timer;
   Timer? breakTimer;
-
   bool countDown = false;
   String? _currentAddress;
   String role = "";
@@ -75,10 +74,11 @@ class _StartingScreenState extends State<StartingScreen> {
   bool timerStatus = false;
   bool clockRunning = false;
   bool breakRunning = false;
-
   String _startTime = '';
   String _finishTime = '';
   String _totalTime = '';
+  String _breakStart = '';
+  String _breakEnd = '';
 
   String twoDigits(int n) => n.toString().padLeft(2, '0');
 
@@ -87,20 +87,25 @@ class _StartingScreenState extends State<StartingScreen> {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning = true;
     // Get.to(() => const ProjectsScreen());
-    if(breakRunning==false) {
-      controller.currentIndex.value = 2;
+    if (breakRunning == false) {
+      // controller.currentIndex.value = 2;
     }
   }
+
   void startBreak() {
-    breakTimer = Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
-    breakRunning = true;
+      breakTimer =
+          Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
+      breakRunning = true;
+
   }
+
   void addBreakTime() {
     final addSeconds = countDown ? -1 : 1;
     setState(() {
+      // breakDuration == Duration();
       final seconds = breakDuration.inSeconds + addSeconds;
       if (seconds < 0) {
-        timer?.cancel();
+        breakTimer?.cancel();
       } else {
         breakDuration = Duration(seconds: seconds);
       }
@@ -121,9 +126,9 @@ class _StartingScreenState extends State<StartingScreen> {
 
   void reset() {
     if (countDown) {
-      setState(() => clockDuration = countdownDuration);
+      setState(() => breakDuration = countdownDuration);
     } else {
-      setState(() => clockDuration = const Duration());
+      setState(() => breakDuration = const Duration());
     }
   }
 
@@ -135,12 +140,127 @@ class _StartingScreenState extends State<StartingScreen> {
     clockRunning = false;
     _getFinishTime();
     _subtractTime();
+    final Size size = MediaQuery.of(context).size;
+    var textsize = size.height / size.width;
+    // if(clockRunning==false || breakRunning==null) {
+    Get.defaultDialog(
+          title: "",
+          content: SizedBox(
+            height: 0.329 * size.height,
+            width: 0.95 * size.width,
+            child: Column(
+              children: [
+                Image.asset(
+                  AppAssets.taskCompleted,
+                  scale: 3,
+                ),
+                SizedBox(
+                  height: 0.008 * size.height,
+                ),
+                Text(
+                  "Time Marked",
+                  style: TextStyle(
+                    fontSize:0.017 * size.height,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 0.05 * size.height,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.startWork,
+                        scale: 3,
+                      ),
+                      Text(
+                        _startTime,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Start Work",
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.finishWork,
+                        scale: 2,
+                      ),
+                      Text(
+                        _finishTime,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Finish Work",
+                        style: TextStyle(
+                          fontSize:0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.breakTime,
+                        scale: 3,
+                      ),
+                      Text(
+                        _totalTime,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Total Work",
+                        style: TextStyle(
+                          fontSize:0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.012 * size.height,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    _currentAddress.toString(),
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 0.017 * size.height, color: Colors.black,overflow: TextOverflow.ellipsis),
+                  ),
+                )
+              ],
+            ),
+          ));
+    // }
   }
+
   void stopBreak({bool resets = true}) {
     if (resets) {
       reset();
     }
-    setState(() => timer?.cancel());
+    setState(() => breakTimer?.cancel());
     breakRunning = false;
     // _getFinishTime();
     // _subtractTime();
@@ -154,7 +274,7 @@ class _StartingScreenState extends State<StartingScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.whileInUse) {
-        _getCurrentLocation();
+        // _getCurrentLocation();
       }
       if (permission == LocationPermission.deniedForever) {
         return Future.error('Location Not Available');
@@ -174,7 +294,7 @@ class _StartingScreenState extends State<StartingScreen> {
     } else {
       // determinePosition();
       // Future.delayed(Duration(seconds: 3));
-      _getCurrentLocation();
+      // _getCurrentLocation();
     }
   }
 
@@ -186,24 +306,77 @@ class _StartingScreenState extends State<StartingScreen> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text(
-                  "Can't get current location",
+                  "Motion And Fitness",
                   style: TextStyle(color: Colors.black, fontSize: 25),
                 ),
-                content:
-                    const Text('Please make sure you enable GPS and try again'),
+                content: Container(
+                  height: 60,
+                  width: 2560,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'Enable Location?',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 5,),
+                      Text('Please make sure you enable GPS and try again'),
+                    ],
+                  ),
+                ),
                 actions: <Widget>[
-                  TextButton(
-                      child: const Text('Ok'),
-                      onPressed: () {
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
                         const AndroidIntent intent = AndroidIntent(
                             action:
-                                'android.settings.LOCATION_SOURCE_SETTINGS');
+                            'android.settings.LOCATION_SOURCE_SETTINGS');
                         // Future.delayed(const Duration(seconds: 3));
                         intent.launch();
                         Navigator.of(context, rootNavigator: true).pop();
 
                         // _gpsService();
-                      })
+                      },
+                      child: Container(
+                        height: 30,
+                        width: 70,
+                        decoration: const BoxDecoration(
+                          color: AppColors.buttonBlue,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Allow",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // TextButton(
+                  //     child: const Text('Allow'),
+                  //     onPressed: () {
+                  //       const AndroidIntent intent = AndroidIntent(
+                  //           action:
+                  //               'android.settings.LOCATION_SOURCE_SETTINGS');
+                  //       // Future.delayed(const Duration(seconds: 3));
+                  //       intent.launch();
+                  //       Navigator.of(context, rootNavigator: true).pop();
+                  //
+                  //       // _gpsService();
+                  //     }),
                 ],
               );
             });
@@ -211,12 +384,13 @@ class _StartingScreenState extends State<StartingScreen> {
     }
     if ((await Geolocator.isLocationServiceEnabled())) {
       if (Theme.of(context).platform == TargetPlatform.android) {
-        _getCurrentLocation();
+        // _getCurrentLocation();
       }
     }
   }
 
   _getCurrentLocation() {
+    locationLoading = true;
     Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
       forceAndroidLocationManager: true,
@@ -225,6 +399,7 @@ class _StartingScreenState extends State<StartingScreen> {
         _currentPosition = position;
         _getAddressFromLatLng();
       });
+      locationLoading = false;
     }).catchError((e) {
       print(e);
     });
@@ -366,11 +541,14 @@ class _StartingScreenState extends State<StartingScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 0.15 * size.height,
+                          height: 0.11 * size.height,
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (_currentAddress == null && role != "") {
+                            _getCurrentLocation();
+                            if (_currentAddress == null &&
+                                role != "" &&
+                                locationLoading == false) {
                               Get.defaultDialog(
                                   title: "Oops !!",
                                   content: const Text(
@@ -385,11 +563,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                   ?
                                   // print(clockRunning);
                                   stopTimer(resets: false)
+
                                   : startTimer();
                               _startTime == "" ? _getStartTime() : null;
 
                               // clockRunning = true;
-                            } else {
+                            } else if (role == "" &&
+                                _currentAddress == null &&
+                                locationLoading == false) {
                               Get.defaultDialog(
                                   title: "Oops !!",
                                   content: const Text(
@@ -412,7 +593,7 @@ class _StartingScreenState extends State<StartingScreen> {
                               ],
                               shape: BoxShape.circle,
                               gradient: timerStatus == false &&
-                                      clockRunning == true
+                                      clockRunning || breakRunning== true
                                   ? LinearGradient(
                                       colors: [
                                         AppColors.orange,
@@ -454,7 +635,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                   height: 0.01 * size.height,
                                 ),
                                 Text(
-                                  timerStatus == false && clockRunning == true
+                                  timerStatus == false && clockRunning || breakRunning== true
                                       ? 'Finish Work'
                                       : 'Start Work',
                                   style: TextStyle(
@@ -476,27 +657,31 @@ class _StartingScreenState extends State<StartingScreen> {
                       child: Column(
                         children: [
                           Visibility(
-                            visible: clockRunning == true || breakRunning==true,
+                            visible:
+                                clockRunning == true || breakRunning == true,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   onTap: () {
                                     stopTimer(resets: false);
-                                    if (breakDuration.inSeconds.remainder(60)>0 && breakRunning==true){
-                                      stopBreak(resets:false);
+                                    if (breakRunning == true) {
+                                      stopBreak(resets: true);
+                                      // breakDuration = const Duration();
                                       startTimer();
-                                    }
-                                    else{
+                                    } else {
+                                      // reset();
                                       startBreak();
                                     }
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
                                     height: 0.05 * size.height,
-                                    width: 0.17 * size.width,
-                                    decoration:  BoxDecoration(
-                                        color: breakRunning==true?AppColors.orange:AppColors.buttonBlue,
+                                    width: 0.13 * size.width,
+                                    decoration: BoxDecoration(
+                                        color: breakRunning == true
+                                            ? AppColors.orange
+                                            : AppColors.buttonBlue,
                                         shape: BoxShape.circle),
                                     child: Image.asset(
                                       AppAssets.breakIcon,
@@ -508,7 +693,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      breakRunning==true?"Tap to End":"Tap to Start",
+                                      breakRunning == true
+                                          ? "Tap to End"
+                                          : "Tap to Start",
                                       style: TextStyle(
                                         fontSize: 6.2 * textsize,
                                         color: Colors.black,
@@ -518,7 +705,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                       "Break",
                                       style: TextStyle(
                                         fontSize: 9.2 * textsize,
-                                        color: breakRunning==true?AppColors.orange:AppColors.buttonBlue,
+                                        color: breakRunning == true
+                                            ? AppColors.orange
+                                            : AppColors.buttonBlue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -528,7 +717,8 @@ class _StartingScreenState extends State<StartingScreen> {
                             ),
                           ),
                           Visibility(
-                            visible: clockRunning == false && breakRunning==false,
+                            visible:
+                                clockRunning == false && breakRunning == false,
                             child: Text(
                               isLoading && sliderOpen == false ? "" : role,
                               style: TextStyle(
@@ -540,19 +730,24 @@ class _StartingScreenState extends State<StartingScreen> {
                           ),
                           SizedBox(
                             height:
-                                clockRunning == true ? 0.001 * size.height : 0,
+                                clockRunning == true ? 0.007 * size.height : 0,
                           ),
                           if (_currentAddress != null)
-                            Text(
-                              _currentAddress.toString(),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 7.2 * textsize),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0,right: 8),
+                              child: Text(
+                                _currentAddress.toString(),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 0.017 * size.height),
+                              ),
                             ),
                           if (_currentAddress == null)
-                            const Text(
-                              "Loading Address...",
-                              style: TextStyle(color: Colors.black),
+                            Text(
+                              locationLoading == true
+                                  ? "Loading Address..."
+                                  : "Tap Start to get Current Location",
+                              style: const TextStyle(color: Colors.black),
                             ),
                         ],
                       ),
@@ -693,7 +888,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 Colors.grey.withOpacity(0.22),
                                             spreadRadius: 2,
                                             blurRadius: 1,
-                                            offset: Offset(0,
+                                            offset: const Offset(0,
                                                 1), // changes position of shadow
                                           ),
                                         ],
@@ -751,8 +946,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Column(
-                                            children: [
+                                        Column(children: [
                                           const Text(
                                             "End Time",
                                             style: TextStyle(
@@ -1139,7 +1333,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                         // );
 
                                         // sliderOpen==true;
-                                        clockRunning == true
+                                       clockDuration.inSeconds.remainder(60)>0 || clockRunning==true
                                             ? Get.defaultDialog(
                                                 title: "Sorry!!",
                                                 content: const Text(
@@ -1194,7 +1388,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        clockRunning == true
+                                        clockDuration.inSeconds.remainder(60)>0|| clockRunning == true
                                             ? Get.defaultDialog(
                                                 title: "Sorry!!",
                                                 content: const Text(
@@ -1378,7 +1572,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        clockRunning == true
+                                        clockDuration.inSeconds.remainder(60)>0||clockRunning == true
                                             ? Get.defaultDialog(
                                                 title: "Sorry!!",
                                                 content: const Text(
@@ -1450,130 +1644,187 @@ class _StartingScreenState extends State<StartingScreen> {
                           ],
                         ),
                       ])
-                    : Positioned(
-                        top: 0.15 * size.height,
-                        child: Container(
-                          // color: Color(0xffE4E4E4),
-                          width: 0.24 * size.width,
-                          height: 0.22 * size.height,
-                          // padding: EdgeInsets.only(
-                          //     top: 0.15 * size.height, bottom: 0.5 * size.height),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                padding:
-                                    const EdgeInsets.only(left: 6, right: 6),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffE4E4E4),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
+                    : Stack(children: [
+                        Positioned(
+                          top: 0.15 * size.height,
+                          child: SizedBox(
+                            // color: Color(0xffE4E4E4),
+                            width: 0.24 * size.width,
+                            height: 0.22 * size.height,
+                            // padding: EdgeInsets.only(
+                            //     top: 0.15 * size.height, bottom: 0.5 * size.height),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                  padding:
+                                      const EdgeInsets.only(left: 6, right: 6),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffE4E4E4),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
+                                    ),
                                   ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 0.03 * size.height,
-                                    ),
-                                    Image.asset(
-                                      "assets/images/FZSnPc.png",
-                                      height: 0.05 * size.height,
-                                    ),
-                                    RotatedBox(
-                                      quarterTurns: 3,
-                                      child: Text(
-                                        'Select Role  ',
-                                        style: TextStyle(
-                                            color: const Color(0xff000000),
-                                            fontSize: 0.02 * size.height,
-                                            fontWeight: FontWeight.w500),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 0.03 * size.height,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                                  // ElevatedButton(
-                                  //     style: ElevatedButton.styleFrom(
-                                  //       backgroundColor: const Color(0xffE4E4E4),
-                                  //         shape: const RoundedRectangleBorder(
-                                  //           borderRadius: BorderRadius.only(
-                                  //             topRight: Radius.circular(30),
-                                  //             bottomRight: Radius.circular(30),
-                                  //           ),
-                                  //         )
-                                  //     ),
-                                  //     onPressed: () {
-                                  //       setState(() {
-                                  //         // load=true;
-                                  //       });
-                                  //     },
-                                  //     child: Column(
-                                  //       children: [
-                                  //         const SizedBox(
-                                  //           height: 20,
-                                  //         ),
-                                  //         Container(
-                                  //             child: Image.asset("assets/images/FZSnPc.png")),
-                                  //         Container(
-                                  //           child: const RotatedBox(
-                                  //             quarterTurns: 3,
-                                  //             child: Text(
-                                  //               'Select Role  ',
-                                  //               style: TextStyle(
-                                  //                   color: Color(0xff000000),
-                                  //                   fontSize: 14,
-                                  //                   fontWeight: FontWeight.w500),
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //       ],
-                                  //     )),
-                                  ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff0062BD),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomRight: Radius.circular(30),
+                                      Image.asset(
+                                        "assets/images/FZSnPc.png",
+                                        height: 0.05 * size.height,
+                                      ),
+                                      RotatedBox(
+                                        quarterTurns: 3,
+                                        child: Text(
+                                          'Select Role  ',
+                                          style: TextStyle(
+                                              color: const Color(0xff000000),
+                                              fontSize: 0.02 * size.height,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      )),
-                                  onPressed: () {
-                                    setState(() {
-                                      isLoading = !isLoading;
-                                      // onTapSlider();
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    // decoration: BoxDecoration(
-                                    //   borderRadius: BorderRadius.circular(10.0),),
-                                    // padding: const EdgeInsets.only(left: 10),
-                                    height: 0.06 * size.height,
-                                    // width: 50,
-                                    // color: const Color(0xff0062BD),
-                                    // child: Image.asset("assets/images/cuTOBs.png"),
-                                    child: isLoading == false
-                                        ? const Center(
-                                            child: Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              color: Color(0xffffffff),
-                                            ),
-                                          )
-                                        : const Center(
-                                            child: Icon(
-                                              Icons.arrow_back_ios_outlined,
-                                              color: Color(0xffffffff),
-                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                    // ElevatedButton(
+                                    //     style: ElevatedButton.styleFrom(
+                                    //       backgroundColor: const Color(0xffE4E4E4),
+                                    //         shape: const RoundedRectangleBorder(
+                                    //           borderRadius: BorderRadius.only(
+                                    //             topRight: Radius.circular(30),
+                                    //             bottomRight: Radius.circular(30),
+                                    //           ),
+                                    //         )
+                                    //     ),
+                                    //     onPressed: () {
+                                    //       setState(() {
+                                    //         // load=true;
+                                    //       });
+                                    //     },
+                                    //     child: Column(
+                                    //       children: [
+                                    //         const SizedBox(
+                                    //           height: 20,
+                                    //         ),
+                                    //         Container(
+                                    //             child: Image.asset("assets/images/FZSnPc.png")),
+                                    //         Container(
+                                    //           child: const RotatedBox(
+                                    //             quarterTurns: 3,
+                                    //             child: Text(
+                                    //               'Select Role  ',
+                                    //               style: TextStyle(
+                                    //                   color: Color(0xff000000),
+                                    //                   fontSize: 14,
+                                    //                   fontWeight: FontWeight.w500),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     )),
+                                    ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xff0062BD),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(30),
+                                            bottomRight: Radius.circular(30),
                                           ),
+                                        )),
+                                    onPressed: () {
+                                      setState(() {
+                                        isLoading = !isLoading;
+                                        // onTapSlider();
+                                      });
+                                    },
+                                    child: SizedBox(
+                                      // decoration: BoxDecoration(
+                                      //   borderRadius: BorderRadius.circular(10.0),),
+                                      // padding: const EdgeInsets.only(left: 10),
+                                      height: 0.06 * size.height,
+                                      // width: 50,
+                                      // color: const Color(0xff0062BD),
+                                      // child: Image.asset("assets/images/cuTOBs.png"),
+                                      child: isLoading == false
+                                          ? const Center(
+                                              child: Icon(
+                                                Icons
+                                                    .arrow_forward_ios_outlined,
+                                                color: Color(0xffffffff),
+                                              ),
+                                            )
+                                          : const Center(
+                                              child: Icon(
+                                                Icons.arrow_back_ios_outlined,
+                                                color: Color(0xffffffff),
+                                              ),
+                                            ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                        locationLoading == true && _currentAddress == null
+                            ? Center(
+                                child: Container(
+                                  height: 0.15 * size.height,
+                                  width: 0.8 * size.width,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(16),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        spreadRadius: 3,
+                                        blurRadius: 1,
+                                        offset: const Offset(
+                                            0, 1), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        // crossAxisAlignment: CrossAxisAlignment.,
+                                        children: [
+                                          SizedBox(
+                                            width: 0.02 * size.height,
+                                          ),
+                                          Icon(
+                                            Icons.location_on,
+                                            size: 0.05 * size.height,
+                                            color: AppColors.buttonBlue,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              "Please Wait while we are fetching your current location",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 0.02 * size.height),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const CircularProgressIndicator(color: AppColors.buttonBlue,),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                      ]),
               ],
             ),
           );

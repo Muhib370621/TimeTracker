@@ -21,7 +21,7 @@ Future<void> main() async {
   Hive.init(path);
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => MaterialApp(
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
