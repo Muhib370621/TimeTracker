@@ -9,15 +9,18 @@ import 'package:get/get.dart';
 class StartingScreenController extends GetxController {
   @override
   void onInit() {
+    // clockRunning = false;
+    // _gpsService();
+    determinePosition();
     // _gpsService(context);
     // TODO: implement initState
     // setState(() {
     isLoading.value = false;
-    _timeString.value = _formatDateTime(DateTime.now());
+    timeString.value = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
     locationLoading.value = true;
     // determinePosition();
-    _getCurrentLocation();
+    getCurrentLocation();
     locationLoading.value = false;
     // });
     // if(_gpsService()==true){
@@ -27,6 +30,13 @@ class StartingScreenController extends GetxController {
     super.onInit();
   }
   // var context;
+  RxBool isSwitched = false.obs;
+
+  var  countdownDuration = const Duration().obs;
+  Rx<Duration> clockDuration = const Duration().obs;
+  Rx<Duration> breakDuration = const Duration().obs;
+  Timer? timer;
+  Timer? breakTimer;
   final RxString _currentAddress = "".obs;
   RxString role = "".obs;
   RxBool isLoading = false.obs;
@@ -42,9 +52,9 @@ class StartingScreenController extends GetxController {
     speed: 0,
     speedAccuracy: 0,
   ).obs;
-
   // DateTime dateTime.obs;
-  final RxString _timeString = ''.obs;
+  final RxString timeString = ''.obs;
+
   // RxBool GPS = false.obs;
   Rx<DateTime> today = DateTime.now().toLocal().obs;
 
@@ -63,14 +73,14 @@ class StartingScreenController extends GetxController {
   }
 
   /*Check if gps service is enabled or not*/
-  Future _gpsService(context) async {
+  Future _gpsService(BuildContext context) async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       _checkGps(context);
       return true;
     }
   }
 
-  Future _checkGps(context) async {
+  Future _checkGps(BuildContext context) async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       if (Theme.of(context).platform == TargetPlatform.android) {
         showDialog(
@@ -102,7 +112,8 @@ class StartingScreenController extends GetxController {
     }
   }
 
-  _getCurrentLocation() {
+  getCurrentLocation() {
+    locationLoading.value=true;
     Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best,
             forceAndroidLocationManager: true)
@@ -111,6 +122,7 @@ class StartingScreenController extends GetxController {
       _currentPosition.value = position;
       _getAddressFromLatLng();
       // });
+      locationLoading.value=false;
     }).catchError((e) {
       print(e);
     });
@@ -138,7 +150,7 @@ class StartingScreenController extends GetxController {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     // setState(() {
-    _timeString.value = formattedDateTime;
+    timeString.value = formattedDateTime;
     // });
   }
 }

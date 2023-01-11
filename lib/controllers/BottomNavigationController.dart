@@ -7,7 +7,6 @@ import '../screens/project/projects_screen.dart';
 import '../screens/time_card/time_card_screen.dart';
 
 
-
 class BottomNavController extends GetxController{
   final List <Widget> pages = [
     const StartingScreen(),
@@ -16,6 +15,8 @@ class BottomNavController extends GetxController{
     const ChatScreen(),
   ].obs;
   RxBool roleSelected = false.obs;
+  RxBool locationLoading = false.obs;
+
   RxInt currentIndex = 0.obs;
   setBottomBarIndex(index) {
     currentIndex.value = index;

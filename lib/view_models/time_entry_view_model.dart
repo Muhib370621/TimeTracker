@@ -8,7 +8,6 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
-import 'package:hive/hive.dart';
 
 class TimeEntryViewModel extends BaseModel{
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;

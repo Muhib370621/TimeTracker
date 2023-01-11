@@ -1,7 +1,6 @@
 
 
-import 'package:blu_time/helpers/locator.dart';
-import 'package:blu_time/stores/store_services.dart';
+
 
 class AppUrls {
 

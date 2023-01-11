@@ -2,6 +2,9 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/BottomNavigationController.dart';
 
 class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
   final String leadingImage;
@@ -22,6 +25,8 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BottomNavController controller = Get.put(BottomNavController());
+
     return AppBar(
       elevation: elevation,
       backgroundColor: backgroundColor,
@@ -33,7 +38,8 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
               if (backEnabled) {
                 Navigator.of(context).pop();
               } else {
-                Navigator.of(context).pushNamed(RouteNames.profile);
+                controller.locationLoading.value==false?
+                Navigator.of(context).pushNamed(RouteNames.profile):null;
               }
             },
           );
