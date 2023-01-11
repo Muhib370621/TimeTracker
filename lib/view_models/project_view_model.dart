@@ -60,12 +60,8 @@ class ProjectViewModel extends BaseModel {
 Future<String?> findLocalPath() async {
   String? externalStorageDirPath = '';
   if (Platform.isAndroid) {
-    try {
-      externalStorageDirPath = await AndroidPathProvider.downloadsPath;
-    } catch (e) {
-      final directory = await getExternalStorageDirectory();
-      externalStorageDirPath = directory?.path;
-    }
+    final directory = await getExternalStorageDirectory();
+    externalStorageDirPath = directory?.path;
   } else if (Platform.isIOS) {
     externalStorageDirPath =
         (await getApplicationDocumentsDirectory()).absolute.path;
