@@ -6,6 +6,7 @@ import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({Key? key}) : super(key: key);
 
@@ -57,7 +58,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AppAssets.addImage),
+                      Image.asset(AppAssets.addImage,width: 92,),
                       Text(AppLocalizedStrings.addImages.tr(),style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
                     ],
                   ),

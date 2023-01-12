@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/time_entry.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
 class TimeCard extends StatelessWidget {
@@ -27,7 +28,7 @@ class TimeCard extends StatelessWidget {
               children: [
                 Text(
                   "Tue 06 Dec",
-                  style: AppTextStyles.bold.copyWith(fontSize: 18),
+                  style: AppTextStyles.semiBold.copyWith(fontSize: 15.width),
                 ),
                 SizedBox(
                   height: 30,
@@ -39,7 +40,7 @@ class TimeCard extends StatelessWidget {
                       ),
                       side: const BorderSide(width: 1.0, color: Colors.red),
                     ),
-                    child: Text(AppLocalizedStrings.timeCardClockedIn.tr(),style: AppTextStyles.bold.copyWith(color: Colors.white),),
+                    child: Text(AppLocalizedStrings.timeCardClockedIn.tr(),style: AppTextStyles.semiBold.copyWith(color: Colors.white,fontSize: 10.width),),
                   ),
                 )
               ],
@@ -50,15 +51,15 @@ class TimeCard extends StatelessWidget {
               children: [
                 Text(
                  AppLocalizedStrings.timeCardProjectName.tr(),
-                  style: AppTextStyles.medium,
+                  style: AppTextStyles.medium.copyWith(fontSize: 10.width),
                 ),
                 const SizedBox(
-                  height: 3,
+                  height: 5,
                 ),
                 Text(
                   timeEntry.displayfield ?? "",
                   style: AppTextStyles.bold
-                      .copyWith(color: AppColors.orange, fontSize: 20),
+                      .copyWith(color: AppColors.orange, fontSize: 15.width),
                 ),
               ],
             ),
@@ -70,36 +71,36 @@ class TimeCard extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizedStrings.action.tr(),
-                    style: AppTextStyles.bold.copyWith(),
+                    style: AppTextStyles.semiBold.copyWith(fontSize: 10.width),
                   ),
                   Text.rich(TextSpan(
                       text: "3",
                       style: AppTextStyles.bold
-                          .copyWith(fontSize: 20, color: AppColors.orange),
+                          .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
                           text: ' ${AppLocalizedStrings.total.tr()}',
-                          style: AppTextStyles.medium.copyWith(fontSize: 12),
+                          style: AppTextStyles.medium.copyWith(fontSize: 9.width),
                         )
                       ])),
                   Text.rich(TextSpan(
                       text: "3",
-                      style: AppTextStyles.bold
-                          .copyWith(fontSize: 20, color: AppColors.orange),
+                      style:AppTextStyles.bold
+                          .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
                           text: ' ${AppLocalizedStrings.complete.tr()}',
-                          style: AppTextStyles.medium.copyWith(fontSize: 12),
+                          style: AppTextStyles.medium.copyWith(fontSize: 9.width),
                         )
                       ])),
                   Text.rich(TextSpan(
                       text: "3",
-                      style: AppTextStyles.bold
-                          .copyWith(fontSize: 20, color: AppColors.orange),
+                      style:AppTextStyles.bold
+                          .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
                         TextSpan(
                           text: ' ${AppLocalizedStrings.remaining.tr()}',
-                          style: AppTextStyles.medium.copyWith(fontSize: 12),
+                          style: AppTextStyles.medium.copyWith(fontSize: 9.width),
                         )
                       ]))
                 ],
@@ -110,7 +111,7 @@ class TimeCard extends StatelessWidget {
                 Text(
                   AppLocalizedStrings.perDayTime.tr(),
                   style: AppTextStyles.normal
-                      .copyWith(color: Colors.white, fontSize: 16),
+                      .copyWith(color: Colors.white, fontSize: 12.width),
                 ),
                 const SizedBox(
                   width: 10,
@@ -118,7 +119,7 @@ class TimeCard extends StatelessWidget {
                 Text(
                   "6h 47m",
                   style: AppTextStyles.bold
-                      .copyWith(color: AppColors.buttonBlue, fontSize: 20),
+                      .copyWith(color: AppColors.buttonBlue, fontSize: 18.width),
                 )
               ],
             )

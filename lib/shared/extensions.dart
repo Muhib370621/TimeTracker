@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 extension IntExtension on int {
-  double get width => (this / 390 * Get.width).roundToDouble();
-  double get height => (this / 844 * Get.height).roundToDouble();
+  double get width => (this / 320 * Get.width).roundToDouble();
+  double get height => (this / 568 * Get.height).roundToDouble();
   SizedBox heightSizedBox() {
     return SizedBox(height: toDouble());
   }
@@ -16,8 +16,8 @@ extension IntExtension on int {
 
 // NOTE: double extension
 extension DoubleExtension on double {
-  double get width => (this / 390 * Get.width).roundToDouble();
-  double get height => (this / 844 * Get.height).roundToDouble();
+  double get width => (this / 320 * Get.width).roundToDouble();
+  double get height => (this / 568 * Get.height).roundToDouble();
   SizedBox heightSizedBox() {
     return SizedBox(height: this);
   }
@@ -29,8 +29,8 @@ extension DoubleExtension on double {
 
 // NOTE: num extension
 extension NumExtension on num {
-  double get w => (this / 390 * Get.width).roundToDouble();
-  double get h => (this / 844 * Get.height).roundToDouble();
+  double get width => (this / 320 * Get.width).roundToDouble();
+  double get height => (this / 568 * Get.height).roundToDouble();
   SizedBox heightSizedBox() {
     return SizedBox(height: toDouble());
   }

@@ -1,9 +1,9 @@
 class AppAssets {
 
   static const String _imagesPath = "assets/images";
+  static const String _svgsPath = "assets/svgs";
   static const String _jsonPath = "assets/json";
 
-  static const appLogo = "$_imagesPath/app_logo.png";
   static const taskCompleted = "$_imagesPath/taskCompleted.png";
 
   static const chatIcon = "$_imagesPath/chat.png";
@@ -18,20 +18,25 @@ class AppAssets {
   static const plumber = "$_imagesPath/plumber.png";
   static const disclaimerIcon = "$_imagesPath/disclaimer.png";
   static const technician = "$_imagesPath/technician.png";
-  static const login1 = "$_imagesPath/login1.png";
-  static const username = "$_imagesPath/username.png";
-  static const password = "$_imagesPath/password.png";
   static const hidePassword = "$_imagesPath/hide_password.png";
   static const changePassword = "$_imagesPath/change_password.png";
-  static const confirmPage = "$_imagesPath/confirm.png";
-  static const back = "$_imagesPath/back.png";
-  static const profilePlaceholder = "$_imagesPath/profile_placeholder.png";
-  static const projectIcon = "$_imagesPath/project_icon.png";
-  static const addNote = "$_imagesPath/add_note.png";
-  static const addImage = "$_imagesPath/add_image.png";
   static const add = "$_imagesPath/add_icon.png";
-  static const aboutUs = "$_imagesPath/about_us.png";
-  static const getHelp = "$_imagesPath/get_help.png";
+  static const addImage = "$_imagesPath/add_image.png";
+
+
+
+
+  static const appLogo = "$_svgsPath/app_logo.svg";
+  static const back = "$_svgsPath/back.svg";
+  static const profilePlaceholder = "$_svgsPath/profile_placeholder.svg";
+  static const addNote = "$_svgsPath/add_note.svg";
+  static const projectIcon = "$_svgsPath/project_icon.svg";
+  static const aboutUs = "$_svgsPath/about_us.svg";
+  static const getHelp = "$_svgsPath/get_help.svg";
+  static const login1 = "$_svgsPath/login1.svg";
+  static const confirmPage = "$_svgsPath/confirm.svg";
+  static const username = "$_svgsPath/username.svg";
+  static const password = "$_svgsPath/password.svg";
 
 
 

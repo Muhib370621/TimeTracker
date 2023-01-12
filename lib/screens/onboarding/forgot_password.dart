@@ -8,6 +8,7 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               leading: Builder(
                 builder: (BuildContext context) {
                   return IconButton(
-                    icon: Image.asset(AppAssets.back), // Put icon of your preference.
+                    icon: SvgPicture.asset(AppAssets.back), // Put icon of your preference.
                     onPressed: () {
                      Navigator.of(context).pop();
                     },
@@ -77,7 +78,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppCommonTextField(
-                          prefixIcon: Image.asset(AppAssets.username),
+                          prefixIcon: SvgPicture.asset(AppAssets.username),
                           backgroundColor: AppColors.textFieldBackground,
                           hintText: "Enter Your Username / Email",
                           textInputType: TextInputType.emailAddress,

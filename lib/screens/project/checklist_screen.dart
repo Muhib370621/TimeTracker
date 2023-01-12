@@ -3,6 +3,7 @@ import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/views/checklist_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/shared/widgets/empty_view.dart';
@@ -63,7 +64,7 @@ class CheckListScreen extends StatelessWidget {
           Text(
             "Action",
             style: AppTextStyles.bold
-                .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                .copyWith(color: AppColors.buttonBlue, fontSize: 15.width),
           ),
           const SizedBox(
             height: 10,

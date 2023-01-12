@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
   final String leadingImage;
@@ -28,7 +29,7 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
-            icon: Image.asset(leadingImage), // Put icon of your preference.
+            icon: SvgPicture.asset(leadingImage), // Put icon of your preference.
             onPressed: () {
               if (backEnabled) {
                 Navigator.of(context).pop();

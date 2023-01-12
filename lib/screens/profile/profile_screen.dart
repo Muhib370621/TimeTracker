@@ -4,11 +4,13 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -65,10 +67,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                const SizedBox(height: 10,),
                                 Text(
                                   "Your Name Here",
-                                  style: AppTextStyles.bold.copyWith(
-                                      fontSize: 25, color: Colors.black),
+                                  style: AppTextStyles.semiBold.copyWith(
+                                      fontSize: 18.width, color: Colors.black),
                                 ),
                                 const SizedBox(
                                   height: 30,
@@ -85,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           Text(
                                             AppLocalizedStrings.firstName.tr(),
                                             style: AppTextStyles.bold.copyWith(
-                                                fontSize: 15,
+                                                fontSize: 12.width,
                                                 color: Colors.black),
                                           ),
                                           const SizedBox(
@@ -114,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           Text(
                                             AppLocalizedStrings.lastName.tr(),
                                             style: AppTextStyles.bold.copyWith(
-                                                fontSize: 15,
+                                                fontSize: 12.width,
                                                 color: Colors.black),
                                           ),
                                           const SizedBox(
@@ -143,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Text(
                                       AppLocalizedStrings.emailAddress.tr(),
                                       style: AppTextStyles.bold.copyWith(
-                                          fontSize: 15, color: Colors.black),
+                                          fontSize: 12.width, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -169,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Text(
                                       AppLocalizedStrings.mobileNumber.tr(),
                                       style: AppTextStyles.bold.copyWith(
-                                          fontSize: 15, color: Colors.black),
+                                          fontSize: 12.width, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -195,6 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       AppCommonButton(
                                         title: AppLocalizedStrings.saveChanges.tr(),
+                                        fontSize: 16,
                                       ),
                                       const Divider(
                                         color: Colors.black,
@@ -215,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               BorderRadius.circular(8)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(AppAssets.aboutUs),
+                                        child: SvgPicture.asset(AppAssets.aboutUs),
                                       ),
                                     ),
                                     const SizedBox(
@@ -224,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Text(
                                       AppLocalizedStrings.aboutUs.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
-                                          fontSize: 18, color: Colors.black),
+                                          fontSize: 15.width, color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -240,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               BorderRadius.circular(8)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(AppAssets.getHelp),
+                                        child: SvgPicture.asset(AppAssets.getHelp),
                                       ),
                                     ),
                                     const SizedBox(
@@ -249,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Text(
                                       AppLocalizedStrings.getHelp.tr(),
                                       style: AppTextStyles.semiBold.copyWith(
-                                          fontSize: 18, color: Colors.black),
+                                          fontSize: 15.width, color: Colors.black),
                                     )
                                   ],
                                 ),

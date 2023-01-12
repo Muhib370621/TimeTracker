@@ -1,9 +1,11 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
+import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/screens/views/time_card.dart';
 import 'package:blu_time/shared/enums/time_card_status.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -107,19 +109,23 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                         horizontal: 10.0, vertical: 5),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.calendar_month,
                           color: AppColors.buttonBlue,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Expanded(child: Text("Tue 06 Dec - Fri 09 Dec")),
-                        SizedBox(
+                        Expanded(
+                            child: Text(
+                          "Tue 06 Dec - Fri 09 Dec",
+                          style: AppTextStyles.medium.copyWith(color: Colors.black,fontSize: 10.width),
+                        )),
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           color: AppColors.buttonBlue,
                         )
@@ -193,8 +199,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                         },
                       ),
                     );
-                  })
-              ),
+                  })),
         ],
       ),
     );

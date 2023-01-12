@@ -3,9 +3,11 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project_action.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
@@ -25,15 +27,16 @@ class _ActionCardState extends State<ActionCard> {
       ),
       color: AppColors.cellBackground,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: ListTile(
           title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.projectAction.custrecordBbBludocsPath ?? "",
-                  style: AppTextStyles.bold
-                      .copyWith(color: Colors.black, fontSize: 15)),
+                  style: AppTextStyles.semiBold
+                      .copyWith(color: Colors.black, fontSize: 11.width)),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Row(
                 children: [
@@ -43,7 +46,7 @@ class _ActionCardState extends State<ActionCard> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(AppAssets.profilePlaceholder),
+                            SvgPicture.asset(AppAssets.profilePlaceholder,width: 17.width,),
                             const SizedBox(
                               width: 12,
                             ),
@@ -53,14 +56,14 @@ class _ActionCardState extends State<ActionCard> {
                                   Expanded(
                                       child: Text("${AppLocalizedStrings.assignedBy.tr()} sample w.",
                                           style: AppTextStyles.medium.copyWith(
-                                              color: Colors.black, fontSize: 11))),
+                                              color: Colors.black, fontSize: 8.width))),
                                   const SizedBox(
                                     width: 12,
                                   ),
                                   Expanded(
                                       child: Text("12/06/23, 09:43",
                                           style: AppTextStyles.medium.copyWith(
-                                              color: Colors.black, fontSize: 11))),
+                                              color: Colors.black, fontSize: 8.width))),
                                 ],
                               ),
                             ),
@@ -74,11 +77,11 @@ class _ActionCardState extends State<ActionCard> {
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.check_circle,size: 30,),
+                       Icon(Icons.check_circle,size: 17.width,),
                       const SizedBox(
                         width: 5,
                       ),
-                      AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
+                      AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 17.width,fontSize: 8.width,radius: 10,onPressed: (){
                         Navigator.of(context).pushNamed(RouteNames.checklist,arguments: widget.projectAction);
                       },)
                     ],

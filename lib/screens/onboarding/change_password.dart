@@ -8,6 +8,7 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -32,7 +33,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               leading: Builder(
                 builder: (BuildContext context) {
                   return IconButton(
-                    icon: Image.asset(AppAssets.back), // Put icon of your preference.
+                    icon: SvgPicture.asset(AppAssets.back), // Put icon of your preference.
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -80,7 +81,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             selector: (context, model) => model.obscureText,
                             builder: (context, value, child) =>
                                 AppCommonTextField(
-                                  prefixIcon: Image.asset(AppAssets.password),
+                                  prefixIcon: SvgPicture.asset(AppAssets.password),
                                   backgroundColor:
                                   AppColors.textFieldBackground,
                                   hintText: "Enter New Password",
@@ -112,7 +113,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             selector: (context, model) => model.obscureText,
                             builder: (context, value, child) =>
                                 AppCommonTextField(
-                                  prefixIcon: Image.asset(AppAssets.password),
+                                  prefixIcon: SvgPicture.asset(AppAssets.password),
                                   backgroundColor:
                                   AppColors.textFieldBackground,
                                   hintText: "Enter Confirm Password",

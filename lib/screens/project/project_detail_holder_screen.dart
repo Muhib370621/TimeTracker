@@ -3,6 +3,7 @@ import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/project/site_map_screen.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
@@ -77,6 +78,7 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
       height: 35,
       radius: 10,
       elevation: 5.0,
+      fontSize: 12.width,
       color:
           (viewModel.tabIndex == index) ? AppColors.buttonBlue : Colors.white,
       textColor:

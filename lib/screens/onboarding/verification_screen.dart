@@ -7,6 +7,7 @@ import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -46,7 +47,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: Image.asset(
+                          child: SvgPicture.asset(
                             AppAssets.confirmPage,
                             fit: BoxFit.fitWidth,
                            // height: MediaQuery.of(context).size.height * 0.6,
