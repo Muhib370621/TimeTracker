@@ -43,7 +43,13 @@ class TimeEntryViewModel extends BaseModel{
               routeParams: "?limit=10&offset=${entries.length}"),
           data: body,
           create: () => QueryResponse(create: () => TimeEntry()));
-      entries = List.from(entries)..addAll(result.response?.items ?? []);
+      if (refresh) {
+        entries = result.response?.items ?? [];
+      }
+      else {
+        entries = List.from(entries)
+          ..addAll(result.response?.items ?? []);
+      }
       totalCount = result.response?.totalResults ?? 0;
       setIsLoading = false;
       await locator<StoreServices>().setLocal(AppStorage.timeEntries, "userid", entries.map((e) => e.toJson()).toList());
