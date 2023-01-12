@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:android_path_provider/android_path_provider.dart';
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,20 +17,23 @@ Future<void> main() async {
   setupLocator();
   var path = await findLocalPath() ?? "";
   Hive.init(path);
-  runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => MaterialApp(
-        useInheritedMediaQuery: true,
-        debugShowCheckedModeBanner: false,
-        home: EasyLocalization(
-          supportedLocales: const [Locale('en', ''), Locale('es', ''), Locale('pt', '')],
-          path: 'assets/translations',
-          fallbackLocale: const Locale('es', ''),
-          child: const MyApp(),
-        ),
-      ), // Wrap your app
-    ));
+  runApp(DevicePreview(
+    enabled: false,
+    builder: (context) => MaterialApp(
+      useInheritedMediaQuery: true,
+      debugShowCheckedModeBanner: false,
+      home: EasyLocalization(
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('es', ''),
+          Locale('pt', '')
+        ],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('es', ''),
+        child: const MyApp(),
+      ),
+    ), // Wrap your app
+  ));
   // runApp(MaterialApp(
   //   debugShowCheckedModeBanner: false,
   //   home: EasyLocalization(
@@ -43,40 +47,43 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,
     ));
-    return GetMaterialApp(
-      navigatorKey: locator<NavigationService>().navigatorKey,
-      useInheritedMediaQuery: true,
-      // localizationsDelegates: const [
-      //   AppLocalizations.delegate, // Add this line
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // locale:Locale('es', ''),
-      // supportedLocales: const [
-      //   Locale('en', ''), // English, no country code
-      //   Locale('es', ''),
-      //   Locale('pt', ''),// Spanish, no country code
-      // ],
-      //locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'bluTime',
-      theme: ThemeData(
-        backgroundColor: Colors.red,
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: "Montserrat",
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: RouteNames.appLoader,
-      onGenerateRoute: RouteFactories.generateRoute,
-    );
+    return ResponsiveSizer(builder: (context, orientation, screenType) {
+      return GetMaterialApp(
+        navigatorKey: locator<NavigationService>().navigatorKey,
+        useInheritedMediaQuery: true,
+        // localizationsDelegates: const [
+        //   AppLocalizations.delegate, // Add this line
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        //   GlobalCupertinoLocalizations.delegate,
+        // ],
+        // locale:Locale('es', ''),
+        // supportedLocales: const [
+        //   Locale('en', ''), // English, no country code
+        //   Locale('es', ''),
+        //   Locale('pt', ''),// Spanish, no country code
+        // ],
+        //locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        title: 'bluTime',
+        theme: ThemeData(
+          backgroundColor: Colors.red,
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: "Montserrat",
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: RouteNames.appLoader,
+        onGenerateRoute: RouteFactories.generateRoute,
+      );
+    });
   }
 }

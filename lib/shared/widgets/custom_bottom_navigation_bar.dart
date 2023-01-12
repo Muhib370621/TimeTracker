@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -77,6 +78,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   });
 
   final BottomNavController controller = Get.put(BottomNavController());
+  final StartingScreenController stController = Get.put(StartingScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -328,7 +330,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: controller.locationLoading.value==true,
+                visible: stController.locationLoading.value==true,
                 child: Container(
                   height: 0.55*size.height,
                   color: AppColors.bottomBar.withOpacity(0.7),

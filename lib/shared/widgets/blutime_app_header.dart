@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,7 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BottomNavController controller = Get.put(BottomNavController());
-
+    final StartingScreenController controller = Get.put(StartingScreenController());
     return AppBar(
       elevation: elevation,
       backgroundColor: backgroundColor,
