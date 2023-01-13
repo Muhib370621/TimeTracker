@@ -1,6 +1,7 @@
 import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/models/project_action.dart';
+import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/screens/StartingScreen/starting_screen.dart';
 import 'package:blu_time/screens/home/clock_screen.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
@@ -104,7 +105,7 @@ class RouteFactories{
              settings: settings, builder: (context) => const ChangePassword());
        case RouteNames.timeCardDetail:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const TimeCardDetailScreen());
+             settings: settings, builder: (context) => TimeCardDetailScreen(timeEntry: settings.arguments as TimeEntry,));
        case RouteNames.startScreen:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const StartingScreen());

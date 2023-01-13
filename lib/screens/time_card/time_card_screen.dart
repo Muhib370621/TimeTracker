@@ -195,7 +195,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                         ),
                         onTap: () {
                           Navigator.of(context)
-                              .pushNamed(RouteNames.timeCardDetail);
+                              .pushNamed(RouteNames.timeCardDetail,arguments: model.entries[index]);
                         },
                       ),
                     );

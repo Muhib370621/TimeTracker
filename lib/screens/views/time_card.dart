@@ -27,7 +27,7 @@ class TimeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Tue 06 Dec",
+                  timeEntry.trandate ?? "N/A",
                   style: AppTextStyles.semiBold.copyWith(fontSize: 15.width),
                 ),
                 SizedBox(
@@ -74,7 +74,7 @@ class TimeCard extends StatelessWidget {
                     style: AppTextStyles.semiBold.copyWith(fontSize: 10.width),
                   ),
                   Text.rich(TextSpan(
-                      text: "3",
+                      text: "0",
                       style: AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -84,7 +84,7 @@ class TimeCard extends StatelessWidget {
                         )
                       ])),
                   Text.rich(TextSpan(
-                      text: "3",
+                      text: "0",
                       style:AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -94,7 +94,7 @@ class TimeCard extends StatelessWidget {
                         )
                       ])),
                   Text.rich(TextSpan(
-                      text: "3",
+                      text: "0",
                       style:AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -111,15 +111,20 @@ class TimeCard extends StatelessWidget {
                 Text(
                   AppLocalizedStrings.perDayTime.tr(),
                   style: AppTextStyles.normal
-                      .copyWith(color: Colors.white, fontSize: 12.width),
+                      .copyWith(color: Colors.white, fontSize: 11.width),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  "6h 47m",
-                  style: AppTextStyles.bold
-                      .copyWith(color: AppColors.buttonBlue, fontSize: 18.width),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text(
+                      (double.parse(timeEntry.hours ?? "0.0")).convertDecimalHours(),
+                      style: AppTextStyles.bold
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 16.width),
+                    ),
+                  ),
                 )
               ],
             )

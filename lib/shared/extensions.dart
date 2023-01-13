@@ -25,6 +25,13 @@ extension DoubleExtension on double {
   SizedBox widthSizedBox() {
     return SizedBox(width: this);
   }
+
+  String convertDecimalHours() {
+    int hours = floor();
+    int minutes = (this % 1 * 60).round();
+    return '$hours hours $minutes minutes';
+  }
+
 }
 
 // NOTE: num extension

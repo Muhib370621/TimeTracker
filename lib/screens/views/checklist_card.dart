@@ -38,7 +38,7 @@ class ChecklistCard extends StatelessWidget {
           children: [
              Icon(Icons.calendar_month,color: AppColors.buttonBlue,size: 15.width,),
             const SizedBox(width: 5,),
-            Text("Task Complete Date here",
+            Text(actionChecklist.lastmodified ?? "N/A",
                 style: AppTextStyles.normal
                     .copyWith(color: Colors.black, fontSize: 10.width)),
           ],

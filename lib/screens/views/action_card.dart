@@ -54,14 +54,14 @@ class _ActionCardState extends State<ActionCard> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                      child: Text("${AppLocalizedStrings.assignedBy.tr()} sample w.",
+                                      child: Text("${AppLocalizedStrings.assignedBy.tr()}\n N/A",
                                           style: AppTextStyles.medium.copyWith(
                                               color: Colors.black, fontSize: 8.width))),
                                   const SizedBox(
                                     width: 12,
                                   ),
                                   Expanded(
-                                      child: Text("12/06/23, 09:43",
+                                      child: Text(widget.projectAction.created ?? "N/A",
                                           style: AppTextStyles.medium.copyWith(
                                               color: Colors.black, fontSize: 8.width))),
                                 ],

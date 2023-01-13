@@ -1,11 +1,13 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
 class TimeCardDetailCard extends StatefulWidget {
-  const TimeCardDetailCard({Key? key}) : super(key: key);
+  final TimeEntry timeEntry;
+  const TimeCardDetailCard({Key? key, required this.timeEntry}) : super(key: key);
 
   @override
   State<TimeCardDetailCard> createState() => _TimeCardDetailCardState();
