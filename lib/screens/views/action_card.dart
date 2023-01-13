@@ -5,7 +5,9 @@ import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
+import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
@@ -80,6 +82,7 @@ class _ActionCardState extends State<ActionCard> {
                       ),
                       AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
                         Navigator.of(context).pushNamed(RouteNames.checklist,arguments: widget.projectAction);
+                        // Get.offAll(CustomBottomNavigationBar());
                       },)
                     ],
                   )

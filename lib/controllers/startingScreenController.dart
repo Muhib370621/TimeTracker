@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../constants/app_assets.dart';
 import '../constants/app_colors.dart';
+import 'BottomNavigationController.dart';
 
 class StartingScreenController extends GetxController {
   @override
@@ -44,6 +45,9 @@ class StartingScreenController extends GetxController {
   RxString startTime = ''.obs;
   RxString finishTime = ''.obs;
   RxString totalTime = ''.obs;
+  RxString Breakstart = ''.obs;
+  RxString finishBreak = ''.obs;
+  RxString totalBreak = ''.obs;
   final Rx<Position> currentPosition = const Position(
     longitude: 0,
     latitude: 0,
@@ -102,30 +106,28 @@ class StartingScreenController extends GetxController {
                   color: AppColors.bottomBar.withOpacity(0.6),
                 ),
                 AlertDialog(
-                  insetPadding: EdgeInsets.all(20),
+                  insetPadding: const EdgeInsets.all(20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   content: Container(
-                    height: 0.23*MediaQuery.of(context).size.height,
+                    height: 0.22 * MediaQuery.of(context).size.height,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                       ),
+                      color: Colors.white,
+                    ),
                     child: Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Motion And Fitness",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 17.sp,
+                                fontSize: 17.5.sp,
                                 fontWeight: FontWeight.w500,
                               ),
-                            ),
-                            SizedBox(
-                              width: 0.14*MediaQuery.of(context).size.width,
                             ),
                             Obx(
                               () => Switch(
@@ -146,7 +148,7 @@ class StartingScreenController extends GetxController {
                         Text(
                           'Enable Location?',
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 16.5.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -155,10 +157,11 @@ class StartingScreenController extends GetxController {
                           height: Adaptive.h(2),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20.0,right: 20.0,top: 5),
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20.0, top: 5),
                           child: Text(
                             'Please make sure you enable GPS and try again',
-                            style: TextStyle(fontSize: 14.5.sp),
+                            style: TextStyle(fontSize: 15.5.sp),
                           ),
                         ),
                         SizedBox(
@@ -169,7 +172,7 @@ class StartingScreenController extends GetxController {
                             onTap: () {
                               const AndroidIntent intent = AndroidIntent(
                                   action:
-                                  'android.settings.LOCATION_SOURCE_SETTINGS');
+                                      'android.settings.LOCATION_SOURCE_SETTINGS');
                               // Future.delayed(const Duration(seconds: 3));
                               intent.launch();
                               Navigator.of(context, rootNavigator: true).pop();
@@ -177,7 +180,7 @@ class StartingScreenController extends GetxController {
                               // _gpsService();
                             },
                             child: Container(
-                              height: Adaptive.h(5),
+                              height: Adaptive.h(4),
                               width: Adaptive.w(35),
                               decoration: const BoxDecoration(
                                 color: AppColors.buttonBlue,
@@ -185,7 +188,7 @@ class StartingScreenController extends GetxController {
                                   Radius.circular(10),
                                 ),
                               ),
-                              child:  Center(
+                              child: Center(
                                 child: Text(
                                   "Allow",
                                   style: TextStyle(
@@ -201,7 +204,6 @@ class StartingScreenController extends GetxController {
                       ],
                     ),
                   ),
-
                 ),
               ]);
             });
@@ -210,10 +212,13 @@ class StartingScreenController extends GetxController {
   }
 
   void startTimer() {
+    final BottomNavController controller = Get.put(BottomNavController());
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
-    // Get.to(() => const ProjectsScreen());
+    controller.currentIndex.value=2;
     if (breakRunning.value == false) {}
+    finishTime.value="";
+    totalTime.value="";
   }
 
   void addTime() {
@@ -230,6 +235,9 @@ class StartingScreenController extends GetxController {
     breakTimer =
         Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
     breakRunning.value = true;
+    getBreakStartTime();
+    finishBreak.value="";
+
   }
 
   void addBreakTime() {
@@ -247,6 +255,18 @@ class StartingScreenController extends GetxController {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     startTime.value = formattedDateTime;
+  }
+
+  void getBreakStartTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    Breakstart.value = formattedDateTime;
+  }
+
+  void getBreakEndTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    finishBreak.value = formattedDateTime;
   }
 
   void subtractTime() {
@@ -283,122 +303,125 @@ class StartingScreenController extends GetxController {
     }
     timer?.cancel();
     clockRunning.value = false;
+
     getFinishTime();
     subtractTime();
     final Size size = MediaQuery.of(context).size;
-    Get.defaultDialog(
-        title: "",
-        content: SizedBox(
-          height: 0.329 * size.height,
-          width: 0.95 * size.width,
-          child: Column(
-            children: [
-              Image.asset(
-                AppAssets.taskCompleted,
-                scale: 3,
-              ),
-              SizedBox(
-                height: 0.008 * size.height,
-              ),
-              Text(
-                "Time Marked",
-                style: TextStyle(
-                  fontSize: 0.017 * size.height,
-                  fontWeight: FontWeight.bold,
+    if (
+    breakRunning.value==false) {
+      Get.defaultDialog(
+          title: "",
+          content: SizedBox(
+            height: 0.329 * size.height,
+            width: 0.95 * size.width,
+            child: Column(
+              children: [
+                Image.asset(
+                  AppAssets.taskCompleted,
+                  scale: 3,
                 ),
-              ),
-              SizedBox(
-                height: 0.05 * size.height,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(children: [
-                    Image.asset(
-                      AppAssets.startWork,
-                      scale: 3,
-                    ),
-                    Text(
-                      startTime.value,
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                    Text(
-                      "Start Work",
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ]),
-                  Column(children: [
-                    Image.asset(
-                      AppAssets.finishWork,
-                      scale: 2,
-                    ),
-                    Text(
-                      finishTime.value,
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                    Text(
-                      "Finish Work",
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ]),
-                  Column(children: [
-                    Image.asset(
-                      AppAssets.breakTime,
-                      scale: 3,
-                    ),
-                    Text(
-                      totalTime.value,
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                    Text(
-                      "Total Work",
-                      style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ]),
-                ],
-              ),
-              SizedBox(
-                height: 0.012 * size.height,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  currentAddress.value.toString(),
-                  maxLines: 1,
+                SizedBox(
+                  height: 0.008 * size.height,
+                ),
+                Text(
+                  "Time Marked",
                   style: TextStyle(
-                      fontSize: 0.017 * size.height,
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis),
+                    fontSize: 0.017 * size.height,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ));
-    // }
+                SizedBox(
+                  height: 0.05 * size.height,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.startWork,
+                        scale: 3,
+                      ),
+                      Text(
+                        startTime.value,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Start Work",
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.finishWork,
+                        scale: 2,
+                      ),
+                      Text(
+                        finishTime.value,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Finish Work",
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                    Column(children: [
+                      Image.asset(
+                        AppAssets.breakTime,
+                        scale: 3,
+                      ),
+                      Text(
+                        totalTime.value,
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      Text(
+                        "Total Work",
+                        style: TextStyle(
+                          fontSize: 0.017 * size.height,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.012 * size.height,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    currentAddress.value.toString(),
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 0.017 * size.height,
+                        color: Colors.black,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                )
+              ],
+            ),
+          ));
+    }
   }
 
   void stopBreak({bool resets = true}) {
@@ -406,7 +429,10 @@ class StartingScreenController extends GetxController {
       reset();
     }
     breakTimer?.cancel();
-    breakRunning.value = false;
+    getBreakEndTime();
+    Future.delayed(const Duration(seconds: 3), () {
+      breakRunning.value = false;
+    });
   }
 
   getCurrentLocation() async {

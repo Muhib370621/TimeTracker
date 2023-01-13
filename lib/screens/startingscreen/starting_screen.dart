@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
@@ -10,16 +9,17 @@ import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../shared/Prompts.dart';
+
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
-
   @override
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
 class _StartingScreenState extends State<StartingScreen> {
   @override
-  // bool get wantKeepAlive => true;
+
   void initState() {
     final StartingScreenController controller =
         Get.put(StartingScreenController());
@@ -33,8 +33,6 @@ class _StartingScreenState extends State<StartingScreen> {
   }
 
   String twoDigits(int n) => n.toString().padLeft(2, '0');
-
-  // DateTime today = DateTime.now().toLocal();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +57,7 @@ class _StartingScreenState extends State<StartingScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 0.06 * size.height,
+                          height: 0.05 * size.height,
                         ),
                         Column(
                           children: [
@@ -70,7 +68,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                   '  ${controller.timeString.value}',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 26.5.sp,
+                                    fontSize: 27.5.sp,
                                     color: AppColors.buttonBlue,
                                   ),
                                 ),
@@ -104,7 +102,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       style: TextStyle(
                                           color: const Color(0xff8B8B8B),
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 12.sp),
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 )
@@ -118,7 +116,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                 style: TextStyle(
                                   // fontFeatures: [FontFeature.subscripts()],
                                   color: const Color(0xff000000),
-                                  fontSize: 16.sp,
+                                  fontSize: 18.sp,
                                 ),
                               ),
                             ),
@@ -127,22 +125,19 @@ class _StartingScreenState extends State<StartingScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                controller.currentAddress == ""
+                                controller.currentAddress.value == ""
                                     ? controller.getCurrentLocation()
                                     : null;
                                 if (controller.currentAddress.value == "" &&
                                     controller.role.value != "" &&
                                     controller.locationLoading.value == false) {
-                                  Get.defaultDialog(
-                                      title: "Oops !!",
-                                      content: const Text(
-                                          "Please wait we are getting your current Location"));
+                                  Prompts.showSnackBar(
+                                      msg:
+                                          "Please wait waiting for your current location");
                                 } else if (controller.role.value == "" &&
-                                    controller.locationLoading == false) {
-                                  Get.defaultDialog(
-                                      title: "Oops !!",
-                                      content: const Text(
-                                          "Please Select Your Role"));
+                                    controller.locationLoading.value == false) {
+                                  Prompts.showSnackBar(
+                                      msg: "Please Select your Role");
                                 } else if (controller.role.value != "") {
                                   controller.clockRunning.value == true
                                       ?
@@ -156,17 +151,15 @@ class _StartingScreenState extends State<StartingScreen> {
 
                                   // clockRunning = true;
                                 } else if (controller.role.value == "" &&
-                                    controller.currentAddress.value == null &&
+                                    controller.currentAddress.value == "" &&
                                     controller.locationLoading.value == false) {
-                                  Get.defaultDialog(
-                                      title: "Oops !!",
-                                      content: const Text(
-                                          "Select your role and let us fetch your current location"));
+                                  Prompts.showSnackBar(
+                                      msg:
+                                          "Please select your role and wait while we are fetching your current location");
                                 }
                               },
                               child: Container(
-                                height:
-                                    26.5.h,
+                                height: 26.5.h,
                                 width: 55.w,
                                 // Below is the code for Linear Gradient.
                                 decoration: BoxDecoration(
@@ -236,7 +229,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           color: const Color(0xffFFFFFF),
-                                          fontSize: 13.5.sp),
+                                          fontSize: 14.sp),
                                     ),
                                   ],
                                 ),
@@ -329,7 +322,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       ? ""
                                       : controller.role.value,
                                   style: TextStyle(
-                                    fontSize: 8.2 * textsize,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.orange,
                                   ),
@@ -340,7 +333,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                     ? 1.h
                                     : 0,
                               ),
-                              if (controller.currentAddress.value != null)
+                              if (controller.currentAddress.value != "")
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20.0, right: 8),
@@ -356,7 +349,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           ? "Loading Address..."
                                           : "Tap Start to get Current Location",
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 16.sp),
+                                          color: Colors.black, fontSize: 15.5.sp),
                                     )
                                   : Container(),
                             ],
@@ -394,7 +387,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           style: TextStyle(
                                             color: const Color(0xffFF4A00),
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 6.5 * textsize,
+                                            fontSize: 14.5.sp,
                                           ),
                                         ),
                                         Text(
@@ -402,7 +395,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           style: TextStyle(
                                               color: const Color(0xff000000),
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 14.sp),
+                                              fontSize: 15.sp),
                                         ),
                                       ],
                                     ),
@@ -424,14 +417,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                           style: TextStyle(
                                               color: const Color(0xffFF4A00),
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 6.2 * textsize),
+                                              fontSize: 14.5.sp),
                                         ),
                                         Text(
                                           'Finish Work',
                                           style: TextStyle(
                                               color: const Color(0xff000000),
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 14.sp),
+                                              fontSize: 15.sp),
                                         ),
                                       ],
                                     ),
@@ -453,14 +446,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                           style: TextStyle(
                                               color: const Color(0xffFF4A00),
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 6.5 * textsize),
+                                              fontSize: 14.5.sp),
                                         ),
                                         Text(
                                           'Total Work',
                                           style: TextStyle(
                                               color: const Color(0xff000000),
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 14.sp),
+                                              fontSize: 15.sp),
                                         ),
                                       ],
                                     ),
@@ -472,7 +465,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       controller.breakRunning.value == true,
                                   child: Container(
                                     height: 0.11 * size.height,
-                                    width: 0.85 * size.width,
+                                    width: 0.9 * size.width,
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -501,13 +494,13 @@ class _StartingScreenState extends State<StartingScreen> {
                                             borderRadius:
                                                 const BorderRadius.all(
                                               Radius.circular(
-                                                12,
+                                                8,
                                               ),
                                             ),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.grey
-                                                    .withOpacity(0.22),
+                                                    .withOpacity(0.5),
                                                 spreadRadius: 2,
                                                 blurRadius: 1,
                                                 offset: const Offset(0,
@@ -528,79 +521,85 @@ class _StartingScreenState extends State<StartingScreen> {
                                         SizedBox(
                                           height: 0.007 * size.height,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Column(children: [
-                                              const Text(
-                                                "Start Time",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 13.2),
-                                              ),
-                                              Container(
-                                                height: 0.028 * size.height,
-                                                width: 0.15 * size.width,
-                                                decoration: const BoxDecoration(
-                                                  color: AppColors.buttonBlue,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(8),
-                                                  ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:3.0,right: 3.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(children: [
+                                                const Text(
+                                                  "Start Time",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 13.2),
                                                 ),
-                                                child: Center(
-                                                  child: Text(
-                                                    controller.startTime.value,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 6.2 * textsize,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                Container(
+                                                  height: 0.028 * size.height,
+                                                  width: 0.15 * size.width,
+                                                  decoration: const BoxDecoration(
+                                                    color: AppColors.buttonBlue,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(8),
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      controller.Breakstart.value,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 6.2 * textsize,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ]),
-                                            Text(
-                                              " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
-                                              style: TextStyle(
-                                                fontSize: 15.2 * textsize,
-                                                color: AppColors.orange,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Column(children: [
-                                              const Text(
-                                                "End Time",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 13.2),
-                                              ),
-                                              Container(
-                                                height: 0.028 * size.height,
-                                                width: 0.15 * size.width,
-                                                decoration: const BoxDecoration(
-                                                  color: AppColors.buttonBlue,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(8),
+                                              ]),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top:1),
+                                                child: Text(
+                                                  " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
+                                                  style: TextStyle(
+                                                    fontSize: 15.2 * textsize,
+                                                    color: AppColors.orange,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "02:00",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 6.2 * textsize,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                              ),
+                                              Column(children: [
+                                                const Text(
+                                                  "End Time",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 13.2),
+                                                ),
+                                                Container(
+                                                  height: 0.028 * size.height,
+                                                  width: 0.15 * size.width,
+                                                  decoration: const BoxDecoration(
+                                                    color: AppColors.buttonBlue,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(8),
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      controller.finishBreak.value==""?"-----":controller.finishBreak.value,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 6.2 * textsize,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ]),
-                                          ],
+                                              ]),
+                                            ],
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 0.01 * size.height,
@@ -627,11 +626,11 @@ class _StartingScreenState extends State<StartingScreen> {
                             ),
                             Positioned(
                               top: 0.142 * size.height,
-                              left: 0.063 * size.width,
-                              child: Container(
+                              left: 0.094 * size.width,
+                              child: SizedBox(
                                 // color: Color(0xffE4E4E4),
-                                width: 0.98 * size.width,
-                                height: 0.17 * size.height,
+                                width: size.width,
+                                height: 0.22 * size.height,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -642,47 +641,28 @@ class _StartingScreenState extends State<StartingScreen> {
                                       decoration: const BoxDecoration(
                                         color: Color(0xffE4E4E4),
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomRight: Radius.circular(30),
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
                                         ),
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          // Column(
-                                          //   children: [
-                                          //     SizedBox(
-                                          //       height: 12,
-                                          //     ),
-                                          //     // Container(
-                                          //     //   height: 180,
-                                          //     //   width: 120,
-                                          //     //   decoration: BoxDecoration(
-                                          //     //     color: const Color(0xff0062BD),
-                                          //     //     borderRadius: BorderRadius.all(
-                                          //     //         Radius.circular(10)),
-                                          //     //   ),
-                                          //     // )
-                                          //   ],
-                                          // ),
                                           SizedBox(
                                             width: 0.01 * size.width,
                                           ),
                                           Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
-                                            // crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               SizedBox(
-                                                height: 0.015 * size.height,
+                                                height: 0.01 * size.height,
                                               ),
                                               Image.asset(
                                                 "assets/images/FZSnPc.png",
-                                                height: 0.029 * size.height,
-                                              ),
-                                              SizedBox(
-                                                height: 0.2.h,
+                                                scale: 3,
+                                                // height: 0.04 * size.height,
                                               ),
                                               RotatedBox(
                                                 quarterTurns: 3,
@@ -692,9 +672,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                                       color: const Color(
                                                           0xff000000),
                                                       fontSize:
-                                                          0.014 * size.height,
+                                                          0.0215 * size.height,
                                                       fontWeight:
-                                                          FontWeight.w500),
+                                                          FontWeight.w600),
                                                 ),
                                               ),
                                             ],
@@ -716,21 +696,11 @@ class _StartingScreenState extends State<StartingScreen> {
                                             ),
                                           )),
                                       onPressed: () {
-                                        // setState(() {
                                         controller.isLoading.value =
                                             !controller.isLoading.value;
-                                        // onTapSlider();
-                                        // });
                                       },
                                       child: SizedBox(
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(10.0),),
-                                        // padding: const EdgeInsets.only(left: 10),
                                         height: 0.03 * size.height,
-                                        // width: 0.05*size.width,
-                                        // width: 50,
-                                        // color: const Color(0xff0062BD),
-                                        // child: Image.asset("assets/images/cuTOBs.png"),
                                         child: controller.isLoading.value ==
                                                 false
                                             ? const Icon(
@@ -756,17 +726,25 @@ class _StartingScreenState extends State<StartingScreen> {
                                 Container(
                                   margin:
                                       EdgeInsets.only(top: 0.13 * size.height),
-                                  // padding: const EdgeInsets.only(top: 105, bottom: 475),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xff0062BD),
-                                    borderRadius: BorderRadius.all(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff0062BD),
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                         10,
                                       ),
                                     ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 2,
+                                        blurRadius: 1,
+                                        offset: const Offset(0,
+                                            2.5), // changes position of shadow
+                                      ),
+                                    ],
                                   ),
-                                  width: 0.35 * size.width,
-                                  height: 0.19 * size.height,
+                                  width: 0.38 * size.width,
+                                  height: 0.24 * size.height,
                                   child: Center(
                                     child: Column(
                                       mainAxisAlignment:
@@ -975,27 +953,16 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     controller.clockRunning
                                                             .value ==
                                                         true
-                                                ? Get.defaultDialog(
-                                                    title: "Sorry!!",
-                                                    content: const Text(
-                                                        "Cant Switch roles while timer is running"))
-                                                :
-                                                // setState(() {
-                                                controller.role.value =
+                                                ? Prompts.showSnackBar(
+                                                    msg:
+                                                        "Cant Change the roles when timer is Running!!")
+                                                : controller.role.value =
                                                     "Electrician";
-                                            // roleSelected==true;
                                             controller.isLoading.value = false;
-
-                                            // Get.to(()=>CustomBottomNavigationBar());
-                                            // print(role);
-                                            // });
-
-                                            // setState(() { isLoading == false;});
-                                            // print(isLoading);
                                           },
                                           child: Container(
-                                            height: 0.04 * size.height,
-                                            width: 0.27 * size.width,
+                                            height: 0.045 * size.height,
+                                            width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
                                                       "Electrician"
@@ -1045,10 +1012,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     controller.clockRunning
                                                             .value ==
                                                         true
-                                                ? Get.defaultDialog(
-                                                    title: "Sorry!!",
-                                                    content: const Text(
-                                                        "Cant Switch roles while timer is running"))
+                                                ? Prompts.showSnackBar(
+                                                    msg:
+                                                        "Cant Change the roles when timer is Running!!")
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1189,12 +1155,10 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 controller.role.value =
                                                     "Technician";
                                             controller.isLoading.value = false;
-                                            // print(role);
-                                            // });
                                           },
                                           child: Container(
-                                            height: 0.04 * size.height,
-                                            width: 0.27 * size.width,
+                                            height: 0.045 * size.height,
+                                            width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
                                                       "Technician"
@@ -1244,10 +1208,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     controller.clockRunning
                                                             .value ==
                                                         true
-                                                ? Get.defaultDialog(
-                                                    title: "Sorry!!",
-                                                    content: const Text(
-                                                        "Cant Switch roles while timer is running"))
+                                                ? Prompts.showSnackBar(
+                                                    msg:
+                                                        "Cant Change the roles when timer is Running!!")
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1270,12 +1233,10 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 controller.role.value =
                                                     "Plumber";
                                             controller.isLoading.value = false;
-                                            // print(role);
-                                            // });
                                           },
                                           child: Container(
-                                            height: 0.04 * size.height,
-                                            width: 0.27 * size.width,
+                                            height: 0.045 * size.height,
+                                            width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
                                                       "Plumber"
@@ -1328,84 +1289,58 @@ class _StartingScreenState extends State<StartingScreen> {
                             Positioned(
                               top: 0.15 * size.height,
                               child: SizedBox(
-                                // color: Color(0xffE4E4E4),
                                 width: 0.24 * size.width,
                                 height: 0.22 * size.height,
-                                // padding: EdgeInsets.only(
-                                //     top: 0.15 * size.height, bottom: 0.5 * size.height),
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 6, right: 6),
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xffE4E4E4),
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(30),
-                                          bottomRight: Radius.circular(30),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 0.03 * size.height,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 6, right: 6),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffE4E4E4),
+                                          borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
                                           ),
-                                          Image.asset(
-                                            "assets/images/FZSnPc.png",
-                                            height: 0.05 * size.height,
-                                          ),
-                                          RotatedBox(
-                                            quarterTurns: 3,
-                                            child: Text(
-                                              'SELECT ROLE  ',
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff000000),
-                                                  fontSize: 0.016 * size.height,
-                                                  fontWeight: FontWeight.w500),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 2,
+                                              blurRadius: 1,
+                                              offset: const Offset(0,
+                                                  2), // changes position of shadow
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                        // ElevatedButton(
-                                        //     style: ElevatedButton.styleFrom(
-                                        //       backgroundColor: const Color(0xffE4E4E4),
-                                        //         shape: const RoundedRectangleBorder(
-                                        //           borderRadius: BorderRadius.only(
-                                        //             topRight: Radius.circular(30),
-                                        //             bottomRight: Radius.circular(30),
-                                        //           ),
-                                        //         )
-                                        //     ),
-                                        //     onPressed: () {
-                                        //       setState(() {
-                                        //         // load=true;
-                                        //       });
-                                        //     },
-                                        //     child: Column(
-                                        //       children: [
-                                        //         const SizedBox(
-                                        //           height: 20,
-                                        //         ),
-                                        //         Container(
-                                        //             child: Image.asset("assets/images/FZSnPc.png")),
-                                        //         Container(
-                                        //           child: const RotatedBox(
-                                        //             quarterTurns: 3,
-                                        //             child: Text(
-                                        //               'Select Role  ',
-                                        //               style: TextStyle(
-                                        //                   color: Color(0xff000000),
-                                        //                   fontSize: 14,
-                                        //                   fontWeight: FontWeight.w500),
-                                        //             ),
-                                        //           ),
-                                        //         ),
-                                        //       ],
-                                        //     )),
+                                          ],
                                         ),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 0.01 * size.height,
+                                            ),
+                                            Image.asset(
+                                              "assets/images/FZSnPc.png",
+                                              scale: 3,
+                                              // height: 0.04 * size.height,
+                                            ),
+                                            RotatedBox(
+                                              quarterTurns: 3,
+                                              child: Text(
+                                                'SELECT ROLE  ',
+                                                style: TextStyle(
+                                                    color:
+                                                        const Color(0xff000000),
+                                                    fontSize:
+                                                        0.022 * size.height,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                     Expanded(
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -1419,20 +1354,11 @@ class _StartingScreenState extends State<StartingScreen> {
                                               ),
                                             )),
                                         onPressed: () {
-                                          // setState(() {
                                           controller.isLoading.value =
                                               !controller.isLoading.value;
-                                          // onTapSlider();
-                                          // });
                                         },
                                         child: SizedBox(
-                                          // decoration: BoxDecoration(
-                                          //   borderRadius: BorderRadius.circular(10.0),),
-                                          // padding: const EdgeInsets.only(left: 10),
                                           height: 0.06 * size.height,
-                                          // width: 50,
-                                          // color: const Color(0xff0062BD),
-                                          // child: Image.asset("assets/images/cuTOBs.png"),
                                           child: controller.isLoading.value ==
                                                   false
                                               ? const Center(
@@ -1458,18 +1384,7 @@ class _StartingScreenState extends State<StartingScreen> {
                             ),
                             controller.locationLoading.value == true &&
                                     controller.currentAddress.value == ""
-                                ?
-                                // BackdropFilter(
-                                //   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                                //   child: AlertDialog(
-                                //
-                                //     title: Text("Fetching Location",style: TextStyle(color: AppColors.buttonBlue),),
-                                //     clipBehavior: Clip.hardEdge,
-                                //     shape: ,
-                                //     backgroundColor: Colors.white,
-                                //   ),
-                                // )
-                                Stack(children: [
+                                ? Stack(children: [
                                     Container(
                                       height: size.height,
                                       width: size.width,
@@ -1503,7 +1418,6 @@ class _StartingScreenState extends State<StartingScreen> {
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
-                                              // crossAxisAlignment: CrossAxisAlignment.,
                                               children: [
                                                 SizedBox(
                                                   width: 0.02 * size.height,
