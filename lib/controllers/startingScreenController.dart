@@ -1,12 +1,13 @@
 import 'dart:async';
+
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:blu_time/shared/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../constants/app_assets.dart';
 import '../constants/app_colors.dart';
 import 'BottomNavigationController.dart';
@@ -59,6 +60,7 @@ class StartingScreenController extends GetxController {
     speedAccuracy: 0,
   ).obs;
   final RxString timeString = ''.obs;
+  RxInt breakCounter = 0.obs;
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -235,6 +237,7 @@ class StartingScreenController extends GetxController {
     breakTimer =
         Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
     breakRunning.value = true;
+    breakCounter++;
     getBreakStartTime();
     finishBreak.value="";
 
@@ -468,4 +471,5 @@ class StartingScreenController extends GetxController {
     timeString.value = formattedDateTime;
     // });
   }
+
 }

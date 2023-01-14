@@ -1,5 +1,5 @@
 
-import 'package:blu_time/utilities/extensions.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
 class PagedList extends StatelessWidget {

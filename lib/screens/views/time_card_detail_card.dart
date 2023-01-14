@@ -1,10 +1,13 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/time_entry.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
 class TimeCardDetailCard extends StatefulWidget {
-  const TimeCardDetailCard({Key? key}) : super(key: key);
+  final TimeEntry timeEntry;
+  const TimeCardDetailCard({Key? key, required this.timeEntry}) : super(key: key);
 
   @override
   State<TimeCardDetailCard> createState() => _TimeCardDetailCardState();
@@ -28,7 +31,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
             Text(
               "Action",
               style: AppTextStyles.normal
-                  .copyWith(color: Colors.white, fontSize: 14),
+                  .copyWith(color: Colors.white, fontSize: 9.width),
             ),
             const SizedBox(
               height: 5,
@@ -39,7 +42,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   child: Text(
                     "Pick Up New Through Bolt",
                     style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                        .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                   ),
                 ),
                 const SizedBox(
@@ -58,7 +61,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
             Text(
               AppLocalizedStrings.workTime.tr(),
               style: AppTextStyles.normal
-                  .copyWith(color: Colors.white, fontSize: 14),
+                  .copyWith(color: Colors.white, fontSize: 9.width),
             ),
             const SizedBox(
               height: 5,
@@ -69,7 +72,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   child: Text(
                     AppLocalizedStrings.startTime.tr(),
                     style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                        .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                   ),
                 ),
                 const SizedBox(
@@ -78,15 +81,15 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                 Text(
                   "12:00 PM",
                   style: AppTextStyles.medium
-                      .copyWith(color: Colors.white, fontSize: 16),
+                      .copyWith(color: Colors.white,fontSize: 13.width),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  "12:00 PM",
-                  style: AppTextStyles.bold
-                      .copyWith(color: AppColors.orange, fontSize: 12),
+                  "Dec 06 2023",
+                  style: AppTextStyles.medium
+                      .copyWith(color: AppColors.orange,fontSize: 10.width),
                 )
               ],
             ),
@@ -99,7 +102,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                   child: Text(
                     AppLocalizedStrings.finishTime.tr(),
                     style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                        .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                   ),
                 ),
                 const SizedBox(
@@ -108,15 +111,15 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                 Text(
                   "12:00 PM",
                   style: AppTextStyles.medium
-                      .copyWith(color: Colors.white, fontSize: 16),
+                      .copyWith(color: Colors.white,fontSize: 13.width),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  "12:00 PM",
-                  style: AppTextStyles.bold
-                      .copyWith(color: AppColors.orange, fontSize: 12),
+                  "Dec 06 2023",
+                  style: AppTextStyles.medium
+                      .copyWith(color: AppColors.orange, fontSize: 10.width),
                 )
               ],
             ),
@@ -132,7 +135,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                     Text(
                       AppLocalizedStrings.breakTime.tr(),
                       style: AppTextStyles.normal
-                          .copyWith(color: Colors.white, fontSize: 14),
+                          .copyWith(color: Colors.white, fontSize: 9.width),
                     ),
                     const SizedBox(
                       height: 5,
@@ -140,7 +143,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                     Text(
                       AppLocalizedStrings.startTime.tr(),
                       style: AppTextStyles.bold
-                          .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                     ),
                     const SizedBox(
                       height: 5,
@@ -148,7 +151,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                     Text(
                       AppLocalizedStrings.endTime.tr(),
                       style: AppTextStyles.bold
-                          .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                     )
                   ],
                 ),
@@ -158,7 +161,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                     Text(
                       "${AppLocalizedStrings.breakString.tr()} 1",
                       style: AppTextStyles.normal
-                          .copyWith(color: AppColors.orange, fontSize: 14),
+                          .copyWith(color: AppColors.orange, fontSize: 9.width),
                     ),
                     const SizedBox(
                       height: 5,
@@ -168,13 +171,13 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                         Row(
                           children: [
                             Container(
-                              width: 30,
-                              height: 30,
+                              width: 18,
+                              height: 18,
                               decoration: const ShapeDecoration(
                                 color: AppColors.buttonBlue,
                                 shape: CircleBorder(),
                               ),
-                              child: Icon(Icons.arrow_back_ios_new_outlined,size: 20,),
+                              child: const Icon(Icons.arrow_back_ios_new_outlined,size: 13,),
                             ),
                             const SizedBox(
                               width: 15,
@@ -184,12 +187,12 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                                 Text(
                                   "12:00 PM",
                                   style: AppTextStyles.medium.copyWith(
-                                      color: Colors.white, fontSize: 16),
+                                      color: Colors.white, fontSize: 13.width),
                                 ),
                                 Text(
                                   "12:00 PM",
                                   style: AppTextStyles.medium.copyWith(
-                                      color: Colors.white, fontSize: 16),
+                                      color: Colors.white, fontSize: 13.width),
                                 ),
                               ],
                             ),
@@ -197,13 +200,13 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                               width: 15,
                             ),
                             Container(
-                              width: 30,
-                              height: 30,
+                              width: 18,
+                              height: 18,
                               decoration: const ShapeDecoration(
                                 color: AppColors.orange,
                                 shape: CircleBorder(),
                               ),
-                              child: Icon(Icons.arrow_forward_ios,size: 20,),
+                              child: const Icon(Icons.arrow_forward_ios,size: 13,),
                             ),
                           ],
                         ),
@@ -222,7 +225,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
             Text(
               "Location",
               style: AppTextStyles.normal
-                  .copyWith(color: Colors.white, fontSize: 14),
+                  .copyWith(color: Colors.white, fontSize: 9.width),
             ),
             const SizedBox(
               height: 5,
@@ -242,7 +245,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                 Text(
                   "Project Location Here",
                   style: AppTextStyles.medium
-                      .copyWith(color: Colors.white, fontSize: 16),
+                      .copyWith(color: Colors.white, fontSize: 13.width),
                 )
               ],
             ),

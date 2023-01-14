@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/controllers/BottomNavigationController.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/views/project_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
@@ -8,6 +9,7 @@ import 'package:blu_time/shared/widgets/empty_view.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -76,6 +78,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
+                    final BottomNavController controller = Get.put(BottomNavController());
+                    controller.projectName.value= model.projects[index].altname.toString();
+
                   },
                 ),
               );

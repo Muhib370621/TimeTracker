@@ -1,25 +1,28 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
+import 'package:blu_time/screens/startingscreen/acitvity.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../controllers/BottomNavigationController.dart';
 import '../../shared/Prompts.dart';
 
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
+
   @override
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
 class _StartingScreenState extends State<StartingScreen> {
   @override
-
   void initState() {
     final StartingScreenController controller =
         Get.put(StartingScreenController());
@@ -38,13 +41,13 @@ class _StartingScreenState extends State<StartingScreen> {
   Widget build(BuildContext context) {
     final StartingScreenController controller =
         Get.put(StartingScreenController());
+    final BottomNavController bottomController = Get.put(BottomNavController());
     final Size size = MediaQuery.of(context).size;
     var textsize = size.height / size.width;
     return ViewModelBuilder<HomeViewModel>.reactive(
         viewModelBuilder: () => HomeViewModel(),
         builder: (context, viewModel, child) {
           return Scaffold(
-              // backgroundColor: Colors.white,
               appBar: const BluTimeAppHeader(
                 leadingImage: AppAssets.profilePlaceholder,
                 backEnabled: false,
@@ -121,120 +124,185 @@ class _StartingScreenState extends State<StartingScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 0.11 * size.height,
+                              height: 2.h,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                controller.currentAddress.value == ""
-                                    ? controller.getCurrentLocation()
-                                    : null;
-                                if (controller.currentAddress.value == "" &&
-                                    controller.role.value != "" &&
-                                    controller.locationLoading.value == false) {
-                                  Prompts.showSnackBar(
-                                      msg:
-                                          "Please wait waiting for your current location");
-                                } else if (controller.role.value == "" &&
-                                    controller.locationLoading.value == false) {
-                                  Prompts.showSnackBar(
-                                      msg: "Please Select your Role");
-                                } else if (controller.role.value != "") {
-                                  controller.clockRunning.value == true
-                                      ?
-                                      // print(clockRunning);
-                                      controller.stopTimer(
-                                          resets: false, context: context)
-                                      : controller.startTimer();
-                                  controller.startTime.value == ""
-                                      ? controller.getStartTime()
-                                      : null;
-
-                                  // clockRunning = true;
-                                } else if (controller.role.value == "" &&
-                                    controller.currentAddress.value == "" &&
-                                    controller.locationLoading.value == false) {
-                                  Prompts.showSnackBar(
-                                      msg:
-                                          "Please select your role and wait while we are fetching your current location");
-                                }
-                              },
-                              child: Container(
-                                height: 26.5.h,
-                                width: 55.w,
-                                // Below is the code for Linear Gradient.
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.9),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(
-                                          0, 4), // changes position of shadow
-                                    ),
-                                  ],
-                                  shape: BoxShape.circle,
-                                  gradient: controller.timerStatus.value ==
-                                                  false &&
-                                              controller.clockRunning.value ||
-                                          controller.breakRunning.value == true
-                                      ? LinearGradient(
-                                          colors: [
-                                            AppColors.orange,
-                                            AppColors.orange.withOpacity(0.9)
-                                          ],
-                                          begin: Alignment.bottomLeft,
-                                          // end: Alignment.topRight,
-                                        )
-                                      : LinearGradient(
-                                          colors: [
-                                            const Color(0xff0062BD),
-                                            const Color(0xff002D4B)
-                                                .withOpacity(0.9)
-                                          ],
-                                          begin: Alignment.bottomLeft,
-                                          // end: Alignment.topRight,
-                                        ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 4.h,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/Group 137.png',
-                                      scale: 3,
-                                    ),
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Text(
-                                      " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
-                                      // '00:00:00',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: const Color(0xffFFFFFF),
-                                          fontSize: 20.sp),
-                                    ),
-                                    SizedBox(
-                                      height: 1.h,
-                                    ),
-                                    Text(
-                                      controller.timerStatus.value == false &&
-                                                  controller
-                                                      .clockRunning.value ||
-                                              controller.breakRunning.value ==
-                                                  true
-                                          ? 'FINISH WORK'
-                                          : 'START WORK',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: const Color(0xffFFFFFF),
-                                          fontSize: 14.sp),
-                                    ),
-                                  ],
+                            Visibility(
+                              visible: bottomController.projectName.value != "",
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 70, right: 70),
+                                child: Text(
+                                  bottomController.projectName.value.toString(),
+                                  style: TextStyle(
+                                      color: AppColors.buttonBlue,
+                                      fontSize: 17.8.sp,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 1,
                                 ),
                               ),
                             ),
+                            Visibility(
+                              visible:
+                                  bottomController.activityName.value != "",
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 80, right: 80),
+                                child: Text(
+                                  bottomController.activityName.value
+                                      .toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.5.sp,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: controller.clockRunning.value ||
+                                      controller.breakRunning.value == true
+                                  ? 0.045 * size.height
+                                  : 0.1 * size.height,
+                            ),
+                            Stack(children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.currentAddress.value == ""
+                                      ? controller.getCurrentLocation()
+                                      : null;
+                                  if (controller.currentAddress.value == "" &&
+                                      controller.role.value != "" &&
+                                      controller.locationLoading.value ==
+                                          false) {
+                                    Prompts.showSnackBar(
+                                        msg:
+                                            "Please wait waiting for your current location");
+                                  } else if (controller.role.value == "" &&
+                                      controller.locationLoading.value ==
+                                          false) {
+                                    Prompts.showSnackBar(
+                                        msg: "Please Select your Role");
+                                  } else if (controller.role.value != "") {
+                                    controller.clockRunning.value == true
+                                        ?
+                                        // print(clockRunning);
+                                        controller.stopTimer(
+                                            resets: false, context: context)
+                                        : controller.startTimer();
+                                    controller.startTime.value == ""
+                                        ? controller.getStartTime()
+                                        : null;
+                                  } else if (controller.role.value == "" &&
+                                      controller.currentAddress.value == "" &&
+                                      controller.locationLoading.value ==
+                                          false) {
+                                    Prompts.showSnackBar(
+                                        msg:
+                                            "Please select your role and wait while we are fetching your current location");
+                                  }
+                                },
+                                child: Container(
+                                  height: 26.5.h,
+                                  width: 64.w,
+                                  // Below is the code for Linear Gradient.
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.6),
+                                        spreadRadius: 4,
+                                        blurRadius: 1,
+                                        offset: const Offset(
+                                            0, 4), // changes position of shadow
+                                      ),
+                                    ],
+                                    shape: BoxShape.circle,
+                                    gradient: controller.timerStatus.value ==
+                                                    false &&
+                                                controller.clockRunning.value ||
+                                            controller.breakRunning.value ==
+                                                true
+                                        ? LinearGradient(
+                                            colors: [
+                                              AppColors.orange,
+                                              AppColors.orange.withOpacity(0.9)
+                                            ],
+                                            begin: Alignment.bottomLeft,
+                                            // end: Alignment.topRight,
+                                          )
+                                        : LinearGradient(
+                                            colors: [
+                                              const Color(0xff0062BD),
+                                              const Color(0xff002D4B)
+                                                  .withOpacity(0.9)
+                                            ],
+                                            begin: Alignment.bottomLeft,
+                                            // end: Alignment.topRight,
+                                          ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/Group 137.png',
+                                        scale: 3,
+                                      ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      Text(
+                                        " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
+                                        // '00:00:00',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xffFFFFFF),
+                                            fontSize: 20.sp),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      Text(
+                                        controller.timerStatus.value == false &&
+                                                    controller
+                                                        .clockRunning.value ||
+                                                controller.breakRunning.value ==
+                                                    true
+                                            ? 'FINISH WORK'
+                                            : 'START WORK',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: const Color(0xffFFFFFF),
+                                            fontSize: 14.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => const Activity());
+                                  },
+                                  child: Container(
+                                    height: 4.5.h,
+                                    width: 10.w,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.bottomBar,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SvgPicture.asset(AppAssets.historyIcon,fit: BoxFit.fitHeight,),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ]),
                           ],
                         ),
                         SizedBox(
@@ -349,7 +417,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                           ? "Loading Address..."
                                           : "Tap Start to get Current Location",
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 15.5.sp),
+                                          color: Colors.black,
+                                          fontSize: 15.5.sp),
                                     )
                                   : Container(),
                             ],
@@ -510,7 +579,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "Break 1",
+                                              "Break ${controller.breakCounter.value}",
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 6.2 * textsize,
@@ -522,7 +591,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                           height: 0.007 * size.height,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left:3.0,right: 3.0),
+                                          padding: const EdgeInsets.only(
+                                              left: 3.0, right: 3.0),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -537,7 +607,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 Container(
                                                   height: 0.028 * size.height,
                                                   width: 0.15 * size.width,
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     color: AppColors.buttonBlue,
                                                     borderRadius:
                                                         BorderRadius.all(
@@ -546,10 +617,12 @@ class _StartingScreenState extends State<StartingScreen> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      controller.Breakstart.value,
+                                                      controller
+                                                          .Breakstart.value,
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 6.2 * textsize,
+                                                        fontSize:
+                                                            6.2 * textsize,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -558,7 +631,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 ),
                                               ]),
                                               Padding(
-                                                padding: const EdgeInsets.only(top:1),
+                                                padding: const EdgeInsets.only(
+                                                    top: 1),
                                                 child: Text(
                                                   " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
                                                   style: TextStyle(
@@ -578,7 +652,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 Container(
                                                   height: 0.028 * size.height,
                                                   width: 0.15 * size.width,
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     color: AppColors.buttonBlue,
                                                     borderRadius:
                                                         BorderRadius.all(
@@ -587,10 +662,17 @@ class _StartingScreenState extends State<StartingScreen> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      controller.finishBreak.value==""?"-----":controller.finishBreak.value,
+                                                      controller.finishBreak
+                                                                  .value ==
+                                                              ""
+                                                          ? "-----"
+                                                          : controller
+                                                              .finishBreak
+                                                              .value,
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 6.2 * textsize,
+                                                        fontSize:
+                                                            6.2 * textsize,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),

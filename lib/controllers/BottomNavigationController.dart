@@ -17,6 +17,10 @@ class BottomNavController extends GetxController{
   RxBool roleSelected = false.obs;
   RxBool locationLoading = false.obs;
 
+  RxString activityName = "".obs;
+  RxString projectName = "".obs;
+
+
   RxInt currentIndex = 0.obs;
   setBottomBarIndex(index) {
     currentIndex.value = index;

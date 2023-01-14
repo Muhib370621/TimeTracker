@@ -57,7 +57,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AppAssets.addImage),
+                      Image.asset(AppAssets.addImage,width: 92,),
                       Text(AppLocalizedStrings.addImages.tr(),style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue,fontSize: 18),)
                     ],
                   ),

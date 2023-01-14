@@ -3,11 +3,16 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project_action.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../controllers/BottomNavigationController.dart';
+
 
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
@@ -27,68 +32,77 @@ class _ActionCardState extends State<ActionCard> {
       ),
       color: AppColors.cellBackground,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: ListTile(
-          title: Column(
-            children: [
-              Text(widget.projectAction.custrecordBbBludocsPath ?? "",
-                  style: AppTextStyles.bold
-                      .copyWith(color: Colors.black, fontSize: 15)),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(AppAssets.profilePlaceholder),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Text("${AppLocalizedStrings.assignedBy.tr()} sample w.",
-                                          style: AppTextStyles.medium.copyWith(
-                                              color: Colors.black, fontSize: 11))),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Expanded(
-                                      child: Text("12/06/23, 09:43",
-                                          style: AppTextStyles.medium.copyWith(
-                                              color: Colors.black, fontSize: 11))),
-                                ],
+          title: GestureDetector(
+            onTap: () {
+              final BottomNavController controller = Get.put(BottomNavController());
+              Get.offAll(() => CustomBottomNavigationBar());
+              controller.currentIndex.value=0;
+              controller.activityName.value = widget.projectAction.custrecordBbBludocsPath!;
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.projectAction.custrecordBbBludocsPath ?? "",
+                    style: AppTextStyles.semiBold
+                        .copyWith(color: Colors.black, fontSize: 11.width)),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(AppAssets.profilePlaceholder,width: 17.width,),
+                              const SizedBox(
+                                width: 12,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Icons.check_circle,size: 30,),
-                      const SizedBox(
-                        width: 5,
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text("${AppLocalizedStrings.assignedBy.tr()}\n N/A",
+                                            style: AppTextStyles.medium.copyWith(
+                                                color: Colors.black, fontSize: 8.width))),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                        child: Text(widget.projectAction.created ?? "N/A",
+                                            style: AppTextStyles.medium.copyWith(
+                                                color: Colors.black, fontSize: 8.width))),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 30,radius: 10,onPressed: (){
-                        Navigator.of(context).pushNamed(RouteNames.checklist,arguments: widget.projectAction);
-                        // Get.offAll(CustomBottomNavigationBar());
-                      },)
-                    ],
-                  )
-                ],
-              ),
-            ],
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Row(
+                      children: [
+                         Icon(Icons.check_circle,size: 17.width,),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 17.width,fontSize: 8.width,radius: 10,onPressed: (){
+                          Navigator.of(context).pushNamed(RouteNames.checklist,arguments: widget.projectAction);
+                          // Get.offAll(CustomBottomNavigationBar());
+                        },)
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

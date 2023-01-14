@@ -6,73 +6,10 @@ import 'package:get/get.dart';
 
 import '../../controllers/BottomNavigationController.dart';
 
-// class CustomBottomNavigationBar extends StatelessWidget {
-//   final int index;
-//   final Function(int) onTap;
-//
-//   const CustomBottomNavigationBar(
-//       {Key? key, required this.index, required this.onTap})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BottomNavBarV2(
-//       index: index,
-//       onTap: onTap,
-//     );
-//     //   BottomNavigationBar(
-//     //   currentIndex: index,
-//     //   backgroundColor: AppColors.bottomBar,
-//     //   onTap: onTap,
-//     //   iconSize: 24,
-//     //   selectedItemColor: AppColors.background,
-//     //   unselectedItemColor: AppColors.timerColor,
-//     //   selectedLabelStyle: AppTextStyles.semiBold.copyWith(fontSize: 12),
-//     //   unselectedLabelStyle: AppTextStyles.semiBold.copyWith(fontSize: 12),
-//     //   type: BottomNavigationBarType.fixed,
-//     //   elevation: 0,
-//     //   items: [
-//     //     BottomNavigationBarItem(
-//     //       label: "Clock",
-//     //       icon: Image.asset("assets/images/clock.png", height: 20),
-//     //       activeIcon: Image.asset("assets/images/selectedClock.png", height: 30),
-//     //     ),
-//     //     BottomNavigationBarItem(
-//     //       label: "Time Cards",
-//     //       icon: Image.asset("assets/images/timecard.png", height: 20),
-//     //       activeIcon: const Icon(
-//     //         Icons.list_alt_outlined,
-//     //         size: 24,
-//     //         color: AppColors.background,
-//     //       ),
-//     //     ),
-//     //     BottomNavigationBarItem(
-//     //       label: "Tasks",
-//     //       icon: Image.asset("assets/images/task.png", height: 20),
-//     //
-//     //       activeIcon: Icon(
-//     //         Icons.task_sharp,
-//     //         size: 24,
-//     //         color: AppColors.background,
-//     //       ),
-//     //     ),
-//     //     BottomNavigationBarItem(
-//     //       label: "Chat",
-//     //       icon: Image.asset("assets/images/chat.png", height: 20),
-//     //       activeIcon: const Icon(
-//     //         Icons.on_device_training,
-//     //         size: 24,
-//     //         color: AppColors.background,
-//     //       ),
-//     //     ),
-//     //   ],
-//     // );
-//   }
-// }
-
 class CustomBottomNavigationBar extends StatelessWidget {
+
+  var data = Get.arguments;
   // final int index;
-  // final Function(int) onTap;
   CustomBottomNavigationBar({
     super.key,
   });
@@ -88,7 +25,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
             index: controller.currentIndex.value,
             children: controller.pages,
           ),
-          bottomNavigationBar: SizedBox(
+          bottomNavigationBar: Container(
+            color: Colors.transparent,
             width: size.width,
             height: 0.119 * size.height,
             child: Stack(children: [

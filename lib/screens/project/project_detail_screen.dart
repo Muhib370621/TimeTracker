@@ -4,6 +4,7 @@ import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/screens/views/action_card.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/project_detail_view_model.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +39,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                 children: [
                   Text(
                     AppLocalizedStrings.details.tr(),
-                    style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                    style: AppTextStyles.semiBold
+                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
                   ),
                   const SizedBox(
                     height: 10,
@@ -47,43 +48,34 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   Card(
                     elevation: 5.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 AppLocalizedStrings.startTime.tr(),
-                                style: AppTextStyles.bold.copyWith(
-                                    color: AppColors.buttonBlue, fontSize: 18),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
                               ),
                               const SizedBox(width: 5,),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        child: Text("Dec 06 2023",
-                                            style: AppTextStyles.medium.copyWith(
-                                                color: Colors.grey, fontSize: 18)),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Text("09:00 AM",
-                                          style: AppTextStyles.semiBold.copyWith(
-                                              color: AppColors.buttonBlue,
-                                              fontSize: 15)),
-                                    ),
-                                  ],
-                                ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Text(widget.project.startdate ?? "",
+                                      style: AppTextStyles.medium.copyWith(
+                                          color: Colors.grey, fontSize: 13.width)),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text("09:00 AM",
+                                      style: AppTextStyles.semiBold.copyWith(
+                                          color: AppColors.buttonBlue,
+                                          fontSize: 10.width)),
+                                ],
                               ),
                             ],
                           ),
@@ -96,31 +88,24 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             children: [
                               Text(
                                 AppLocalizedStrings.finishTime.tr(),
-                                style: AppTextStyles.bold.copyWith(
-                                    color: AppColors.buttonBlue, fontSize: 18),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
                               ),
                               const SizedBox(width: 5,),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        child: Text("Dec 06 2023",
-                                            style: AppTextStyles.medium.copyWith(
-                                                color: Colors.grey, fontSize: 18)),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Text("09:00 AM",
-                                          style: AppTextStyles.semiBold.copyWith(
-                                              color: AppColors.buttonBlue,
-                                              fontSize: 15)),
-                                    ),
-                                  ],
-                                ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Text(widget.project.custentityBbForecastedInstallDate ?? "",
+                                      style: AppTextStyles.medium.copyWith(
+                                          color: Colors.grey, fontSize: 13.width)),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text("09:00 AM",
+                                      style: AppTextStyles.semiBold.copyWith(
+                                          color: AppColors.buttonBlue,
+                                          fontSize: 10.width)),
+                                ],
                               ),
                             ],
                           ),
@@ -133,31 +118,16 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             children: [
                               Text(
                                 AppLocalizedStrings.location.tr(),
-                                style: AppTextStyles.bold.copyWith(
-                                    color: AppColors.buttonBlue, fontSize: 18),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
                               ),
                               const SizedBox(width: 5,),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        child: Text("Dec 06 2023",
-                                            style: AppTextStyles.medium.copyWith(
-                                                color: Colors.grey, fontSize: 18)),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Text("09:00 AM",
-                                          style: AppTextStyles.semiBold.copyWith(
-                                              color: AppColors.buttonBlue,
-                                              fontSize: 15)),
-                                    ),
-                                  ],
-                                ),
+                              Row(
+                                children: [
+                                  Text(widget.project.custentityBbInstallAddress1Text ?? "Project Location Here",
+                                      style: AppTextStyles.medium.copyWith(
+                                          color: Colors.grey, fontSize: 13.width)),
+                                ],
                               ),
                             ],
                           )
@@ -166,12 +136,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                     ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
                   Text(
                     AppLocalizedStrings.action.tr(),
                     style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 16),
+                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
                   ),
                   const SizedBox(
                     height: 10,

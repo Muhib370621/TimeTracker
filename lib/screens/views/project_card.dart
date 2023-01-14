@@ -3,6 +3,7 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
@@ -19,9 +20,9 @@ class ProjectCard extends StatelessWidget {
       child: ListTile(
         title: Row(
           children: [
-            Image.asset(AppAssets.projectIcon),
+            SvgPicture.asset(AppAssets.projectIcon,color: AppColors.buttonBlue,),
             const SizedBox(width: 12,),
-            Flexible(child: Text(project.altname?? "",style: AppTextStyles.bold.copyWith(color: Colors.black,fontSize: 13))),
+            Flexible(child: Text(project.altname?? "",style: AppTextStyles.semiBold.copyWith(color: Colors.black,fontSize: 12))),
           ],
         ),
         trailing: Container(

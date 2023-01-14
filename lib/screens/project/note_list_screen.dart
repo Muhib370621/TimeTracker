@@ -3,10 +3,12 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/view_models/note_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -79,16 +81,16 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
                 child: Card(
                   elevation: 5.0,
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 5),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, t mollit anim id est laborum.",
-                            style: AppTextStyles.semiBold
-                                .copyWith(color: Colors.black, fontSize: 12)),
+                            style: AppTextStyles.medium
+                                .copyWith(color: Colors.black, fontSize: 9.width)),
                         const SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         Row(
                           children: [
@@ -123,7 +125,7 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(AppAssets.addNote),
+          SvgPicture.asset(AppAssets.addNote),
           const SizedBox(
             height: 15,
           ),

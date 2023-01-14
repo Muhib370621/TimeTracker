@@ -13,6 +13,7 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/utilities.dart';
 import 'package:blu_time/view_models/onboarding_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Image.asset(
+                      child: SvgPicture.asset(
                         AppAssets.login1,
                         fit: BoxFit.cover,
                        // height: MediaQuery.of(context).size.width * 0.4,
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text("Username / Email",style: AppTextStyles.medium.copyWith(color: Colors.black),),
                         ),
                         AppCommonTextField(
-                          prefixIcon: Image.asset(AppAssets.username),
+                          prefixIcon: SvgPicture.asset(AppAssets.username),
                           backgroundColor: AppColors.textFieldBackground,
                           hintText: "Enter Your Username / Email",
                           textInputType: TextInputType.emailAddress,
@@ -104,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             selector: (context, model) => model.obscureText,
                             builder: (context, value, child) =>
                                 AppCommonTextField(
-                                  prefixIcon: Image.asset(AppAssets.password),
+                                  prefixIcon: SvgPicture.asset(AppAssets.password),
                                   backgroundColor:
                                       AppColors.textFieldBackground,
                                   hintText: "Enter Your Password",

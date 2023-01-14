@@ -31,6 +31,7 @@ enum AppLocalizedStrings {
   breakTime,
   endTime,
   startDateTime,
+  endDateTime,
   completed,
   breakString,
   firstName,
@@ -42,6 +43,7 @@ enum AppLocalizedStrings {
   getHelp,
   logOut,
   enterEmailAddress,
+  projectTotalTime,
   enterMobileNumber;
 
   String tr() {
