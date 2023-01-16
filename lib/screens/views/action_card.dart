@@ -13,9 +13,9 @@ import 'package:get/get.dart';
 
 import '../../controllers/BottomNavigationController.dart';
 
-
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
+
   const ActionCard({Key? key, required this.projectAction}) : super(key: key);
 
   @override
@@ -36,17 +36,26 @@ class _ActionCardState extends State<ActionCard> {
         child: ListTile(
           title: GestureDetector(
             onTap: () {
-              final BottomNavController controller = Get.put(BottomNavController());
-              Get.offAll(() => CustomBottomNavigationBar());
-              controller.currentIndex.value=0;
-              controller.activityName.value = widget.projectAction.custrecordBbBludocsPath!;
+              final BottomNavController controller = Get.put(
+                BottomNavController(),
+              );
+              Get.offAll(
+                () => CustomBottomNavigationBar(),
+              );
+              controller.currentIndex.value = 0;
+              controller.activityName.value =
+                  widget.projectAction.custrecordBbBludocsPath!;
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.projectAction.custrecordBbBludocsPath ?? "",
-                    style: AppTextStyles.semiBold
-                        .copyWith(color: Colors.black, fontSize: 11.width)),
+                Text(
+                  widget.projectAction.custrecordBbBludocsPath ?? "",
+                  style: AppTextStyles.semiBold.copyWith(
+                    color: Colors.black,
+                    fontSize: 11.width,
+                  ),
+                ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -58,7 +67,10 @@ class _ActionCardState extends State<ActionCard> {
                         children: [
                           Row(
                             children: [
-                              SvgPicture.asset(AppAssets.profilePlaceholder,width: 17.width,),
+                              SvgPicture.asset(
+                                AppAssets.profilePlaceholder,
+                                width: 17.width,
+                              ),
                               const SizedBox(
                                 width: 12,
                               ),
@@ -66,16 +78,24 @@ class _ActionCardState extends State<ActionCard> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: Text("${AppLocalizedStrings.assignedBy.tr()}\n N/A",
-                                            style: AppTextStyles.medium.copyWith(
-                                                color: Colors.black, fontSize: 8.width))),
+                                      child: Text(
+                                        "${AppLocalizedStrings.assignedBy.tr()}\n N/A",
+                                        style: AppTextStyles.medium.copyWith(
+                                            color: Colors.black,
+                                            fontSize: 8.width),
+                                      ),
+                                    ),
                                     const SizedBox(
                                       width: 12,
                                     ),
                                     Expanded(
-                                        child: Text(widget.projectAction.created ?? "N/A",
-                                            style: AppTextStyles.medium.copyWith(
-                                                color: Colors.black, fontSize: 8.width))),
+                                      child: Text(
+                                        widget.projectAction.created ?? "N/A",
+                                        style: AppTextStyles.medium.copyWith(
+                                            color: Colors.black,
+                                            fontSize: 8.width),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -89,16 +109,28 @@ class _ActionCardState extends State<ActionCard> {
                     ),
                     Row(
                       children: [
-                         Icon(Icons.check_circle,size: 17.width,),
+                        Icon(
+                          Icons.check_circle,
+                          size: 17.width,
+                        ),
                         const SizedBox(
                           width: 5,
                         ),
-                        AppCommonButton(title: AppLocalizedStrings.checklist.tr(),height: 17.width,fontSize: 8.width,radius: 10,onPressed: (){
-                          Navigator.of(context).pushNamed(RouteNames.checklist,arguments: widget.projectAction);
-                          // Get.offAll(CustomBottomNavigationBar());
-                        },)
+                        AppCommonButton(
+                          title: AppLocalizedStrings.checklist.tr(),
+                          height: 17.width,
+                          fontSize: 8.width,
+                          radius: 10,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              RouteNames.checklist,
+                              arguments: widget.projectAction,
+                            );
+                            // Get.offAll(CustomBottomNavigationBar());
+                          },
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ],

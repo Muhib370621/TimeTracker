@@ -185,12 +185,129 @@ class _StartingScreenState extends State<StartingScreen> {
                                     Prompts.showSnackBar(
                                         msg: "Please Select your Role");
                                   } else if (controller.role.value != "") {
-                                    controller.clockRunning.value == true
-                                        ?
-                                        // print(clockRunning);
-                                        controller.stopTimer(
-                                            resets: false, context: context)
-                                        : controller.startTimer();
+                                    if(controller.clockRunning.value == true)
+                                        {controller.stopTimer(
+                                            resets: false, context: context);
+                                        final Size size = MediaQuery.of(context).size;
+                                        Get.defaultDialog(
+                                              title: "",
+                                              content: SizedBox(
+                                                height: 0.329 * size.height,
+                                                width: 0.95 * size.width,
+                                                child: Column(
+                                                  children: [
+                                                    Image.asset(
+                                                      AppAssets.taskCompleted,
+                                                      scale: 3,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.008 * size.height,
+                                                    ),
+                                                    Text(
+                                                      "Time Marked",
+                                                      style: TextStyle(
+                                                        fontSize: 0.017 * size.height,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.05 * size.height,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: [
+                                                        Column(children: [
+                                                          Image.asset(
+                                                            AppAssets.startWork,
+                                                            scale: 3,
+                                                          ),
+                                                          Text(
+                                                            controller.startTime.value,
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: AppColors.orange,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Start Work",
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                        Column(children: [
+                                                          Image.asset(
+                                                            AppAssets.finishWork,
+                                                            scale: 2,
+                                                          ),
+                                                          Text(
+                                                            controller.finishTime.value,
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: AppColors.orange,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Finish Work",
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                        Column(children: [
+                                                          Image.asset(
+                                                            AppAssets.breakTime,
+                                                            scale: 3,
+                                                          ),
+                                                          Text(
+                                                            controller.totalTime.value,
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: AppColors.orange,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Total Work",
+                                                            style: TextStyle(
+                                                              fontSize: 0.017 * size.height,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.012 * size.height,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(12.0),
+                                                      child: Text(
+                                                        controller.currentAddress.value.toString(),
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                            fontSize: 0.017 * size.height,
+                                                            color: Colors.black,
+                                                            overflow: TextOverflow.ellipsis),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ));
+                                        }
+
+                                        else{
+                                      controller.startTimer();
+                                      final BottomNavController bottController = Get.put(BottomNavController());
+                                      bottController.currentIndex.value = 2;
+                                    }
                                     controller.startTime.value == ""
                                         ? controller.getStartTime()
                                         : null;
@@ -210,9 +327,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.6),
-                                        spreadRadius: 4,
-                                        blurRadius: 1,
+                                        color: Colors.grey.withOpacity(0.4),
+                                        spreadRadius: 5,
+                                        blurRadius: 5,
                                         offset: const Offset(
                                             0, 4), // changes position of shadow
                                       ),
@@ -281,23 +398,29 @@ class _StartingScreenState extends State<StartingScreen> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Get.to(() => const Activity());
-                                  },
-                                  child: Container(
-                                    height: 4.5.h,
-                                    width: 10.w,
-                                    decoration: const BoxDecoration(
-                                      color: AppColors.bottomBar,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SvgPicture.asset(AppAssets.historyIcon,fit: BoxFit.fitHeight,),
+                              Visibility(
+                                visible: controller.breakCounter.value > 0,
+                                child: Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => const Activity());
+                                    },
+                                    child: Container(
+                                      height: 4.5.h,
+                                      width: 10.w,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.bottomBar,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SvgPicture.asset(
+                                          AppAssets.historyIcon,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

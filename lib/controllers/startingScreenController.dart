@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -8,9 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../constants/app_assets.dart';
 import '../constants/app_colors.dart';
-import 'BottomNavigationController.dart';
 
 class StartingScreenController extends GetxController {
   @override
@@ -27,6 +26,7 @@ class StartingScreenController extends GetxController {
   }
 
   Rx<DateTime> today = DateTime.now().toLocal().obs;
+  List listOfBreaks = <BreakModel>[].obs;
   RxBool isSwitched = false.obs;
   RxBool countDown = false.obs;
   RxBool GPS = false.obs;
@@ -214,13 +214,11 @@ class StartingScreenController extends GetxController {
   }
 
   void startTimer() {
-    final BottomNavController controller = Get.put(BottomNavController());
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
-    controller.currentIndex.value=2;
     if (breakRunning.value == false) {}
-    finishTime.value="";
-    totalTime.value="";
+    finishTime.value = "";
+    totalTime.value = "";
   }
 
   void addTime() {
@@ -239,8 +237,7 @@ class StartingScreenController extends GetxController {
     breakRunning.value = true;
     breakCounter++;
     getBreakStartTime();
-    finishBreak.value="";
-
+    finishBreak.value = "";
   }
 
   void addBreakTime() {
@@ -279,11 +276,24 @@ class StartingScreenController extends GetxController {
     DateTime start = dateFormat.parse(startTime.value);
     DateTime finish = dateFormat.parse(finishTime.value);
     Duration diff = finish.difference(start);
-    print(diff);
+    // print(diff);
     hourDiff = diff.inHours.toString();
     minutes_diff = diff.inMinutes.toString();
     totalTime.value = "${hourDiff}h  ${minutes_diff}m";
-    print(totalTime.value);
+    // print(totalTime.value);
+  }
+  void subtractBreak() {
+    var dateFormat = DateFormat('hh:mm');
+    var hourDiff;
+    var minutes_diff;
+    DateTime start = dateFormat.parse(Breakstart.value);
+    DateTime finish = dateFormat.parse(finishBreak.value);
+    Duration diff = finish.difference(start);
+    print(diff);
+    hourDiff = diff.inHours.toString();
+    minutes_diff = diff.inMinutes.toString();
+    totalBreak.value = "${hourDiff}h  ${minutes_diff}m";
+    print(totalBreak.value);
   }
 
   void getFinishTime() {
@@ -306,125 +316,8 @@ class StartingScreenController extends GetxController {
     }
     timer?.cancel();
     clockRunning.value = false;
-
     getFinishTime();
     subtractTime();
-    final Size size = MediaQuery.of(context).size;
-    if (
-    breakRunning.value==false) {
-      Get.defaultDialog(
-          title: "",
-          content: SizedBox(
-            height: 0.329 * size.height,
-            width: 0.95 * size.width,
-            child: Column(
-              children: [
-                Image.asset(
-                  AppAssets.taskCompleted,
-                  scale: 3,
-                ),
-                SizedBox(
-                  height: 0.008 * size.height,
-                ),
-                Text(
-                  "Time Marked",
-                  style: TextStyle(
-                    fontSize: 0.017 * size.height,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 0.05 * size.height,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(children: [
-                      Image.asset(
-                        AppAssets.startWork,
-                        scale: 3,
-                      ),
-                      Text(
-                        startTime.value,
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.orange,
-                        ),
-                      ),
-                      Text(
-                        "Start Work",
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ]),
-                    Column(children: [
-                      Image.asset(
-                        AppAssets.finishWork,
-                        scale: 2,
-                      ),
-                      Text(
-                        finishTime.value,
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.orange,
-                        ),
-                      ),
-                      Text(
-                        "Finish Work",
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ]),
-                    Column(children: [
-                      Image.asset(
-                        AppAssets.breakTime,
-                        scale: 3,
-                      ),
-                      Text(
-                        totalTime.value,
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.orange,
-                        ),
-                      ),
-                      Text(
-                        "Total Work",
-                        style: TextStyle(
-                          fontSize: 0.017 * size.height,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ]),
-                  ],
-                ),
-                SizedBox(
-                  height: 0.012 * size.height,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    currentAddress.value.toString(),
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 0.017 * size.height,
-                        color: Colors.black,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                )
-              ],
-            ),
-          ));
-    }
   }
 
   void stopBreak({bool resets = true}) {
@@ -433,6 +326,11 @@ class StartingScreenController extends GetxController {
     }
     breakTimer?.cancel();
     getBreakEndTime();
+    subtractBreak();
+    listOfBreaks.add(BreakModel(
+        breakStart: Breakstart.value,
+        breakEnd: finishBreak.value,
+        totalBreakTime: totalBreak.value));
     Future.delayed(const Duration(seconds: 3), () {
       breakRunning.value = false;
     });
@@ -471,5 +369,4 @@ class StartingScreenController extends GetxController {
     timeString.value = formattedDateTime;
     // });
   }
-
 }

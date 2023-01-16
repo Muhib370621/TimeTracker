@@ -1,6 +1,7 @@
 {
   "timeCardClockedIn": "Clocked In",
   "timeCardProjectName": "Project Name",
+  "selectRole" : "SELECT ROLE",
   "startTime": "Start Time",
   "finishTime": "Finish Time",
   "location": "Location",

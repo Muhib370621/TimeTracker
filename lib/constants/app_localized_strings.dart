@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 enum AppLocalizedStrings {
   timeCardClockedIn,
   timeCardProjectName,
+  selectRole,
   startTime,
   finishTime,
   location,
