@@ -33,6 +33,7 @@ class MapSampleState extends State<SiteMapScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -55,28 +56,30 @@ class MapSampleState extends State<SiteMapScreen>
               bottom: 0,
               left: 0,
               right: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  elevation: 10,
-                  color: Colors.white,
-                  child: Container(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    elevation: 10,
                     color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.pin_drop),
-                            const Text("Location address")
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 50,
-                          width: double.infinity,
-                          child: MyDeliveryProgress(),
-                        )
-                      ],
+                    child: Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: const [
+                              Icon(Icons.pin_drop),
+                              Text("Location address")
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            child: MyDeliveryProgress(),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

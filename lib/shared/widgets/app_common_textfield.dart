@@ -21,6 +21,7 @@ class AppCommonTextField extends StatelessWidget {
   final Color? hintColor;
   final bool obscureText;
   final TextInputType? textInputType;
+  final ValueChanged<String>? onChanged;
   const AppCommonTextField({
     Key? key,
     this.height = 66,
@@ -36,7 +37,7 @@ class AppCommonTextField extends StatelessWidget {
     this.prefixIcon, this.suffixIcon,
     this.backgroundColor = Colors.transparent,
     this.controller, this.validator, this.hintText, this.hintColor,
-    this.obscureText = false,this.textInputType,
+    this.obscureText = false,this.textInputType, this.onChanged,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class AppCommonTextField extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: obscureText,
       style: TextStyle(color: textColor),
+      onChanged: onChanged,
       decoration: InputDecoration(
           prefixIcon: (prefixIcon != null) ? Padding(
             padding: const EdgeInsets.all(15.0),

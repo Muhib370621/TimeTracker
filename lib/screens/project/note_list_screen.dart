@@ -22,6 +22,7 @@ class NoteListScreen extends StatefulWidget {
 class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.transparent,
@@ -81,12 +82,13 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
                 child: Card(
                   elevation: 5.0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, t mollit anim id est laborum.",
+                            model.notes[index].note ?? "",
                             style: AppTextStyles.medium
                                 .copyWith(color: Colors.black, fontSize: 9.width)),
                         const SizedBox(
@@ -94,15 +96,15 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
                         ),
                         Row(
                           children: [
-                            Image.asset(
-                              AppAssets.addImage,
+                            Image.network(
+                              "https://picsum.photos/40",
                               width: 40,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                            Image.asset(
-                              AppAssets.addImage,
+                            Image.network(
+                              "https://picsum.photos/41",
                               width: 40,
                             ),
                           ],

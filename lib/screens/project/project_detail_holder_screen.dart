@@ -28,6 +28,7 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    widget.viewModel.setTabIndex = 0;
   }
 
   @override

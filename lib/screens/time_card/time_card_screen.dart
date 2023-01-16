@@ -33,7 +33,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
         leadingImage: AppAssets.profilePlaceholder,
         backEnabled: false,
       ),
-      body: ViewModelBuilder.nonReactive(
+      body: ViewModelBuilder.reactive(
           onModelReady: (TimeEntryViewModel model) => model.fetchEntries(),
           viewModelBuilder: () => TimeEntryViewModel(),
           builder:
@@ -88,6 +88,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                 backgroundColor: Colors.white,
                 hintText: AppLocalizedStrings.searchProject.tr(),
                 hintColor: Colors.grey,
+                onChanged:model.searchTimeEntry,
               ),
             ),
           ),

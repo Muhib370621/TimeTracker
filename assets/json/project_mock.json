@@ -9,11 +9,11 @@
       "notes": [
         {
           "noteId": "1",
-          "note": "text"
+          "note": "Memo 1"
         },
         {
           "noteId": "2",
-          "note": "text"
+          "note": "Memo 2"
         }
       ],
       "images": [
@@ -181,11 +181,11 @@
       "notes": [
         {
           "noteId": "1",
-          "note": "text"
+          "note": "Memo 1"
         },
         {
           "noteId": "2",
-          "note": "text"
+          "note": "Memo 2"
         }
       ],
       "images": [

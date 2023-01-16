@@ -12,6 +12,7 @@ import 'package:blu_time/view_models/base_view_model.dart';
 class TimeEntryViewModel extends BaseModel{
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
   List<TimeEntry> entries = [];
+  List<TimeEntry> allEntries = [];
   int totalCount = 0;
   bool isLoading = false;
   set setIsLoading(bool isLoading) {
@@ -23,13 +24,14 @@ class TimeEntryViewModel extends BaseModel{
       return;
     }
     if (refresh) {
-      entries.clear();
-    } else if (entries.length == totalCount && totalCount !=0) {
+      allEntries.clear();
+    } else if (allEntries.length == totalCount && totalCount !=0) {
       return;
     }
 
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.timeEntries, "userid") ?? [];
-     entries = jsonList.map((e) => TimeEntry().decode((Map<String, dynamic>.from(e)))).toList();
+    allEntries = jsonList.map((e) => TimeEntry().decode((Map<String, dynamic>.from(e)))).toList();
+    entries = allEntries;
     setState(entries.isNotEmpty ? ViewState.completed : ViewState.loading);
 
     setIsLoading = true;
@@ -44,19 +46,31 @@ class TimeEntryViewModel extends BaseModel{
           data: body,
           create: () => QueryResponse(create: () => TimeEntry()));
       if (refresh) {
-        entries = result.response?.items ?? [];
+        allEntries = result.response?.items ?? [];
       }
       else {
-        entries = List.from(entries)
+        allEntries = List.from(allEntries)
           ..addAll(result.response?.items ?? []);
       }
+      entries = allEntries;
       totalCount = result.response?.totalResults ?? 0;
       setIsLoading = false;
-      await locator<StoreServices>().setLocal(AppStorage.timeEntries, "userid", entries.map((e) => e.toJson()).toList());
-      setState(entries.isEmpty ? ViewState.empty : ViewState.completed);
+      await locator<StoreServices>().setLocal(AppStorage.timeEntries, "userid", allEntries.map((e) => e.toJson()).toList());
+      setState(allEntries.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();
     } on ErrorResponse {
       rethrow;
     }
   }
+
+  Future<void>searchTimeEntry(String text) async{
+    if (text.isEmpty){
+      entries = allEntries;
+    }
+    else {
+      entries = allEntries.where((element) => element.displayfield?.toLowerCase().contains(text.toLowerCase()) ?? false).toList();
+    }
+    setState(ViewState.completed);
+  }
+
 }

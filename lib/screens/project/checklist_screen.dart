@@ -74,9 +74,6 @@ class CheckListScreen extends StatelessWidget {
                   itemCount: model.checklist.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
-                        Get.to(() => CustomBottomNavigationBar());
-                      },
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         child: ChecklistCard(

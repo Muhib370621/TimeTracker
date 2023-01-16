@@ -36,7 +36,7 @@ class ClockViewModel extends BaseModel {
 
   getLocalProjects<T extends Decodable>() async {
     var projectResponse = (await fetch<ProjectResponse>());
-    projects = projectResponse.projectList ?? [];
+    //projects = projectResponse.projectList ?? [];
     if (projects.isNotEmpty){
       currentProject = projects[0];
     }
