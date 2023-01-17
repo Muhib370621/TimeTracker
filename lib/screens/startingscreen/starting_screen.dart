@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/screens/startingscreen/acitvity.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -31,6 +32,7 @@ class _StartingScreenState extends State<StartingScreen> {
     super.initState();
   }
 
+  @override
   void dispose() {
     super.dispose();
   }
@@ -56,98 +58,97 @@ class _StartingScreenState extends State<StartingScreen> {
                 () => Stack(
                   children: [
                     Center(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 0.05 * size.height,
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '  ${controller.timeString.value}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 27.5.sp,
-                                    color: AppColors.buttonBlue,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 0.01 * size.width,
-                                ),
-                                //Changes required
-                                Container(
-                                  padding: const EdgeInsets.all(3),
-                                  margin:
-                                      EdgeInsets.only(left: 0.02 * size.width),
-                                  height: 0.025 * size.height,
-                                  width: 0.09 * size.width,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 1,
-                                        blurRadius: 0,
-                                        offset: const Offset(0,
-                                            1.5), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      DateFormat('a').format(DateTime.now()),
-                                      style: TextStyle(
-                                          color: const Color(0xff8B8B8B),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 0.05 * size.height,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '  ${controller.timeString.value}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 27.5.sp,
+                                      color: AppColors.buttonBlue,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            Center(
-                              child: Text(
-                                DateFormat('EEEE, MMM dd')
-                                    .format(controller.today.value)
-                                    .toString(),
-                                style: TextStyle(
-                                  // fontFeatures: [FontFeature.subscripts()],
-                                  color: const Color(0xff000000),
-                                  fontSize: 18.sp,
-                                ),
+                                  SizedBox(
+                                    width: 0.01 * size.width,
+                                  ),
+                                  //Changes required
+                                  Container(
+                                    padding: const EdgeInsets.all(3),
+                                    margin: EdgeInsets.only(
+                                        left: 0.02 * size.width),
+                                    height: 0.025 * size.height,
+                                    width: 0.09 * size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(7)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 1,
+                                          blurRadius: 0,
+                                          offset: const Offset(0,
+                                              1.5), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        DateFormat('a').format(DateTime.now()),
+                                        style: TextStyle(
+                                            color: const Color(0xff8B8B8B),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14.sp),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Visibility(
-                              visible: bottomController.projectName.value != "",
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 70, right: 70),
+                              Center(
                                 child: Text(
-                                  bottomController.projectName.value.toString(),
+                                  DateFormat('EEEE, MMM dd')
+                                      .format(controller.today.value)
+                                      .toString(),
                                   style: TextStyle(
-                                      color: AppColors.buttonBlue,
-                                      fontSize: 17.8.sp,
-                                      overflow: TextOverflow.ellipsis,
-                                      fontWeight: FontWeight.bold),
-                                  maxLines: 1,
+                                    // fontFeatures: [FontFeature.subscripts()],
+                                    color: const Color(0xff000000),
+                                    fontSize: 18.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Visibility(
-                              visible:
-                                  bottomController.activityName.value != "",
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 80, right: 80),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Visibility(
+                                visible:
+                                    bottomController.projectName.value != "",
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 50, right: 20),
+                                  child: Text(
+                                    bottomController.projectName.value
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: AppColors.buttonBlue,
+                                        fontSize: 17.8.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible:
+                                    bottomController.activityName.value != "",
                                 child: Text(
                                   bottomController.activityName.value
                                       .toString(),
@@ -159,504 +160,601 @@ class _StartingScreenState extends State<StartingScreen> {
                                   maxLines: 1,
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: controller.clockRunning.value ||
-                                      controller.breakRunning.value == true
-                                  ? 0.045 * size.height
-                                  : 0.1 * size.height,
-                            ),
-                            Stack(children: [
-                              GestureDetector(
-                                onTap: () {
-                                  controller.currentAddress.value == ""
-                                      ? controller.getCurrentLocation()
-                                      : null;
-                                  if (controller.currentAddress.value == "" &&
-                                      controller.role.value != "" &&
-                                      controller.locationLoading.value ==
-                                          false) {
-                                    Prompts.showSnackBar(
-                                        msg:
-                                            "Please wait waiting for your current location");
-                                  } else if (controller.role.value == "" &&
-                                      controller.locationLoading.value ==
-                                          false) {
-                                    Prompts.showSnackBar(
-                                        msg: "Please Select your Role");
-                                  } else if (controller.role.value != "") {
-                                    if(controller.clockRunning.value == true)
-                                        {controller.stopTimer(
-                                            resets: false, context: context);
-                                        final Size size = MediaQuery.of(context).size;
-                                        Get.defaultDialog(
-                                              title: "",
-                                              content: SizedBox(
-                                                height: 0.329 * size.height,
-                                                width: 0.95 * size.width,
-                                                child: Column(
-                                                  children: [
-                                                    Image.asset(
-                                                      AppAssets.taskCompleted,
-                                                      scale: 3,
-                                                    ),
-                                                    SizedBox(
-                                                      height: 0.008 * size.height,
-                                                    ),
-                                                    Text(
-                                                      "Time Marked",
-                                                      style: TextStyle(
-                                                        fontSize: 0.017 * size.height,
-                                                        fontWeight: FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 0.05 * size.height,
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: [
-                                                        Column(children: [
-                                                          Image.asset(
-                                                            AppAssets.startWork,
-                                                            scale: 3,
-                                                          ),
-                                                          Text(
-                                                            controller.startTime.value,
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: AppColors.orange,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "Start Work",
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                        Column(children: [
-                                                          Image.asset(
-                                                            AppAssets.finishWork,
-                                                            scale: 2,
-                                                          ),
-                                                          Text(
-                                                            controller.finishTime.value,
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: AppColors.orange,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "Finish Work",
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                        Column(children: [
-                                                          Image.asset(
-                                                            AppAssets.breakTime,
-                                                            scale: 3,
-                                                          ),
-                                                          Text(
-                                                            controller.totalTime.value,
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: AppColors.orange,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "Total Work",
-                                                            style: TextStyle(
-                                                              fontSize: 0.017 * size.height,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: Colors.black,
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 0.012 * size.height,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(12.0),
-                                                      child: Text(
-                                                        controller.currentAddress.value.toString(),
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                            fontSize: 0.017 * size.height,
-                                                            color: Colors.black,
-                                                            overflow: TextOverflow.ellipsis),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ));
-                                        }
-
-                                        else{
-                                      controller.startTimer();
-                                      final BottomNavController bottController = Get.put(BottomNavController());
-                                      bottController.currentIndex.value = 2;
-                                    }
-                                    controller.startTime.value == ""
-                                        ? controller.getStartTime()
-                                        : null;
-                                  } else if (controller.role.value == "" &&
-                                      controller.currentAddress.value == "" &&
-                                      controller.locationLoading.value ==
-                                          false) {
-                                    Prompts.showSnackBar(
-                                        msg:
-                                            "Please select your role and wait while we are fetching your current location");
-                                  }
-                                },
+                              SizedBox(
+                                height: 0.4.h,
+                              ),
+                              Visibility(
+                                visible:
+                                    bottomController.checkListItem.value != "",
                                 child: Container(
-                                  height: 26.5.h,
-                                  width: 64.w,
-                                  // Below is the code for Linear Gradient.
+                                  height: 3.h,
+                                  width: 45.w,
                                   decoration: BoxDecoration(
+                                    color:
+                                        AppColors.timerColor.withOpacity(0.2),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.withOpacity(0.4),
-                                        spreadRadius: 5,
-                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                        blurRadius: 4,
                                         offset: const Offset(
-                                            0, 4), // changes position of shadow
-                                      ),
-                                    ],
-                                    shape: BoxShape.circle,
-                                    gradient: controller.timerStatus.value ==
-                                                    false &&
-                                                controller.clockRunning.value ||
-                                            controller.breakRunning.value ==
-                                                true
-                                        ? LinearGradient(
-                                            colors: [
-                                              AppColors.orange,
-                                              AppColors.orange.withOpacity(0.9)
-                                            ],
-                                            begin: Alignment.bottomLeft,
-                                            // end: Alignment.topRight,
-                                          )
-                                        : LinearGradient(
-                                            colors: [
-                                              const Color(0xff0062BD),
-                                              const Color(0xff002D4B)
-                                                  .withOpacity(0.9)
-                                            ],
-                                            begin: Alignment.bottomLeft,
-                                            // end: Alignment.topRight,
-                                          ),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                      Image.asset(
-                                        'assets/images/Group 137.png',
-                                        scale: 3,
-                                      ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      Text(
-                                        " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
-                                        // '00:00:00',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xffFFFFFF),
-                                            fontSize: 20.sp),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Text(
-                                        controller.timerStatus.value == false &&
-                                                    controller
-                                                        .clockRunning.value ||
-                                                controller.breakRunning.value ==
-                                                    true
-                                            ? 'FINISH WORK'
-                                            : 'START WORK',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: const Color(0xffFFFFFF),
-                                            fontSize: 14.sp),
+                                            0, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: controller.breakCounter.value > 0,
-                                child: Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const Activity());
-                                    },
-                                    child: Container(
-                                      height: 4.5.h,
-                                      width: 10.w,
-                                      decoration: const BoxDecoration(
-                                        color: AppColors.bottomBar,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SvgPicture.asset(
-                                          AppAssets.historyIcon,
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ]),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 0.022 * size.height,
-                        ),
-                        Center(
-                          // padding: const EdgeInsets.symmetric(vertical: 30),
-                          child: Column(
-                            children: [
-                              Visibility(
-                                visible:
-                                    controller.clockRunning.value == true ||
-                                        controller.breakRunning.value == true,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        controller.stopTimer(
-                                            resets: false, context: context);
-                                        if (controller.breakRunning.value ==
-                                            true) {
-                                          controller.stopBreak(resets: true);
-                                          // breakDuration = const Duration();
-                                          controller.startTimer();
-                                        } else {
-                                          // reset();
-                                          controller.startBreak();
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(10),
-                                        height: 0.05 * size.height,
-                                        width: 0.13 * size.width,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                controller.breakRunning.value ==
-                                                        true
-                                                    ? AppColors.orange
-                                                    : AppColors.buttonBlue,
-                                            shape: BoxShape.circle),
-                                        child: Image.asset(
-                                          AppAssets.breakIcon,
-                                          scale: 3,
-                                        ),
-                                      ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
+                                        SvgPicture.asset(
+                                          AppAssets.checkListItem,
+                                          height: 2.h,
+                                        ),
                                         Text(
-                                          controller.breakRunning.value == true
-                                              ? "Tap To End"
-                                              : "Tap To Start",
+                                          bottomController.checkListItem.value
+                                              .toString(),
                                           style: TextStyle(
-                                            fontSize: 15.sp,
                                             color: Colors.black,
+                                            fontSize: 15.sp,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
+                                          maxLines: 1,
                                         ),
-                                        Text(
-                                          "Break",
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            color:
-                                                controller.breakRunning.value ==
-                                                        true
-                                                    ? AppColors.orange
-                                                    : AppColors.buttonBlue,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                        const SizedBox()
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Visibility(
-                                visible:
-                                    controller.clockRunning.value == false &&
-                                        controller.breakRunning.value == false,
-                                child: Text(
-                                  controller.isLoading.value &&
-                                          controller.sliderOpen.value == false
-                                      ? ""
-                                      : controller.role.value,
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.orange,
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                height: controller.clockRunning.value == true
-                                    ? 1.h
-                                    : 0,
+                                height: controller.clockRunning.value ||
+                                        controller.breakRunning.value == true
+                                    ? 0.03 * size.height
+                                    : 0.05 * size.height,
                               ),
-                              if (controller.currentAddress.value != "")
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0, right: 8),
-                                  child: Text(
-                                    controller.currentAddress.value.toString(),
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 15.5.sp),
+                              Stack(children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.currentAddress.value == ""
+                                        ? controller.getCurrentLocation()
+                                        : null;
+                                    if (controller.currentAddress.value == "" &&
+                                        controller.role.value != "" &&
+                                        controller.locationLoading.value ==
+                                            false) {
+                                      Prompts.showSnackBar(
+                                          msg:
+                                              "Please wait waiting for your current location");
+                                    } else if (controller.role.value == "" &&
+                                        controller.locationLoading.value ==
+                                            false) {
+                                      Prompts.showSnackBar(
+                                          msg: "Please Select your Role");
+                                    } else if (controller.role.value != "") {
+                                      if (controller.clockRunning.value ==
+                                          true) {
+                                        controller.stopTimer(
+                                            resets: false, context: context);
+                                        final Size size =
+                                            MediaQuery.of(context).size;
+                                        Get.defaultDialog(
+                                            title: "",
+                                            content: SizedBox(
+                                              height: 0.329 * size.height,
+                                              width: 0.95 * size.width,
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    AppAssets.taskCompleted,
+                                                    scale: 3,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 0.008 * size.height,
+                                                  ),
+                                                  Text(
+                                                    "Time Marked",
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          0.017 * size.height,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 0.05 * size.height,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Column(children: [
+                                                        Image.asset(
+                                                          AppAssets.startWork,
+                                                          scale: 3,
+                                                        ),
+                                                        Text(
+                                                          controller
+                                                              .startTime.value,
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .orange,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Start Work",
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                      Column(children: [
+                                                        Image.asset(
+                                                          AppAssets.finishWork,
+                                                          scale: 2,
+                                                        ),
+                                                        Text(
+                                                          controller
+                                                              .finishTime.value,
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .orange,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Finish Work",
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                      Column(children: [
+                                                        Image.asset(
+                                                          AppAssets.breakTime,
+                                                          scale: 3,
+                                                        ),
+                                                        Text(
+                                                          controller
+                                                              .totalTime.value,
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .orange,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Total Work",
+                                                          style: TextStyle(
+                                                            fontSize: 0.017 *
+                                                                size.height,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 0.012 * size.height,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12.0),
+                                                    child: Text(
+                                                      controller
+                                                          .currentAddress.value
+                                                          .toString(),
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 0.017 *
+                                                              size.height,
+                                                          color: Colors.black,
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ));
+                                      } else {
+                                        controller.startTimer();
+                                        final BottomNavController
+                                            bottController =
+                                            Get.put(BottomNavController());
+                                        bottController.currentIndex.value = 2;
+                                      }
+                                      controller.startTime.value == ""
+                                          ? controller.getStartTime()
+                                          : null;
+                                    } else if (controller.role.value == "" &&
+                                        controller.currentAddress.value == "" &&
+                                        controller.locationLoading.value ==
+                                            false) {
+                                      Prompts.showSnackBar(
+                                          msg:
+                                              "Please select your role and wait while we are fetching your current location");
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 26.5.h,
+                                    width: 64.w,
+                                    // Below is the code for Linear Gradient.
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          spreadRadius: 5,
+                                          blurRadius: 5,
+                                          offset: const Offset(0,
+                                              4), // changes position of shadow
+                                        ),
+                                      ],
+                                      shape: BoxShape.circle,
+                                      gradient: controller.timerStatus.value ==
+                                                      false &&
+                                                  controller
+                                                      .clockRunning.value ||
+                                              controller.breakRunning.value ==
+                                                  true
+                                          ? LinearGradient(
+                                              colors: [
+                                                AppColors.orange,
+                                                AppColors.orange
+                                                    .withOpacity(0.9)
+                                              ],
+                                              begin: Alignment.bottomLeft,
+                                              // end: Alignment.topRight,
+                                            )
+                                          : LinearGradient(
+                                              colors: [
+                                                const Color(0xff0062BD),
+                                                const Color(0xff002D4B)
+                                                    .withOpacity(0.9)
+                                              ],
+                                              begin: Alignment.bottomLeft,
+                                              // end: Alignment.topRight,
+                                            ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 4.h,
+                                        ),
+                                        Image.asset(
+                                          'assets/images/Group 137.png',
+                                          scale: 3,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
+                                          // '00:00:00',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xffFFFFFF),
+                                              fontSize: 20.sp),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          controller.timerStatus.value ==
+                                                          false &&
+                                                      controller
+                                                          .clockRunning.value ||
+                                                  controller
+                                                          .breakRunning.value ==
+                                                      true
+                                              ? AppLocalizedStrings.finishWork
+                                                  .tr()
+                                              : AppLocalizedStrings.startWork
+                                                  .tr(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xffFFFFFF),
+                                              fontSize: 14.sp),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              controller.currentAddress.value == ""
-                                  ? Text(
-                                      controller.locationLoading.value == true
-                                          ? "Loading Address..."
-                                          : "Tap Start to get Current Location",
+                                Visibility(
+                                  visible: controller.breakCounter.value > 0,
+                                  child: Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => const Activity());
+                                      },
+                                      child: Container(
+                                        height: 4.5.h,
+                                        width: 10.w,
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.bottomBar,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SvgPicture.asset(
+                                            AppAssets.historyIcon,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 0.022 * size.height,
+                          ),
+                          Center(
+                            // padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: Column(
+                              children: [
+                                Visibility(
+                                  visible:
+                                      controller.clockRunning.value == true ||
+                                          controller.breakRunning.value == true,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.stopTimer(
+                                              resets: false, context: context);
+                                          if (controller.breakRunning.value ==
+                                              true) {
+                                            controller.stopBreak(resets: true);
+                                            // breakDuration = const Duration();
+                                            controller.startTimer();
+                                          } else {
+                                            // reset();
+                                            controller.startBreak();
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          height: 0.05 * size.height,
+                                          width: 0.13 * size.width,
+                                          decoration: BoxDecoration(
+                                              color: controller
+                                                          .breakRunning.value ==
+                                                      true
+                                                  ? AppColors.orange
+                                                  : AppColors.buttonBlue,
+                                              shape: BoxShape.circle),
+                                          child: Image.asset(
+                                            AppAssets.breakIcon,
+                                            scale: 3,
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            controller.breakRunning.value ==
+                                                    true
+                                                ? AppLocalizedStrings.tapToEnd
+                                                    .tr()
+                                                : AppLocalizedStrings.tapToStart
+                                                    .tr(),
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            AppLocalizedStrings.Break.tr(),
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              color: controller
+                                                          .breakRunning.value ==
+                                                      true
+                                                  ? AppColors.orange
+                                                  : AppColors.buttonBlue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: controller.clockRunning.value ==
+                                          false &&
+                                      controller.breakRunning.value == false,
+                                  child: Text(
+                                    controller.isLoading.value &&
+                                            controller.sliderOpen.value == false
+                                        ? ""
+                                        : controller.role.value,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.orange,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: controller.clockRunning.value == true
+                                      ? 0.5.h
+                                      : 0,
+                                ),
+                                if (controller.currentAddress.value != "")
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, right: 8),
+                                    child: Text(
+                                      controller.currentAddress.value
+                                          .toString(),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 15.5.sp),
-                                    )
-                                  : Container(),
-                            ],
+                                    ),
+                                  ),
+                                controller.currentAddress.value == ""
+                                    ? Text(
+                                        controller.locationLoading.value == true
+                                            ? AppLocalizedStrings.loadingAddress
+                                                .tr()
+                                            : AppLocalizedStrings.beforeLocation
+                                                .tr(),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15.5.sp),
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: controller.breakRunning.value == true
-                              ? 4.5.h
-                              : 4.5.h,
-                        ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Visibility(
-                                visible: controller.breakRunning.value == false,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          AppAssets.startWork,
-                                          scale: 3,
-                                        ),
-                                        SizedBox(
-                                          height: 0.01 * size.height,
-                                        ),
-                                        Text(
-                                          controller.startTime.value == ""
-                                              ? '-----'
-                                              : controller.startTime.value,
-                                          style: TextStyle(
-                                            color: const Color(0xffFF4A00),
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14.5.sp,
+                          SizedBox(
+                            height: controller.breakRunning.value == true
+                                ? 2.h
+                                : 2.5.h,
+                          ),
+                          SizedBox(
+                            height:
+                                controller.clockRunning.value == true ? 0 : 0.8.h,
+                          ),
+                          Center(
+                            child: Column(
+                              children: [
+                                Visibility(
+                                  visible:
+                                      controller.breakRunning.value == false,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.startWork,
+                                            scale: 3,
                                           ),
-                                        ),
-                                        Text(
-                                          'Start Work',
-                                          style: TextStyle(
-                                              color: const Color(0xff000000),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15.sp),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          AppAssets.finishWork,
-                                          scale: 2,
-                                        ),
-                                        SizedBox(
-                                          height: 0.01 * size.height,
-                                        ),
-                                        Text(
-                                          controller.finishTime.value == ""
-                                              ? '-----'
-                                              : controller.finishTime.value,
-                                          style: TextStyle(
+                                          SizedBox(
+                                            height: 0.01 * size.height,
+                                          ),
+                                          Text(
+                                            controller.startTime.value == ""
+                                                ? '-----'
+                                                : controller.startTime.value,
+                                            style: TextStyle(
                                               color: const Color(0xffFF4A00),
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 14.5.sp),
-                                        ),
-                                        Text(
-                                          'Finish Work',
-                                          style: TextStyle(
-                                              color: const Color(0xff000000),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15.sp),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          AppAssets.breakTime,
-                                          scale: 3,
-                                        ),
-                                        SizedBox(
-                                          height: 0.01 * size.height,
-                                        ),
-                                        Text(
-                                          controller.totalTime.value == ""
-                                              ? '-----'
-                                              : controller.totalTime.value,
-                                          style: TextStyle(
-                                              color: const Color(0xffFF4A00),
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 14.5.sp),
-                                        ),
-                                        Text(
-                                          'Total Work',
-                                          style: TextStyle(
-                                              color: const Color(0xff000000),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15.sp),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                              fontSize: 14.5.sp,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Start Work',
+                                            style: TextStyle(
+                                                color: const Color(0xff000000),
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15.sp),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.finishWork,
+                                            scale: 2,
+                                          ),
+                                          SizedBox(
+                                            height: 0.01 * size.height,
+                                          ),
+                                          Text(
+                                            controller.finishTime.value == ""
+                                                ? '-----'
+                                                : controller.finishTime.value,
+                                            style: TextStyle(
+                                                color: const Color(0xffFF4A00),
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14.5.sp),
+                                          ),
+                                          Text(
+                                            'Finish Work',
+                                            style: TextStyle(
+                                                color: const Color(0xff000000),
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15.sp),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.breakTime,
+                                            scale: 3,
+                                          ),
+                                          SizedBox(
+                                            height: 0.01 * size.height,
+                                          ),
+                                          Text(
+                                            controller.totalTime.value == ""
+                                                ? '-----'
+                                                : controller.totalTime.value,
+                                            style: TextStyle(
+                                                color: const Color(0xffFF4A00),
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14.5.sp),
+                                          ),
+                                          Text(
+                                            'Total Work',
+                                            style: TextStyle(
+                                                color: const Color(0xff000000),
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Visibility(
+                                Visibility(
                                   visible:
                                       controller.breakRunning.value == true,
                                   child: Container(
-                                    height: 0.11 * size.height,
+                                    height: 11.2.h,
                                     width: 0.9 * size.width,
                                     decoration: BoxDecoration(
                                       boxShadow: [
@@ -811,12 +909,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                         ),
                                       ],
                                     ),
-                                  )),
-                            ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )),
+                        ],
+                      ),
+                    ),
                     controller.isLoading.value == true
                         ? Stack(children: [
                             GestureDetector(
@@ -869,10 +969,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 scale: 3,
                                                 // height: 0.04 * size.height,
                                               ),
+                                              SizedBox(
+                                                height: 0.01 * size.height,
+                                              ),
                                               RotatedBox(
                                                 quarterTurns: 3,
                                                 child: Text(
-                                                  'SELECT ROLE  ',
+                                                  AppLocalizedStrings.selectRole
+                                                      .tr(),
                                                   style: TextStyle(
                                                       color: const Color(
                                                           0xff000000),
@@ -942,7 +1046,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                       BoxShadow(
                                         color: Colors.grey.withOpacity(0.5),
                                         spreadRadius: 2,
-                                        blurRadius: 1,
+                                        blurRadius: 5,
                                         offset: const Offset(0,
                                             2.5), // changes position of shadow
                                       ),
@@ -1160,9 +1264,11 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when timer is Running!!")
+                                                        "Cant Change the roles when working on Project!!")
                                                 : controller.role.value =
-                                                    "Electrician";
+                                                    AppLocalizedStrings
+                                                        .electrician
+                                                        .tr();
                                             controller.isLoading.value = false;
                                           },
                                           child: Container(
@@ -1170,7 +1276,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                             width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
-                                                      "Electrician"
+                                                      AppLocalizedStrings
+                                                          .electrician
+                                                          .tr()
                                                   ? AppColors.bottomBar
                                                   : Colors.white,
                                               borderRadius:
@@ -1190,16 +1298,22 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     scale: 1,
                                                     color: controller
                                                                 .role.value ==
-                                                            "Electrician"
+                                                            AppLocalizedStrings
+                                                                .electrician
+                                                                .tr()
                                                         ? Colors.white
                                                         : AppColors.buttonBlue,
                                                   ),
                                                   Text(
-                                                    "Electrician",
+                                                    AppLocalizedStrings
+                                                        .electrician
+                                                        .tr(),
                                                     style: TextStyle(
                                                       color: controller
                                                                   .role.value ==
-                                                              "Electrician"
+                                                              AppLocalizedStrings
+                                                                  .electrician
+                                                                  .tr()
                                                           ? Colors.white
                                                           : Colors.black,
                                                       fontSize: 6.2 * textsize,
@@ -1219,7 +1333,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when timer is Running!!")
+                                                        "Cant Change the roles when working on Project!!")
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1358,7 +1472,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 //       ),
                                                 //     ));
                                                 controller.role.value =
-                                                    "Technician";
+                                                    AppLocalizedStrings
+                                                        .technician
+                                                        .tr();
                                             controller.isLoading.value = false;
                                           },
                                           child: Container(
@@ -1366,7 +1482,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                             width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
-                                                      "Technician"
+                                                      AppLocalizedStrings
+                                                          .technician
+                                                          .tr()
                                                   ? AppColors.bottomBar
                                                   : Colors.white,
                                               borderRadius:
@@ -1391,11 +1509,15 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         : AppColors.buttonBlue,
                                                   ),
                                                   Text(
-                                                    "Technician",
+                                                    AppLocalizedStrings
+                                                        .technician
+                                                        .tr(),
                                                     style: TextStyle(
                                                         color: controller.role
                                                                     .value ==
-                                                                "Technician"
+                                                                AppLocalizedStrings
+                                                                    .technician
+                                                                    .tr()
                                                             ? Colors.white
                                                             : Colors.black,
                                                         fontSize:
@@ -1415,7 +1537,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when timer is Running!!")
+                                                        "Cant Change the roles when working on Project!!")
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1436,7 +1558,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 //       ],
                                                 //     ));
                                                 controller.role.value =
-                                                    "Plumber";
+                                                    AppLocalizedStrings.plumber
+                                                        .tr();
                                             controller.isLoading.value = false;
                                           },
                                           child: Container(
@@ -1444,7 +1567,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                             width: 0.29 * size.width,
                                             decoration: BoxDecoration(
                                               color: controller.role.value ==
-                                                      "Plumber"
+                                                      AppLocalizedStrings
+                                                          .plumber
+                                                          .tr()
                                                   ? AppColors.bottomBar
                                                   : Colors.white,
                                               borderRadius:
@@ -1464,16 +1589,21 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     scale: 3,
                                                     color: controller
                                                                 .role.value ==
-                                                            "Plumber"
+                                                            AppLocalizedStrings
+                                                                .plumber
+                                                                .tr()
                                                         ? Colors.white
                                                         : AppColors.buttonBlue,
                                                   ),
                                                   Text(
-                                                    "Plumber",
+                                                    AppLocalizedStrings.plumber
+                                                        .tr(),
                                                     style: TextStyle(
                                                       color: controller
                                                                   .role.value ==
-                                                              "Plumber"
+                                                              AppLocalizedStrings
+                                                                  .plumber
+                                                                  .tr()
                                                           ? Colors.white
                                                           : Colors.black,
                                                       fontSize: 6.2 * textsize,
@@ -1529,10 +1659,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                               scale: 3,
                                               // height: 0.04 * size.height,
                                             ),
+                                            SizedBox(
+                                              height: 0.01 * size.height,
+                                            ),
                                             RotatedBox(
                                               quarterTurns: 3,
                                               child: Text(
-                                                'SELECT ROLE  ',
+                                                AppLocalizedStrings.selectRole
+                                                    .tr(),
                                                 style: TextStyle(
                                                     color:
                                                         const Color(0xff000000),

@@ -129,7 +129,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                         const Icon(
                           Icons.arrow_forward_ios,
                           color: AppColors.buttonBlue,
-                        )
+                        ),
                       ],
                     ),
                   ),

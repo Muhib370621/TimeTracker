@@ -38,6 +38,7 @@ class AppAssets {
   static const username = "$_svgsPath/username.svg";
   static const password = "$_svgsPath/password.svg";
   static const historyIcon = "$_svgsPath/historyIcon.svg";
+  static const checkListItem = "$_svgsPath/checkListItem.svg";
 
 
 

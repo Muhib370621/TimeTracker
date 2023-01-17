@@ -14,6 +14,9 @@ import '../constants/app_colors.dart';
 class StartingScreenController extends GetxController {
   @override
   void onInit() {
+    activityName.value="";
+    projectName.value="";
+    checkListItem.value="";
     clockRunning.value = false;
     determinePosition();
     reset();
@@ -61,6 +64,9 @@ class StartingScreenController extends GetxController {
   ).obs;
   final RxString timeString = ''.obs;
   RxInt breakCounter = 0.obs;
+  RxString activityName = "".obs;
+  RxString projectName = "".obs;
+  RxString checkListItem = "".obs;
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -282,6 +288,7 @@ class StartingScreenController extends GetxController {
     totalTime.value = "${hourDiff}h  ${minutes_diff}m";
     // print(totalTime.value);
   }
+
   void subtractBreak() {
     var dateFormat = DateFormat('hh:mm');
     var hourDiff;
@@ -369,4 +376,5 @@ class StartingScreenController extends GetxController {
     timeString.value = formattedDateTime;
     // });
   }
+
 }

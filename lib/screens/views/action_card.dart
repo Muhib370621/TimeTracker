@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/BottomNavigationController.dart';
+import '../../controllers/startingScreenController.dart';
 
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
@@ -25,6 +26,12 @@ class ActionCard extends StatefulWidget {
 class _ActionCardState extends State<ActionCard> {
   @override
   Widget build(BuildContext context) {
+    final StartingScreenController startController = Get.put(
+      StartingScreenController(),
+    );
+    final BottomNavController controller = Get.put(
+      BottomNavController(),
+    );
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
@@ -36,15 +43,10 @@ class _ActionCardState extends State<ActionCard> {
         child: ListTile(
           title: GestureDetector(
             onTap: () {
-              final BottomNavController controller = Get.put(
-                BottomNavController(),
-              );
-              Get.offAll(
-                () => CustomBottomNavigationBar(),
-              );
-              controller.currentIndex.value = 0;
-              controller.activityName.value =
-                  widget.projectAction.custrecordBbBludocsPath!;
+              if (startController.clockRunning.value==true) {
+                controller.activityName.value =
+                widget.projectAction.custrecordBbBludocsPath!;
+              }
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,6 +128,11 @@ class _ActionCardState extends State<ActionCard> {
                               RouteNames.checklist,
                               arguments: widget.projectAction,
                             );
+                            final BottomNavController controller = Get.put(
+                              BottomNavController(),
+                            );
+                            controller.activityName.value =
+                            widget.projectAction.custrecordBbBludocsPath!;
                             // Get.offAll(CustomBottomNavigationBar());
                           },
                         ),

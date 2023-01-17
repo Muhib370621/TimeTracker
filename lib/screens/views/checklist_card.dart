@@ -1,8 +1,13 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/action_checklist.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/BottomNavigationController.dart';
+import '../../shared/widgets/custom_bottom_navigation_bar.dart';
 
 class ChecklistCard extends StatelessWidget {
   final ActionChecklist actionChecklist;
@@ -11,37 +16,53 @@ class ChecklistCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final StartingScreenController startController =
+    Get.put(StartingScreenController());
+    final BottomNavController controller = Get.put(
+      BottomNavController(),
+    );
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       color: AppColors.cellBackground,
-      child: ListTile(
-        dense: true,
-        leading: Icon(
-          Icons.check_circle,
-          size: 17.height,
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(actionChecklist.custrecordBbPachklistTitle ?? "",
-                style: AppTextStyles.semiBold
-                    .copyWith(color: Colors.black, fontSize: 12.width)),
-            const SizedBox(
-              height: 3,
-            ),
-          ],
-        ),
-        subtitle: Row(
-          children: [
-             Icon(Icons.calendar_month,color: AppColors.buttonBlue,size: 15.width,),
-            const SizedBox(width: 5,),
-            Text(actionChecklist.lastmodified ?? "N/A",
-                style: AppTextStyles.normal
-                    .copyWith(color: Colors.black, fontSize: 10.width)),
-          ],
+      child: GestureDetector(
+        onTap: () {
+          if (startController.clockRunning.value==true){
+          Get.offAll(
+                () => CustomBottomNavigationBar(),
+          );
+          controller.currentIndex.value = 0;
+          controller.checkListItem.value= actionChecklist.custrecordBbPachklistTitle.toString();
+          }
+        },
+        child: ListTile(
+          dense: true,
+          leading: Icon(
+            Icons.check_circle,
+            size: 17.height,
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(actionChecklist.custrecordBbPachklistTitle ?? "",
+                  style: AppTextStyles.semiBold
+                      .copyWith(color: Colors.black, fontSize: 12.width)),
+              const SizedBox(
+                height: 3,
+              ),
+            ],
+          ),
+          subtitle: Row(
+            children: [
+               Icon(Icons.calendar_month,color: AppColors.buttonBlue,size: 15.width,),
+              const SizedBox(width: 5,),
+              Text(actionChecklist.lastmodified ?? "N/A",
+                  style: AppTextStyles.normal
+                      .copyWith(color: Colors.black, fontSize: 10.width)),
+            ],
+          ),
         ),
       ),
     );

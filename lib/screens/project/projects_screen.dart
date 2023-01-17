@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/controllers/BottomNavigationController.dart';
+import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/views/project_card.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
@@ -61,6 +62,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   _buildDataView(ProjectViewModel model) {
+    final StartingScreenController startController =
+    Get.put(StartingScreenController());
+    final BottomNavController controller = Get.put(BottomNavController());
     return Selector<ProjectViewModel, List<Project>>(
         selector: (context, model) => model.projects,
         builder: (BuildContext context, value, Widget? child) {
@@ -78,9 +82,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
-                    final BottomNavController controller = Get.put(BottomNavController());
+                    if(startController.clockRunning.value==true){
                     controller.projectName.value= model.projects[index].altname.toString();
-
+                    }
                   },
                 ),
               );
