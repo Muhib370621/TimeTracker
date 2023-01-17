@@ -20,6 +20,7 @@ import 'package:blu_time/screens/project/projects_screen.dart';
 import 'package:blu_time/screens/time_card/time_card_detail_screen.dart';
 import 'package:blu_time/screens/time_card/time_card_screen.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
+import 'package:blu_time/view_models/note_view_model.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -120,7 +121,7 @@ class RouteFactories{
              settings: settings, builder: (context) => const NoteListScreen());
        case RouteNames.addNote:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const AddNoteScreen());
+             settings: settings, builder: (context) => AddNoteScreen(viewModel: settings.arguments as NoteViewModel,));
        case RouteNames.profile:
          return MaterialPageRoute(
              settings: settings, builder: (context) => const ProfileScreen());

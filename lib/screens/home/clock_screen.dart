@@ -171,7 +171,7 @@ class _ClockScreenState extends State<ClockScreen> {
                           viewModel.selectRandomProject();
                         },
                       ),
-                      const SiteMapScreen(),
+                    //  const SiteMapScreen(),
                       const Center(child: Text("Tab 1")),
                     ],
                   ),

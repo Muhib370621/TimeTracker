@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class SiteMapScreen extends StatefulWidget {
-  const SiteMapScreen({Key? key}) : super(key: key);
+  final Project project;
+  const SiteMapScreen({Key? key, required this.project}) : super(key: key);
 
   @override
   State<SiteMapScreen> createState() => MapSampleState();
@@ -20,16 +22,23 @@ class MapSampleState extends State<SiteMapScreen>
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
+  CameraPosition _cameraPosition = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _cameraPosition = CameraPosition(
+      target: LatLng(
+          double.parse(widget.project.custentityBbEntityLatitudeText ?? "0.0"),
+          double.parse(
+              widget.project.custentityBbEntityLongitudeText ?? "0.0")),
+      zoom: 16.4746,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +55,19 @@ class MapSampleState extends State<SiteMapScreen>
                   () => EagerGestureRecognizer(),
                 ),
               },
+              myLocationEnabled: true,
               mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
+              initialCameraPosition: _cameraPosition,
+              padding: const EdgeInsets.only(bottom: 150,right: 15),
+              markers: {
+                Marker(
+                  markerId: const MarkerId("d"),
+                  position:LatLng(
+                      double.parse(widget.project.custentityBbEntityLatitudeText ?? "0.0"),
+                      double.parse(
+                          widget.project.custentityBbEntityLongitudeText ?? "0.0"))
+                )
+              },
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
@@ -68,9 +88,9 @@ class MapSampleState extends State<SiteMapScreen>
                       child: Column(
                         children: [
                           Row(
-                            children: const [
-                              Icon(Icons.pin_drop),
-                              Text("Location address")
+                            children: [
+                              const Icon(Icons.pin_drop),
+                              Text(widget.project.custentityBbInstallAddress1Text ?? "Location address")
                             ],
                           ),
                           const SizedBox(
@@ -89,11 +109,6 @@ class MapSampleState extends State<SiteMapScreen>
         ),
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 
   @override
@@ -133,15 +148,19 @@ class StepperState extends State<MyDeliveryProgress> {
               ),
             ],
           ),
-          const SizedBox(height:2,),
+          const SizedBox(
+            height: 2,
+          ),
           Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('9:00',
-                  style: AppTextStyles.bold.copyWith(
-                      color: AppColors.buttonBlue, fontSize: 13)),
-              const SizedBox(width:2,),
+                  style: AppTextStyles.bold
+                      .copyWith(color: AppColors.buttonBlue, fontSize: 13)),
+              const SizedBox(
+                width: 2,
+              ),
               const Expanded(
                 child: StepProgressIndicator(
                   totalSteps: 20,
@@ -151,10 +170,12 @@ class StepperState extends State<MyDeliveryProgress> {
                   roundedEdges: Radius.circular(10),
                 ),
               ),
-              const SizedBox(width:2,),
+              const SizedBox(
+                width: 2,
+              ),
               Text('16:00',
-                  style: AppTextStyles.bold.copyWith(
-                      color: AppColors.buttonBlue, fontSize: 13)),
+                  style: AppTextStyles.bold
+                      .copyWith(color: AppColors.buttonBlue, fontSize: 13)),
             ],
           ),
         ],
