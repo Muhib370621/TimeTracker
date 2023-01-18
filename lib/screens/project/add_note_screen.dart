@@ -59,82 +59,105 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     const SizedBox(
                       height: 25,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        model.selectImages();
-                      },
-                      child: DottedBorder(
-                        color: AppColors.buttonBlue,
-                        strokeWidth: 3,
-                        dashPattern: const [15, 8],
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: 1.5,
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: AspectRatio(
+                    model.noteImages.isEmpty
+                        ? GestureDetector(
+                            onTap: () {
+                              model.selectImages();
+                            },
+                            child: DottedBorder(
+                              color: AppColors.buttonBlue,
+                              strokeWidth: 3,
+                              dashPattern: const [15, 8],
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(20),
+                              child: AspectRatio(
                                   aspectRatio: 1.5,
                                   child: Container(
-                                    //height: 100,
-                                    // width: MediaQuery.of(context).size.width,
+                                    width: double.infinity,
                                     decoration: BoxDecoration(
                                         color:
                                             AppColors.buttonBlue.withAlpha(20),
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: model.noteImages.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return SizedBox(
-                                            height: 100,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                60,
-                                            child: Image.file(
-                                              File(
-                                                  model.noteImages[index].path),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                ),
-                              ),
-                              IgnorePointer(
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.buttonBlue.withAlpha(20),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        AppAssets.addImage,
-                                        width: 92,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          AppAssets.addImage,
+                                          width: 92,
+                                        ),
+                                        Text(
+                                          AppLocalizedStrings.addImages.tr(),
+                                          style: AppTextStyles.bold.copyWith(
+                                              color: AppColors.buttonBlue,
+                                              fontSize: 18),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          )
+                        : SizedBox(
+                            height: MediaQuery.of(context).size.width,
+                            child: GridView.builder(
+                              itemCount: model.noteImages.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == model.noteImages.length) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      model.selectImages();
+                                    },
+                                    child: Image.asset(
+                                      AppAssets.addImage,
+                                      fit: BoxFit.fitWidth,
+                                      width: 60,
+                                      height: 60,
+                                    ),
+                                  );
+                                }
+                                return Stack(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      padding: EdgeInsets.all(5),
+                                      child: Image.file(
+                                        File(model.noteImages[index].path),
+                                        fit: BoxFit.cover,
                                       ),
-                                      Text(
-                                        AppLocalizedStrings.addImages.tr(),
-                                        style: AppTextStyles.bold.copyWith(
-                                            color: AppColors.buttonBlue,
-                                            fontSize: 18),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: ClipOval(
+                                        child: Container(
+                                          color:Colors.white,
+                                          child: IconButton(
+                                            color: Colors.black,
+                                            padding: EdgeInsets.zero,
+                                            constraints: const BoxConstraints(),
+                                            onPressed: () {
+                                              model.removeImage(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.cancel_rounded,
+
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(
                       height: 25,
                     ),
@@ -143,23 +166,32 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       radius: 10,
                       height: 40,
                       onPressed: () async {
-                        List<String> paths = model.noteImages.map((e) => e.path).toList();
+                        List<String> paths =
+                            model.noteImages.map((e) => e.path).toList();
                         try {
-                          List<dynamic> notes = await locator<StoreServices>().getLocal("notes", "userid");
-                          List<AddNote> note1 = notes.map((e) => AddNote.fromJson(Map<String,dynamic>.from(e))).toList() ;
-                          AddNote note = AddNote(controller.text ?? "", paths, false);
+                          List<dynamic> notes = await locator<StoreServices>()
+                              .getLocal("notes", "userid");
+                          List<AddNote> note1 = notes
+                              .map((e) => AddNote.fromJson(
+                                  Map<String, dynamic>.from(e)))
+                              .toList();
+                          AddNote note =
+                              AddNote(controller.text ?? "", paths, false);
                           note1.add(note);
-                          await locator<StoreServices>().setLocal("notes", "userid", (note1.map((e) => e.toJson()).toList()));
+                          await locator<StoreServices>().setLocal(
+                              "notes",
+                              "userid",
+                              (note1.map((e) => e.toJson()).toList()));
+                          Prompts.showSnackBar(msg: "Note saved locally");
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          AddNote note =
+                              AddNote(controller.text ?? "", paths, false);
+                          await locator<StoreServices>()
+                              .setLocal("notes", "userid", [note.toJson()]);
                           Prompts.showSnackBar(msg: "Note saved locally");
                           Navigator.of(context).pop();
                         }
-                        catch(e){
-                          AddNote note = AddNote(controller.text ?? "", paths, false);
-                          await locator<StoreServices>().setLocal("notes", "userid", [note.toJson()]);
-                          Prompts.showSnackBar(msg: "Note saved locally");
-                          Navigator.of(context).pop();
-                        }
-
                       },
                     ),
                   ],

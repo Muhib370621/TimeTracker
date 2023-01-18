@@ -51,9 +51,17 @@ class NoteViewModel extends BaseModel {
   }
 
   selectImages() async {
-   noteImages = await _mediaPicker.selectImages();
+   List<XFile> images = await _mediaPicker.selectImages();
+   noteImages.addAll(images);
    debugPrint(noteImages.toString());
    notifyListeners();
+  }
+
+  removeImage(int index){
+    if (noteImages.length < index) {
+      noteImages.removeAt(index);
+      notifyListeners();
+    }
   }
 
   addNote() {
