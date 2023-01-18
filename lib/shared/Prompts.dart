@@ -3,22 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class Prompts{
-
-  static showSnackBar({String? msg}) {
+class Prompts {
+  static showSnackBar({String? msg, bool? isWarning}) {
     return Get.showSnackbar(
       GetSnackBar(
         duration: const Duration(seconds: 3),
         backgroundColor: AppColors.background,
         messageText: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            msg!,
-            style:  TextStyle(
-              color: Colors.white,
-              fontSize: 17.sp,
-                fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            children: [
+              Visibility(
+                visible: isWarning!,
+                child: Icon(
+                  Icons.warning_rounded,
+                  color: Colors.white,
+                  size: 32.sp,
+                ),
+              ),
+              Text(
+                msg!,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
         snackStyle: SnackStyle.GROUNDED,

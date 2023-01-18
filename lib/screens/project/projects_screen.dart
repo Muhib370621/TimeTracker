@@ -14,6 +14,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../constants/app_storage.dart';
+import '../../helpers/locator.dart';
+import '../../stores/store_services.dart';
+
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({Key? key}) : super(key: key);
 
@@ -74,18 +78,20 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               return Container(
                 margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                 child: GestureDetector(
-                  child: ProjectCard(
-                    project: model.projects[index],
-                  ),
-                  onTap: () {
+                  onTap: () async {
                     model.setSelectedProject = model.projects[index];
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
-                    if(startController.clockRunning.value==true){
+                    if(startController.clockRunning.value==true && controller.projectName.value==""){
                     controller.projectName.value= model.projects[index].altname.toString();
+                    await locator<StoreServices>()
+                    .setLocal(AppStorage.projectName, "userid",controller.projectName.value);
                     }
                   },
+                  child: ProjectCard(
+                    project: model.projects[index],
+                  ),
                 ),
               );
             },

@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:blu_time/constants/app_storage.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +9,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../constants/app_colors.dart';
+import '../stores/store_services.dart';
 
 class StartingScreenController extends GetxController {
   @override
   void onInit() {
-    activityName.value="";
-    projectName.value="";
-    checkListItem.value="";
+    // activityName.value="";
+    // projectName.value="";
+    // checkListItem.value="";
     clockRunning.value = false;
     determinePosition();
     reset();
@@ -64,9 +65,9 @@ class StartingScreenController extends GetxController {
   ).obs;
   final RxString timeString = ''.obs;
   RxInt breakCounter = 0.obs;
-  RxString activityName = "".obs;
-  RxString projectName = "".obs;
-  RxString checkListItem = "".obs;
+  // RxString activityName = "".obs;
+  // RxString projectName = "".obs;
+  // RxString checkListItem = "".obs;
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -219,12 +220,19 @@ class StartingScreenController extends GetxController {
     }
   }
 
-  void startTimer() {
+  void startTimer() async{
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
     if (breakRunning.value == false) {}
     finishTime.value = "";
     totalTime.value = "";
+    await locator<StoreServices>()
+    .setLocal(AppStorage.timerStartTime, "userid", startTime.value);
+    await locator<StoreServices>()
+        .setLocal(AppStorage.currentDate, "userid", today.value.toString());
+    print("-----------------------");
+    print("saved properly");
+    // Prompts.showSnackBar(msg: "Note saved locally");
   }
 
   void addTime() {
@@ -237,13 +245,18 @@ class StartingScreenController extends GetxController {
     }
   }
 
-  void startBreak() {
+  void startBreak() async {
     breakTimer =
         Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
     breakRunning.value = true;
     breakCounter++;
     getBreakStartTime();
     finishBreak.value = "";
+    await locator<StoreServices>()
+        .setLocal(AppStorage.breakStartTime, "userid", Breakstart.value);
+    // List<dynamic> note = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+    // print(note);
+
   }
 
   void addBreakTime() {
@@ -269,13 +282,15 @@ class StartingScreenController extends GetxController {
     Breakstart.value = formattedDateTime;
   }
 
-  void getBreakEndTime() {
+  void getBreakEndTime() async{
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     finishBreak.value = formattedDateTime;
+    await locator<StoreServices>()
+    .setLocal(AppStorage.breakFinishTime, "userid", finishBreak.value);
   }
 
-  void subtractTime() {
+  void subtractTime() async{
     var dateFormat = DateFormat('hh:mm');
     var hourDiff;
     var minutes_diff;
@@ -286,10 +301,12 @@ class StartingScreenController extends GetxController {
     hourDiff = diff.inHours.toString();
     minutes_diff = diff.inMinutes.toString();
     totalTime.value = "${hourDiff}h  ${minutes_diff}m";
+    await locator<StoreServices>()
+    .setLocal(AppStorage.totalWorkTime, "userid", totalTime.value);
     // print(totalTime.value);
   }
 
-  void subtractBreak() {
+  void subtractBreak() async {
     var dateFormat = DateFormat('hh:mm');
     var hourDiff;
     var minutes_diff;
@@ -301,12 +318,16 @@ class StartingScreenController extends GetxController {
     minutes_diff = diff.inMinutes.toString();
     totalBreak.value = "${hourDiff}h  ${minutes_diff}m";
     print(totalBreak.value);
+    await locator<StoreServices>()
+    .setLocal(AppStorage.totalBreakTime, "userid", totalBreak.value);
   }
 
-  void getFinishTime() {
+  void getFinishTime() async {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     finishTime.value = formattedDateTime;
+    await locator<StoreServices>()
+    .setLocal(AppStorage.timeFinishTime, "userid", finishTime.value);
   }
 
   void reset() {
@@ -317,7 +338,7 @@ class StartingScreenController extends GetxController {
     }
   }
 
-  void stopTimer({bool resets = true, required context}) {
+  void stopTimer({bool resets = true, required context}) async {
     if (resets) {
       reset();
     }
@@ -325,9 +346,12 @@ class StartingScreenController extends GetxController {
     clockRunning.value = false;
     getFinishTime();
     subtractTime();
+    // print("-------------------------------");
+    // String? note = await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+    // print(note);
   }
 
-  void stopBreak({bool resets = true}) {
+  Future<void> stopBreak({bool resets = true}) async {
     if (resets) {
       reset();
     }
@@ -338,6 +362,8 @@ class StartingScreenController extends GetxController {
         breakStart: Breakstart.value,
         breakEnd: finishBreak.value,
         totalBreakTime: totalBreak.value));
+    await locator<StoreServices>()
+    .setLocal(AppStorage.listOfBreaks, "userid",listOfBreaks);
     Future.delayed(const Duration(seconds: 3), () {
       breakRunning.value = false;
     });
@@ -351,6 +377,8 @@ class StartingScreenController extends GetxController {
     );
     _getAddressFromLatLng(position.latitude, position.longitude);
     locationLoading.value = false;
+    await locator<StoreServices>()
+        .setLocal(AppStorage.currentAddress, "userid", currentAddress.value);
   }
 
   _getAddressFromLatLng(latitude, longitude) async {

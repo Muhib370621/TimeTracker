@@ -2,12 +2,16 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/action_checklist.dart';
+import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../constants/app_storage.dart';
 import '../../controllers/BottomNavigationController.dart';
+import '../../helpers/locator.dart';
 import '../../shared/widgets/custom_bottom_navigation_bar.dart';
+import '../../stores/store_services.dart';
 
 class ChecklistCard extends StatelessWidget {
   final ActionChecklist actionChecklist;
@@ -28,13 +32,16 @@ class ChecklistCard extends StatelessWidget {
       ),
       color: AppColors.cellBackground,
       child: GestureDetector(
-        onTap: () {
-          if (startController.clockRunning.value==true){
-          Get.offAll(
+        onTap: () async {
+          if (startController.clockRunning.value==true && controller.checkListItem.value==""){
+          Get.to(
                 () => CustomBottomNavigationBar(),
           );
+          // Get.reset();
           controller.currentIndex.value = 0;
           controller.checkListItem.value= actionChecklist.custrecordBbPachklistTitle.toString();
+          await locator<StoreServices>()
+          .setLocal(AppStorage.checkListItemName, "userid",controller.checkListItem.value);
           }
         },
         child: ListTile(

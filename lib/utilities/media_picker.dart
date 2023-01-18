@@ -1,4 +1,3 @@
-import 'package:blu_time/view_models/base_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MediaPicker {

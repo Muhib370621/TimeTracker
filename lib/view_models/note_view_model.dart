@@ -13,8 +13,8 @@ import 'package:blu_time/utilities/media_picker.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 class NoteViewModel extends BaseModel {
   List<Notes> notes = [];
  final MediaPicker _mediaPicker = MediaPicker();

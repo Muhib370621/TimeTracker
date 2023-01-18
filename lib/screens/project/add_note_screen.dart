@@ -10,7 +10,6 @@ import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/stores/store_services.dart';
-import 'package:blu_time/utilities/media_picker.dart';
 import 'package:blu_time/view_models/note_view_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +198,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           }
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                 );

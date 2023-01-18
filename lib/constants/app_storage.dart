@@ -5,4 +5,20 @@ class AppStorage {
   static const String timeEntries = "timeEntries";
   static const String actions = "actions";
   static const String checklist = "checklist";
+
+///////////////////////////////////////////starting Screen values////////////////
+  static const String timerStartTime = "timerStartTime";
+  static const String timeFinishTime = "timeFinishTime";
+  static const String breakStartTime = "breakStartTime";
+  static const String breakFinishTime = "breakFinishTime";
+  static const String totalWorkTime = "totalWorkTime";
+  static const String totalBreakTime = "totalBreakTime";
+  static const String role = "role";
+  static const String currentAddress = "currentAddress";
+  static const String currentDate = "currentDate";
+  static const String projectName = "projectName";
+  static const String activityName = "activityName";
+  static const String checkListItemName = "checkListItemName";
+  static const String listOfBreaks = "listOfBreaks";
+
 }

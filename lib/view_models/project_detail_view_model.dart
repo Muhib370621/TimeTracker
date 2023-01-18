@@ -10,6 +10,7 @@ import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
 
 class ProjectDetailViewModel extends BaseModel {
+
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
   List<ProjectAction> actions = [];
   int totalCount = 0;
@@ -18,6 +19,7 @@ class ProjectDetailViewModel extends BaseModel {
     this.isLoading = isLoading;
     notifyListeners();
   }
+
   fetchActions({bool refresh = false,required String projectID}) async {
     if (isLoading){
       return;
@@ -29,8 +31,6 @@ class ProjectDetailViewModel extends BaseModel {
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.actions, projectID) ?? [];
     actions = jsonList.map((e) => ProjectAction().decode((Map<String, dynamic>.from(e)))).toList();
     setState(actions.isNotEmpty ? ViewState.completed : ViewState.loading);
-
-
     Map<String, String> body = {
       'q':
           "SELECT * FROM customrecord_bb_project_action WHERE custrecord_bb_project=$projectID"
@@ -57,4 +57,5 @@ class ProjectDetailViewModel extends BaseModel {
       rethrow;
     }
   }
+
 }

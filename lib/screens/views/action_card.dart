@@ -6,13 +6,15 @@ import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
-import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../constants/app_storage.dart';
 import '../../controllers/BottomNavigationController.dart';
 import '../../controllers/startingScreenController.dart';
+import '../../helpers/locator.dart';
+import '../../stores/store_services.dart';
 
 class ActionCard extends StatefulWidget {
   final ProjectAction projectAction;
@@ -42,10 +44,12 @@ class _ActionCardState extends State<ActionCard> {
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: ListTile(
           title: GestureDetector(
-            onTap: () {
+            onTap: () async{
               if (startController.clockRunning.value==true) {
                 controller.activityName.value =
                 widget.projectAction.custrecordBbBludocsPath!;
+                await locator<StoreServices>()
+              .setLocal(AppStorage.activityName, "userid",controller.activityName.value);
               }
             },
             child: Column(
@@ -123,17 +127,20 @@ class _ActionCardState extends State<ActionCard> {
                           height: 17.width,
                           fontSize: 8.width,
                           radius: 10,
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pushNamed(
                               RouteNames.checklist,
                               arguments: widget.projectAction,
                             );
-                            final BottomNavController controller = Get.put(
-                              BottomNavController(),
-                            );
-                            controller.activityName.value =
-                            widget.projectAction.custrecordBbBludocsPath!;
-                            // Get.offAll(CustomBottomNavigationBar());
+                            if(startController.clockRunning.value==true && controller.activityName.value=="") {
+                              final BottomNavController controller = Get.put(
+                                BottomNavController(),
+                              );
+                              controller.activityName.value =
+                              widget.projectAction.custrecordBbBludocsPath!;
+                              await locator<StoreServices>()
+                            .setLocal(AppStorage.activityName, "userid",controller.activityName.value);
+                            }
                           },
                         ),
                       ],

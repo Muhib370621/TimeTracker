@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/screens/startingscreen/acitvity.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
@@ -12,8 +13,10 @@ import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../constants/app_storage.dart';
 import '../../controllers/BottomNavigationController.dart';
 import '../../shared/Prompts.dart';
+import '../../stores/store_services.dart';
 
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
@@ -24,7 +27,7 @@ class StartingScreen extends StatefulWidget {
 
 class _StartingScreenState extends State<StartingScreen> {
   @override
-  void initState() {
+  void initState()  {
     final StartingScreenController controller =
         Get.put(StartingScreenController());
     controller.gpsService(context);
@@ -131,18 +134,22 @@ class _StartingScreenState extends State<StartingScreen> {
                               Visibility(
                                 visible:
                                     bottomController.projectName.value != "",
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 20),
-                                  child: Text(
-                                    bottomController.projectName.value
-                                        .toString(),
-                                    style: TextStyle(
-                                        color: AppColors.buttonBlue,
-                                        fontSize: 17.8.sp,
-                                        overflow: TextOverflow.ellipsis,
-                                        fontWeight: FontWeight.bold),
-                                    maxLines: 1,
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: SizedBox(
+                                      width: 72.w,
+                                      child: Text(
+                                        bottomController.projectName.value
+                                            .toString(),
+                                        style: TextStyle(
+                                            color: AppColors.buttonBlue,
+                                            fontSize: 17.8.sp,
+                                            overflow: TextOverflow.ellipsis,
+                                            fontWeight: FontWeight.bold),
+                                        maxLines: 1,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -228,12 +235,12 @@ class _StartingScreenState extends State<StartingScreen> {
                                             false) {
                                       Prompts.showSnackBar(
                                           msg:
-                                              "Please wait waiting for your current location");
+                                              "Please wait waiting for your current location",isWarning: true);
                                     } else if (controller.role.value == "" &&
                                         controller.locationLoading.value ==
                                             false) {
                                       Prompts.showSnackBar(
-                                          msg: "Please Select your Role");
+                                          msg: "Please Select your Role",isWarning: true);
                                     } else if (controller.role.value != "") {
                                       if (controller.clockRunning.value ==
                                           true) {
@@ -397,7 +404,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                             false) {
                                       Prompts.showSnackBar(
                                           msg:
-                                              "Please select your role and wait while we are fetching your current location");
+                                              "Please select your role and wait while we are fetching your current location",isWarning: true);
                                     }
                                   },
                                   child: Container(
@@ -1062,7 +1069,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         GestureDetector(
-                                          onTap: () {
+                                          onTap: () async {
                                             // controller.roleSelected.value==true;
 
                                             // Get.defaultDialog(
@@ -1264,12 +1271,14 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when working on Project!!")
+                                                        "Cant Change the roles when working on Project!!",isWarning: true)
                                                 : controller.role.value =
                                                     AppLocalizedStrings
                                                         .electrician
                                                         .tr();
                                             controller.isLoading.value = false;
+                                            await locator<StoreServices>()
+                                            .setLocal(AppStorage.role, "userid", controller.role.value);
                                           },
                                           child: Container(
                                             height: 0.045 * size.height,
@@ -1323,7 +1332,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           ),
                                         ),
                                         GestureDetector(
-                                          onTap: () {
+                                          onTap: () async {
                                             controller.clockDuration.value
                                                             .inSeconds
                                                             .remainder(60) >
@@ -1333,7 +1342,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when working on Project!!")
+                                                        "Cant Change the roles when working on Project!!",isWarning: true)
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1475,6 +1484,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                     AppLocalizedStrings
                                                         .technician
                                                         .tr();
+                                            await locator<StoreServices>()
+                                            .setLocal(AppStorage.role, "userid", controller.role.value);
                                             controller.isLoading.value = false;
                                           },
                                           child: Container(
@@ -1527,7 +1538,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                           ),
                                         ),
                                         GestureDetector(
-                                          onTap: () {
+                                          onTap: () async {
                                             controller.clockDuration.value
                                                             .inSeconds
                                                             .remainder(60) >
@@ -1537,7 +1548,7 @@ class _StartingScreenState extends State<StartingScreen> {
                                                         true
                                                 ? Prompts.showSnackBar(
                                                     msg:
-                                                        "Cant Change the roles when working on Project!!")
+                                                        "Cant Change the roles when working on Project!!",isWarning: true)
                                                 :
                                                 // setState(() {
                                                 // Get.defaultDialog(
@@ -1560,6 +1571,8 @@ class _StartingScreenState extends State<StartingScreen> {
                                                 controller.role.value =
                                                     AppLocalizedStrings.plumber
                                                         .tr();
+                                            await locator<StoreServices>()
+                                            .setLocal(AppStorage.role, "userid", controller.role.value);
                                             controller.isLoading.value = false;
                                           },
                                           child: Container(
