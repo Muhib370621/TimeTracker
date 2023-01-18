@@ -5,6 +5,7 @@ import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/add_note.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
@@ -13,7 +14,7 @@ import 'package:blu_time/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:get/get.dart';
 class NoteViewModel extends BaseModel {
   List<Notes> notes = [];
  final MediaPicker _mediaPicker = MediaPicker();
@@ -51,9 +52,44 @@ class NoteViewModel extends BaseModel {
   }
 
   selectImages() async {
-   noteImages = await _mediaPicker.selectImages();
-   debugPrint(noteImages.toString());
-   notifyListeners();
+  Get.defaultDialog(
+       title: '',
+       middleText: '',
+      titlePadding: EdgeInsets.zero,
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          AppCommonButton(title: "Gallery",width: 90,height: 40,onPressed: () async {
+            if (Get.context != null) {
+              Navigator.of(Get.context!, rootNavigator: true).pop();
+            }
+            List<XFile> images = await _mediaPicker.selectImages();
+            noteImages.addAll(images);
+            debugPrint(noteImages.toString());
+            notifyListeners();
+
+          },),
+          AppCommonButton(title: "Camera",width: 90,height: 40,onPressed: () async {
+            if (Get.context != null) {
+              Navigator.of(Get.context!, rootNavigator: true).pop();
+            }
+            List<XFile> images = await _mediaPicker.openCamera();
+            noteImages.addAll(images);
+            debugPrint(noteImages.toString());
+            notifyListeners();
+          },),
+        ],
+      ),
+
+    );
+
+  }
+
+  removeImage(int index){
+    if (noteImages.length > index) {
+      noteImages.removeAt(index);
+      notifyListeners();
+    }
   }
 
   addNote() {
