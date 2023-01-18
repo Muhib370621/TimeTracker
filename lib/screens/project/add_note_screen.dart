@@ -28,79 +28,84 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const BluTimeAppHeader(),
-        body: ViewModelBuilder.reactive(
-            viewModelBuilder: () => widget.viewModel,
-            disposeViewModel: false,
-            builder:
-                (BuildContext context, NoteViewModel model, Widget? child) {
-              return Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: TextField(
-                        minLines: 7,
-                        maxLines: 7,
-                        controller: controller,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(10),
-                            hintText:
-                                "${AppLocalizedStrings.writeNote.tr()}...",
-                            hintStyle: AppTextStyles.normal
-                                .copyWith(color: Colors.grey)),
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          resizeToAvoidBottomInset:false,
+          appBar: const BluTimeAppHeader(),
+          body: ViewModelBuilder.reactive(
+              viewModelBuilder: () => widget.viewModel,
+              disposeViewModel: false,
+              builder:
+                  (BuildContext context, NoteViewModel model, Widget? child) {
+                return Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: TextField(
+                          minLines: 7,
+                          maxLines: 7,
+                          controller: controller,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.all(10),
+                              hintText:
+                                  "${AppLocalizedStrings.writeNote.tr()}...",
+                              hintStyle: AppTextStyles.normal
+                                  .copyWith(color: Colors.grey)),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    model.noteImages.isEmpty
-                        ? GestureDetector(
-                            onTap: () {
-                              model.selectImages();
-                            },
-                            child: DottedBorder(
-                              color: AppColors.buttonBlue,
-                              strokeWidth: 3,
-                              dashPattern: const [15, 8],
-                              borderType: BorderType.RRect,
-                              radius: const Radius.circular(20),
-                              child: AspectRatio(
-                                  aspectRatio: 1.5,
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        color:
-                                            AppColors.buttonBlue.withAlpha(20),
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          AppAssets.addImage,
-                                          width: 92,
-                                        ),
-                                        Text(
-                                          AppLocalizedStrings.addImages.tr(),
-                                          style: AppTextStyles.bold.copyWith(
-                                              color: AppColors.buttonBlue,
-                                              fontSize: 18),
-                                        )
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          )
-                        : SizedBox(
-                            height: MediaQuery.of(context).size.width,
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      model.noteImages.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                model.selectImages();
+                              },
+                              child: DottedBorder(
+                                color: AppColors.buttonBlue,
+                                strokeWidth: 3,
+                                dashPattern: const [15, 8],
+                                borderType: BorderType.RRect,
+                                radius: const Radius.circular(20),
+                                child: AspectRatio(
+                                    aspectRatio: 1.5,
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              AppColors.buttonBlue.withAlpha(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.addImage,
+                                            width: 92,
+                                          ),
+                                          Text(
+                                            AppLocalizedStrings.addImages.tr(),
+                                            style: AppTextStyles.bold.copyWith(
+                                                color: AppColors.buttonBlue,
+                                                fontSize: 18),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            )
+                          : Expanded(
                             child: GridView.builder(
                               itemCount: model.noteImages.length + 1,
                               itemBuilder: (context, index) {
@@ -122,7 +127,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                                     Container(
                                       height: 100,
                                       width: 100,
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       child: Image.file(
                                         File(model.noteImages[index].path),
                                         fit: BoxFit.cover,
@@ -158,45 +163,47 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                               ),
                             ),
                           ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    AppCommonButton(
-                      title: AppLocalizedStrings.addNote.tr(),
-                      radius: 10,
-                      height: 40,
-                      onPressed: () async {
-                        List<String> paths =
-                            model.noteImages.map((e) => e.path).toList();
-                        try {
-                          List<dynamic> notes = await locator<StoreServices>()
-                              .getLocal("notes", "userid");
-                          List<AddNote> note1 = notes
-                              .map((e) => AddNote.fromJson(
-                                  Map<String, dynamic>.from(e)))
-                              .toList();
-                          AddNote note =
-                              AddNote(controller.text ?? "", paths, false);
-                          note1.add(note);
-                          await locator<StoreServices>().setLocal(
-                              "notes",
-                              "userid",
-                              (note1.map((e) => e.toJson()).toList()));
-                          Prompts.showSnackBar(msg: "Note saved locally");
-                          Navigator.of(context).pop();
-                        } catch (e) {
-                          AddNote note =
-                              AddNote(controller.text ?? "", paths, false);
-                          await locator<StoreServices>()
-                              .setLocal("notes", "userid", [note.toJson()]);
-                          Prompts.showSnackBar(msg: "Note saved locally");
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }));
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      AppCommonButton(
+                        title: AppLocalizedStrings.addNote.tr(),
+                        radius: 10,
+                        height: 40,
+                        onPressed: () async {
+                          List<String> paths =
+                              model.noteImages.map((e) => e.path).toList();
+                          try {
+                            List<dynamic> notes = await locator<StoreServices>()
+                                .getLocal("notes", "userid");
+                            List<AddNote> note1 = notes
+                                .map((e) => AddNote.fromJson(
+                                    Map<String, dynamic>.from(e)))
+                                .toList();
+                            AddNote note =
+                                AddNote(controller.text ?? "", paths, false);
+                            note1.add(note);
+                            await locator<StoreServices>().setLocal(
+                                "notes",
+                                "userid",
+                                (note1.map((e) => e.toJson()).toList()));
+                            Prompts.showSnackBar(msg: "Note saved locally");
+                            Navigator.of(context).pop();
+                          } catch (e) {
+                            AddNote note =
+                                AddNote(controller.text ?? "", paths, false);
+                            await locator<StoreServices>()
+                                .setLocal("notes", "userid", [note.toJson()]);
+                            Prompts.showSnackBar(msg: "Note saved locally");
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                );
+              })),
+    );
   }
 }
