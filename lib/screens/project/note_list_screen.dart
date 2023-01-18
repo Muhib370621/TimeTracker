@@ -19,38 +19,42 @@ class NoteListScreen extends StatefulWidget {
   State<NoteListScreen> createState() => _NoteListScreenState();
 }
 
-class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAliveClientMixin {
+class _NoteListScreenState extends State<NoteListScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        elevation: 10.0,
-        child: const SizedBox(
-          width: 70,
-          height: 70,
-          child: Card(
-            color: AppColors.buttonBlue,
-            shape: CircleBorder(),
-            child: Icon(Icons.add,size: 40,color: Colors.white,),
-          ),
-        ),
-        onPressed: () {
-          Navigator.of(context).pushNamed(RouteNames.addNote);
-        },
-      ),
-      body: ViewModelBuilder.reactive(
+    return ViewModelBuilder.reactive(
         onModelReady: (NoteViewModel model) => model.fetchNotes(),
         viewModelBuilder: () => NoteViewModel(),
         builder: (BuildContext context, NoteViewModel model, Widget? child) {
-          return _buildBody(model);
-        },
-      ),
-    );
+          return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                elevation: 10.0,
+                child: const SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: Card(
+                    color: AppColors.buttonBlue,
+                    shape: CircleBorder(),
+                    child: Icon(
+                      Icons.add,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(RouteNames.addNote, arguments: model);
+                },
+              ),
+              body: _buildBody(model));
+        });
   }
 
   _buildBody(NoteViewModel model) {
@@ -82,15 +86,15 @@ class _NoteListScreenState extends State<NoteListScreen> with AutomaticKeepAlive
                 child: Card(
                   elevation: 5.0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 10),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            model.notes[index].note ?? "",
-                            style: AppTextStyles.medium
-                                .copyWith(color: Colors.black, fontSize: 9.width)),
+                        Text(model.notes[index].note ?? "",
+                            style: AppTextStyles.medium.copyWith(
+                                color: Colors.black, fontSize: 9.width)),
                         const SizedBox(
                           height: 5,
                         ),
