@@ -41,4 +41,35 @@ class Prompts {
     );
   }
 
+  static confirmationDialog(BuildContext context, String middleText,void Function()? onConfirmTap) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Confirm"),
+            content: Text(middleText),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                backgroundColor: AppColors.buttonBlue,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed:
+                  onConfirmTap,
+                child: const Text("Confirm")
+              ),
+            ],
+          );
+        });
+  }
 }

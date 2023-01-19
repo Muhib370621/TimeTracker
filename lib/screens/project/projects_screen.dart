@@ -3,6 +3,7 @@ import 'package:blu_time/controllers/BottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/views/project_card.dart';
+import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -12,8 +13,10 @@ import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../constants/app_colors.dart';
 import '../../constants/app_storage.dart';
 import '../../helpers/locator.dart';
 import '../../stores/store_services.dart';
@@ -67,12 +70,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
   _buildDataView(ProjectViewModel model) {
     final StartingScreenController startController =
-    Get.put(StartingScreenController());
+        Get.put(StartingScreenController());
     final BottomNavController controller = Get.put(BottomNavController());
     return Selector<ProjectViewModel, List<Project>>(
         selector: (context, model) => model.projects,
         builder: (BuildContext context, value, Widget? child) {
-         return PagedList(
+          return PagedList(
             itemCount: model.projects.length,
             itemBuilder: (context, index) {
               return Container(
@@ -83,10 +86,14 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
-                    if(startController.clockRunning.value==true && controller.projectName.value==""){
-                    controller.projectName.value= model.projects[index].altname.toString();
-                    await locator<StoreServices>()
-                    .setLocal(AppStorage.projectName, "userid",controller.projectName.value);
+                    if (startController.clockRunning.value == true &&
+                        controller.projectName.value == "") {
+                      controller.projectName.value =
+                          model.projects[index].altname.toString();
+                      await locator<StoreServices>().setLocal(
+                          AppStorage.projectName,
+                          "userid",
+                          controller.projectName.value);
                     }
                   },
                   child: ProjectCard(

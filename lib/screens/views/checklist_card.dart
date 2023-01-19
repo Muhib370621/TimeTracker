@@ -15,13 +15,14 @@ import '../../stores/store_services.dart';
 
 class ChecklistCard extends StatelessWidget {
   final ActionChecklist actionChecklist;
+
   const ChecklistCard({Key? key, required this.actionChecklist})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final StartingScreenController startController =
-    Get.put(StartingScreenController());
+        Get.put(StartingScreenController());
     final BottomNavController controller = Get.put(
       BottomNavController(),
     );
@@ -33,15 +34,22 @@ class ChecklistCard extends StatelessWidget {
       color: AppColors.cellBackground,
       child: GestureDetector(
         onTap: () async {
-          if (startController.clockRunning.value==true && controller.checkListItem.value==""){
-          Get.to(
+          if (startController.clockRunning.value == true &&
+              controller.checkListItem.value == "") {
+            Prompts.confirmationDialog(
+                context, "Are you Sure you Want to Select this item", () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              Get.to(
                 () => CustomBottomNavigationBar(),
-          );
-          // Get.reset();
-          controller.currentIndex.value = 0;
-          controller.checkListItem.value= actionChecklist.custrecordBbPachklistTitle.toString();
-          await locator<StoreServices>()
-          .setLocal(AppStorage.checkListItemName, "userid",controller.checkListItem.value);
+              );
+              controller.currentIndex.value = 0;
+              controller.checkListItem.value =
+                  actionChecklist.custrecordBbPachklistTitle.toString();
+              await locator<StoreServices>().setLocal(
+                  AppStorage.checkListItemName,
+                  "userid",
+                  controller.checkListItem.value);
+            });
           }
         },
         child: ListTile(
@@ -63,8 +71,14 @@ class ChecklistCard extends StatelessWidget {
           ),
           subtitle: Row(
             children: [
-               Icon(Icons.calendar_month,color: AppColors.buttonBlue,size: 15.width,),
-              const SizedBox(width: 5,),
+              Icon(
+                Icons.calendar_month,
+                color: AppColors.buttonBlue,
+                size: 15.width,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
               Text(actionChecklist.lastmodified ?? "N/A",
                   style: AppTextStyles.normal
                       .copyWith(color: Colors.black, fontSize: 10.width)),

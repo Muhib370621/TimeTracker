@@ -346,9 +346,9 @@ class StartingScreenController extends GetxController {
     clockRunning.value = false;
     getFinishTime();
     subtractTime();
-    // print("-------------------------------");
-    // String? note = await locator<StoreServices>().getLocal(AppStorage.role, "userid");
-    // print(note);
+    print("-------------------------------");
+    RxList<BreakModel> note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+    print(note.length);
   }
 
   Future<void> stopBreak({bool resets = true}) async {

@@ -1,11 +1,16 @@
 
-
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:hive/hive.dart';
+// part 'break.dart';
 
-class BreakModel extends BaseModel
+@HiveType(typeId:0)
+class BreakModel extends HiveObject
 {
+  @HiveField(0)
   String breakStart;
+  @HiveField(1)
   String breakEnd;
+  @HiveField(2)
   String totalBreakTime;
 
   BreakModel({

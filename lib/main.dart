@@ -11,12 +11,15 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'models/break.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   setupLocator();
   var path = await findLocalPath() ?? "";
   Hive.init(path);
+  Hive.registerAdapter(BreakModelAdapter());
   runApp(DevicePreview(
     enabled: false,
     builder: (context) => MaterialApp(

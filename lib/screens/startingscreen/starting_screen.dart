@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../constants/app_storage.dart';
 import '../../controllers/BottomNavigationController.dart';
 import '../../shared/Prompts.dart';
@@ -25,15 +24,49 @@ class StartingScreen extends StatefulWidget {
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
-class _StartingScreenState extends State<StartingScreen> {
+class _StartingScreenState extends State<StartingScreen> with WidgetsBindingObserver{
   @override
   void initState()  {
+    WidgetsBinding.instance.addObserver(this);
     final StartingScreenController controller =
         Get.put(StartingScreenController());
     controller.gpsService(context);
     controller.determinePosition();
     super.initState();
   }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    final StartingScreenController controller =
+    Get.put(StartingScreenController());
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("Resumed");
+        print("--------------------------------------------------------------------");
+        String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+        String currentTime = await locator<StoreServices>().getLocal(AppStorage.currentDate, "userid");
+        print(note);
+        print(currentTime);
+        break;
+      case AppLifecycleState.paused:
+        print("Paused");
+        print("--------------------------------------------------------------------");
+        await locator<StoreServices>()
+            .setLocal(AppStorage.timerTime, "userid", " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
+        break;
+      case AppLifecycleState.inactive:
+        print("Inactive");
+        print("--------------------------------------------------------------------");
+        break;
+      case AppLifecycleState.detached:
+        print("Detached");
+        print("--------------------------------------------------------------------");
+        await locator<StoreServices>()
+    .setLocal(AppStorage.timerTime, "userid", " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
+        break;
+    }
+  }
+
 
   @override
   void dispose() {

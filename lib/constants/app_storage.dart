@@ -8,6 +8,7 @@ class AppStorage {
 
 ///////////////////////////////////////////starting Screen values////////////////
   static const String timerStartTime = "timerStartTime";
+  static const String timerTime = "timerTime";
   static const String timeFinishTime = "timeFinishTime";
   static const String breakStartTime = "breakStartTime";
   static const String breakFinishTime = "breakFinishTime";
