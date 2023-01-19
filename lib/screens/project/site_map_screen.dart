@@ -124,6 +124,7 @@ class MyDeliveryProgress extends StatefulWidget {
 }
 
 class StepperState extends State<MyDeliveryProgress> {
+  int totalSteps = 30;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,13 +162,28 @@ class StepperState extends State<MyDeliveryProgress> {
               const SizedBox(
                 width: 2,
               ),
-              const Expanded(
+               Expanded(
                 child: StepProgressIndicator(
-                  totalSteps: 20,
-                  currentStep: 6,
+                  totalSteps: totalSteps,
+                  currentStep: 15,
+                  customSize: (index,value) {
+                    if ((index == 0) || (index == totalSteps - 1)){
+                      return 20;
+                    }
+                    return 2;
+                  },
                   selectedColor: AppColors.buttonBlue,
                   unselectedColor: Colors.grey,
-                  roundedEdges: Radius.circular(10),
+                 // roundedEdges: Radius.circular(10),
+                  customStep:  (index, color, size){
+                    if ((index == 0) || (index == totalSteps - 1)){
+                      return Container(decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black
+                      ),);
+                    }
+                    return Container(decoration: BoxDecoration(shape: BoxShape.rectangle,color:color),);
+                  },
                 ),
               ),
               const SizedBox(

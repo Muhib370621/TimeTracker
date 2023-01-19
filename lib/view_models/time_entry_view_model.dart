@@ -8,17 +8,29 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:intl/intl.dart';
 
 class TimeEntryViewModel extends BaseModel{
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
   List<TimeEntry> entries = [];
   List<TimeEntry> allEntries = [];
   int totalCount = 0;
+  DateTime? startDate;
+  DateTime? endDate;
+
   bool isLoading = false;
   set setIsLoading(bool isLoading) {
     this.isLoading = isLoading;
     notifyListeners();
   }
+
+  String filterTime = "";
+  set setFilterTime(String filterTime) {
+    this.filterTime = filterTime;
+    searchWithDateRange();
+    notifyListeners();
+  }
+
   fetchEntries({bool refresh = false}) async {
     if (isLoading){
       return;
@@ -33,7 +45,6 @@ class TimeEntryViewModel extends BaseModel{
     allEntries = jsonList.map((e) => TimeEntry().decode((Map<String, dynamic>.from(e)))).toList();
     entries = allEntries;
     setState(entries.isNotEmpty ? ViewState.completed : ViewState.loading);
-
     setIsLoading = true;
     Map<String, String> body = {
       'q':
@@ -70,6 +81,22 @@ class TimeEntryViewModel extends BaseModel{
     else {
       entries = allEntries.where((element) => element.displayfield?.toLowerCase().contains(text.toLowerCase()) ?? false).toList();
     }
+    setState(ViewState.completed);
+  }
+
+  searchWithDateRange() {
+    if (startDate == null) {
+      return;
+    }
+    var dateFormat = DateFormat.yMd();
+    var output = <TimeEntry>[];
+    for (var i = 0; i < allEntries.length; i += 1) {
+      var date = dateFormat.parse(allEntries[i].trandate ?? "", true);
+      if (date.compareTo(startDate!) >= 0 && date.compareTo(endDate!) <= 0) {
+        output.add(allEntries[i]);
+      }
+    }
+    entries = output;
     setState(ViewState.completed);
   }
 

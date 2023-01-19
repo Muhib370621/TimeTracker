@@ -13,6 +13,7 @@ import 'package:blu_time/shared/widgets/empty_view.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/time_entry_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
@@ -99,38 +100,63 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 5,
-                  child: Container(
-                    //height: 35,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: AppColors.buttonBlue,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                            child: Text(
-                          "Tue 06 Dec - Fri 09 Dec",
-                          style: AppTextStyles.medium.copyWith(color: Colors.black,fontSize: 10.width),
-                        )),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          color: AppColors.buttonBlue,
-                        ),
-                      ],
+                child: GestureDetector(
+                  onTap: () async {
+                    final picked = await showDateRangePicker(
+                      context: context,
+                      lastDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      builder: (BuildContext context, Widget? child) {
+                        return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: AppColors.background,
+                           colorScheme: const ColorScheme.light(primary:AppColors.background),
+                          ),
+                          child: child!,
+                        );
+                      }
+                    );
+                    if (picked != null) {
+                      final DateFormat formatter = DateFormat('EEE d MMM');
+                      model.startDate = picked.start;
+                      model.endDate = picked.end;
+                      final String formatted = "${formatter.format(picked.start)} - ${formatter.format(picked.end)}";
+                      model.setFilterTime = formatted;
+                    }
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 5,
+                    child: Container(
+                      //height: 35,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.calendar_month,
+                            color: AppColors.buttonBlue,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                              child: Text(
+                            model.filterTime,
+                            style: AppTextStyles.medium.copyWith(color: Colors.black,fontSize: 10.width),
+                          )),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.buttonBlue,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
