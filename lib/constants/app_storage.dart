@@ -21,5 +21,8 @@ class AppStorage {
   static const String activityName = "activityName";
   static const String checkListItemName = "checkListItemName";
   static const String listOfBreaks = "listOfBreaks";
+  static const String appPausedTime = "appPausedTime";
+  static const String appResumedTime = "appResumedTime";
+
 
 }

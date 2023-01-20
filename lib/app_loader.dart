@@ -59,15 +59,9 @@ class _AppLoaderState extends State<AppLoader> {
                       Column(
                         children: [
                           Text.rich( TextSpan(
-                                text: "blu ",
+                                text: "bluTime",
                                 style: AppTextStyles.bold.copyWith(fontSize: 35),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Time',
-                                    style: AppTextStyles.medium.copyWith(fontSize: 35),
-                                  )
-                                ]),
-                          ),
+                          ),),
                           const SizedBox(height: 10,),
                           const Text("Because Your Time is Valuable",style: AppTextStyles.normal,),
                         ],

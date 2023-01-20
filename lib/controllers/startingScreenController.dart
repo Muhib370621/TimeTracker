@@ -15,6 +15,7 @@ import '../stores/store_services.dart';
 class StartingScreenController extends GetxController {
   @override
   void onInit() {
+    // RxInt acitivityIndex = 0.obs;
     // activityName.value="";
     // projectName.value="";
     // checkListItem.value="";
@@ -68,6 +69,11 @@ class StartingScreenController extends GetxController {
   // RxString activityName = "".obs;
   // RxString projectName = "".obs;
   // RxString checkListItem = "".obs;
+removeBreak(index){
+  listOfBreaks.removeAt(index);
+  update();
+}
+
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;

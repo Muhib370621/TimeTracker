@@ -35,39 +35,104 @@ class _StartingScreenState extends State<StartingScreen> with WidgetsBindingObse
     super.initState();
   }
 
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    final StartingScreenController controller =
-    Get.put(StartingScreenController());
-    switch (state) {
-      case AppLifecycleState.resumed:
-        print("Resumed");
-        print("--------------------------------------------------------------------");
-        String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
-        String currentTime = await locator<StoreServices>().getLocal(AppStorage.currentDate, "userid");
-        print(note);
-        print(currentTime);
-        break;
-      case AppLifecycleState.paused:
-        print("Paused");
-        print("--------------------------------------------------------------------");
-        await locator<StoreServices>()
-            .setLocal(AppStorage.timerTime, "userid", " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
-        break;
-      case AppLifecycleState.inactive:
-        print("Inactive");
-        print("--------------------------------------------------------------------");
-        break;
-      case AppLifecycleState.detached:
-        print("Detached");
-        print("--------------------------------------------------------------------");
-        await locator<StoreServices>()
-    .setLocal(AppStorage.timerTime, "userid", " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
-        break;
-    }
-  }
-
-
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   final StartingScreenController controller =
+  //   Get.put(StartingScreenController());
+  //   switch (state) {
+  //     case AppLifecycleState.resumed:
+  //       print("Resumed");
+  //       print("--------------------------------------------------------------------");
+  //       String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+  //       await locator<StoreServices>()
+  //           .setLocal(AppStorage.appResumedTime, "userid", controller.timeString.value);
+  //       String resume = await locator<StoreServices>().getLocal(AppStorage.appResumedTime, "userid");
+  //       String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+  //       var dateFormat = DateFormat('hh:mm');
+  //       var hourDiff;
+  //       var minutes_diff;
+  //       var seconds_diff;
+  //       DateTime start = dateFormat.parse(paused);
+  //       DateTime finish = dateFormat.parse(resume);
+  //       Duration diff = finish.difference(start);
+  //       hourDiff = diff.inHours;
+  //       minutes_diff = diff.inMinutes;
+  //       // var result = "$hourDiff:$minutes_diff";
+  //       String timerTime = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+  //       print(timerTime);
+  //       // twoDigits(controller.clockDuration.value.inMinutes.remainder(60)) =
+  //       // twoDigits(controller.clockDuration.value.inMinutes.remainder(60))
+  //       // +AutofillHints.middleName;
+  //       // print("result $result");
+  //       // print(note);
+  //       // print(resume);
+  //       print("before ${controller.clockDuration.value.inMinutes.toString()}");
+  //       // var updated =controller.clockDuration.value.inMinutes+ minutes_diff;
+  //       // print("updated $updated");
+  //       if(controller.clockRunning.value==true){
+  //       controller.clockDuration.value = controller.clockDuration.value+Duration(minutes: minutes_diff.toInt());}
+  //       // controller.startTimer();
+  //       // controller.clockDuration.value.inHours + hourDiff;
+  //       print("difference $minutes_diff");
+  //       print("after ${controller.clockDuration.value.inMinutes.toString()}");
+  //       // controller.startTimer();
+  //       break;
+  //     case AppLifecycleState.paused:
+  //       print("Paused");
+  //       print("--------------------------------------------------------------------");
+  //       await locator<StoreServices>()
+  //           .setLocal(AppStorage.timerTime, "userid", " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
+  //       await locator<StoreServices>()
+  //           .setLocal(AppStorage.appPausedTime, "userid", controller.timeString.value);
+  //       String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+  //       print(paused);
+  //       // controller.stopTimer(context: context);
+  //       // String timerTime = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+  //       // print(timerTime);
+  //       break;
+  //     case AppLifecycleState.inactive:
+  //       print("Inactive");
+  //       print("--------------------------------------------------------------------");
+  //       break;
+  //     case AppLifecycleState.detached:
+  //       print("Detached");
+  //       print("--------------------------------------------------------------------");
+  //       String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+  //       await locator<StoreServices>()
+  //           .setLocal(AppStorage.appResumedTime, "userid", controller.timeString.value);
+  //       String resume = await locator<StoreServices>().getLocal(AppStorage.appResumedTime, "userid");
+  //       String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+  //       var dateFormat = DateFormat('hh:mm');
+  //       var hourDiff;
+  //       var minutes_diff;
+  //       var seconds_diff;
+  //       DateTime start = dateFormat.parse(paused);
+  //       DateTime finish = dateFormat.parse(resume);
+  //       Duration diff = finish.difference(start);
+  //       hourDiff = diff.inHours;
+  //       minutes_diff = diff.inMinutes;
+  //       // var result = "$hourDiff:$minutes_diff";
+  //       String timerTime = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+  //       print(timerTime);
+  //       // twoDigits(controller.clockDuration.value.inMinutes.remainder(60)) =
+  //       // twoDigits(controller.clockDuration.value.inMinutes.remainder(60))
+  //       // +AutofillHints.middleName;
+  //       // print("result $result");
+  //       // print(note);
+  //       // print(resume);
+  //       print("before ${controller.clockDuration.value.inMinutes.toString()}");
+  //       // var updated =controller.clockDuration.value.inMinutes+ minutes_diff;
+  //       // print("updated $updated");
+  //       if(controller.clockRunning.value==true){
+  //         controller.clockDuration.value = controller.clockDuration.value+Duration(minutes: minutes_diff.toInt());}
+  //       // controller.startTimer();
+  //       // controller.clockDuration.value.inHours + hourDiff;
+  //       print("difference $minutes_diff");
+  //       print("after ${controller.clockDuration.value.inMinutes.toString()}");
+  //   // controller.startTimer();
+  //   break;
+  //   }
+  // }
   @override
   void dispose() {
     super.dispose();
@@ -234,15 +299,17 @@ class _StartingScreenState extends State<StartingScreen> with WidgetsBindingObse
                                           AppAssets.checkListItem,
                                           height: 2.h,
                                         ),
-                                        Text(
-                                          bottomController.checkListItem.value
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.sp,
-                                            overflow: TextOverflow.ellipsis,
+                                        Expanded(
+                                          child: Text(
+                                            bottomController.checkListItem.value
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            maxLines: 1,
                                           ),
-                                          maxLines: 1,
                                         ),
                                         const SizedBox()
                                       ],
@@ -1670,7 +1737,7 @@ class _StartingScreenState extends State<StartingScreen> with WidgetsBindingObse
                             Positioned(
                               top: 0.15 * size.height,
                               child: SizedBox(
-                                width: 0.24 * size.width,
+                                width: 0.23 * size.width,
                                 height: 0.22 * size.height,
                                 child: Row(
                                   children: [
