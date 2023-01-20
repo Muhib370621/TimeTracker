@@ -4,10 +4,12 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/models/user_profile.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,6 +23,24 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  UserProfile? user;
+  TextEditingController? firstNameController;
+  TextEditingController? lastNameController;
+  TextEditingController? emailController;
+  TextEditingController? mobileController;
+
+  @override
+  void initState() {
+    super.initState();
+    String userId = locator<StoreServices>().getUsername();
+    user = MockFactory().mockUsers(userId: userId).first;
+    firstNameController = TextEditingController(text: user?.firstName ?? "");
+    lastNameController = TextEditingController(text: user?.lastName ?? "");
+    emailController = TextEditingController(text: user?.email ?? "");
+    mobileController = TextEditingController(text: user?.mobile ?? "");
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double profileIconSize = MediaQuery.of(context).size.width * 0.13;
@@ -49,19 +69,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: double.infinity,
                     margin: EdgeInsets.only(top: profileIconSize),
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
-                        boxShadow: [BoxShadow(blurRadius: 10)]),
+                        color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50)), boxShadow: [BoxShadow(blurRadius: 10)]),
                     //padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Padding(
                       padding: EdgeInsets.only(top: profileIconSize),
                       child: SingleChildScrollView(
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50)),
+                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50)),
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Column(
@@ -72,8 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Text(
                                   "Your Name Here",
-                                  style: AppTextStyles.semiBold.copyWith(
-                                      fontSize: 18.width, color: Colors.black),
+                                  style: AppTextStyles.semiBold.copyWith(fontSize: 18.width, color: Colors.black),
                                 ),
                                 const SizedBox(
                                   height: 30,
@@ -83,15 +96,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
                                             AppLocalizedStrings.firstName.tr(),
-                                            style: AppTextStyles.bold.copyWith(
-                                                fontSize: 12.width,
-                                                color: Colors.black),
+                                            style: AppTextStyles.bold.copyWith(fontSize: 12.width, color: Colors.black),
                                           ),
                                           const SizedBox(
                                             height: 10,
@@ -99,11 +109,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           SizedBox(
                                             height: 45,
                                             child: AppCommonTextField(
-                                              backgroundColor:
-                                                  AppColors.textFieldBackground,
-                                              hintText: AppLocalizedStrings
-                                                  .enterEmailAddress
-                                                  .tr(),
+                                              controller: firstNameController,
+                                              backgroundColor: AppColors.textFieldBackground,
+                                              hintText: AppLocalizedStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -115,14 +123,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizedStrings.lastName.tr(),
-                                            style: AppTextStyles.bold.copyWith(
-                                                fontSize: 12.width,
-                                                color: Colors.black),
+                                            style: AppTextStyles.bold.copyWith(fontSize: 12.width, color: Colors.black),
                                           ),
                                           const SizedBox(
                                             height: 10,
@@ -130,11 +135,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           SizedBox(
                                             height: 45,
                                             child: AppCommonTextField(
-                                              backgroundColor:
-                                                  AppColors.textFieldBackground,
-                                              hintText: AppLocalizedStrings
-                                                  .enterEmailAddress
-                                                  .tr(),
+                                              controller: lastNameController,
+                                              backgroundColor: AppColors.textFieldBackground,
+                                              hintText: AppLocalizedStrings.enterEmailAddress.tr(),
                                               hintColor: Colors.grey,
                                             ),
                                           ),
@@ -151,9 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Text(
                                       AppLocalizedStrings.emailAddress.tr(),
-                                      style: AppTextStyles.bold.copyWith(
-                                          fontSize: 12.width,
-                                          color: Colors.black),
+                                      style: AppTextStyles.bold.copyWith(fontSize: 12.width, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -161,11 +162,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     SizedBox(
                                       height: 45,
                                       child: AppCommonTextField(
-                                        backgroundColor:
-                                            AppColors.textFieldBackground,
-                                        hintText: AppLocalizedStrings
-                                            .enterEmailAddress
-                                            .tr(),
+                                        controller: emailController,
+                                        backgroundColor: AppColors.textFieldBackground,
+                                        hintText: AppLocalizedStrings.enterEmailAddress.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -179,9 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Text(
                                       AppLocalizedStrings.mobileNumber.tr(),
-                                      style: AppTextStyles.bold.copyWith(
-                                          fontSize: 12.width,
-                                          color: Colors.black),
+                                      style: AppTextStyles.bold.copyWith(fontSize: 12.width, color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -189,11 +186,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     SizedBox(
                                       height: 45,
                                       child: AppCommonTextField(
-                                        backgroundColor:
-                                            AppColors.textFieldBackground,
-                                        hintText: AppLocalizedStrings
-                                            .enterMobileNumber
-                                            .tr(),
+                                        controller: mobileController,
+                                        backgroundColor: AppColors.textFieldBackground,
+                                        hintText: AppLocalizedStrings.enterMobileNumber.tr(),
                                         hintColor: Colors.grey,
                                       ),
                                     ),
@@ -207,8 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Column(
                                     children: [
                                       AppCommonButton(
-                                        title: AppLocalizedStrings.saveChanges
-                                            .tr(),
+                                        title: AppLocalizedStrings.saveChanges.tr(),
                                         fontSize: 16,
                                       ),
                                       const Divider(
@@ -225,13 +219,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Card(
                                       elevation: 5,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child:
-                                            SvgPicture.asset(AppAssets.aboutUs),
+                                        child: SvgPicture.asset(AppAssets.aboutUs),
                                       ),
                                     ),
                                     const SizedBox(
@@ -239,9 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     Text(
                                       AppLocalizedStrings.aboutUs.tr(),
-                                      style: AppTextStyles.semiBold.copyWith(
-                                          fontSize: 15.width,
-                                          color: Colors.black),
+                                      style: AppTextStyles.semiBold.copyWith(fontSize: 15.width, color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -252,13 +241,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Card(
                                       elevation: 5,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child:
-                                            SvgPicture.asset(AppAssets.getHelp),
+                                        child: SvgPicture.asset(AppAssets.getHelp),
                                       ),
                                     ),
                                     const SizedBox(
@@ -266,9 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     Text(
                                       AppLocalizedStrings.getHelp.tr(),
-                                      style: AppTextStyles.semiBold.copyWith(
-                                          fontSize: 15.width,
-                                          color: Colors.black),
+                                      style: AppTextStyles.semiBold.copyWith(fontSize: 15.width, color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -279,8 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   title: AppLocalizedStrings.logOut.tr(),
                                   onPressed: () async {
                                     await locator<StoreServices>().clearAll();
-                                    await locator<StoreServices>()
-                                        .setAccessToken("");
+                                    await locator<StoreServices>().setAccessToken("");
                                     Get.offAll(() => const AppLoader());
                                   },
                                 ),
@@ -301,12 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 10,
-                                color: Colors.black.withAlpha(60),
-                                spreadRadius: 5)
-                          ],
+                          boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withAlpha(60), spreadRadius: 5)],
                         ),
                         child: GestureDetector(
                           onTap: () async {
@@ -353,9 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: CircleAvatar(
                               backgroundColor: Colors.black,
                               radius: profileIconSize - 3,
-                              child: Icon(Icons.person_rounded,
-                                  color: Colors.white,
-                                  size: profileIconSize * 1.5),
+                              child: Icon(Icons.person_rounded, color: Colors.white, size: profileIconSize * 1.5),
                             ),
                           ),
                         ),

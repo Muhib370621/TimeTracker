@@ -1,10 +1,13 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/main.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/screens/views/time_card_detail_card.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:flutter/material.dart';
 
 class TimeCardDetailScreen extends StatefulWidget {
@@ -16,6 +19,17 @@ class TimeCardDetailScreen extends StatefulWidget {
 }
 
 class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
+
+  Project? timeProject;
+  @override
+  void initState() {
+    super.initState();
+    if (isMockEnabled) {
+      setState(() {
+        timeProject = MockFactory().mockProjectById(widget.timeEntry.csegBbProject ?? "");
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -99,9 +99,9 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
         child: ProjectDetailScreen(project: widget.viewModel.selectedProject!,),
       ),
       SiteMapScreen(project: widget.viewModel.selectedProject!,),
-      const Padding(
-        padding: EdgeInsets.only(top: 70.0),
-        child: NoteListScreen(),
+       Padding(
+        padding: const EdgeInsets.only(top: 70.0),
+        child: NoteListScreen(project: widget.viewModel.selectedProject!,),
       )
     ]);
   }

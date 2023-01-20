@@ -6,6 +6,7 @@ import 'package:blu_time/models/add_note.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
@@ -19,9 +20,14 @@ class NoteViewModel extends BaseModel {
   List<Notes> notes = [];
  final MediaPicker _mediaPicker = MediaPicker();
  List<XFile> noteImages = [];
-  fetchNotes() async {
-    var projectResponse = (await fetch<ProjectResponse>());
-    notes = projectResponse.projectList?[0].notes ?? [];
+
+
+  fetchNotes(String projectId) async {
+
+    notes = MockFactory().mockProjectNotes(projectId);
+
+    // var projectResponse = (await fetch<ProjectResponse>());
+    // notes = projectResponse.projectList?[0].notes ?? [];
     if (notes.isEmpty) {
       setState(ViewState.empty);
     } else {
@@ -97,6 +103,6 @@ class NoteViewModel extends BaseModel {
     // notes.add("value");
     // notes.add("value");
     // notes.add("value");
-    fetchNotes();
+    //fetchNotes();
   }
 }
