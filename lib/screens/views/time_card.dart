@@ -74,7 +74,7 @@ class TimeCard extends StatelessWidget {
                     style: AppTextStyles.semiBold.copyWith(fontSize: 10.width),
                   ),
                   Text.rich(TextSpan(
-                      text: "0",
+                      text: '${timeEntry.actionsCount ?? 0}',
                       style: AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -84,7 +84,7 @@ class TimeCard extends StatelessWidget {
                         )
                       ])),
                   Text.rich(TextSpan(
-                      text: "0",
+                      text:'${timeEntry.completeCount ?? 0}',
                       style:AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -94,7 +94,7 @@ class TimeCard extends StatelessWidget {
                         )
                       ])),
                   Text.rich(TextSpan(
-                      text: "0",
+                      text: '${timeEntry.remainingCount ?? 0}',
                       style:AppTextStyles.bold
                           .copyWith(fontSize: 18.width, color: AppColors.orange),
                       children: <TextSpan>[
@@ -107,24 +107,22 @@ class TimeCard extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  AppLocalizedStrings.perDayTime.tr(),
-                  style: AppTextStyles.normal
-                      .copyWith(color: Colors.white, fontSize: 11.width),
+                Expanded(
+                  child: Text(
+                    AppLocalizedStrings.perDayTime.tr(),
+                    style: AppTextStyles.normal
+                        .copyWith(color: Colors.white, fontSize: 11.width),
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                Expanded(
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      (double.parse(timeEntry.hours ?? "0.0")).convertDecimalHours(),
-                      style: AppTextStyles.bold
-                          .copyWith(color: AppColors.buttonBlue, fontSize: 16.width),
-                    ),
-                  ),
+                Text(
+                  (double.parse(timeEntry.hours ?? "0.0")).convertDecimalHours(),
+                  style: AppTextStyles.bold
+                      .copyWith(color: AppColors.buttonBlue, fontSize: 16.width),
                 )
               ],
             )

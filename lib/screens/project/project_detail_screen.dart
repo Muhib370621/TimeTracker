@@ -113,7 +113,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             height: 15,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(

@@ -26,7 +26,10 @@ class TimeEntry extends Decodable<TimeEntry>{
   String? timesheet;
   String? timetype;
   String? trandate;
-
+  int? actionsCount;
+  int? completeCount;
+  int? remainingCount;
+  String? type;
   TimeEntry(
       {this.billingsubsidiary,
         this.csegBbProject,
@@ -52,7 +55,7 @@ class TimeEntry extends Decodable<TimeEntry>{
         this.timemodified,
         this.timesheet,
         this.timetype,
-        this.trandate});
+        this.trandate,this.actionsCount,this.completeCount,this.remainingCount,this.type});
 
   TimeEntry.fromJson(Map<String, dynamic> json) {
     billingsubsidiary = json['billingsubsidiary'];

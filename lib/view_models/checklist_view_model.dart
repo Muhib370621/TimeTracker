@@ -1,8 +1,10 @@
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/main.dart';
 import 'package:blu_time/models/action_checklist.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -14,7 +16,11 @@ class ChecklistViewModel extends BaseModel {
   List<ActionChecklist> checklist = [];
 
   fetchCheckList(String action) async {
-
+    if (isMockEnabled){
+      checklist = MockFactory().mockActionChecklist(action);
+      setState(checklist.isNotEmpty ? ViewState.completed : ViewState.empty);
+      return;
+    }
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.checklist, action) ?? [];
     checklist = jsonList.map((e) => ActionChecklist().decode((Map<String, dynamic>.from(e)))).toList();
     setState(checklist.isNotEmpty ? ViewState.completed : ViewState.loading);

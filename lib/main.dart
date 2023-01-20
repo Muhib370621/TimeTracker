@@ -12,7 +12,7 @@ import 'package:hive/hive.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'models/break.dart';
-
+bool isMockEnabled = true;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();

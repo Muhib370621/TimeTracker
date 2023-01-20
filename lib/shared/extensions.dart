@@ -29,6 +29,9 @@ extension DoubleExtension on double {
   String convertDecimalHours() {
     int hours = floor();
     int minutes = (this % 1 * 60).round();
+    if (minutes == 0){
+      return '$hours hours';
+    }
     return '$hours hours $minutes minutes';
   }
 

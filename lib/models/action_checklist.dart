@@ -12,6 +12,7 @@ class ActionChecklist extends Decodable<ActionChecklist>{
   String? name;
   String? owner;
   String? scriptid;
+  bool? isCompleted;
 
   ActionChecklist(
       {this.created,
@@ -24,7 +25,7 @@ class ActionChecklist extends Decodable<ActionChecklist>{
         this.lastmodified,
         this.name,
         this.owner,
-        this.scriptid});
+        this.scriptid,this.isCompleted});
 
   ActionChecklist.fromJson(Map<String, dynamic> json) {
 

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/main.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -21,7 +23,10 @@ class ProjectViewModel extends BaseModel {
   int tabIndex = 0;
   set setTabIndex(int tabIndex) {
     this.tabIndex = tabIndex;
-    notifyListeners();
+    Future.delayed(Duration.zero).then((value) {
+      notifyListeners();
+    });
+
   }
 
   set setSelectedProject(Project selectedProject) {
@@ -30,7 +35,14 @@ class ProjectViewModel extends BaseModel {
   }
 
   fetchProjects() async {
-     //projects =  await locator<StoreServices>().getLocal(AppStorage.projects, Project());
+    if (isMockEnabled){
+      String userId = locator<StoreServices>().getUsername();
+      projects = MockFactory().mockProjects(userId: (userId == "t3@bb.com") ? null : userId);
+      setState(projects.isNotEmpty ? ViewState.completed : ViewState.empty);
+      return;
+    }
+
+    //projects =  await locator<StoreServices>().getLocal(AppStorage.projects, Project());
      List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.projects, "userid") ?? [];
      projects = jsonList.map((e) => Project().decode((Map<String, dynamic>.from(e)))).toList();
      setState(projects.isNotEmpty ? ViewState.completed : ViewState.loading);

@@ -24,6 +24,8 @@ class ProjectAction extends Decodable<ProjectAction>{
   String? owner;
   String? scriptid;
   String? custrecordBbProjactPrecedPackAction;
+  String? assignedBy;
+  bool? isCompleted;
 
   ProjectAction(
       {
@@ -49,7 +51,8 @@ class ProjectAction extends Decodable<ProjectAction>{
         this.name,
         this.owner,
         this.scriptid,
-        this.custrecordBbProjactPrecedPackAction});
+        this.custrecordBbProjactPrecedPackAction,
+      this.assignedBy,this.isCompleted});
 
   ProjectAction.fromJson(Map<String, dynamic> json) {
     created = json['created'];

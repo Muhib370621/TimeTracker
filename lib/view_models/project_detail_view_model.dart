@@ -1,8 +1,10 @@
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/main.dart';
 import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -21,6 +23,11 @@ class ProjectDetailViewModel extends BaseModel {
   }
 
   fetchActions({bool refresh = false,required String projectID}) async {
+    if (isMockEnabled){
+      actions = MockFactory().mockProjectActions(projectID);
+      setState(actions.isNotEmpty ? ViewState.completed : ViewState.empty);
+      return;
+    }
     if (isLoading){
       return;
     }

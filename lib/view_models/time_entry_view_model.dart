@@ -1,8 +1,10 @@
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/main.dart';
 import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
+import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -32,6 +34,13 @@ class TimeEntryViewModel extends BaseModel{
   }
 
   fetchEntries({bool refresh = false}) async {
+    if (isMockEnabled){
+      String userId = locator<StoreServices>().getUsername();
+      allEntries = MockFactory().mockTimeEntry(userId: (userId == "t3@bb.com") ? null : userId);
+      entries = allEntries;
+      setState(entries.isNotEmpty ? ViewState.completed : ViewState.empty);
+      return;
+    }
     if (isLoading){
       return;
     }

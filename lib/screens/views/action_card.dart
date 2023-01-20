@@ -85,7 +85,7 @@ class _ActionCardState extends State<ActionCard> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "${AppLocalizedStrings.assignedBy.tr()}\n N/A",
+                                        "${AppLocalizedStrings.assignedBy.tr()}\n ${widget.projectAction.assignedBy ?? "N/A"}",
                                         style: AppTextStyles.medium.copyWith(
                                             color: Colors.black,
                                             fontSize: 8.width),
