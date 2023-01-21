@@ -22,7 +22,8 @@ class _ActivityState extends State<Activity> {
         Get.put(StartingScreenController());
     return Scaffold(
       appBar: const BluTimeAppHeader(),
-      body: Stack(children: [
+      body: Stack(
+          children: [
         Center(
           child: Column(
             children: [
@@ -543,6 +544,7 @@ class _ActivityState extends State<Activity> {
             ],
           ),
         ),
+            ///insert the time picker here when tapped on add break
       ]),
     );
   }

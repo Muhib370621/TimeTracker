@@ -48,4 +48,5 @@ class ChecklistViewModel extends BaseModel {
       rethrow;
     }
   }
+
 }

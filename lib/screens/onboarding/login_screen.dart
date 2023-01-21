@@ -58,16 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.center,
                       child:  Text.rich( TextSpan(
-                            text: "blu ",
+                            text: "bluTime",
                             style: AppTextStyles.bold
                                 .copyWith(fontSize: 35, color: Colors.black),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Time',
-                                style: AppTextStyles.medium
-                                    .copyWith(fontSize: 35, color: Colors.black),
-                              )
-                            ]),
+                            ),
                       ),
                     ),
                     Expanded(

@@ -112,8 +112,9 @@ class Project2 {
 class Notes {
   String? noteId;
   String? note;
+  String? projectId;
 
-  Notes({this.noteId, this.note});
+  Notes({this.noteId, this.note,this.projectId});
 
   Notes.fromJson(Map<String, dynamic> json) {
     noteId = json['noteId'];

@@ -5,46 +5,59 @@ import 'package:blu_time/models/time_entry.dart';
 import 'package:blu_time/models/user_profile.dart';
 
 class MockFactory {
-  List<UserProfile> mockUsers() {
-    UserProfile user1 = UserProfile("t1@bb.com", "testing@1one");
-    UserProfile user2 = UserProfile("t2@bb.com", "testing@1one");
-    UserProfile user3 = UserProfile("t3@bb.com", "testing@1one");
-    return [user1, user2,user3];
+
+  Project project1 = Project(
+      altname: "Residential Plumbing and Electrical Upgrade",
+      id: "1",
+      startdate: "2/15/2022",
+      custentityBbForecastedInstallDate: "3/27/2022",
+      custentityBbInstallAddress1Text: "123 Main St, Anytown",
+      customer: "t1@bb.com",
+      custentityBbEntityLatitudeText: "37.788022",
+      custentityBbEntityLongitudeText: "-122.399797");
+
+  Project project2 = Project(
+      altname: "Commercial Building Renovation",
+      id: "2",
+      startdate: "4/20/2022",
+      custentityBbForecastedInstallDate: "5/15/2022",
+      custentityBbInstallAddress1Text: "555 Park Ave, Cityville",
+      customer: "t2@bb.com",
+      custentityBbEntityLatitudeText: "41.878114",
+      custentityBbEntityLongitudeText: "-87.629798");
+
+  Project project3 = Project(
+      altname: "HVAC and Plumbing Maintenance and Repair",
+      id: "3",
+      startdate: "6/25/2022",
+      custentityBbForecastedInstallDate: "7/10/2022",
+      custentityBbInstallAddress1Text: "999 Elm St, Village",
+      customer: "t2@bb.com",
+      custentityBbEntityLatitudeText: "40.730610",
+      custentityBbEntityLongitudeText: "-73.935242");
+
+  List<UserProfile> mockUsers({String? userId}) {
+    UserProfile user1 = UserProfile("t1@bb.com", "testing@1one","Dirk","Liebich","(555) 555-5201");
+    UserProfile user2 = UserProfile("t2@bb.com", "testing@1one","David","Williams","(555) 555-5202");
+    UserProfile user3 = UserProfile("t3@bb.com", "testing@1one","Robert","Miller","555-5203");
+    List<UserProfile> users = [user1, user2,user3];
+    if (userId == null) {
+      return users;
+    }
+    return users.where((element) => element.email == userId).toList();
   }
 
   List<Project> mockProjects({String? userId}) {
-    Project project1 = Project(
-        altname: "Residential Plumbing and Electrical Upgrade",
-        id: "1",
-        startdate: "2/15/2022",
-        custentityBbForecastedInstallDate: "3/27/2022",
-        custentityBbInstallAddress1Text: "123 Main St, Anytown",
-        customer: "t1@bb.com",
-        custentityBbEntityLatitudeText: "37.788022",
-        custentityBbEntityLongitudeText: "-122.399797");
-    Project project2 = Project(
-        altname: "Commercial Building Renovation",
-        id: "2",
-        startdate: "4/20/2022",
-        custentityBbForecastedInstallDate: "5/15/2022",
-        custentityBbInstallAddress1Text: "555 Park Ave, Cityville",
-        customer: "t2@bb.com",
-        custentityBbEntityLatitudeText: "41.878114",
-        custentityBbEntityLongitudeText: "-87.629798");
-    Project project3 = Project(
-        altname: "HVAC and Plumbing Maintenance and Repair",
-        id: "3",
-        startdate: "6/25/2022",
-        custentityBbForecastedInstallDate: "7/10/2022",
-        custentityBbInstallAddress1Text: "999 Elm St, Village",
-        customer: "t2@bb.com",
-        custentityBbEntityLatitudeText: "40.730610",
-        custentityBbEntityLongitudeText: "-73.935242");
     List<Project> projects = [project1, project2, project3];
     if (userId == null) {
       return projects;
     }
     return projects.where((element) => element.customer == userId).toList();
+  }
+
+  Project mockProjectById(String projectId) {
+    List<Project> projects = [project1, project2, project3];
+    return projects.where((element) => element.id == projectId).toList().first;
   }
 
   List<ProjectAction> mockProjectActions(String? projectId) {
@@ -122,7 +135,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Approved",
           hours: "2.50",
-          employee: "t1@bb.com"),
+          employee: "t1@bb.com",
+          csegBbProject:"1"),
       TimeEntry(
           trandate: "2/22/2022",
           displayfield: "Residential Plumbing and Electrical Upgrade",
@@ -131,7 +145,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Approved",
           hours: "3.5",
-          employee: "t1@bb.com"),
+          employee: "t1@bb.com",
+          csegBbProject:"1"),
       TimeEntry(
           trandate: "2/25/2022",
           displayfield: "Commercial Building Renovation",
@@ -140,7 +155,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked In",
           hours: "8.0",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"2"),
       TimeEntry(
           trandate: "3/5/2022",
           displayfield: "Commercial Building Renovation",
@@ -149,7 +165,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked In",
           hours: "8.0",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"2"),
       TimeEntry(
           trandate: "4/2/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -158,7 +175,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "1.2",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"3"),
       TimeEntry(
           trandate: "4/20/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -167,7 +185,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "6.2",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"3"),
       TimeEntry(
           trandate: "5/15/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -176,7 +195,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "7.9",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"3"),
       TimeEntry(
           trandate: "6/10/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -185,7 +205,8 @@ class MockFactory {
           remainingCount: 1,
           type: "Not Approved",
           hours: "8.0",
-          employee: "t2@bb.com"),
+          employee: "t2@bb.com",
+          csegBbProject:"3"),
     ];
     if (userId == null) {
       return timeEntries;
@@ -193,5 +214,15 @@ class MockFactory {
     return timeEntries.where((element) => element.employee == userId).toList();
   }
 
+  List<Notes> mockProjectNotes(String projectId) {
+   Notes notes1 = Notes(note: "Initial assessment of the property has been completed, and a plan for the upgrade has been developed.",noteId: "1",projectId: "1");
+   Notes notes2 = Notes(note: "Demolition of existing fixtures and wiring has begun, and new plumbing and electrical components have been ordered.",noteId: "2",projectId: "1");
+   Notes notes3 = Notes(note: "Demolition and removal of existing walls and floors is complete",noteId: "3",projectId: "2");
+   Notes notes4 = Notes(note: "New electrical and plumbing systems have been installed and carpentry work is underway",noteId: "4",projectId: "2");
+   Notes notes5 = Notes(note: "HVAC system has been inspected and maintained",noteId: "5",projectId: "3");
+   Notes notes6 = Notes(note: "Plumbing system has been inspected and maintained and any damaged parts have been replaced",noteId: "6",projectId: "3");
+    List<Notes> actions = [notes1, notes2, notes3, notes4, notes5, notes6];
+    return actions.where((element) => element.projectId == projectId).toList();
+  }
 
 }

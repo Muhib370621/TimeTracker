@@ -11,27 +11,103 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../constants/app_colors.dart';
 import '../stores/store_services.dart';
+import 'BottomNavigationController.dart';
 
 class StartingScreenController extends GetxController {
   @override
-  void onInit() {
-    // RxInt acitivityIndex = 0.obs;
+  Future<void> onInit() async {
+    // RxInt activityIndex = 0.obs;
     // activityName.value="";
     // projectName.value="";
     // checkListItem.value="";
-    clockRunning.value = false;
+    // clockRunning.value = false;
+
     determinePosition();
-    reset();
+    // reset();
     isLoading.value = false;
     timeString.value = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-    locationLoading.value = true;
-    locationLoading.value = false;
+    // locationLoading.value = true;
+    // locationLoading.value = false;
     super.onInit();
+    String roles = await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+    String currentLoc = await locator<StoreServices>().getLocal(AppStorage.currentAddress, "userid");
+    // String timerVal = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+    String timerStartTime = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+    String project = await locator<StoreServices>().getLocal(AppStorage.projectName, "userid");
+    String acitivity = await locator<StoreServices>().getLocal(AppStorage.activityName, "userid");
+    String checklist = await locator<StoreServices>().getLocal(AppStorage.checkListItemName, "userid");
+
+    // var prjName = Get.find<BottomNavController>().projectName.value;
+    final BottomNavController controller = Get.put(BottomNavController());
+
+    controller.projectName.value=project;
+    controller.activityName.value=acitivity;
+    controller.checkListItem.value=checklist;
+    print("prjname $project");
+
+
+    print("timer start $timerStartTime");
+    // List<BreakModel> breakList = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+    role.value = roles;
+    // String resume = await locator<StoreServices>().getLocal(AppStorage.appResumedTime, "userid");
+    // String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+    // var dateFormat = DateFormat('hh:mm');
+      // startTimer();
+      // print("Clock is Running");
+      // clockRunning.value==true;
+      // print(currentLoc);
+      currentAddress.value=currentLoc;
+      // clockDuration.value.inMinutes+minutes_diff;
+      startTime.value=timerStartTime;
+
+      // listOfBreaks = breakList;
+      // print(listOfBreaks.toString());
+      // print("minutes diff $minutes_diff");
+      // print(timerVal);
+    // twoDigits(controller.clockDuration.value.inMinutes.remainder(60)) =
+    // twoDigits(controller.clockDuration.value.inMinutes.remainder(60))
+    // +AutofillHints.middleName;
+    // print("result $result");
+    // print(note);
+    // print(resume);
+    // print("before ${clockDuration.value.inMinutes.toString()}");
+    if(startTime.value!="" && finishTime.value ==""){
+      startTimer();
+      var dateFormat = DateFormat('hh:mm');
+      DateTime currtime = dateFormat.parse(timeString.value);
+      var s = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+      DateTime start = dateFormat.parse(s);
+      Duration res =  currtime.difference(start);
+      clockDuration.value=res;
+      print(res);
+    }
+    // if(clockRunning.value==false){
+    //   clockDuration.value = clockDuration.value+Duration(minutes: minutes_diff.toInt());}
+    // if(timer_val!=null){
+    //   clockDuration.value = timer_val;
+    // }
   }
+
+  @override
+  Future<void> dispose() async {
+    print("Paused");
+    print("--------------------------------------------------------------------");
+    await locator<StoreServices>()
+    .setLocal(AppStorage.timerTime, "userid",
+    " ${twoDigits(clockDuration.value.inHours.remainder(60))}:${twoDigits(clockDuration.value.inMinutes.remainder(60))}:${twoDigits(clockDuration.value.inSeconds.remainder(60))}");
+    await locator<StoreServices>()
+        .setLocal(AppStorage.appPausedTime, "userid", timeString.value);
+    String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+    print(paused);
+    // _timer?.cancel();
+    super.dispose();
+  }
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
 
   Rx<DateTime> today = DateTime.now().toLocal().obs;
   List listOfBreaks = <BreakModel>[].obs;
+  RxString timer_value = "".obs;
   RxBool isSwitched = false.obs;
   RxBool countDown = false.obs;
   RxBool GPS = false.obs;
@@ -69,11 +145,10 @@ class StartingScreenController extends GetxController {
   // RxString activityName = "".obs;
   // RxString projectName = "".obs;
   // RxString checkListItem = "".obs;
-removeBreak(index){
+  removeBreak(index){
   listOfBreaks.removeAt(index);
   update();
 }
-
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -229,15 +304,15 @@ removeBreak(index){
   void startTimer() async{
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
-    if (breakRunning.value == false) {}
     finishTime.value = "";
     totalTime.value = "";
-    await locator<StoreServices>()
-    .setLocal(AppStorage.timerStartTime, "userid", startTime.value);
     await locator<StoreServices>()
         .setLocal(AppStorage.currentDate, "userid", today.value.toString());
     print("-----------------------");
     print("saved properly");
+    String timerStartTime = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+    print(timerStartTime);
+    print("done");
     // Prompts.showSnackBar(msg: "Note saved locally");
   }
 
@@ -276,10 +351,12 @@ removeBreak(index){
     // });
   }
 
-  void getStartTime() {
+  Future<void> getStartTime() async {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     startTime.value = formattedDateTime;
+    await locator<StoreServices>()
+    .setLocal(AppStorage.timerStartTime, "userid", startTime.value.toString());
   }
 
   void getBreakStartTime() {
@@ -353,7 +430,7 @@ removeBreak(index){
     getFinishTime();
     subtractTime();
     print("-------------------------------");
-    RxList<BreakModel> note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+    List<dynamic> note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
     print(note.length);
   }
 
@@ -370,6 +447,8 @@ removeBreak(index){
         totalBreakTime: totalBreak.value));
     await locator<StoreServices>()
     .setLocal(AppStorage.listOfBreaks, "userid",listOfBreaks);
+    List<dynamic> breakList = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+    print("list break ${breakList[0].toString()}");
     Future.delayed(const Duration(seconds: 3), () {
       breakRunning.value = false;
     });
@@ -383,8 +462,7 @@ removeBreak(index){
     );
     _getAddressFromLatLng(position.latitude, position.longitude);
     locationLoading.value = false;
-    await locator<StoreServices>()
-        .setLocal(AppStorage.currentAddress, "userid", currentAddress.value);
+
   }
 
   _getAddressFromLatLng(latitude, longitude) async {
@@ -394,6 +472,8 @@ removeBreak(index){
       Placemark place = placemarks[0];
       currentAddress.value =
           "${place.locality}, ${place.subLocality}, ${place.street}";
+      await locator<StoreServices>()
+          .setLocal(AppStorage.currentAddress, "userid", currentAddress.value);
     } catch (e) {
       print(e);
     }

@@ -118,7 +118,7 @@ class RouteFactories{
              settings: settings, builder: (context) => ProjectDetailScreen(project: Project(),));
          case RouteNames.noteList:
          return MaterialPageRoute(
-             settings: settings, builder: (context) => const NoteListScreen());
+             settings: settings, builder: (context) => NoteListScreen(project: Project()));
        case RouteNames.addNote:
          return MaterialPageRoute(
              settings: settings, builder: (context) => AddNoteScreen(viewModel: settings.arguments as NoteViewModel,));

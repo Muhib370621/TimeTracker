@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
@@ -13,7 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class NoteListScreen extends StatefulWidget {
-  const NoteListScreen({Key? key}) : super(key: key);
+  final Project project;
+  const NoteListScreen({Key? key, required this.project}) : super(key: key);
 
   @override
   State<NoteListScreen> createState() => _NoteListScreenState();
@@ -25,7 +27,7 @@ class _NoteListScreenState extends State<NoteListScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return ViewModelBuilder.reactive(
-        onModelReady: (NoteViewModel model) => model.fetchNotes(),
+        onModelReady: (NoteViewModel model) => model.fetchNotes(widget.project.id ?? ""),
         viewModelBuilder: () => NoteViewModel(),
         builder: (BuildContext context, NoteViewModel model, Widget? child) {
           return Scaffold(
@@ -118,7 +120,7 @@ class _NoteListScreenState extends State<NoteListScreen>
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(RouteNames.noteList);
+                 // Navigator.of(context).pushNamed(RouteNames.noteList);
                 },
               ),
             ));
