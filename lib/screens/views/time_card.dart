@@ -40,7 +40,7 @@ class TimeCard extends StatelessWidget {
                       ),
                       side: const BorderSide(width: 1.0, color: Colors.red),
                     ),
-                    child: Text(AppLocalizedStrings.timeCardClockedIn.tr(),style: AppTextStyles.semiBold.copyWith(color: Colors.white,fontSize: 10.width),),
+                    child: Text(timeEntry.type ?? "",style: AppTextStyles.semiBold.copyWith(color: Colors.white,fontSize: 10.width),),
                   ),
                 )
               ],

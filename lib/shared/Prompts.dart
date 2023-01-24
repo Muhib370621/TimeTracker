@@ -14,7 +14,7 @@ class Prompts {
           child: Column(
             children: [
               Visibility(
-                visible: isWarning!,
+                visible: isWarning ?? false,
                 child: Icon(
                   Icons.warning_rounded,
                   color: Colors.white,

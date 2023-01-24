@@ -3,6 +3,7 @@ import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/main.dart';
 import 'package:blu_time/models/time_entry.dart';
+import 'package:blu_time/shared/enums/time_card_status.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
@@ -19,7 +20,7 @@ class TimeEntryViewModel extends BaseModel{
   int totalCount = 0;
   DateTime? startDate;
   DateTime? endDate;
-
+  TimeCardStatus timeCardStatus = TimeCardStatus.all;
   bool isLoading = false;
   set setIsLoading(bool isLoading) {
     this.isLoading = isLoading;
@@ -30,6 +31,12 @@ class TimeEntryViewModel extends BaseModel{
   set setFilterTime(String filterTime) {
     this.filterTime = filterTime;
     searchWithDateRange();
+    notifyListeners();
+  }
+
+  set setTimeCardStatus(TimeCardStatus status) {
+    timeCardStatus = status;
+    searchWithStatus();
     notifyListeners();
   }
 
@@ -90,6 +97,11 @@ class TimeEntryViewModel extends BaseModel{
     else {
       entries = allEntries.where((element) => element.displayfield?.toLowerCase().contains(text.toLowerCase()) ?? false).toList();
     }
+    setState(ViewState.completed);
+  }
+
+  searchWithStatus(){
+    entries = allEntries.where((element) => (timeCardStatus == TimeCardStatus.all) ? true : (element.type == timeCardStatus.title)).toList();
     setState(ViewState.completed);
   }
 
