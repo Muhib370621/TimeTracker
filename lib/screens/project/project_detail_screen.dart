@@ -191,11 +191,11 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                             },
                             itemCount: value.length + 1,
                             onRefresh: () {
-                              model.fetchActions(refresh: true,projectID: "1043028");
+                              model.fetchActions(refresh: true,projectID: widget.project.id ?? "");
                             },
                             onScrollToBottom: () {
                               debugPrint("ScrollNotification");
-                              model.fetchActions(projectID: "1043028");
+                              model.fetchActions(projectID: widget.project.id ?? "");
                             },
                           ));
                         }),

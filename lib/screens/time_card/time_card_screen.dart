@@ -7,6 +7,7 @@ import 'package:blu_time/shared/enums/time_card_status.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
+import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/shared/widgets/empty_view.dart';
@@ -25,8 +26,6 @@ class TimeCardScreen extends StatefulWidget {
 }
 
 class _TimeCardScreenState extends State<TimeCardScreen> {
-  TimeCardStatus timeCardStatus = TimeCardStatus.all;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +36,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
       body: ViewModelBuilder.reactive(
           onModelReady: (TimeEntryViewModel model) => model.fetchEntries(),
           viewModelBuilder: () => TimeEntryViewModel(),
-          builder:
-              (BuildContext context, TimeEntryViewModel model, Widget? child) {
+          builder: (BuildContext context, TimeEntryViewModel model, Widget? child) {
             return _buildBody(model);
           }),
     );
@@ -89,7 +87,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                 backgroundColor: Colors.white,
                 hintText: AppLocalizedStrings.searchProject.tr(),
                 hintColor: Colors.grey,
-                onChanged:model.searchTimeEntry,
+                onChanged: model.searchTimeEntry,
               ),
             ),
           ),
@@ -103,19 +101,38 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     final picked = await showDateRangePicker(
-                      context: context,
-                      lastDate: DateTime.now(),
-                      firstDate: DateTime(2019),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: AppColors.background,
-                           colorScheme: const ColorScheme.light(primary:AppColors.background),
-                          ),
-                          child: child!,
-                        );
-                      }
-                    );
+                        context: context,
+                        lastDate: DateTime.now(),
+                        firstDate: DateTime(2019),
+                        builder: (BuildContext context, Widget? child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              primaryColor: AppColors.background,
+                              colorScheme: const ColorScheme.light(primary: AppColors.background),
+                            ),
+                            child: Stack(
+                              children: [
+                                child!,
+                                Positioned(
+                                    bottom: 0,
+                                    left: 20,
+                                    right: 20,
+                                    child: SafeArea(
+                                        child: AppCommonButton(
+                                      title: "Clear",
+                                      onPressed: () {
+                                        final DateFormat formatter = DateFormat('EEE d MMM');
+                                        model.startDate = DateTime(2019);
+                                        model.endDate = DateTime.now();
+                                        final String formatted = "${formatter.format(model.startDate!)} - ${formatter.format( model.endDate!)}";
+                                        model.setFilterTime = formatted;
+                                        Navigator.of(context).pop();
+                                      },
+                                    ))),
+                              ],
+                            ),
+                          );
+                        });
                     if (picked != null) {
                       final DateFormat formatter = DateFormat('EEE d MMM');
                       model.startDate = picked.start;
@@ -131,8 +148,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                     elevation: 5,
                     child: Container(
                       //height: 35,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -146,7 +162,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                           Expanded(
                               child: Text(
                             model.filterTime,
-                            style: AppTextStyles.medium.copyWith(color: Colors.black,fontSize: 10.width),
+                            style: AppTextStyles.medium.copyWith(color: Colors.black, fontSize: 10.width),
                           )),
                           const SizedBox(
                             width: 5,
@@ -177,15 +193,14 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                           child: DropdownButton(
                             isExpanded: true,
                             alignment: Alignment.centerLeft,
-                            value: timeCardStatus,
+                            value: model.timeCardStatus,
                             style: const TextStyle(color: Colors.black),
                             icon: const Icon(
                               Icons.keyboard_arrow_down_outlined,
                               color: AppColors.buttonBlue,
                               size: 30,
                             ),
-                            items: TimeCardStatus.values
-                                .map((TimeCardStatus item) {
+                            items: TimeCardStatus.values.map((TimeCardStatus item) {
                               return DropdownMenuItem(
                                 value: item,
                                 child: Text(
@@ -195,8 +210,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                               );
                             }).toList(),
                             onChanged: (TimeCardStatus? value) async {
-                              timeCardStatus = value!;
-                              setState(() {});
+                              model.setTimeCardStatus = value ?? TimeCardStatus.all;
                             },
                           ),
                         ),
@@ -221,8 +235,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                           timeEntry: model.entries[index],
                         ),
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(RouteNames.timeCardDetail,arguments: model.entries[index]);
+                          Navigator.of(context).pushNamed(RouteNames.timeCardDetail, arguments: model.entries[index]);
                         },
                       ),
                     );
