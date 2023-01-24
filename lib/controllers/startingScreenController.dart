@@ -45,8 +45,6 @@ class StartingScreenController extends GetxController {
     controller.activityName.value=acitivity;
     controller.checkListItem.value=checklist;
     print("prjname $project");
-
-
     print("timer start $timerStartTime");
     // List<BreakModel> breakList = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
     role.value = roles;
@@ -60,7 +58,6 @@ class StartingScreenController extends GetxController {
       currentAddress.value=currentLoc;
       // clockDuration.value.inMinutes+minutes_diff;
       startTime.value=timerStartTime;
-
       // listOfBreaks = breakList;
       // print(listOfBreaks.toString());
       // print("minutes diff $minutes_diff");
@@ -104,7 +101,6 @@ class StartingScreenController extends GetxController {
     super.dispose();
   }
   String twoDigits(int n) => n.toString().padLeft(2, '0');
-
   Rx<DateTime> today = DateTime.now().toLocal().obs;
   List listOfBreaks = <BreakModel>[].obs;
   RxString timer_value = "".obs;
@@ -130,6 +126,11 @@ class StartingScreenController extends GetxController {
   RxString Breakstart = ''.obs;
   RxString finishBreak = ''.obs;
   RxString totalBreak = ''.obs;
+  RxString stopSelector = "".obs;
+  RxBool isStopSelecting = false.obs;
+
+
+
   final Rx<Position> currentPosition = const Position(
     longitude: 0,
     latitude: 0,
@@ -422,16 +423,22 @@ class StartingScreenController extends GetxController {
   }
 
   void stopTimer({bool resets = true, required context}) async {
+
     if (resets) {
       reset();
     }
-    timer?.cancel();
+    isStopSelecting.value=true;
+    if(stopSelector.value =="Pause Timer") {
+      timer?.cancel();
     clockRunning.value = false;
-    getFinishTime();
-    subtractTime();
-    print("-------------------------------");
-    List<dynamic> note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
-    print(note.length);
+      getFinishTime();
+      subtractTime();
+      print("-------------------------------");
+      // List<dynamic>? note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+      // print(note!.length);
+    }
+    stopSelector.value="";
+
   }
 
   Future<void> stopBreak({bool resets = true}) async {

@@ -27,7 +27,7 @@ class StartingScreen extends StatefulWidget {
 class _StartingScreenState extends State<StartingScreen>
     with WidgetsBindingObserver {
   @override
-  void initState()  {
+  void initState() {
     WidgetsBinding.instance.addObserver(this);
     // controller.gpsService(context);
     // controller.determinePosition();
@@ -43,37 +43,41 @@ class _StartingScreenState extends State<StartingScreen>
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     final StartingScreenController controller =
-    Get.put(StartingScreenController());
+        Get.put(StartingScreenController());
     switch (state) {
       case AppLifecycleState.resumed:
-        controller.clockDuration.value+const Duration(minutes: 2);
+        controller.clockDuration.value + const Duration(minutes: 2);
         print("Resumed");
-        print("--------------------------------------------------------------------");
+        print(
+            "--------------------------------------------------------------------");
         print("time: ${controller.timeString.value}");
         var dateFormat = DateFormat('hh:mm');
 
         DateTime currtime = dateFormat.parse(controller.timeString.value);
-        var s = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+        var s = await locator<StoreServices>()
+            .getLocal(AppStorage.timerStartTime, "userid");
         DateTime start = dateFormat.parse(s);
-        Duration res =  currtime.difference(start);
+        Duration res = currtime.difference(start);
         print(res);
         // String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
-        await locator<StoreServices>()
-            .setLocal(AppStorage.appResumedTime, "userid", controller.timeString.value);
-        String roles = await locator<StoreServices>().getLocal(AppStorage.role, "userid");
-        controller.role.value=roles;
+        await locator<StoreServices>().setLocal(
+            AppStorage.appResumedTime, "userid", controller.timeString.value);
+        String roles =
+            await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+        controller.role.value = roles;
         print("gets role from local");
         print("after ${controller.clockDuration.value.inMinutes.toString()}");
         break;
       case AppLifecycleState.paused:
         print("Paused");
-        print("--------------------------------------------------------------------");
-        await locator<StoreServices>()
-            .setLocal(AppStorage.timerTime, "userid",
+        print(
+            "--------------------------------------------------------------------");
+        await locator<StoreServices>().setLocal(AppStorage.timerTime, "userid",
             " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
-        await locator<StoreServices>()
-            .setLocal(AppStorage.appPausedTime, "userid", controller.timeString.value);
-        String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+        await locator<StoreServices>().setLocal(
+            AppStorage.appPausedTime, "userid", controller.timeString.value);
+        String paused = await locator<StoreServices>()
+            .getLocal(AppStorage.appPausedTime, "userid");
         print("paused time $paused");
         // controller.stopTimer(context: context);
         // String timerTime = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
@@ -81,17 +85,22 @@ class _StartingScreenState extends State<StartingScreen>
         break;
       case AppLifecycleState.inactive:
         print("Inactive");
-        print("--------------------------------------------------------------------");
+        print(
+            "--------------------------------------------------------------------");
         break;
       case AppLifecycleState.detached:
         // if(controller.clockRunning.value==false){}
         print("Detached");
-        print("--------------------------------------------------------------------");
-        String note = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
-        await locator<StoreServices>()
-            .setLocal(AppStorage.appResumedTime, "userid", controller.timeString.value);
-        String resume = await locator<StoreServices>().getLocal(AppStorage.appResumedTime, "userid");
-        String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
+        print(
+            "--------------------------------------------------------------------");
+        String note = await locator<StoreServices>()
+            .getLocal(AppStorage.timerTime, "userid");
+        await locator<StoreServices>().setLocal(
+            AppStorage.appResumedTime, "userid", controller.timeString.value);
+        String resume = await locator<StoreServices>()
+            .getLocal(AppStorage.appResumedTime, "userid");
+        String paused = await locator<StoreServices>()
+            .getLocal(AppStorage.appPausedTime, "userid");
         var dateFormat = DateFormat('hh:mm');
         var hourDiff;
         var minutes_diff;
@@ -102,7 +111,8 @@ class _StartingScreenState extends State<StartingScreen>
         hourDiff = diff.inHours;
         minutes_diff = diff.inMinutes;
         // var result = "$hourDiff:$minutes_diff";
-        String timerTime = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
+        String timerTime = await locator<StoreServices>()
+            .getLocal(AppStorage.timerTime, "userid");
         print(timerTime);
         // twoDigits(controller.clockDuration.value.inMinutes.remainder(60)) =
         // twoDigits(controller.clockDuration.value.inMinutes.remainder(60))
@@ -120,17 +130,15 @@ class _StartingScreenState extends State<StartingScreen>
         // controller.clockDuration.value.inHours + hourDiff;
         print("difference $minutes_diff");
         print("after ${controller.clockDuration.value.inMinutes.toString()}");
-    // controller.startTimer();
-    break;
+        // controller.startTimer();
+        break;
     }
   }
 
   String twoDigits(int n) => n.toString().padLeft(2, '0');
 
-
   @override
   Widget build(BuildContext context) {
-
     final StartingScreenController controller =
         Get.put(StartingScreenController());
     final BottomNavController bottomController = Get.put(BottomNavController());
@@ -333,151 +341,152 @@ class _StartingScreenState extends State<StartingScreen>
                                     if (controller.clockRunning.value == true) {
                                       controller.stopTimer(
                                           resets: false, context: context);
-                                      final Size size =
-                                          MediaQuery.of(context).size;
-                                      Get.defaultDialog(
-                                          title: "",
-                                          content: SizedBox(
-                                            height: 0.329 * size.height,
-                                            width: 0.95 * size.width,
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  AppAssets.taskCompleted,
-                                                  scale: 3,
-                                                ),
-                                                SizedBox(
-                                                  height: 0.008 * size.height,
-                                                ),
-                                                Text(
-                                                  "Time Marked",
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        0.017 * size.height,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 0.05 * size.height,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Column(children: [
-                                                      Image.asset(
-                                                        AppAssets.startWork,
-                                                        scale: 3,
-                                                      ),
-                                                      Text(
-                                                        controller
-                                                            .startTime.value,
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              AppColors.orange,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Start Work",
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ]),
-                                                    Column(children: [
-                                                      Image.asset(
-                                                        AppAssets.finishWork,
-                                                        scale: 2,
-                                                      ),
-                                                      Text(
-                                                        controller
-                                                            .finishTime.value,
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              AppColors.orange,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Finish Work",
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ]),
-                                                    Column(children: [
-                                                      Image.asset(
-                                                        AppAssets.breakTime,
-                                                        scale: 3,
-                                                      ),
-                                                      Text(
-                                                        controller
-                                                            .totalTime.value,
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              AppColors.orange,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Total Work",
-                                                        style: TextStyle(
-                                                          fontSize: 0.017 *
-                                                              size.height,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ]),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 0.012 * size.height,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Text(
-                                                    controller
-                                                        .currentAddress.value
-                                                        .toString(),
-                                                    maxLines: 1,
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            0.017 * size.height,
-                                                        color: Colors.black,
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ));
+                                      // final Size size =
+                                      //     MediaQuery.of(context).size;
+                                      // Get.defaultDialog(
+                                      //     title: "",
+                                      //     content: SizedBox(
+                                      //       height: 0.329 * size.height,
+                                      //       width: 0.95 * size.width,
+                                      //       child: Column(
+                                      //         children: [
+                                      //           Image.asset(
+                                      //             AppAssets.taskCompleted,
+                                      //             scale: 3,
+                                      //           ),
+                                      //           SizedBox(
+                                      //             height: 0.008 * size.height,
+                                      //           ),
+                                      //           Text(
+                                      //             "Time Marked",
+                                      //             style: TextStyle(
+                                      //               fontSize:
+                                      //                   0.017 * size.height,
+                                      //               fontWeight: FontWeight.bold,
+                                      //             ),
+                                      //           ),
+                                      //           SizedBox(
+                                      //             height: 0.05 * size.height,
+                                      //           ),
+                                      //           Row(
+                                      //             mainAxisAlignment:
+                                      //                 MainAxisAlignment
+                                      //                     .spaceEvenly,
+                                      //             children: [
+                                      //               Column(children: [
+                                      //                 Image.asset(
+                                      //                   AppAssets.startWork,
+                                      //                   scale: 3,
+                                      //                 ),
+                                      //                 Text(
+                                      //                   controller
+                                      //                       .startTime.value,
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color:
+                                      //                         AppColors.orange,
+                                      //                   ),
+                                      //                 ),
+                                      //                 Text(
+                                      //                   "Start Work",
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color: Colors.black,
+                                      //                   ),
+                                      //                 ),
+                                      //               ]),
+                                      //               Column(children: [
+                                      //                 Image.asset(
+                                      //                   AppAssets.finishWork,
+                                      //                   scale: 2,
+                                      //                 ),
+                                      //                 Text(
+                                      //                   controller
+                                      //                       .finishTime.value,
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color:
+                                      //                         AppColors.orange,
+                                      //                   ),
+                                      //                 ),
+                                      //                 Text(
+                                      //                   "Finish Work",
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color: Colors.black,
+                                      //                   ),
+                                      //                 ),
+                                      //               ]),
+                                      //               Column(children: [
+                                      //                 Image.asset(
+                                      //                   AppAssets.breakTime,
+                                      //                   scale: 3,
+                                      //                 ),
+                                      //                 Text(
+                                      //                   controller
+                                      //                       .totalTime.value,
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color:
+                                      //                         AppColors.orange,
+                                      //                   ),
+                                      //                 ),
+                                      //                 Text(
+                                      //                   "Total Work",
+                                      //                   style: TextStyle(
+                                      //                     fontSize: 0.017 *
+                                      //                         size.height,
+                                      //                     fontWeight:
+                                      //                         FontWeight.bold,
+                                      //                     color: Colors.black,
+                                      //                   ),
+                                      //                 ),
+                                      //               ]),
+                                      //             ],
+                                      //           ),
+                                      //           SizedBox(
+                                      //             height: 0.012 * size.height,
+                                      //           ),
+                                      //           Padding(
+                                      //             padding: const EdgeInsets.all(
+                                      //                 12.0),
+                                      //             child: Text(
+                                      //               controller
+                                      //                   .currentAddress.value
+                                      //                   .toString(),
+                                      //               maxLines: 1,
+                                      //               style: TextStyle(
+                                      //                   fontSize:
+                                      //                       0.017 * size.height,
+                                      //                   color: Colors.black,
+                                      //                   overflow: TextOverflow
+                                      //                       .ellipsis),
+                                      //             ),
+                                      //           )
+                                      //         ],
+                                      //       ),
+                                      //     ));
                                     } else {
                                       controller.startTimer();
-                                      final BottomNavController bottController =
-                                          Get.put(BottomNavController());
-                                      bottController.currentIndex.value = 2;
+                                      // final BottomNavController bottController =
+                                      //     Get.put(BottomNavController());
+                                      bottomController.projectName.value==""?
+                                      bottomController.currentIndex.value = 2:null;
                                     }
                                     controller.startTime.value == ""
                                         ? controller.getStartTime()
@@ -543,7 +552,7 @@ class _StartingScreenState extends State<StartingScreen>
                                         height: 2.h,
                                       ),
                                       Text(
-                                      " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
+                                        " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
                                         // '00:00:00',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
@@ -1865,6 +1874,132 @@ class _StartingScreenState extends State<StartingScreen>
                                 ])
                               : Container(),
                         ]),
+                  Visibility(
+                    visible: controller.isStopSelecting.value==true,
+                    child: Container(
+                      color: AppColors.bottomBar.withOpacity(0.7),
+                    ),
+                  ),
+                  Visibility(
+                    visible: controller.isStopSelecting.value==true,
+                    child: Center(
+                      child: Container(
+                        height: 32.h,
+                        width: 85.w,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.isStopSelecting.value=false;
+                                  },
+                                  child: Icon(
+                                    Icons.clear,
+                                    color: AppColors.hintTextColor.withOpacity(0.6),
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left:10.0,right:10.0),
+                                    child: Text(
+                                      "Are you sure you want to finish this checklist item or you want to pause the timer?",
+                                      textAlign: TextAlign.center,
+                                      maxLines: 3,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17.5.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height:3.h
+                                  ),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: (){
+                                            controller.stopSelector.value = "Pause Timer";
+                                            controller.isStopSelecting.value=false;
+                                          },
+                                          child: Container(
+                                              height: 12.h,
+                                              width: 22.w,
+                                              padding: const EdgeInsets.all(5),
+                                              decoration:  BoxDecoration(
+                                                color: Colors.white,
+                                              borderRadius: const BorderRadius.all(Radius.circular(12),
+                                              ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.5),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, 2), // changes position of shadow
+                                                  ),
+                                                ],
+                                          ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children:[
+                                              SvgPicture.asset(AppAssets.pauseTimer),
+                                                  const Text("Pause\nTimer")
+                                            ])
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              controller.stopSelector.value = "Finish Work";
+                                            },
+                                          child: Container(
+                                              height: 12.h,
+                                              width: 22.w,
+                                              padding: const EdgeInsets.all(5),
+                                              decoration:  BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: const BorderRadius.all(Radius.circular(12),
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.5),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, 2), // changes position of shadow
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children:[
+                                                    SvgPicture.asset(AppAssets.finishWorkIcon),
+                                                    const Text("Finish\nWork")
+                                                  ])
+                                          ),
+                                        ),
+
+                                      ],
+                                  )
+
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

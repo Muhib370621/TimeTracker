@@ -41,6 +41,8 @@ class AppAssets {
   static const checkListItem = "$_svgsPath/checkListItem.svg";
   static const deleteIcon = "$_svgsPath/deleteIcon.svg";
   static const editIcon = "$_svgsPath/editIcon.svg";
+  static const pauseTimer = "$_svgsPath/pauseTimer.svg";
+  static const finishWorkIcon = "$_svgsPath/finishWork.svg";
 
 
 

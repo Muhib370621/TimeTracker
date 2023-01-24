@@ -15,6 +15,7 @@ import 'package:blu_time/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProjectViewModel extends BaseModel {
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
@@ -61,7 +62,9 @@ class ProjectViewModel extends BaseModel {
        rethrow;
     } on SocketException{
        throw Get.defaultDialog(title: "Internet Not Available",
-          content: const Text("Please check your internet connection"));
+          content:  Expanded(child: SizedBox(
+            width: 90.w,
+              child: const Text("Please check your internet connection"),),),);
     }
   }
 

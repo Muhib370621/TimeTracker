@@ -268,9 +268,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: stController.locationLoading.value==true,
+                visible: stController.locationLoading.value || stController.isStopSelecting.value==true,
                 child: Container(
-                  height: 0.55*size.height,
+                  height: 0.2*size.height,
                   color: AppColors.bottomBar.withOpacity(0.7),
                 ),
               ),
