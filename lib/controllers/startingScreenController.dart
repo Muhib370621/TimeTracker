@@ -338,7 +338,6 @@ class StartingScreenController extends GetxController {
         .setLocal(AppStorage.breakStartTime, "userid", Breakstart.value);
     // List<dynamic> note = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
     // print(note);
-
   }
 
   void addBreakTime() {
@@ -416,14 +415,13 @@ class StartingScreenController extends GetxController {
 
   void reset() {
     if (countDown.value) {
-      breakDuration.value = countdownDuration.value;
+      clockDuration.value = countdownDuration.value;
     } else {
-      breakDuration.value = const Duration();
+      clockDuration.value = const Duration();
     }
   }
 
   void stopTimer({bool resets = true, required context}) async {
-
     if (resets) {
       reset();
     }
@@ -437,8 +435,18 @@ class StartingScreenController extends GetxController {
       // List<dynamic>? note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
       // print(note!.length);
     }
-    stopSelector.value="";
+    if(stopSelector.value =="Finish Work") {
+      timer?.cancel();
+      reset();
+      clockRunning.value = false;
+      getFinishTime();
+      subtractTime();
+      print("-------------------------------");
+      // List<dynamic>? note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+      // print(note!.length);
+    }
 
+    stopSelector.value="";
   }
 
   Future<void> stopBreak({bool resets = true}) async {
@@ -469,7 +477,6 @@ class StartingScreenController extends GetxController {
     );
     _getAddressFromLatLng(position.latitude, position.longitude);
     locationLoading.value = false;
-
   }
 
   _getAddressFromLatLng(latitude, longitude) async {

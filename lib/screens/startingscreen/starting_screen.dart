@@ -1932,6 +1932,8 @@ class _StartingScreenState extends State<StartingScreen>
                                         GestureDetector(
                                           onTap: (){
                                             controller.stopSelector.value = "Pause Timer";
+                                            controller.stopTimer(context: context,resets: false);
+                                            // controller.reset();
                                             controller.isStopSelecting.value=false;
                                           },
                                           child: Container(
@@ -1962,6 +1964,8 @@ class _StartingScreenState extends State<StartingScreen>
                                         GestureDetector(
                                             onTap: () {
                                               controller.stopSelector.value = "Finish Work";
+                                              controller.reset();
+                                              controller.isStopSelecting.value=false;
                                             },
                                           child: Container(
                                               height: 12.h,
