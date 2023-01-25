@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blu_time/app_loader.dart';
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
@@ -11,9 +13,11 @@ import 'package:blu_time/shared/widgets/app_common_textfield.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
+import 'package:blu_time/utilities/media_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -29,6 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController? emailController;
   TextEditingController? mobileController;
 
+  final MediaPicker _mediaPicker = MediaPicker();
+  List<XFile> userImages = [];
+
   @override
   void initState() {
     super.initState();
@@ -43,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double profileIconSize = MediaQuery.of(context).size.width * 0.13;
+    double profileIconSize = MediaQuery.of(context).size.width * 0.14;
     return Scaffold(
         backgroundColor: AppColors.blueLightBackground,
         appBar: const BluTimeAppHeader(
@@ -85,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Your Name Here",
+                                  "${user?.firstName ?? ""} ${user?.lastName ?? ""}",
                                   style: AppTextStyles.semiBold.copyWith(fontSize: 18.width, color: Colors.black),
                                 ),
                                 const SizedBox(
@@ -281,61 +288,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withAlpha(60), spreadRadius: 5)],
-                        ),
-                        child: GestureDetector(
-                          onTap: () async {
-                            // var request = http.MultipartRequest('POST', Uri.parse('http://devipsumlivemobileapi-env.eba-hnpd7hsp.eu-west-2.elasticbeanstalk.com/v1/InspectionsController/upload-inspection-sheet-photos'));
-                            // request.fields.addAll({
-                            //   'data': '{"tenant_id": 1, "inspection_sheet_id": 533, "user_id": 1, "inspection_test_sheet_attribute_id": 490}',
-                            //   'attributes': '[{"type": "pre", "lat": 31.5511, "lng": 74.3437}, {"type": "post", "lat": 31.5511, "lng": 74.3437}]'
-                            // });
-                            // request.files.add(await http.MultipartFile.fromPath('photos', '/Volumes/pankaj/2022_projects/ipsum/ipsumlive.mobile/src/images/app-icon.png'));
-                            //
-                            // http.StreamedResponse response = await request.send();
-                            //
-                            // if (response.statusCode == 200) {
-                            //   print(await response.stream.bytesToString());
-                            // }
-                            // else {
-                            //   print(response.statusCode);
-                            // }
-                            //
-                            // return;
-
-                            //
-                            // final uri = Uri.parse('http://devipsumlivemobileapi-env.eba-hnpd7hsp.eu-west-2.elasticbeanstalk.com/v1/InspectionsController/upload-inspection-sheet-photos');
-                            // var request = http.MultipartRequest('POST', uri);
-                            // var bytes = (await rootBundle.load('assets/images/about_us.png')).buffer.asUint8List();
-                            // final httpImage = http.MultipartFile.fromBytes('files', bytes,
-                            //     contentType: MediaType.parse("image/png"), filename: 'myImage.png');
-                            // request.files.add(httpImage);
-                            // request.headers.addAll({
-                            //   "content-type":"multipart/form-data;",
-                            // });
-                            // request.fields.addAll({
-                            //   "data":"{'tenant_id': 1, 'inspection_sheet_id': 533, 'user_id': 1, 'inspection_test_sheet_attribute_id': 490}",
-                            //   "attributes":"[{'type': 'pre', 'lat': 31.5511, 'lng': 74.3437}, {'type': 'post', 'lat': 31.5511, 'lng': 74.3437}]"
-                            // });
-                            // // request.fields['data'] = {"tenant_id": 1, "inspection_sheet_id": 533, "user_id": 1, "inspection_test_sheet_attribute_id": 490}.toString();
-                            // // request.fields['attributes'] = [{"type": "pre", "lat": 31.5511, "lng": 74.3437}, {"type": "post", "lat": 31.5511, "lng": 74.3437}].toString();
-                            // final response = await request.send();
-                            // debugPrint(response.statusCode.toString());
-                          },
-                          child: CircleAvatar(
-                            radius: profileIconSize,
-                            backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.black,
-                              radius: profileIconSize - 3,
-                              child: Icon(Icons.person_rounded, color: Colors.white, size: profileIconSize * 1.5),
-                            ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black.withAlpha(60), spreadRadius: 5)],
                           ),
-                        ),
-                      ),
+                          child: GestureDetector(
+                            onTap: () async {
+                              selectImages();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4), // Border radius
+                              child: ClipOval(
+                                  child: Container(
+                                    width: profileIconSize * 1.5,
+                                    height: profileIconSize * 1.5,
+                                    color: AppColors.background,
+                                child: (userImages.isNotEmpty)
+                                    ? Image.file(
+                                        File(userImages[0].path),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.network("https://picsum.photos/100/100",width: profileIconSize,fit: BoxFit.cover,),
+                              )),
+                            ),
+                          )),
                     ),
                   ),
                 ],
@@ -343,5 +320,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ));
+  }
+
+  selectImages() async {
+    Get.defaultDialog(
+      title: '',
+      middleText: '',
+      titlePadding: EdgeInsets.zero,
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          AppCommonButton(
+            title: "Gallery",
+            width: 90,
+            height: 40,
+            onPressed: () async {
+              if (Get.context != null) {
+                Navigator.of(Get.context!, rootNavigator: true).pop();
+              }
+              List<XFile> images = await _mediaPicker.selectImages(isSingle: true);
+              userImages.addAll(images);
+              debugPrint(userImages.toString());
+              setState(() {
+
+              });
+            },
+          ),
+          AppCommonButton(
+            title: "Camera",
+            width: 90,
+            height: 40,
+            onPressed: () async {
+              if (Get.context != null) {
+                Navigator.of(Get.context!, rootNavigator: true).pop();
+              }
+              List<XFile> images = await _mediaPicker.openCamera();
+              userImages.addAll(images);
+              debugPrint(userImages.toString());
+              setState(() {
+
+              });
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -102,6 +102,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                   onTap: () async {
                     final picked = await showDateRangePicker(
                         context: context,
+                        initialDateRange: ((model.startDate == null) && (model.endDate == null)) ? null : DateTimeRange(start: model.startDate!, end: model.endDate!),
                         lastDate: DateTime.now(),
                         firstDate: DateTime(2019),
                         builder: (BuildContext context, Widget? child) {
@@ -122,9 +123,9 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                                       title: "Clear",
                                       onPressed: () {
                                         final DateFormat formatter = DateFormat('EEE d MMM');
-                                        model.startDate = DateTime(2019);
-                                        model.endDate = DateTime.now();
-                                        final String formatted = "${formatter.format(model.startDate!)} - ${formatter.format( model.endDate!)}";
+                                        model.startDate = null;
+                                        model.endDate = null;
+                                        final String formatted = "${formatter.format(DateTime(2019))} - ${formatter.format(DateTime.now())}";
                                         model.setFilterTime = formatted;
                                         Navigator.of(context).pop();
                                       },
