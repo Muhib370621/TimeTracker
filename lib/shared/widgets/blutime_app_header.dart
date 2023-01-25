@@ -33,7 +33,7 @@ class BluTimeAppHeader extends StatelessWidget implements PreferredSizeWidget {
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
-            icon: SvgPicture.asset(leadingImage), // Put icon of your preference.
+            icon: SvgPicture.asset(leadingImage,color: themeColor,), // Put icon of your preference.
             onPressed: () {
               if (backEnabled) {
                 Navigator.of(context).pop();

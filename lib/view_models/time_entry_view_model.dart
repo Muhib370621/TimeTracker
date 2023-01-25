@@ -106,7 +106,9 @@ class TimeEntryViewModel extends BaseModel{
   }
 
   searchWithDateRange() {
-    if (startDate == null) {
+    if ((startDate == null) && (endDate == null) ){
+      entries = allEntries;
+      setState(ViewState.completed);
       return;
     }
     var dateFormat = DateFormat.yMd();
