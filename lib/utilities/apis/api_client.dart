@@ -1,8 +1,5 @@
 import 'package:blu_time/constants/app_assets.dart';
-import 'package:blu_time/main.dart';
 import 'package:blu_time/models/error_response.dart';
-import 'package:blu_time/models/project.dart';
-import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/connectivity_manager.dart';

@@ -21,10 +21,12 @@ class ChecklistViewModel extends BaseModel {
       setState(checklist.isNotEmpty ? ViewState.completed : ViewState.empty);
       return;
     }
+    // final StartingScreenController controller =
+    // Get.put(StartingScreenController());
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.checklist, action) ?? [];
+    // controller.actions = jsonList;
     checklist = jsonList.map((e) => ActionChecklist().decode((Map<String, dynamic>.from(e)))).toList();
     setState(checklist.isNotEmpty ? ViewState.completed : ViewState.loading);
-
     Map<String, String> body = {
       'q':
           "SELECT * FROM customrecord_bb_project_action_checklist WHERE custrecord_bb_pachklist_project_action=$action"

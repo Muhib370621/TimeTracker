@@ -40,6 +40,42 @@ class Prompts {
       ),
     );
   }
+  static noInternet({String? msg, bool? isWarning}) {
+    return Get.showSnackbar(
+      GetSnackBar(
+        duration: const Duration(seconds: 2),
+        backgroundColor: AppColors.redAlert,
+        messageText: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Visibility(
+                visible: isWarning ?? false,
+                child: Icon(
+                  Icons.warning_rounded,
+                  color: Colors.white,
+                  size: 32.sp,
+                ),
+              ),
+              Text(
+                msg!,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        snackStyle: SnackStyle.GROUNDED,
+        snackPosition: SnackPosition.BOTTOM,
+        animationDuration: const Duration(seconds: 1),
+        forwardAnimationCurve: Curves.fastOutSlowIn,
+        reverseAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      ),
+    );
+  }
 
   static confirmationDialog(BuildContext context, String middleText,void Function()? onConfirmTap) {
     showDialog(

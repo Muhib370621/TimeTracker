@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors();
@@ -17,4 +17,6 @@ class AppColors {
   static const Color orange = Color(0XFFEC6315);
   static const Color cellBackground = Color(0XFFFCFCFC);
   static const Color blueLightBackground = Color(0XFF225FB7);
+  static const Color redAlert = Colors.red;
+
 }

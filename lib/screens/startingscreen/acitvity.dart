@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/controllers/BottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
@@ -24,7 +25,7 @@ class _ActivityState extends State<Activity> {
   bool isEdit = false;
   bool isStartTime = false;
   DateTime _dateTime = DateTime.now();
-  DateTime _dateTime1 = DateTime.now();
+  // DateTime _dateTime1 = DateTime.now();
 
   bool isAddingBreak = false;
   String startTime = "";
@@ -34,6 +35,9 @@ class _ActivityState extends State<Activity> {
   Widget build(BuildContext context) {
     final StartingScreenController controller =
     Get.put(StartingScreenController());
+    final BottomNavController bottController =
+    Get.put(BottomNavController());
+
     return Scaffold(
       appBar: const BluTimeAppHeader(),
       body: Stack(
@@ -54,7 +58,7 @@ class _ActivityState extends State<Activity> {
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.all(10),
                     shrinkWrap: true,
-                    itemCount: 2,
+                    itemCount: 1,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -83,7 +87,7 @@ class _ActivityState extends State<Activity> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Pick Up new Through Bolt",
+                                    bottController.activityName.value,
                                     style: TextStyle(
                                       fontSize: 17.sp,
                                       fontWeight: FontWeight.bold,
@@ -152,7 +156,7 @@ class _ActivityState extends State<Activity> {
                                             ),
                                           ),
                                           Text(
-                                            "12:00 PM",
+                                            controller.startTime.value,
                                             style: TextStyle(
                                               fontSize: 16.sp,
                                               color: AppColors.timerColor,
@@ -193,7 +197,8 @@ class _ActivityState extends State<Activity> {
                                           : controller.listOfBreaks.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
-                                        return Stack(children: [
+                                        return
+                                          Stack(children: [
                                           Positioned(
                                             top: 25,
                                             child: Container(
@@ -784,28 +789,28 @@ class _ActivityState extends State<Activity> {
                                   onTap: () {
                                     setState(() {
                                       if (isStartTime == true) {
-                                        String timeFormatted =
-                                        DateFormat("hh:mm a")
-                                            .format(_dateTime);
+                                        var dateFormat = DateFormat("h:m a");
+                                        String timeFormatted =dateFormat.format(_dateTime);
+                                        print("formatted time $timeFormatted");
                                         endTime = timeFormatted;
                                         // parse the start and end times into DateTime objects
-                                        DateTime start = DateFormat("hh:mm a")
-                                            .parse(startTime);
-                                        DateTime end = DateFormat("hh:mm a")
-                                            .parse(endTime);
-                                        Duration difference = end.difference(
-                                            start);
+                                        DateTime start = dateFormat.parse(startTime);
+                                        print("estart $start");
+                                        DateTime end =dateFormat.parse(endTime);
+                                        print("end $end");
+                                        Duration difference = end.difference(start);
+                                        // Duration abc = dateFormat.format(difference);
+
                                         // String formattedDuration = difference.toString().substring(0,8);
                                         // print(formattedDuration);
-
                                         // print("difference $difference");
-                                        print("differ : $difference");
-                                        var hourDiff, minutes_diff, totalBreak;
-                                        hourDiff = difference.inHours.toString();
+                                        print("differ : ${dateFormat.format(dateFormat)}");
+                                        // var hourDiff, minutes_diff, totalBreak;
+                                        var hourDiff = difference.inHours.toString();
                                         print(hourDiff);
-                                        minutes_diff = difference.inMinutes.toString();
-                                        print(minutes_diff);
-                                        totalBreak = "${hourDiff}h  ${minutes_diff}m";
+                                        var minutesDiff = difference.inMinutes.toString();
+                                        print(minutesDiff);
+                                        var totalBreak = "${hourDiff}h  ${minutesDiff}m";
                                         print("total break $totalBreak");
                                         // endTime!=""?isAddingBreak = false:null;
                                         isStartTime=false;
