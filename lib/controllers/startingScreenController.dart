@@ -126,6 +126,7 @@ class StartingScreenController extends GetxController {
   RxBool timerStatus = false.obs;
   RxBool clockRunning = false.obs;
   RxBool breakRunning = false.obs;
+  RxString startDate = ''.obs;
   RxString startTime = ''.obs;
   RxString finishTime = ''.obs;
   RxString totalTime = ''.obs;
@@ -136,6 +137,12 @@ class StartingScreenController extends GetxController {
   RxBool isStopSelecting = false.obs;
   RxBool isChecklistConfirm = false.obs;
   RxBool isNear = false.obs;
+  RxBool addSuccess = false.obs;
+  RxBool isEditting = false.obs;
+  RxInt editIndex = 0.obs;
+  RxBool editSuccess = false.obs;
+  RxBool deletionConfirmation = false.obs;
+  RxInt deleteIndex = 0.obs;
   final Rx<Position> currentPosition = const Position(
     longitude: 0,
     latitude: 0,
@@ -148,11 +155,9 @@ class StartingScreenController extends GetxController {
   ).obs;
   final RxString timeString = ''.obs;
   RxInt breakCounter = 0.obs;
-
   // RxString activityName = "".obs;
   // RxString projectName = "".obs;
   // RxString checkListItem = "".obs;
-
   // getNextValue(ChecklistViewModel model,int index){
   //   var value = model.checklist[index+1].custrecordBbPachklistTitle;
   //   return value;
@@ -161,6 +166,13 @@ class StartingScreenController extends GetxController {
   listOfBreaks.removeAt(index);
   update();
 }
+  editBreak(index, bstart, bend, diff){
+    // create a copy of the original list
+    List<BreakModel> newList = List.from(listOfBreaks);
+    newList[index] = BreakModel(breakStart: bstart, breakEnd: bend, totalBreakTime: diff);
+    listOfBreaks=newList;
+    update();
+  }
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -318,6 +330,9 @@ class StartingScreenController extends GetxController {
     clockRunning.value = true;
     finishTime.value = "";
     totalTime.value = "";
+    startDate.value = DateFormat('EEEE, MMM dd')
+        .format(today.value)
+        .toString();
     await locator<StoreServices>()
         .setLocal(AppStorage.currentDate, "userid", today.value.toString());
     // print("-----------------------");
@@ -399,7 +414,7 @@ class StartingScreenController extends GetxController {
     Duration diff = finish.difference(start);
     // print(diff);
     var hourDiff = diff.inHours.toString();
-    var minutesDiff = diff.inMinutes.toString();
+    var minutesDiff = (diff.inMinutes%60).toString();
     totalTime.value = "${hourDiff}h  ${minutesDiff}m";
     await locator<StoreServices>()
     .setLocal(AppStorage.totalWorkTime, "userid", totalTime.value);
@@ -415,7 +430,7 @@ class StartingScreenController extends GetxController {
     Duration diff = finish.difference(start);
     print(diff);
     hourDiff = diff.inHours.toString();
-    minutes_diff = diff.inMinutes.toString();
+    minutes_diff = (diff.inMinutes%60).toString();
     totalBreak.value = "${hourDiff}h  ${minutes_diff}m";
     print(totalBreak.value);
     await locator<StoreServices>()

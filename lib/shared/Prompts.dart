@@ -1,7 +1,11 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../constants/app_assets.dart';
+import 'widgets/app_common_button.dart';
 
 class Prompts {
   static showSnackBar({String? msg, bool? isWarning}) {
@@ -40,6 +44,7 @@ class Prompts {
       ),
     );
   }
+
   static noInternet({String? msg, bool? isWarning}) {
     return Get.showSnackbar(
       GetSnackBar(
@@ -77,35 +82,75 @@ class Prompts {
     );
   }
 
-  static confirmationDialog(BuildContext context, String middleText,void Function()? onConfirmTap) {
+  static confirmationDialog(
+      BuildContext context, String middleText, void Function()? onConfirmTap) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Confirm"),
-            content: Text(middleText),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+            title: const Text(
+              "Are you Sure you Want to Select this item?",
+              textAlign: TextAlign.center,
+              // style: TextStyle(fontFamily: "Montserrat"),
             ),
+            titleTextStyle: TextStyle(
+                fontFamily: "Montserrat",
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 19.sp),
+            content: Text(
+              middleText,
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontFamily: "Montserrat",
+                color: Colors.black,
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            // actionsPadding: EdgeInsets.symmetric(vertical: 5),
             actions: <Widget>[
-              TextButton(
-                style: TextButton.styleFrom(
-                backgroundColor: AppColors.buttonBlue,
-                  foregroundColor: Colors.white,
-                ),
+              AppCommonButton(
+                title: "NO",
+                width: 35.w,
+                height: 4.5.h,
+                radius: 8,
+                color: Colors.white,
+                textColor: AppColors.buttonBlue,
+                borderColor: Colors.white,
                 onPressed: () {
-                  Navigator.of(context).pop(false);
+                  Navigator.pop(context);
                 },
-                child: const Text("Cancel"),
               ),
-              TextButton(
-                onPressed:
-                  onConfirmTap,
-                child: const Text("Confirm")
-              ),
+              AppCommonButton(
+                  title: "YES",
+                  width: 35.w,
+                  height: 4.5.h,
+                  radius: 8,
+                  color: AppColors.buttonBlue,
+                  textColor: Colors.white,
+                  onPressed: onConfirmTap
+                  // borderColor: Colors.white,
+                  ),
             ],
           );
         });
+  }
+
+  Widget showSuccess() {
+    return Container(
+      height: 10.h,
+      width: 80.w,
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            12,
+          ),
+        ),
+      ),
+    );
   }
 }

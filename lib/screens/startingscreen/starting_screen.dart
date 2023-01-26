@@ -908,7 +908,7 @@ class _StartingScreenState extends State<StartingScreen>
                                         ),
                                         child: Center(
                                           child: Text(
-                                            "Break ${controller.breakCounter.value}",
+                                            "Break ${controller.listOfBreaks.length+1}",
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 6.2 * textsize,
@@ -2173,7 +2173,7 @@ class _StartingScreenState extends State<StartingScreen>
                                       controller.isStopSelecting.value = false;
                                     },
                                     // borderColor: Colors.white,
-                                  )
+                                  ),
                                 ]),
                           ],
                         ),

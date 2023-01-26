@@ -37,7 +37,7 @@ class ChecklistCard extends StatelessWidget {
           if (startController.clockRunning.value == true &&
               controller.checkListItem.value == "") {
             Prompts.confirmationDialog(
-                context, "Are you Sure you Want to Select this item", () async {
+                context, "You won't be able to change the activity after selection", () async {
               Navigator.of(context, rootNavigator: true).pop();
               Get.to(
                 () => CustomBottomNavigationBar(),
