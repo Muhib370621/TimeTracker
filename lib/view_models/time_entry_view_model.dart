@@ -27,7 +27,7 @@ class TimeEntryViewModel extends BaseModel{
     notifyListeners();
   }
 
-  String filterTime = "";
+  String filterTime = "Choose date";
   set setFilterTime(String filterTime) {
     this.filterTime = filterTime;
     searchWithDateRange();
