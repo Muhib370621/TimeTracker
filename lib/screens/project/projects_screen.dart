@@ -80,6 +80,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     model.setSelectedProject = model.projects[index];
+                    controller.projectId.value = model.selectedProject?.id ?? "";
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);

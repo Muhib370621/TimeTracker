@@ -28,7 +28,7 @@ class BottomNavController extends GetxController{
   RxString activityName = "".obs;
   RxString projectName = "".obs;
   RxString checkListItem = "".obs;
-
+  RxString projectId = "".obs;
 
   RxInt currentIndex = 0.obs;
   setBottomBarIndex(index) {
