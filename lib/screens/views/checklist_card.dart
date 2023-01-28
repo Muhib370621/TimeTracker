@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constants/app_storage.dart';
-import '../../controllers/BottomNavigationController.dart';
+import '../../controllers/bottomNavigationController.dart';
 import '../../helpers/locator.dart';
 import '../../shared/widgets/custom_bottom_navigation_bar.dart';
 import '../../stores/store_services.dart';

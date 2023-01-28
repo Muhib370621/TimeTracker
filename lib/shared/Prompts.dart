@@ -1,10 +1,8 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../constants/app_assets.dart';
 import 'widgets/app_common_button.dart';
 
 class Prompts {

@@ -5,7 +5,7 @@ import 'package:blu_time/shared/Prompts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/BottomNavigationController.dart';
+import '../../controllers/bottomNavigationController.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
 

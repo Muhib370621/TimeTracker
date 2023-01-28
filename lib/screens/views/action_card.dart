@@ -11,7 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/app_storage.dart';
-import '../../controllers/BottomNavigationController.dart';
+import '../../controllers/bottomNavigationController.dart';
 import '../../controllers/startingScreenController.dart';
 import '../../helpers/locator.dart';
 import '../../stores/store_services.dart';

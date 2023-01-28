@@ -5,110 +5,78 @@ import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../constants/app_colors.dart';
+import '../shared/Prompts.dart';
 import '../stores/store_services.dart';
-import '../view_models/checklist_view_model.dart';
-import 'BottomNavigationController.dart';
+import 'bottomNavigationController.dart';
 
 class StartingScreenController extends GetxController {
+  ///init state os the controller
   @override
   Future<void> onInit() async {
-    // RxInt activityIndex = 0.obs;
-    // activityName.value="";
-    // projectName.value="";
-    // checkListItem.value="";
-    // clockRunning.value = false;
     determinePosition();
-    // reset();
     isLoading.value = false;
     timeString.value = _formatMainDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-    // locationLoading.value = true;
-    // locationLoading.value = false;
     super.onInit();
-    String roles = await locator<StoreServices>().getLocal(AppStorage.role, "userid");
-
-    String currentLoc = await locator<StoreServices>().getLocal(AppStorage.currentAddress, "userid");
-    // String timerVal = await locator<StoreServices>().getLocal(AppStorage.timerTime, "userid");
-    String timerStartTime = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
-    String timerFinishTime = await locator<StoreServices>().getLocal(AppStorage.timeFinishTime, "userid");
-    String timerTotalTime = await locator<StoreServices>().getLocal(AppStorage.totalWorkTime, "userid");
-
-    String project = await locator<StoreServices>().getLocal(AppStorage.projectName, "userid");
-    String acitivity = await locator<StoreServices>().getLocal(AppStorage.activityName, "userid");
-    String checklist = await locator<StoreServices>().getLocal(AppStorage.checkListItemName, "userid");
-    // var prjName = Get.find<BottomNavController>().projectName.value;
+    String roles =
+        await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+    String currentLoc = await locator<StoreServices>()
+        .getLocal(AppStorage.currentAddress, "userid");
+    String timerStartTime = await locator<StoreServices>()
+        .getLocal(AppStorage.timerStartTime, "userid");
+    String timerFinishTime = await locator<StoreServices>()
+        .getLocal(AppStorage.timeFinishTime, "userid");
+    String timerTotalTime = await locator<StoreServices>()
+        .getLocal(AppStorage.totalWorkTime, "userid");
+    String project = await locator<StoreServices>()
+        .getLocal(AppStorage.projectName, "userid");
+    String acitivity = await locator<StoreServices>()
+        .getLocal(AppStorage.activityName, "userid");
+    String checklist = await locator<StoreServices>()
+        .getLocal(AppStorage.checkListItemName, "userid");
+    // List<dynamic> breakList = await locator<StoreServices>()
+    //     .getLocal(AppStorage.listOfBreaks, "userid");
     final BottomNavController controller = Get.put(BottomNavController());
-    controller.projectName.value=project;
-    controller.activityName.value=acitivity;
-    controller.checkListItem.value=checklist;
-    // print("prjname $project");
-    // print("timer start $timerStartTime");
-    // List<BreakModel> breakList = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
+    controller.projectName.value = project;
+    controller.activityName.value = acitivity;
+    controller.checkListItem.value = checklist;
     role.value = roles;
-    // String resume = await locator<StoreServices>().getLocal(AppStorage.appResumedTime, "userid");
-    // String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
-    // var dateFormat = DateFormat('hh:mm');
-      // startTimer();
-      // print("Clock is Running");
-      // clockRunning.value==true;
-      // print(currentLoc);
-      currentAddress.value=currentLoc;
-      // clockDuration.value.inMinutes+minutes_diff;
-      startTime.value=timerStartTime;
-      finishTime.value = timerFinishTime;
-      totalTime.value = timerTotalTime;
-      // listOfBreaks = breakList;
-      // print(listOfBreaks.toString());
-      // print("minutes diff $minutes_diff");
-      // print(timerVal);
-    // twoDigits(controller.clockDuration.value.inMinutes.remainder(60)) =
-    // twoDigits(controller.clockDuration.value.inMinutes.remainder(60))
-    // +AutofillHints.middleName;
-    // print("result $result");
-    // print(note);
-    // print(resume);
-    // print("before ${clockDuration.value.inMinutes.toString()}");
-    if(startTime.value!="" && finishTime.value ==""){
+    currentAddress.value = currentLoc;
+    var res = DateFormat.jm().format(DateFormat("hh:mm:ss").parse(timerStartTime));
+    startTime.value = res;
+    finishTime.value = timerFinishTime;
+    totalTime.value = timerTotalTime;
+    // listOfBreaks = breakList;
+    if (startTime.value != "" && finishTime.value == "") {
       startTimer();
-      var dateFormat = DateFormat('hh:mm');
-      DateTime currtime = dateFormat.parse(timeString.value);
-      var s = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
+      var dateFormat = DateFormat('hh:mm:ss');
+      DateTime currtime = dateFormat.parse(updatedString.value);
+      var s = await locator<StoreServices>()
+          .getLocal(AppStorage.timerStartTime, "userid");
       DateTime start = dateFormat.parse(s);
-      Duration res =  currtime.difference(start);
-      clockDuration.value=res;
-      print(res);
+      Duration res = currtime.difference(start);
+      clockDuration.value = res;
     }
-    // if(clockRunning.value==false){
-    //   clockDuration.value = clockDuration.value+Duration(minutes: minutes_diff.toInt());}
-    // if(timer_val!=null){
-    //   clockDuration.value = timer_val;
-    // }
   }
 
   @override
   Future<void> dispose() async {
-    print("Paused");
-    print("--------------------------------------------------------------------");
-    await locator<StoreServices>()
-    .setLocal(AppStorage.timerTime, "userid",
-    " ${twoDigits(clockDuration.value.inHours.remainder(60))}:${twoDigits(clockDuration.value.inMinutes.remainder(60))}:${twoDigits(clockDuration.value.inSeconds.remainder(60))}");
+    await locator<StoreServices>().setLocal(AppStorage.timerTime, "userid",
+        " ${twoDigits(clockDuration.value.inHours.remainder(60))}:${twoDigits(clockDuration.value.inMinutes.remainder(60))}:${twoDigits(clockDuration.value.inSeconds.remainder(60))}");
     await locator<StoreServices>()
         .setLocal(AppStorage.appPausedTime, "userid", timeString.value);
-    String paused = await locator<StoreServices>().getLocal(AppStorage.appPausedTime, "userid");
-    print(paused);
-    // _timer?.cancel();
     super.dispose();
   }
+
   String twoDigits(int n) => n.toString().padLeft(2, '0');
   Rx<DateTime> today = DateTime.now().toLocal().obs;
   List listOfBreaks = <BreakModel>[].obs;
-  // List<dynamic> actions = [].obs;
-
   RxString timer_value = "".obs;
   RxBool isSwitched = false.obs;
   RxBool countDown = false.obs;
@@ -154,66 +122,61 @@ class StartingScreenController extends GetxController {
     speedAccuracy: 0,
   ).obs;
   final RxString timeString = ''.obs;
+  final RxString updatedString = ''.obs;
+
   RxInt breakCounter = 0.obs;
-  // RxString activityName = "".obs;
-  // RxString projectName = "".obs;
-  // RxString checkListItem = "".obs;
-  // getNextValue(ChecklistViewModel model,int index){
-  //   var value = model.checklist[index+1].custrecordBbPachklistTitle;
-  //   return value;
-  // }
-  removeBreak(index){
-  listOfBreaks.removeAt(index);
-  update();
-}
-  editBreak(index, bstart, bend, diff){
-    // create a copy of the original list
-    List<BreakModel> newList = List.from(listOfBreaks);
-    newList[index] = BreakModel(breakStart: bstart, breakEnd: bend, totalBreakTime: diff);
-    listOfBreaks=newList;
+
+  ///removes the break from break list
+  removeBreak(index) {
+    listOfBreaks.removeAt(index);
     update();
   }
 
+  ///edits the element from break list
+  editBreak(index, bstart, bend, diff) {
+    /// create a copy of the original list
+    List<BreakModel> newList = List.from(listOfBreaks);
+    newList[index] =
+        BreakModel(breakStart: bstart, breakEnd: bend, totalBreakTime: diff);
+    listOfBreaks = newList;
+    update();
+  }
+
+  ///checks the permission of location in application
   Future<Position?> determinePosition() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.whileInUse) {
-        // _getCurrentLocation();
-      }
+      if (permission == LocationPermission.whileInUse) {}
       if (permission == LocationPermission.deniedForever) {
         return Future.error('Location Not Available');
       }
     } else {
       throw Exception('Error');
     }
-    // Geolocator.ena;
     return await Geolocator.getCurrentPosition();
   }
 
-  /*Check if gps service is enabled or not*/
+  ///check that the GPS is enabled or not
   Future gpsService(context) async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       _checkGps(context);
       return true;
-    } else {
-      // determinePosition();
-      // Future.delayed(Duration(seconds: 3));
-      // _getCurrentLocation();
-    }
+    } else {}
   }
 
+  ///shows custom prompt for enabling location
   Future _checkGps(context) async {
     if (!(await Geolocator.isLocationServiceEnabled())) {
       if (Theme.of(context).platform == TargetPlatform.android) {
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              final StartingScreenController controller =
-                  Get.put(StartingScreenController());
-              // final Size size = MediaQuery.of(context).size;
-              return Stack(children: [
+          context: context,
+          builder: (BuildContext context) {
+            final StartingScreenController controller =
+                Get.put(StartingScreenController());
+            return Stack(
+              children: [
                 Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -248,12 +211,8 @@ class StartingScreenController extends GetxController {
                                 activeColor: AppColors.buttonBlue,
                                 value: controller.isSwitched.value,
                                 onChanged: (value) {
-                                  // setState(() {
                                   controller.isSwitched.value =
                                       !controller.isSwitched.value;
-                                  print(controller.isSwitched.value);
-                                  // });
-                                  // isSwitched= value;
                                 },
                               ),
                             ),
@@ -275,7 +234,9 @@ class StartingScreenController extends GetxController {
                               left: 20.0, right: 20.0, top: 5),
                           child: Text(
                             'Please make sure you enable GPS and try again',
-                            style: TextStyle(fontSize: 15.5.sp),
+                            style: TextStyle(
+                              fontSize: 15.5.sp,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -284,31 +245,37 @@ class StartingScreenController extends GetxController {
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                              const AndroidIntent intent = AndroidIntent(
-                                  action:
-                                      'android.settings.LOCATION_SOURCE_SETTINGS');
-                              // Future.delayed(const Duration(seconds: 3));
-                              intent.launch();
-                              Navigator.of(context, rootNavigator: true).pop();
-
-                              // _gpsService();
+                              if (isSwitched.value == true) {
+                                const AndroidIntent intent = AndroidIntent(
+                                    action:
+                                        'android.settings.LOCATION_SOURCE_SETTINGS');
+                                intent.launch();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                              }
                             },
-                            child: Container(
-                              height: Adaptive.h(4),
-                              width: Adaptive.w(35),
-                              decoration: const BoxDecoration(
-                                color: AppColors.buttonBlue,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+                            child: Obx(
+                              () => Container(
+                                height: Adaptive.h(4),
+                                width: Adaptive.w(35),
+                                decoration: BoxDecoration(
+                                  color: isSwitched.value
+                                      ? AppColors.buttonBlue
+                                      : AppColors.buttonBlue.withOpacity(0.8),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Allow",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
+                                child: Center(
+                                  child: Text(
+                                    "Allow",
+                                    style: TextStyle(
+                                      color: isSwitched.value
+                                          ? Colors.white
+                                          : Colors.white.withOpacity(0.8),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -319,46 +286,43 @@ class StartingScreenController extends GetxController {
                     ),
                   ),
                 ),
-              ]);
-            });
+              ],
+            );
+          },
+        );
       }
     }
   }
 
-  void startTimer() async{
+
+
+  /// triggers when you tap on start time after getting current locaiton and selecting roles
+  void startTimer() async {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
     finishTime.value = "";
     totalTime.value = "";
-    startDate.value = DateFormat('EEEE, MMM dd')
-        .format(today.value)
-        .toString();
+    startDate.value = DateFormat('EEEE, MMM dd').format(today.value).toString();
     await locator<StoreServices>()
         .setLocal(AppStorage.currentDate, "userid", today.value.toString());
-    // print("-----------------------");
-    // print("saved properly");
-    // String timerStartTime = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
-    // print(timerStartTime);
-    // print("done");
     await locator<StoreServices>()
         .setLocal(AppStorage.timeFinishTime, "userid", "");
     await locator<StoreServices>()
         .setLocal(AppStorage.totalWorkTime, "userid", "");
-    // String rolesHeaders = 'NLAuth nlauth_account=${locator<StoreServices>().getAccountID()}, nlauth_email=${locator<StoreServices>().getUsername()}, nlauth_signature=${locator<StoreServices>().getPassword()}, nlauth_role=1172';
-    // print(rolesHeaders);
-    // Prompts.showSnackBar(msg: "Note saved locally");
   }
 
+  /// add a second to the instance of "clock duration"
   void addTime() {
     final addSeconds = countDown.value ? -1 : 1;
     final seconds = clockDuration.value.inSeconds + addSeconds;
-    if (seconds < 0) {
+    if (seconds > 359999) {
       timer?.cancel();
     } else {
       clockDuration.value = Duration(seconds: seconds);
     }
   }
 
+  ///triggers when tapped on start break button
   void startBreak() async {
     breakTimer =
         Timer.periodic(const Duration(seconds: 1), (_) => addBreakTime());
@@ -368,10 +332,9 @@ class StartingScreenController extends GetxController {
     finishBreak.value = "";
     await locator<StoreServices>()
         .setLocal(AppStorage.breakStartTime, "userid", Breakstart.value);
-    // List<dynamic> note = await locator<StoreServices>().getLocal(AppStorage.timerStartTime, "userid");
-    // print(note);
   }
 
+  /// add a second to the instance "break duration"
   void addBreakTime() {
     final addSeconds = countDown.value ? -1 : 1;
     final seconds = breakDuration.value.inSeconds + addSeconds;
@@ -380,15 +343,15 @@ class StartingScreenController extends GetxController {
     } else {
       breakDuration.value = Duration(seconds: seconds);
     }
-    // });
   }
 
+  /// get the start time of the timer
   Future<void> getStartTime() async {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     startTime.value = formattedDateTime;
-    await locator<StoreServices>()
-    .setLocal(AppStorage.timerStartTime, "userid", startTime.value.toString());
+    await locator<StoreServices>().setLocal(AppStorage.timerStartTime, "userid",
+        DateFormat('hh:mm a').format(now));
   }
 
   void getBreakStartTime() {
@@ -397,44 +360,36 @@ class StartingScreenController extends GetxController {
     Breakstart.value = formattedDateTime;
   }
 
-  void getBreakEndTime() async{
+  void getBreakEndTime() async {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     finishBreak.value = formattedDateTime;
     await locator<StoreServices>()
-    .setLocal(AppStorage.breakFinishTime, "userid", finishBreak.value);
+        .setLocal(AppStorage.breakFinishTime, "userid", finishBreak.value);
   }
 
-  void subtractTime() async{
+  void subtractTime() async {
     var dateFormat = DateFormat('hh:mm a');
-    // var hourDiff;
-    // var minutes_diff;
     DateTime start = dateFormat.parse(startTime.value);
     DateTime finish = dateFormat.parse(finishTime.value);
     Duration diff = finish.difference(start);
-    // print(diff);
     var hourDiff = diff.inHours.toString();
-    var minutesDiff = (diff.inMinutes%60).toString();
+    var minutesDiff = (diff.inMinutes % 60).toString();
     totalTime.value = "${hourDiff}h  ${minutesDiff}m";
     await locator<StoreServices>()
-    .setLocal(AppStorage.totalWorkTime, "userid", totalTime.value);
-    // print(totalTime.value);
+        .setLocal(AppStorage.totalWorkTime, "userid", totalTime.value);
   }
 
   void subtractBreak() async {
     var dateFormat = DateFormat('hh:mm a');
-    var hourDiff;
-    var minutes_diff;
     DateTime start = dateFormat.parse(Breakstart.value);
     DateTime finish = dateFormat.parse(finishBreak.value);
     Duration diff = finish.difference(start);
-    print(diff);
-    hourDiff = diff.inHours.toString();
-    minutes_diff = (diff.inMinutes%60).toString();
-    totalBreak.value = "${hourDiff}h  ${minutes_diff}m";
-    print(totalBreak.value);
+    var hourDiff = diff.inHours.toString();
+    var minutesDiff = (diff.inMinutes % 60).toString();
+    totalBreak.value = "${hourDiff}h  ${minutesDiff}m";
     await locator<StoreServices>()
-    .setLocal(AppStorage.totalBreakTime, "userid", totalBreak.value);
+        .setLocal(AppStorage.totalBreakTime, "userid", totalBreak.value);
   }
 
   void getFinishTime() async {
@@ -442,7 +397,7 @@ class StartingScreenController extends GetxController {
     final String formattedDateTime = _formatDateTime(now);
     finishTime.value = formattedDateTime;
     await locator<StoreServices>()
-    .setLocal(AppStorage.timeFinishTime, "userid", finishTime.value);
+        .setLocal(AppStorage.timeFinishTime, "userid", finishTime.value);
   }
 
   void reset() {
@@ -465,28 +420,21 @@ class StartingScreenController extends GetxController {
     if (resets) {
       reset();
     }
-    // isStopSelecting.value=true;
-    if(stopSelector.value =="Pause Timer") {
+    if (stopSelector.value == "Pause Timer") {
       timer?.cancel();
-    clockRunning.value = false;
+      clockRunning.value = false;
       getFinishTime();
       subtractTime();
-      print("-------------------------------");
-      // List<dynamic>? note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
-      // print(note!.length);
     }
-    if(stopSelector.value =="Finish Work") {
+    if (stopSelector.value == "Finish Work") {
       timer?.cancel();
       reset();
       clockRunning.value = false;
       getFinishTime();
       subtractTime();
-      print("-------------------------------");
-      // List<dynamic>? note = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
-      // print(note!.length);
     }
 
-    stopSelector.value="";
+    stopSelector.value = "";
   }
 
   Future<void> stopBreak({bool resets = true}) async {
@@ -501,9 +449,10 @@ class StartingScreenController extends GetxController {
         breakEnd: finishBreak.value,
         totalBreakTime: totalBreak.value));
     await locator<StoreServices>()
-    .setLocal(AppStorage.listOfBreaks, "userid",listOfBreaks);
-    List<dynamic> breakList = await locator<StoreServices>().getLocal(AppStorage.listOfBreaks, "userid");
-    print("list break ${breakList[0].toString()}");
+        .setLocal(AppStorage.listOfBreaks, "userid", listOfBreaks.toList());
+    List<dynamic> breakList = await locator<StoreServices>()
+        .getLocal(AppStorage.listOfBreaks, "userid");
+    print("list break ${breakList.toString()}");
     Future.delayed(const Duration(seconds: 3), () {
       breakRunning.value = false;
     });
@@ -528,16 +477,23 @@ class StartingScreenController extends GetxController {
           "${place.locality}, ${place.subLocality}, ${place.street}";
       await locator<StoreServices>()
           .setLocal(AppStorage.currentAddress, "userid", currentAddress.value);
-      double distanceInMeters = Geolocator.distanceBetween(37.788022, -122.399797, latitude, longitude);
+      double distanceInMeters = Geolocator.distanceBetween(
+          37.788022, -122.399797, latitude, longitude);
       if (distanceInMeters <= 100.0) {
-        isNear.value=true;
-        print("The given location is near to your current location");
+        isNear.value = true;
+        // print("The given location is near to your current location");
       } else {
-        isNear.value=false;
-        print("The given location is far to your current location");
+        isNear.value = false;
+        // print("The given location is far to your current location");
       }
     } catch (e) {
-      print(e);
+      if (e is PlatformException) {
+        if (e.code == 'IO_ERROR') {
+          // handle the network error
+          Prompts.noInternet(
+              msg: "Please check your Internet Connection", isWarning: true);
+        }
+      }
     }
   }
 
@@ -552,9 +508,7 @@ class StartingScreenController extends GetxController {
   void _getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatMainDateTime(now);
-    // setState(() {
     timeString.value = formattedDateTime;
-    // });
+    updatedString.value = DateFormat('hh:mm:ss').format(now);
   }
-
 }

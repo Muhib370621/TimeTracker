@@ -1,9 +1,8 @@
 import 'package:blu_time/constants/app_assets.dart';
-import 'package:blu_time/controllers/BottomNavigationController.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ChatScreen extends StatefulWidget {

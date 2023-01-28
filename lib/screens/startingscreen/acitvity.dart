@@ -1,6 +1,6 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
-import 'package:blu_time/controllers/BottomNavigationController.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
@@ -201,8 +201,6 @@ class _ActivityState extends State<Activity> {
                                               ? 0
                                               : controller.listOfBreaks.length,
                                           shrinkWrap: true,
-                                          // padding: EdgeInsets.symmetric(vertical: 20),
-                                          // reverse: true,
                                           itemBuilder: (context, index) {
                                             return Stack(children: [
                                               SingleChildScrollView(
@@ -210,8 +208,6 @@ class _ActivityState extends State<Activity> {
                                                     Axis.horizontal,
                                                 physics:
                                                     const BouncingScrollPhysics(),
-                                                // dragStartBehavior: DragStartBehavior.down,
-                                                // padding: ,
                                                 child: Row(
                                                   children: [
                                                     GestureDetector(
@@ -400,7 +396,7 @@ class _ActivityState extends State<Activity> {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            )
+                                                                            ),
                                                                           ],
                                                                         ),
                                                                         Column(
@@ -473,8 +469,6 @@ class _ActivityState extends State<Activity> {
                                                         controller
                                                             .deletionConfirmation
                                                             .value = true;
-                                                        // controller.listOfBreaks.removeAt(index);
-                                                        // controller.listOfBreaks.length--;
                                                       },
                                                       child: Container(
                                                         height: 4.h,
@@ -504,46 +498,6 @@ class _ActivityState extends State<Activity> {
                                                         ),
                                                       ),
                                                     ),
-                                                    // SizedBox(height: 1.h,),
-                                                    // Visibility(
-                                                    //   visible: isDelete == true,
-                                                    //   child: GestureDetector(
-                                                    //     onTap: () {
-                                                    //       controller.removeBreak(
-                                                    //           index);
-                                                    //       setState(() {});
-                                                    //       Prompts.showSnackBar(
-                                                    //           msg: "Break Deleted",
-                                                    //           isWarning: false);
-                                                    //       // controller.listOfBreaks.removeAt(index);
-                                                    //       // controller.listOfBreaks.length--;
-                                                    //     },
-                                                    //     child: Container(
-                                                    //       height: 4.5.h,
-                                                    //       width: 10.w,
-                                                    //       decoration:
-                                                    //       const BoxDecoration(
-                                                    //           color: AppColors
-                                                    //               .bottomBar,
-                                                    //           borderRadius:
-                                                    //           BorderRadius.all(
-                                                    //             Radius.circular(
-                                                    //                 8),
-                                                    //           )),
-                                                    //       child: Padding(
-                                                    //         padding:
-                                                    //         const EdgeInsets.all(
-                                                    //             7.0),
-                                                    //         child: SvgPicture
-                                                    //             .asset(
-                                                    //           AppAssets
-                                                    //               .deleteIcon,
-                                                    //           color: Colors.red,
-                                                    //         ),
-                                                    //       ),
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
                                                   ],
                                                 ),
                                               ),
@@ -739,8 +693,6 @@ class _ActivityState extends State<Activity> {
                                   textColor: AppColors.buttonBlue,
                                   borderColor: Colors.white,
                                   onPressed: () {
-                                    // controller.isChecklistConfirm.value =
-                                    // false;
                                     controller.deletionConfirmation.value = false;
                                   },
                                 ),
@@ -759,17 +711,7 @@ class _ActivityState extends State<Activity> {
                                         msg:
                                         "Break Deleted",
                                         isWarning: false);
-                                    // setState(() {});
-                                    // controller.stopSelector.value =
-                                    // "Finish Work";
-                                    // controller.reset();
-                                    // controller.stopTimer(
-                                    //     context: context, resets: true);
-                                    // controller.isChecklistConfirm.value =
-                                    // false;
-                                    // controller.isStopSelecting.value = false;
                                   },
-                                  // borderColor: Colors.white,
                                 ),
                               ]),
                         ],
@@ -806,7 +748,6 @@ class _ActivityState extends State<Activity> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: const [
-                                // SizedBox(width: 1.w,),
                                 VerticalDivider(
                                   indent: 5,
                                   endIndent: 5,
@@ -819,7 +760,6 @@ class _ActivityState extends State<Activity> {
                                   thickness: 1.5,
                                   color: Colors.white,
                                 ),
-                                // SizedBox(width: 1.w,),
                               ],
                             ),
                           ),
@@ -950,41 +890,26 @@ class _ActivityState extends State<Activity> {
                                                 DateFormat("hh:mm a");
                                             String timeFormatted =
                                                 dateFormat.format(_dateTime);
-                                            // print(
-                                            //     "formatted time $timeFormatted");
                                             endTime = timeFormatted;
-                                            // parse the start and end times into DateTime objects
                                             DateTime start =
                                                 dateFormat.parse(startTime);
-                                            // print("estart $start");
                                             DateTime end =
                                                 dateFormat.parse(endTime);
-                                            // print("end $end");
                                             Duration difference =
                                                 end.difference(start);
-                                            // Duration abc = dateFormat.format(difference);
                                             if (difference.isNegative) {
                                               Prompts.showSnackBar(
                                                   msg:
                                                       "Please Select correct start & End time",
                                                   isWarning: false);
                                             } else {
-                                              // String formattedDuration = difference.toString().substring(0,8);
-                                              // print(formattedDuration);
-                                              // print("difference $difference");
-                                              // print("differ : $difference");
-                                              // var hourDiff, minutes_diff, totalBreak;
                                               var hourDiff =
                                                   difference.inHours.toString();
-                                              // print(hourDiff);
                                               var minutesDiff =
                                                   (difference.inMinutes % 60)
                                                       .toString();
-                                              // print(minutesDiff);
                                               var totalBreak =
                                                   "${hourDiff}h  ${minutesDiff}m";
-                                              // print("total break $totalBreak");
-                                              // endTime!=""?isAddingBreak = false:null;
                                               if (controller.isEditting.value ==
                                                   true) {
                                                 controller.editSuccess.value =
@@ -992,9 +917,6 @@ class _ActivityState extends State<Activity> {
                                               }
                                               controller.addSuccess.value =
                                                   true;
-                                              // print(
-                                              //     "index ${controller.editIndex.value}");
-                                              // isAddingBreak = false;
                                               controller.isEditting.value ==
                                                       true
                                                   ? controller.editBreak(
@@ -1012,7 +934,6 @@ class _ActivityState extends State<Activity> {
                                               isAddingBreak = false;
                                               controller.isEditting.value =
                                                   false;
-                                              // Prompts().showSuccess;
                                               if (controller.addSuccess.value =
                                                   true) {
                                                 Future.delayed(
@@ -1033,11 +954,8 @@ class _ActivityState extends State<Activity> {
                                                 DateFormat("hh:mm a")
                                                     .format(_dateTime);
                                             startTime = formattedTime;
-                                            // print("start Time : $startTime");
                                             isStartTime = true;
                                           }
-                                          // startTime="";
-                                          // endTime="";
                                         });
                                       },
                                       child: Container(

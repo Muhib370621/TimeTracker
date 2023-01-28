@@ -1,5 +1,5 @@
 import 'package:blu_time/constants/app_assets.dart';
-import 'package:blu_time/controllers/BottomNavigationController.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/screens/views/project_card.dart';
