@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/main.dart';
 import 'package:blu_time/models/project.dart';
@@ -35,9 +36,20 @@ class ProjectViewModel extends BaseModel {
   }
 
   fetchProjects() async {
+    final BottomNavController bottomController = Get.put(BottomNavController());
+
     if (isMockEnabled) {
       String userId = locator<StoreServices>().getUsername();
       projects = MockFactory().mockProjects(userId: (userId == "t1@bb.com") ? null : userId);
+      print("projects ${projects.length}");
+      if (projects.length==1){
+        bottomController.projectList.value= projects[0];
+        bottomController.projectModel.value ;
+        bottomController.isSingle.value=true;
+        setSelectedProject = projects[0];
+        // bottomController.projectList.value= projects;
+        print("single : ${bottomController.isSingle.value}");
+      }
       setState(projects.isNotEmpty ? ViewState.completed : ViewState.empty);
       return;
     }

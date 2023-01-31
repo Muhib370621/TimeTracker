@@ -1,4 +1,6 @@
 // import 'package:flutter/material.dart';
+import 'package:blu_time/models/project.dart';
+import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,6 +33,9 @@ class BottomNavController extends GetxController{
   RxString checkListItem = "".obs;        /// name of the checklist item which is selected when we start the timer
   RxString projectId = "".obs;            /// Id of the project which is then passed to chat screen
   RxInt currentIndex = 0.obs;             /// it is the current index of the bottom navigation
+  RxBool isSingle = false.obs;
+  var projectModel = ProjectViewModel().obs;
+  Rx<Project> projectList = Project().obs;
 
 
   ///set bottom bar index to the desired value

@@ -18,8 +18,10 @@ class BreakTimer extends StatelessWidget {
     return Obx(() => Visibility(
       visible: controller.breakRunning.value == true,
       child: Container(
-        height: 11.2.h,
-        width: 0.9 * size.width,
+        margin:  const EdgeInsets.symmetric(horizontal: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        // height: 11.2.h,
+        // width: 0.9 * size.width,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -90,7 +92,7 @@ class BreakTimer extends StatelessWidget {
                       ),
                       Container(
                         height: 0.028 * size.height,
-                        width: 0.15 * size.width,
+                        width: 0.2 * size.width,
                         decoration:
                         const BoxDecoration(
                           color: AppColors.buttonBlue,
@@ -120,11 +122,11 @@ class BreakTimer extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                    const EdgeInsets.only(top: 1),
+                    const EdgeInsets.only(top: 5),
                     child: Text(
                       " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
                       style: TextStyle(
-                        fontSize: 15.2 * textsize,
+                        fontSize: 13.5 * textsize,
                         color: AppColors.orange,
                         fontWeight: FontWeight.bold,
                       ),
@@ -140,7 +142,7 @@ class BreakTimer extends StatelessWidget {
                       ),
                       Container(
                         height: 0.028 * size.height,
-                        width: 0.15 * size.width,
+                        width: 0.2 * size.width,
                         decoration:
                         const BoxDecoration(
                           color: AppColors.buttonBlue,

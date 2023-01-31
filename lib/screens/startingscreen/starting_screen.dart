@@ -68,11 +68,11 @@ class _StartingScreenState extends State<StartingScreen>
         ///storing resumed time to local storage
         await locator<StoreServices>().setLocal(
             AppStorage.appResumedTime, "userid", controller.timeString.value);
-        String roles =
-            await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+        // String roles =
+        //     await locator<StoreServices>().getLocal(AppStorage.role, "userid");
 
         ///setting role value from local storage
-        controller.role.value = roles;
+        // controller.role.value = roles;
         break;
 
       case AppLifecycleState.paused:
@@ -125,7 +125,7 @@ class _StartingScreenState extends State<StartingScreen>
                             /// this is the header with local time and date
                             const StartHeader(),
                             SizedBox(
-                              height: 2.h,
+                              height: 1.9.h,
                             ),
                             ///this is the widget which have project name,action name and checklist item name
                             const ProjectDetails(),
@@ -144,30 +144,32 @@ class _StartingScreenState extends State<StartingScreen>
                         ),
                         Center(
                           child: Column(
-                            children: const [
+                            children:  [
                               ///break button with text
-                              BreakButton(),
+                              const BreakButton(),
                               ///role text
-                              RoleText(),
+                              // RoleText(),
+                              SizedBox(height: 0.9.h,),
                               ///current address
-                              CurrentAddress(),
+                              const CurrentAddress(),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: controller.breakRunning.value == true
-                              ? 2.h
-                              : 2.5.h,
-                        ),
-                        SizedBox(
-                          height:
-                              controller.clockRunning.value == true ? 0 : 0.8.h,
-                        ),
+                        // SizedBox(
+                        //   height: controller.breakRunning.value == true
+                        //       ? 2.h
+                        //       : 2.5.h,
+                        // ),
+                        // SizedBox(
+                        //   height:
+                        //       controller.clockRunning.value == true ? 0 : 0.8.h,
+                        // ),
+                        SizedBox(height: 2.5.h,),
                         Center(
                           child: Column(
                             children: const [
                               ///shows start time, end time and total working time
-                              TimerStatusWidget(),
+                              // TimerStatusWidget(),
                               ///shows a break timer which starts when we tap break button
                               BreakTimer(),
                             ],
@@ -176,30 +178,31 @@ class _StartingScreenState extends State<StartingScreen>
                       ],
                     ),
                   ),
-                  controller.isLoading.value == true
-                      ? Stack(
-                          children: [
-                            ///container with opaque bg
-                            GestureDetector(
-                              onTap: () {
-                                controller.isLoading.value = false;
-                              },
-                              child: Container(
-                                height: 1 * size.height,
-                                width: 1 * size.width,
-                                color: Colors.white.withOpacity(0.9),
-                              ),
-                            ),
-                            ///slider with arrow and "select role" text
-                            const RoleSliderAfter(),
-                            ///role after selector with selection buttons
-                            const RoleSelector(),
-                          ],
-                        )
-                      : Stack(
+                  // controller.isLoading.value == true
+                  //     ? Stack(
+                  //         children: [
+                  //           ///container with opaque bg
+                  //           GestureDetector(
+                  //             onTap: () {
+                  //               controller.isLoading.value = false;
+                  //             },
+                  //             child: Container(
+                  //               height: 1 * size.height,
+                  //               width: 1 * size.width,
+                  //               color: Colors.white.withOpacity(0.9),
+                  //             ),
+                  //           ),
+                  //           ///slider with arrow and "select role" text
+                  //           const RoleSliderAfter(),
+                  //           ///role after selector with selection buttons
+                  //           const RoleSelector(),
+                  //         ],
+                  //       )
+                  //     :
+                  Stack(
                           children: [
                             ///role before selector with selection buttons
-                            const RoleSliderBefore(),
+                            // const RoleSliderBefore(),
                             controller.locationLoading.value == true &&
                                     controller.currentAddress.value == ""
                             ///fetching location popup

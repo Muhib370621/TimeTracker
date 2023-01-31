@@ -3,12 +3,21 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
+import 'package:blu_time/models/action_checklist.dart';
+import 'package:blu_time/screens/project/project_detail_holder_screen.dart';
+import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/startingscreen/acitvity.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../../models/project.dart';
+import '../../../shared/enums/view_states.dart';
+import '../../../shared/widgets/empty_view.dart';
+import '../../../view_models/project_view_model.dart';
 
 class TimerButton extends StatelessWidget {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -27,39 +36,37 @@ class TimerButton extends StatelessWidget {
               ? controller.getCurrentLocation()
               : null;
           if (controller.currentAddress.value == "" &&
-              controller.role.value != "" &&
               controller.locationLoading.value ==
                   false) {
             Prompts.showSnackBar(
                 msg:
                 "Please wait fetching for your current location",
                 isWarning: true);
-          } else if (controller.role.value == "" &&
-              controller.locationLoading.value ==
-                  false) {
-            Prompts.showSnackBar(
-                msg: "Please Select your Role",
-                isWarning: true);
-          } else if (controller.role.value != "") {
+          }
             if (controller.clockRunning.value == true) {
               controller.stopTimer(
                   resets: false, context: context);
               controller.isStopSelecting.value = true;
             } else {
-              controller.breakRunning.value == false
-                  ? controller.startTimer()
-                  : Prompts.showSnackBar(
-                  msg: "Stop the Break first!",
-                  isWarning: true);
-              bottomController.projectName.value == ""
-                  ? bottomController
-                  .currentIndex.value = 2
-                  : null;
+              if(bottomController.isSingle.value==true){
+                Get.to(()=>ProjectDetailHolderScreen(viewModel: bottomController.projectModel.value));
+              }
+              else {
+                controller.breakRunning.value == false
+                    ? controller.startTimer()
+                    : Prompts.showSnackBar(
+                    msg: "Stop the Break first!",
+                    isWarning: true);
+                bottomController.projectName.value == ""
+                    ? bottomController
+                    .currentIndex.value = 2
+                    : null;
+              }
             }
-            controller.startTime.value == ""
-                ? controller.getStartTime()
-                : null;
-          } else if (controller.role.value == "" &&
+            if(controller.startTime.value == ""){
+              controller.getStartTime();
+            }
+           else if (
               controller.currentAddress.value == "" &&
               controller.locationLoading.value ==
                   false) {
@@ -108,45 +115,47 @@ class TimerButton extends StatelessWidget {
               begin: Alignment.bottomLeft,
             ),
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 4.h,
-              ),
-              Image.asset(
-                'assets/images/Group 137.png',
-                scale: 3,
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Text(
-                " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xffFFFFFF),
-                    fontSize: 20.sp),
-              ),
-              SizedBox(
-                height: 1.h,
-              ),
-              Text(
-                controller.timerStatus.value == false &&
-                    controller
-                        .clockRunning.value ||
-                    controller.breakRunning.value ==
-                        true
-                    ? AppLocalizedStrings.finishWork
-                    .tr()
-                    : AppLocalizedStrings.startWork
-                    .tr(),
-                style: TextStyle(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 4.h,
+                ),
+                Image.asset(
+                  'assets/images/Group 137.png',
+                  scale: 3,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xffFFFFFF),
+                      fontSize: 20.sp),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Text(
+                  controller.timerStatus.value == false &&
+                      controller
+                          .clockRunning.value ||
+                      controller.breakRunning.value ==
+                          true
+                      ? AppLocalizedStrings.finishWork
+                      .tr()
+                      : AppLocalizedStrings.startWork
+                      .tr(),
+                  style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: const Color(0xffFFFFFF),
                     fontSize: 14.sp,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -180,4 +189,7 @@ class TimerButton extends StatelessWidget {
     ],)
     );
   }
-}
+  }
+
+
+

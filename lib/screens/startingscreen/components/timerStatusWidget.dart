@@ -13,7 +13,7 @@ class TimerStatusWidget extends StatelessWidget {
     Get.put(StartingScreenController());
     final Size size = MediaQuery.of(context).size;
     return Obx(() => Visibility(
-      visible: controller.breakRunning.value == false,
+      visible: controller.breakRunning.value == false || controller.clockRunning.value == false || controller.breakRunning.value==true,
       child: Row(
         mainAxisAlignment:
         MainAxisAlignment.spaceEvenly,

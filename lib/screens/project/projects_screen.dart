@@ -72,6 +72,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return Selector<ProjectViewModel, List<Project>>(
         selector: (context, model) => model.projects,
         builder: (BuildContext context, value, Widget? child) {
+          controller.projectModel.value=model;
           return PagedList(
             itemCount: model.projects.length,
             itemBuilder: (context, index) {
@@ -84,6 +85,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
+                    // print(controller.projectModel.value=model);
+                    // print("model is $model");
                     if (startController.clockRunning.value == true &&
                         controller.projectName.value == "") {
                       controller.projectName.value =
@@ -92,7 +95,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                           AppStorage.projectName,
                           "userid",
                           controller.projectName.value);
-
                     }
                   },
                   child: ProjectCard(

@@ -17,7 +17,7 @@ class StopTimerSelector extends StatelessWidget {
           visible: controller.isStopSelecting.value == true,
           child: Center(
             child: Container(
-              height: 32.h,
+              height: 22.h,
               width: 85.w,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -43,21 +43,7 @@ class StopTimerSelector extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Text(
-                            "Are you sure you want to finish this checklist item or you want to pause the timer?",
-                            textAlign: TextAlign.center,
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.5.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 3.h),
+                        SizedBox(height: 2.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -70,7 +56,7 @@ class StopTimerSelector extends StatelessWidget {
                               },
                               child: Container(
                                 height: 12.h,
-                                width: 22.w,
+                                width: 27.w,
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -104,7 +90,7 @@ class StopTimerSelector extends StatelessWidget {
                               },
                               child: Container(
                                 height: 12.h,
-                                width: 22.w,
+                                width: 27.w,
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -126,7 +112,7 @@ class StopTimerSelector extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     SvgPicture.asset(AppAssets.finishWorkIcon),
-                                    const Text("Finish\nWork")
+                                    const Text("Close Current Task",textAlign: TextAlign.center,)
                                   ],
                                 ),
                               ),

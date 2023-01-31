@@ -18,7 +18,7 @@ class ProjectDetails extends StatelessWidget {
           visible: bottomController.projectName.value != "",
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: SizedBox(
                 width: 72.w,
                 child: Text(
@@ -34,6 +34,9 @@ class ProjectDetails extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        SizedBox(
+          height: 0.4.h,
         ),
         Visibility(
           visible:

@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/screens/project/note_list_screen.dart';
 import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/project/site_map_screen.dart';
@@ -8,6 +9,7 @@ import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
 class ProjectDetailHolderScreen extends StatefulWidget {
@@ -93,10 +95,12 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
   }
 
   Widget buildBody() {
+    final BottomNavController bottomController = Get.put(BottomNavController());
+
     return TabBarView(controller: _tabController, physics: const NeverScrollableScrollPhysics(),children: [
       Padding(
         padding: const EdgeInsets.only(top: 70.0),
-        child: ProjectDetailScreen(project: widget.viewModel.selectedProject!,),
+        child: ProjectDetailScreen(project: widget.viewModel.selectedProject!),
       ),
       SiteMapScreen(project: widget.viewModel.selectedProject!,),
        Padding(

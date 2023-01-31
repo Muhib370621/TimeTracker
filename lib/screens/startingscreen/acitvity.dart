@@ -11,7 +11,6 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../../models/breakModel.dart';
 
 class Activity extends StatefulWidget {
@@ -26,12 +25,7 @@ class _ActivityState extends State<Activity> {
   bool isEdit = false;
   bool isStartTime = false;
   DateTime _dateTime = DateTime.now();
-
-  // DateTime _dateTime1 = DateTime.now();
-
   bool isAddingBreak = false;
-
-  // bool addSuccess = false;
   String startTime = "";
   String endTime = "";
 
@@ -593,7 +587,6 @@ class _ActivityState extends State<Activity> {
                   ],
                 ),
               ),
-
               ///this is the container with opacity bg
               Visibility(
                 visible: isAddingBreak ||
@@ -614,7 +607,6 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
-
               ///Successfully added break
               Visibility(
                 visible: controller.addSuccess.value,
@@ -653,7 +645,6 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
-
               ///delete confirmation
               Visibility(
                 visible: controller.deletionConfirmation.value,
@@ -720,7 +711,6 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
-
               ///this is the complete time picker
               Visibility(
                 visible: isAddingBreak || controller.isEditting.value,

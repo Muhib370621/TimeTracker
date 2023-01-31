@@ -20,12 +20,12 @@ class StartingScreenController extends GetxController {
   @override
   Future<void> onInit() async {
     determinePosition();
-    isLoading.value = false;
+    // isLoading.value = false;
     timeString.value = _formatMainDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
     super.onInit();
-    String roles =
-        await locator<StoreServices>().getLocal(AppStorage.role, "userid");
+    // String roles =
+    //     await locator<StoreServices>().getLocal(AppStorage.role, "userid");
     String currentLoc = await locator<StoreServices>()
         .getLocal(AppStorage.currentAddress, "userid");
     String timerStartTime = await locator<StoreServices>()
@@ -46,7 +46,7 @@ class StartingScreenController extends GetxController {
     controller.projectName.value = project;
     controller.activityName.value = acitivity;
     controller.checkListItem.value = checklist;
-    role.value = roles;
+    // role.value = roles;
     currentAddress.value = currentLoc;
     var res = DateFormat.jm().format(DateFormat("hh:mm:ss").parse(timerStartTime));
     startTime.value = res;
@@ -87,9 +87,9 @@ class StartingScreenController extends GetxController {
   Timer? timer;
   Timer? breakTimer;
   final RxString currentAddress = "".obs;
-  RxString role = "".obs;
-  RxBool isLoading = false.obs;
-  RxBool sliderOpen = true.obs;
+  // RxString role = "".obs;
+  // RxBool isLoading = false.obs;
+  // RxBool sliderOpen = true.obs;
   RxBool locationLoading = false.obs;
   RxBool timerStatus = false.obs;
   RxBool clockRunning = false.obs;
@@ -351,7 +351,7 @@ class StartingScreenController extends GetxController {
     final String formattedDateTime = _formatDateTime(now);
     startTime.value = formattedDateTime;
     await locator<StoreServices>().setLocal(AppStorage.timerStartTime, "userid",
-        DateFormat('hh:mm a').format(now));
+        DateFormat('hh:mm:ss').format(now));
   }
 
   void getBreakStartTime() {
