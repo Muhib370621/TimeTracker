@@ -28,19 +28,23 @@ class ProjectDetailViewModel extends BaseModel {
       setState(actions.isNotEmpty ? ViewState.completed : ViewState.empty);
       return;
     }
-    if (isLoading){
-      return;
-    }
     else if (actions.length == totalCount && totalCount !=0) {
       return;
     }
     setIsLoading = true;
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.actions, projectID) ?? [];
     actions = jsonList.map((e) => ProjectAction().decode((Map<String, dynamic>.from(e)))).toList();
+    if (refresh){
+      isLoading = false;
+      actions.clear();
+    }
+    if (isLoading){
+      return;
+    }
     setState(actions.isNotEmpty ? ViewState.completed : ViewState.loading);
     Map<String, String> body = {
       'q':
-          "SELECT * FROM customrecord_bb_project_action WHERE custrecord_bb_project=$projectID"
+          "SELECT TO_CHAR(custrecord_bt_assign_time, 'DS TS') as assigned_time, entity.entityid as assigned_by, name as title, customrecord_bt_proj_conn_action.custrecord_bt_complete as completed, customrecord_bt_proj_conn_action.id as id FROM customrecord_bt_proj_conn_action INNER JOIN entity ON entity.id = customrecord_bt_proj_conn_action.custrecord_bt_assigned_by WHERE custrecord_bt_proj_connection_act =$projectID"
     };
     try {
       final result = await _queryClient.request<QueryResponse<ProjectAction>>(

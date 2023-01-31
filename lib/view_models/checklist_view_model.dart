@@ -29,7 +29,7 @@ class ChecklistViewModel extends BaseModel {
     setState(checklist.isNotEmpty ? ViewState.completed : ViewState.loading);
     Map<String, String> body = {
       'q':
-          "SELECT * FROM customrecord_bb_project_action_checklist WHERE custrecord_bb_pachklist_project_action=$action"
+          "SELECT customrecord_bb_project_action_checklist.custrecord_bb_pachklist_title as title, custrecord_bt_complete_checklist as completed, TO_CHAR(custrecord_bt_completed_dt, 'DS TS') as completed_date FROM customrecord_bt_proj_conn_checklist INNER JOIN customrecord_bb_project_action_checklist ON customrecord_bt_proj_conn_checklist.custrecord_bt_pa_checklist = customrecord_bb_project_action_checklist.id WHERE custrecord_bt_proj_act_conn =$action"
     };
     try {
       final result = await _queryClient.request<QueryResponse<ActionChecklist>>(

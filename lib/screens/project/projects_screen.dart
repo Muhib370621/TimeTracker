@@ -87,7 +87,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     if (startController.clockRunning.value == true &&
                         controller.projectName.value == "") {
                       controller.projectName.value =
-                          model.projects[index].altname.toString();
+                          model.projects[index].name.toString();
                       await locator<StoreServices>().setLocal(
                           AppStorage.projectName,
                           "userid",

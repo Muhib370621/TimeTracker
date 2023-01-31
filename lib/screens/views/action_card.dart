@@ -46,8 +46,7 @@ class _ActionCardState extends State<ActionCard> {
           title: GestureDetector(
             onTap: () async{
               if (startController.clockRunning.value==true) {
-                controller.activityName.value =
-                widget.projectAction.custrecordBbBludocsPath!;
+                controller.activityName.value = widget.projectAction.title ?? "";
                 await locator<StoreServices>()
               .setLocal(AppStorage.activityName, "userid",controller.activityName.value);
               }
@@ -56,7 +55,7 @@ class _ActionCardState extends State<ActionCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.projectAction.custrecordBbBludocsPath ?? "",
+                  widget.projectAction.title ?? "",
                   style: AppTextStyles.semiBold.copyWith(
                     color: Colors.black,
                     fontSize: 11.width,
@@ -96,7 +95,7 @@ class _ActionCardState extends State<ActionCard> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        widget.projectAction.created ?? "N/A",
+                                        widget.projectAction.assignedTime ?? "N/A",
                                         style: AppTextStyles.medium.copyWith(
                                             color: Colors.black,
                                             fontSize: 8.width),
@@ -136,8 +135,7 @@ class _ActionCardState extends State<ActionCard> {
                               final BottomNavController controller = Get.put(
                                 BottomNavController(),
                               );
-                              controller.activityName.value =
-                              widget.projectAction.custrecordBbBludocsPath!;
+                              controller.activityName.value = widget.projectAction.title ?? "";
                               await locator<StoreServices>()
                             .setLocal(AppStorage.activityName, "userid",controller.activityName.value);
                             }

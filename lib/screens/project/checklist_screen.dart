@@ -60,7 +60,7 @@ class CheckListScreen extends StatelessWidget {
             height: 10,
           ),
           Text(
-            action.custrecordBbBludocsPath ?? "",
+            action.title ?? "",
             style: AppTextStyles.bold
                 .copyWith(color: AppColors.buttonBlue, fontSize: 15.width),
           ),

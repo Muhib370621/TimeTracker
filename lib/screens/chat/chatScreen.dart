@@ -1,6 +1,8 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/controllers/bottomNavigationController.dart';
+import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -20,6 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    String chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.projectId.value}';
     webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -41,12 +44,12 @@ class _ChatScreenState extends State<ChatScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=11&recordType=job&recordId=${controller.projectId.value}'));
+      ..loadRequest(Uri.parse(chatURl));
 
     ever(controller.projectId, (_) {
           debugPrint("$_ has been changed");
-          debugPrint('https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=11&recordType=job&recordId=${controller.projectId.value}');
-      webController.loadRequest(Uri.parse('https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=11&recordType=job&recordId=${controller.projectId.value}'));
+          debugPrint(chatURl);
+      webController.loadRequest(Uri.parse(chatURl));
     });
   }
 

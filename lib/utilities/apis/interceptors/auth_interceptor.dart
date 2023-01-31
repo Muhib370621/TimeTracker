@@ -58,7 +58,10 @@ class AuthInterceptor extends InterceptorsWrapper {
 
     if (client.options.baseUrl == AppUrls.issueToken){
     //  String rolesHeaders = 'NLAuth nlauth_account=TSTDRV1967913, nlauth_email=t1@bb.com, nlauth_signature=testing@1one, nlauth_role=1172';
-      String rolesHeaders = 'NLAuth nlauth_account=${locator<StoreServices>().getAccountID()}, nlauth_email=${locator<StoreServices>().getUsername()}, nlauth_signature=${locator<StoreServices>().getPassword()}, nlauth_role=1172';
+      String rolesHeaders = 'NLAuth nlauth_account=${locator<StoreServices>().getAccountID()}, '
+          'nlauth_email=${locator<StoreServices>().getUsername()}, '
+          'nlauth_signature=${locator<StoreServices>().getPassword()}, '
+          'nlauth_role=${locator<StoreServices>().getRoleID()}';
       options.headers['Authorization'] = rolesHeaders;
       options.headers['Prefer'] = 'transient';
       options.headers['Accept'] = 'application/json';

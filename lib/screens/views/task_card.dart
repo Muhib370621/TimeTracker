@@ -19,11 +19,11 @@ class _TaskCardState extends State<TaskCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${widget.task.startdate} - ${widget.task.datecreated}",
+            "${widget.task.startTime} - ${widget.task.endTime}",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(
-            widget.task.datecreated ?? "",
+            widget.task.startTime ?? "",
             style: AppTextStyles.medium.copyWith(color: Colors.black),
           ),
           Text(

@@ -13,5 +13,5 @@ class AppUrls {
   static final String _companyURL = "https://$_accountID.suitetalk.api.netsuite.com";
   static String path = "$_companyURL/services/rest";
   static String roles = "https://rest.netsuite.com/rest/roles";
-  static String issueToken = "https://$_accountID.restlets.api.netsuite.com/rest/issuetoken?consumerKey=${AppUrls.consumerKey}&name=<optional name>";
+  static String issueToken = "https://$_accountID.restlets.api.netsuite.com/rest/issuetoken?consumerKey=${AppUrls.consumerKey}";
 }

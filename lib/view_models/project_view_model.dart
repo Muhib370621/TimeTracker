@@ -27,7 +27,6 @@ class ProjectViewModel extends BaseModel {
     Future.delayed(Duration.zero).then((value) {
       notifyListeners();
     });
-
   }
 
   set setSelectedProject(Project selectedProject) {
@@ -36,7 +35,7 @@ class ProjectViewModel extends BaseModel {
   }
 
   fetchProjects() async {
-    if (isMockEnabled){
+    if (isMockEnabled) {
       String userId = locator<StoreServices>().getUsername();
       projects = MockFactory().mockProjects(userId: (userId == "t3@bb.com") ? null : userId);
       setState(projects.isNotEmpty ? ViewState.completed : ViewState.empty);
@@ -44,30 +43,35 @@ class ProjectViewModel extends BaseModel {
     }
 
     //projects =  await locator<StoreServices>().getLocal(AppStorage.projects, Project());
-     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.projects, "userid") ?? [];
-     projects = jsonList.map((e) => Project().decode((Map<String, dynamic>.from(e)))).toList();
-     setState(projects.isNotEmpty ? ViewState.completed : ViewState.loading);
+    List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.projects, "userid") ?? [];
+    projects = jsonList.map((e) => Project().decode((Map<String, dynamic>.from(e)))).toList();
+    setState(projects.isNotEmpty ? ViewState.completed : ViewState.loading);
 
-    Map<String,String> body = {'q':"SELECT * FROM job WHERE custentity_bb_install_address_1_text='123 S. Main St' AND custentity_bb_install_address_2_text='Lot 2' AND custentity_bb_install_city_text='Portland' AND custentity_bb_install_zip_code_text='97216'"};
+    Map<String, String> body = {
+      'q':
+          "SELECT TO_CHAR(custrecord_bt_start_date, 'DS TS') as start_time, TO_CHAR(custrecord_bt_end_date, 'DS TS') as end_time, job.entityid as name, job.custentity_bb_install_address_1_text as address_1, job.custentity_bb_install_address_2_text as address_2, job.custentity_bb_install_city_text as city, customrecord_blutime_proj_connection.id as id, job.custentity_bb_entity_longitude_text as longitude, job.custentity_bb_entity_latitude_text as latitude FROM customrecord_blutime_proj_connection INNER JOIN job ON job.id = customrecord_blutime_proj_connection.custrecord_bt_project WHERE customrecord_blutime_proj_connection.custrecord_bt_entity = ${locator<StoreServices>().getUserID()}"
+    };
     try {
       final result = await _queryClient.request<QueryResponse<Project>>(
-          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"),
-          data: body,
-          create: () => QueryResponse(create: () => Project()));
+          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => Project()));
       projects = result.response?.items ?? [];
       await locator<StoreServices>().setLocal(AppStorage.projects, "userid", projects.map((e) => e.toJson()).toList());
       setState(projects.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();
     } on ErrorResponse {
-       rethrow;
-    } on SocketException{
-       throw Get.defaultDialog(title: "Internet Not Available",
-          content:  Expanded(child: SizedBox(
+      rethrow;
+    } on SocketException {
+      throw Get.defaultDialog(
+        title: "Internet Not Available",
+        content: Expanded(
+          child: SizedBox(
             width: 90.w,
-              child: const Text("Please check your internet connection"),),),);
+            child: const Text("Please check your internet connection"),
+          ),
+        ),
+      );
     }
   }
-
 }
 
 Future<String?> findLocalPath() async {
@@ -76,8 +80,7 @@ Future<String?> findLocalPath() async {
     final directory = await getExternalStorageDirectory();
     externalStorageDirPath = directory?.path;
   } else if (Platform.isIOS) {
-    externalStorageDirPath =
-        (await getApplicationDocumentsDirectory()).absolute.path;
+    externalStorageDirPath = (await getApplicationDocumentsDirectory()).absolute.path;
   }
   return externalStorageDirPath;
 }

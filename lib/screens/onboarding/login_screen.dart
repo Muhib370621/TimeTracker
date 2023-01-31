@@ -2,6 +2,7 @@ import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/models/token_info.dart';
 import 'package:blu_time/screens/home/home_screen.dart';
 import 'package:blu_time/shared/extensions.dart';
@@ -142,15 +143,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         try {
                           await locator<StoreServices>().setUsername(emailController.text);
                           await locator<StoreServices>().setPassword(passwordController.text);
-                          TokenInfo tokenInfo = await viewModel.getToken();
-                          locator<StoreServices>().setAccessToken(tokenInfo.tokenId ?? "");
-                          locator<StoreServices>().setTokenSecret(tokenInfo.tokenSecret ?? "");
-                          Get.offAll(()=>const HomeScreen());
+                          List<RoleResponse> roleResponse = await viewModel.getRoles();
+                          if (roleResponse.isNotEmpty) {
+                            await locator<StoreServices>().setAccountID(roleResponse.first.account?.internalId ?? "");
+                            await locator<StoreServices>().setRoleID(roleResponse.first.role?.internalId.toString() ?? "");
+                            TokenInfo tokenInfo = await viewModel.getToken();
+                            locator<StoreServices>().setAccessToken(tokenInfo.tokenId ?? "");
+                            locator<StoreServices>().setTokenSecret(tokenInfo.tokenSecret ?? "");
+                            await viewModel.getUserId();
+                            debugPrint("test");
+                            Get.offAll(() => const HomeScreen());
+                          }
                         } on ErrorResponse catch (e) {
                           Utilities.showSnack(context, e.toString());
                           debugPrint(e.toString());
-                          locator<StoreServices>().setAccessToken("dummy");
-                          Get.offAll(()=>const HomeScreen());
+                         // locator<StoreServices>().setAccessToken("dummy");
+                         // Get.offAll(()=>const HomeScreen());
                         }
                         // Navigator.of(context)
                         //     .pushNamed(RouteNames.verification);

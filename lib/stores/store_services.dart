@@ -13,6 +13,10 @@ abstract class StoreServices {
   Future<bool> setPassword(String value);
   String getAccountID();
   Future<bool> setAccountID(String value);
+  String getRoleID();
+  Future<bool> setRoleID(String value);
+  String getUserID();
+  Future<bool> setUserID(String value);
 
   dynamic getUserProfile();
   Future<bool> setUserProfile(value);
@@ -34,6 +38,8 @@ class StoreServicesImpl extends StoreServices {
   final String _kUsername = "_kUsername";
   final String _password = "_password";
   final String _accountID = "_accountID";
+  final String _roleID = "_roleID";
+  final String _userID = "_userID";
 
   @override
   String getAccessToken() {
@@ -76,6 +82,25 @@ class StoreServicesImpl extends StoreServices {
   }
 
 
+  @override
+  String getRoleID() {
+    return _prefs.getString(_roleID) ?? '';
+  }
+
+  @override
+  Future<bool> setRoleID(String value) async {
+    return _prefs.setString(_roleID, value);
+  }
+
+  @override
+  String getUserID() {
+    return _prefs.getString(_userID) ?? '';
+  }
+
+  @override
+  Future<bool> setUserID(String value) async {
+    return _prefs.setString(_userID, value);
+  }
 
   @override
   dynamic? getUserProfile() {

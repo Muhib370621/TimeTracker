@@ -50,7 +50,7 @@ class TimeScreen extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(project?.altname ?? ""),
+              Text(project?.name ?? ""),
             ],
           ),
           trailing: const Icon(Icons.arrow_forward_ios),
@@ -66,7 +66,7 @@ class TimeScreen extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(project?.startdate ?? ""),
+              Text(project?.startTime ?? ""),
             ],
           ),
         )

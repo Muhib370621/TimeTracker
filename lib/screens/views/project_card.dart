@@ -26,7 +26,7 @@ class ProjectCard extends StatelessWidget {
           children: [
             SvgPicture.asset(AppAssets.projectIcon,color: controller.isNear.value==true?AppColors.cellBackground:AppColors.buttonBlue,),
             const SizedBox(width: 12,),
-            Flexible(child: Text(project.altname?? "",style: AppTextStyles.semiBold.copyWith(color: controller.isNear.value==true?AppColors.cellBackground:Colors.black,fontSize: 12))),
+            Flexible(child: Text(project.name?? "",style: AppTextStyles.semiBold.copyWith(color: controller.isNear.value==true?AppColors.cellBackground:Colors.black,fontSize: 12))),
           ],
         ),
         trailing: Container(

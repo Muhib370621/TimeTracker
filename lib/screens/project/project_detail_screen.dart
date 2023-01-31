@@ -65,7 +65,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const Spacer(),
                               Row(
                                 children: [
-                                  Text(widget.project.startdate ?? "",
+                                  Text(widget.project.startTime ?? "",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.grey, fontSize: 13.width)),
                                   const SizedBox(
@@ -95,7 +95,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const Spacer(),
                               Row(
                                 children: [
-                                  Text(widget.project.custentityBbForecastedInstallDate ?? "",
+                                  Text(widget.project.endTime ?? "",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.grey, fontSize: 13.width)),
                                   const SizedBox(
@@ -124,7 +124,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const SizedBox(width: 5,),
                               Row(
                                 children: [
-                                  Text(widget.project.custentityBbInstallAddress1Text ?? "Project Location Here",
+                                  Text(widget.project.address1 ?? "Project Location Here",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.grey, fontSize: 13.width)),
                                 ],

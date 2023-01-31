@@ -33,9 +33,9 @@ class MapSampleState extends State<SiteMapScreen>
     super.initState();
     _cameraPosition = CameraPosition(
       target: LatLng(
-          double.parse(widget.project.custentityBbEntityLatitudeText ?? "0.0"),
+          double.parse(widget.project.latitude ?? "0.0"),
           double.parse(
-              widget.project.custentityBbEntityLongitudeText ?? "0.0")),
+              widget.project.longitude ?? "0.0")),
       zoom: 16.4746,
     );
   }
@@ -63,9 +63,9 @@ class MapSampleState extends State<SiteMapScreen>
                 Marker(
                   markerId: const MarkerId("d"),
                   position:LatLng(
-                      double.parse(widget.project.custentityBbEntityLatitudeText ?? "0.0"),
+                      double.parse(widget.project.latitude ?? "0.0"),
                       double.parse(
-                          widget.project.custentityBbEntityLongitudeText ?? "0.0"))
+                          widget.project.longitude ?? "0.0"))
                 )
               },
               onMapCreated: (GoogleMapController controller) {
@@ -90,7 +90,7 @@ class MapSampleState extends State<SiteMapScreen>
                           Row(
                             children: [
                               const Icon(Icons.pin_drop),
-                              Text(widget.project.custentityBbInstallAddress1Text ?? "Location address")
+                              Text(widget.project.address1 ?? "Location address")
                             ],
                           ),
                           const SizedBox(

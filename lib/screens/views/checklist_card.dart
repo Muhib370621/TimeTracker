@@ -44,7 +44,7 @@ class ChecklistCard extends StatelessWidget {
               );
               controller.currentIndex.value = 0;
               controller.checkListItem.value =
-                  actionChecklist.custrecordBbPachklistTitle.toString();
+                  actionChecklist.title.toString();
               await locator<StoreServices>().setLocal(
                   AppStorage.checkListItemName,
                   "userid",
@@ -61,7 +61,7 @@ class ChecklistCard extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(actionChecklist.custrecordBbPachklistTitle ?? "",
+              Text(actionChecklist.title ?? "",
                   style: AppTextStyles.semiBold
                       .copyWith(color: Colors.black, fontSize: 12.width)),
               const SizedBox(
@@ -79,7 +79,7 @@ class ChecklistCard extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Text(actionChecklist.lastmodified ?? "N/A",
+              Text(actionChecklist.completedDate ?? "N/A",
                   style: AppTextStyles.normal
                       .copyWith(color: Colors.black, fontSize: 10.width)),
             ],
