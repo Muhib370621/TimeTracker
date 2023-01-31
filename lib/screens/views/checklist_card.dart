@@ -56,6 +56,7 @@ class ChecklistCard extends StatelessWidget {
           dense: true,
           leading: Icon(
             Icons.check_circle,
+            color: (actionChecklist.completed ?? false) ? AppColors.buttonBlue : Colors.grey,
             size: 17.height,
           ),
           title: Column(

@@ -116,6 +116,7 @@ class _ActionCardState extends State<ActionCard> {
                       children: [
                         Icon(
                           Icons.check_circle,
+                          color: (widget.projectAction.completed ?? false) ? AppColors.buttonBlue : Colors.grey,
                           size: 17.width,
                         ),
                         const SizedBox(

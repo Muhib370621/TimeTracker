@@ -22,6 +22,7 @@ class TimeEntryViewModel extends BaseModel{
   DateTime? endDate;
   TimeCardStatus timeCardStatus = TimeCardStatus.all;
   bool isLoading = false;
+  String textSearch = "";
   set setIsLoading(bool isLoading) {
     this.isLoading = isLoading;
     notifyListeners();
@@ -41,7 +42,7 @@ class TimeEntryViewModel extends BaseModel{
   }
 
   fetchEntries({bool refresh = false}) async {
-    if (isMockEnabled){
+    if (!isMockEnabled){
       String userId = locator<StoreServices>().getUsername();
       allEntries = MockFactory().mockTimeEntry(userId: (userId == "t3@bb.com") ? null : userId);
       entries = allEntries;
@@ -91,6 +92,9 @@ class TimeEntryViewModel extends BaseModel{
   }
 
   Future<void>searchTimeEntry(String text) async{
+    textSearch =  text;
+    setFilters();
+    return;
     if (text.isEmpty){
       entries = allEntries;
     }
@@ -101,11 +105,15 @@ class TimeEntryViewModel extends BaseModel{
   }
 
   searchWithStatus(){
+    setFilters();
+    return;
     entries = allEntries.where((element) => (timeCardStatus == TimeCardStatus.all) ? true : (element.type == timeCardStatus.title)).toList();
     setState(ViewState.completed);
   }
 
   searchWithDateRange() {
+    setFilters();
+    return;
     if ((startDate == null) && (endDate == null) ){
       entries = allEntries;
       setState(ViewState.completed);
@@ -120,6 +128,28 @@ class TimeEntryViewModel extends BaseModel{
       }
     }
     entries = output;
+    setState(ViewState.completed);
+  }
+
+  setFilters(){
+    if ((startDate == null) && (endDate == null) ){
+      entries = allEntries;
+    }
+    else {
+      var dateFormat = DateFormat.yMd();
+      var output = <TimeEntry>[];
+      for (var i = 0; i < allEntries.length; i += 1) {
+        var date = dateFormat.parse(allEntries[i].trandate ?? "", true);
+        if (date.compareTo(startDate!) >= 0 && date.compareTo(endDate!) <= 0) {
+          output.add(allEntries[i]);
+        }
+      }
+      entries = output;
+    }
+    entries = entries.where((element) => (
+        (element.displayfield?.toLowerCase().contains(textSearch.toLowerCase()) ?? false) &&
+        ((timeCardStatus == TimeCardStatus.all) ? true : (element.type == timeCardStatus.title))
+    )).toList();
     setState(ViewState.completed);
   }
 

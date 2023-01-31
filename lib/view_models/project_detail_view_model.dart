@@ -31,7 +31,7 @@ class ProjectDetailViewModel extends BaseModel {
     else if (actions.length == totalCount && totalCount !=0) {
       return;
     }
-    setIsLoading = true;
+   // setIsLoading = true;
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.actions, projectID) ?? [];
     actions = jsonList.map((e) => ProjectAction().decode((Map<String, dynamic>.from(e)))).toList();
     if (refresh){

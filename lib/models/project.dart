@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:blu_time/utilities/apis/decodable.dart';
+import 'package:intl/intl.dart';
 
 class ProjectResponse implements Decodable<ProjectResponse> {
   List<Project2>? projectList;
@@ -350,6 +351,7 @@ class Project extends Decodable<Project>{
     data['longitude'] = longitude;
     data['name'] = name;
     data['start_time'] = startTime;
+    startTimeParsed;
     return data;
   }
 
@@ -357,5 +359,46 @@ class Project extends Decodable<Project>{
   Project decode(json) {
     return Project.fromJson(json);
   }
+
+  String get startDateParsed {
+   return _getParsedDate(startTime ?? "");
+  }
+
+  String get startTimeParsed {
+    return _getParsedTime(startTime ?? "");
+  }
+
+
+  String get endDateParsed {
+    return _getParsedDate(endTime ?? "");
+  }
+
+  String get endTimeParsed {
+    return _getParsedTime(endTime ?? "");
+  }
+
+  _getParsedDate(String date){
+    DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+    return "${dateTime.month}/${dateTime.day}/${dateTime.year}";
+  }
+
+  _getParsedTime(String date){
+    DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+    int hour = dateTime.hour;
+    if (hour == 0 || hour == 12) {
+      hour = 12;
+    } else if (hour > 12) {
+      hour -= 12;
+    }
+    String minute = dateTime.minute.toString().padLeft(2, '0');
+    String second = dateTime.second.toString().padLeft(2, '0');
+    String time = "$hour:$minute";
+    if (second != "00") {
+      time += ":$second";
+    }
+    time += " ${dateTime.hour >= 12 ? 'PM' : 'AM'}";
+    return time;
+  }
+
 }
 

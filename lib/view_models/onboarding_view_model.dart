@@ -28,6 +28,12 @@ class OnboardingViewModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _isLoggingIn = false;
+  bool get isLoggingIn => _isLoggingIn;
+  set setIsLoggingIn(bool val) {
+    _isLoggingIn = val;
+    notifyListeners();
+  }
 
   getRoles() async {
     try {

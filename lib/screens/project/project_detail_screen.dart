@@ -65,13 +65,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const Spacer(),
                               Row(
                                 children: [
-                                  Text(widget.project.startTime ?? "",
+                                  Text(widget.project.startDateParsed ?? "",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.grey, fontSize: 13.width)),
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text("09:00 AM",
+                                  Text(widget.project.startTimeParsed ?? "",
                                       style: AppTextStyles.semiBold.copyWith(
                                           color: AppColors.buttonBlue,
                                           fontSize: 10.width)),
@@ -95,13 +95,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const Spacer(),
                               Row(
                                 children: [
-                                  Text(widget.project.endTime ?? "",
+                                  Text(widget.project.endDateParsed ?? "",
                                       style: AppTextStyles.medium.copyWith(
                                           color: Colors.grey, fontSize: 13.width)),
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text("09:00 AM",
+                                  Text(widget.project.endTimeParsed ?? "",
                                       style: AppTextStyles.semiBold.copyWith(
                                           color: AppColors.buttonBlue,
                                           fontSize: 10.width)),

@@ -48,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     ever(controller.projectId, (_) {
           debugPrint("$_ has been changed");
+          chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.projectId.value}';
           debugPrint(chatURl);
       webController.loadRequest(Uri.parse(chatURl));
     });

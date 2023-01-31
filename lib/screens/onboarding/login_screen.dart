@@ -28,7 +28,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController(text: "t1@bb.com");
   final TextEditingController passwordController = TextEditingController(text: "testing@1one");
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<OnboardingViewModel>.reactive(
@@ -139,8 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     AppCommonButton(
                       title: "LOG IN",
+                      isLoading: viewModel.isLoggingIn,
                       onPressed: () async {
                         try {
+                          viewModel.setIsLoggingIn = true;
                           await locator<StoreServices>().setUsername(emailController.text);
                           await locator<StoreServices>().setPassword(passwordController.text);
                           List<RoleResponse> roleResponse = await viewModel.getRoles();
@@ -152,13 +153,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             locator<StoreServices>().setTokenSecret(tokenInfo.tokenSecret ?? "");
                             await viewModel.getUserId();
                             debugPrint("test");
+                            viewModel.setIsLoggingIn = false;
                             Get.offAll(() => const HomeScreen());
                           }
                         } on ErrorResponse catch (e) {
+                          viewModel.setIsLoggingIn = false;
                           Utilities.showSnack(context, e.toString());
                           debugPrint(e.toString());
-                         // locator<StoreServices>().setAccessToken("dummy");
-                         // Get.offAll(()=>const HomeScreen());
+                          locator<StoreServices>().setAccessToken("dummy");
+                          Get.offAll(()=>const HomeScreen());
                         }
                         // Navigator.of(context)
                         //     .pushNamed(RouteNames.verification);
