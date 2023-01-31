@@ -5,6 +5,7 @@ class AppStorage {
   static const String timeEntries = "timeEntries";
   static const String actions = "actions";
   static const String checklist = "checklist";
+  static const String notes = "notes";
 
 ///////////////////////////////////////////starting Screen values////////////////
   static const String timerStartTime = "timerStartTime";

@@ -37,7 +37,7 @@ class ProjectViewModel extends BaseModel {
   fetchProjects() async {
     if (isMockEnabled) {
       String userId = locator<StoreServices>().getUsername();
-      projects = MockFactory().mockProjects(userId: (userId == "t3@bb.com") ? null : userId);
+      projects = MockFactory().mockProjects(userId: (userId == "t1@bb.com") ? null : userId);
       setState(projects.isNotEmpty ? ViewState.completed : ViewState.empty);
       return;
     }

@@ -160,7 +160,8 @@ class _NoteListScreenState extends State<NoteListScreen>
             height: 35,
             radius: 10,
             onPressed: () {
-              viewModel.addNote();
+              Navigator.of(context)
+                  .pushNamed(RouteNames.addNote, arguments: viewModel);
             },
           ),
         ],

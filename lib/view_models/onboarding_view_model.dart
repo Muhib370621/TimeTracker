@@ -6,6 +6,7 @@ import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/models/token_info.dart';
 import 'package:blu_time/models/user_detail.dart';
+import 'package:blu_time/models/user_profile.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
@@ -60,9 +61,9 @@ class OnboardingViewModel extends BaseModel {
       Map<String, String> body = {
         'q': "SELECT id FROM entity WHERE email = 'dev5-bbss@blubanyan.com'"
       };
-      final result = await _queryClient.request<QueryResponse<UserDetail>>(
-          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => UserDetail()));
-      List<UserDetail> users = result.response?.items ?? [];
+      final result = await _queryClient.request<QueryResponse<UserProfile>>(
+          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => UserProfile()));
+      List<UserProfile> users = result.response?.items ?? [];
       if (users.isNotEmpty){
         await locator<StoreServices>().setUserID(users.first.id ?? "");
       }

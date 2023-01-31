@@ -43,17 +43,7 @@ class Project2 {
   List<Tasks>? tasks;
   List<Breaks>? breaks;
 
-  Project2(
-      {this.projectId,
-        this.name,
-        this.address,
-        this.startDateTime,
-        this.endDateTime,
-        this.notes,
-        this.images,
-        this.totalTime,
-        this.tasks,
-        this.breaks});
+  Project2({this.projectId, this.name, this.address, this.startDateTime, this.endDateTime, this.notes, this.images, this.totalTime, this.tasks, this.breaks});
 
   Project2.fromJson(Map<String, dynamic> json) {
     projectId = json['projectId'];
@@ -112,12 +102,12 @@ class Project2 {
   }
 }
 
-class Notes {
+class Notes extends Decodable<Notes> {
   String? noteId;
   String? note;
   String? projectId;
 
-  Notes({this.noteId, this.note,this.projectId});
+  Notes({this.noteId, this.note, this.projectId});
 
   Notes.fromJson(Map<String, dynamic> json) {
     noteId = json['noteId'];
@@ -129,6 +119,11 @@ class Notes {
     data['noteId'] = noteId;
     data['note'] = note;
     return data;
+  }
+
+  @override
+  Notes decode(json) {
+    return Notes.fromJson(json);
   }
 }
 
@@ -163,14 +158,7 @@ class Tasks {
   String? note;
   List<Images>? images;
 
-  Tasks(
-      {this.taskId,
-        this.taskDescription,
-        this.startDateTime,
-        this.endDateTime,
-        this.totalTime,
-        this.note,
-        this.images});
+  Tasks({this.taskId, this.taskDescription, this.startDateTime, this.endDateTime, this.totalTime, this.note, this.images});
 
   Tasks.fromJson(Map<String, dynamic> json) {
     taskId = json['taskId'];
@@ -227,10 +215,7 @@ class Breaks {
   }
 }
 
-
-
-
-class QueryResult extends Decodable<QueryResult>{
+class QueryResult extends Decodable<QueryResult> {
   List<Links>? links;
   int? count;
   bool? hasMore;
@@ -238,13 +223,7 @@ class QueryResult extends Decodable<QueryResult>{
   int? offset;
   int? totalResults;
 
-  QueryResult(
-      {this.links,
-        this.count,
-        this.hasMore,
-        this.items,
-        this.offset,
-        this.totalResults});
+  QueryResult({this.links, this.count, this.hasMore, this.items, this.offset, this.totalResults});
 
   QueryResult.fromJson(Map<String, dynamic> json) {
     if (json['links'] != null) {
@@ -306,7 +285,7 @@ class Links {
   }
 }
 
-class Project extends Decodable<Project>{
+class Project extends Decodable<Project> {
   List<Links>? links;
   String? address1;
   String? city;
@@ -318,17 +297,7 @@ class Project extends Decodable<Project>{
   String? startTime;
   String? customer;
 
-  Project(
-      {this.links,
-        this.address1,
-        this.city,
-        this.endTime,
-        this.id,
-        this.latitude,
-        this.longitude,
-        this.name,
-        this.startTime,
-      this.customer});
+  Project({this.links, this.address1, this.city, this.endTime, this.id, this.latitude, this.longitude, this.name, this.startTime, this.customer});
 
   Project.fromJson(Map<String, dynamic> json) {
     address1 = json['address_1'];
@@ -361,13 +330,12 @@ class Project extends Decodable<Project>{
   }
 
   String get startDateParsed {
-   return _getParsedDate(startTime ?? "");
+    return _getParsedDate(startTime ?? "");
   }
 
   String get startTimeParsed {
     return _getParsedTime(startTime ?? "");
   }
-
 
   String get endDateParsed {
     return _getParsedDate(endTime ?? "");
@@ -377,28 +345,34 @@ class Project extends Decodable<Project>{
     return _getParsedTime(endTime ?? "");
   }
 
-  _getParsedDate(String date){
-    DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
-    return "${dateTime.month}/${dateTime.day}/${dateTime.year}";
+  _getParsedDate(String date) {
+    try {
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+      return "${dateTime.month}/${dateTime.day}/${dateTime.year}";
+    } catch (e) {
+      return date;
+    }
   }
 
-  _getParsedTime(String date){
-    DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
-    int hour = dateTime.hour;
-    if (hour == 0 || hour == 12) {
-      hour = 12;
-    } else if (hour > 12) {
-      hour -= 12;
+  _getParsedTime(String date) {
+    try {
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+      int hour = dateTime.hour;
+      if (hour == 0 || hour == 12) {
+        hour = 12;
+      } else if (hour > 12) {
+        hour -= 12;
+      }
+      String minute = dateTime.minute.toString().padLeft(2, '0');
+      String second = dateTime.second.toString().padLeft(2, '0');
+      String time = "$hour:$minute";
+      if (second != "00") {
+        time += ":$second";
+      }
+      time += " ${dateTime.hour >= 12 ? 'PM' : 'AM'}";
+      return time;
+    } catch (e) {
+      return date;
     }
-    String minute = dateTime.minute.toString().padLeft(2, '0');
-    String second = dateTime.second.toString().padLeft(2, '0');
-    String time = "$hour:$minute";
-    if (second != "00") {
-      time += ":$second";
-    }
-    time += " ${dateTime.hour >= 12 ? 'PM' : 'AM'}";
-    return time;
   }
-
 }
-

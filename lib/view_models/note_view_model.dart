@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/constants/app_storage.dart';
+import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
+import 'package:blu_time/main.dart';
 import 'package:blu_time/models/add_note.dart';
 import 'package:blu_time/models/project.dart';
 import 'package:blu_time/shared/enums/view_states.dart';
@@ -9,6 +12,8 @@ import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/stores/mock_factory.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';
+import 'package:blu_time/utilities/apis/api_routes.dart';
+import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/utilities/apis/decodable.dart';
 import 'package:blu_time/utilities/media_picker.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
@@ -20,22 +25,56 @@ class NoteViewModel extends BaseModel {
   List<Notes> notes = [];
  final MediaPicker _mediaPicker = MediaPicker();
  List<XFile> noteImages = [];
-
+  final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
 
   fetchNotes(String projectId) async {
-
-    notes = MockFactory().mockProjectNotes(projectId);
-
-    // var projectResponse = (await fetch<ProjectResponse>());
-    // notes = projectResponse.projectList?[0].notes ?? [];
-    if (notes.isEmpty) {
-      setState(ViewState.empty);
-    } else {
-      setState(ViewState.completed);
+    if (isMockEnabled){
+      notes = MockFactory().mockProjectNotes(projectId);
+      setState(notes.isNotEmpty ? ViewState.completed : ViewState.empty);
+      return;
     }
-   // fetchLocalNotes();
-    notifyListeners();
+
+    List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.notes, projectId) ?? [];
+    notes = jsonList.map((e) => Notes().decode((Map<String, dynamic>.from(e)))).toList();
+    setState(notes.isNotEmpty ? ViewState.completed : ViewState.loading);
+    Map<String, String> body = {
+      'q':
+      "SELECT note.note FROM note WHERE entity=$projectId"
+    };
+    try {
+      final result = await _queryClient.request<QueryResponse<Notes>>(
+          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"),
+          data: body,
+          create: () => QueryResponse(create: () => Notes()));
+      notes = result.response?.items ?? [];
+      if (notes.isNotEmpty) {
+        await locator<StoreServices>().setLocal(AppStorage.notes,projectId, notes.map((e) => e.toJson()).toList());
+      }
+      if (notes.isEmpty) {
+        setState(ViewState.empty);
+      } else {
+        setState(ViewState.completed);
+      }
+      notifyListeners();
+    } on ErrorResponse {
+      rethrow;
+    }
   }
+
+  // fetchNotes(String projectId) async {
+  //
+  //   notes = MockFactory().mockProjectNotes(projectId);
+  //
+  //   // var projectResponse = (await fetch<ProjectResponse>());
+  //   // notes = projectResponse.projectList?[0].notes ?? [];
+  //   if (notes.isEmpty) {
+  //     setState(ViewState.empty);
+  //   } else {
+  //     setState(ViewState.completed);
+  //   }
+  //  // fetchLocalNotes();
+  //   notifyListeners();
+  // }
 
   fetchLocalNotes() async {
 

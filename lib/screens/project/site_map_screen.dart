@@ -93,10 +93,10 @@ class MapSampleState extends State<SiteMapScreen>
                               Text(widget.project.address1 ?? "Location address")
                             ],
                           ),
-                          const SizedBox(
+                           SizedBox(
                             height: 50,
                             width: double.infinity,
-                            child: MyDeliveryProgress(),
+                            child: MyDeliveryProgress(project: widget.project,),
                           )
                         ],
                       ),
@@ -117,7 +117,8 @@ class MapSampleState extends State<SiteMapScreen>
 }
 
 class MyDeliveryProgress extends StatefulWidget {
-  const MyDeliveryProgress({super.key});
+  final Project project;
+   const MyDeliveryProgress({super.key, required this.project});
 
   @override
   StepperState createState() => StepperState();
@@ -156,7 +157,7 @@ class StepperState extends State<MyDeliveryProgress> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('9:00',
+              Text(widget.project.startTimeParsed,
                   style: AppTextStyles.bold
                       .copyWith(color: AppColors.buttonBlue, fontSize: 13)),
               const SizedBox(
@@ -189,7 +190,7 @@ class StepperState extends State<MyDeliveryProgress> {
               const SizedBox(
                 width: 2,
               ),
-              Text('16:00',
+              Text(widget.project.endTimeParsed,
                   style: AppTextStyles.bold
                       .copyWith(color: AppColors.buttonBlue, fontSize: 13)),
             ],

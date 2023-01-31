@@ -1,11 +1,11 @@
 import 'package:blu_time/utilities/apis/decodable.dart';
 
-class UserDetail extends Decodable<UserDetail> {
+class UserDetail1 extends Decodable<UserDetail1> {
   String? id;
 
-  UserDetail({this.id});
+  UserDetail1({this.id});
 
-  UserDetail.fromJson(Map<String, dynamic> json) {
+  UserDetail1.fromJson(Map<String, dynamic> json) {
     id = json['id'];
   }
 
@@ -16,7 +16,7 @@ class UserDetail extends Decodable<UserDetail> {
   }
 
   @override
-  UserDetail decode(json) {
-    return UserDetail.fromJson(json);
+  UserDetail1 decode(json) {
+    return UserDetail1.fromJson(json);
   }
 }

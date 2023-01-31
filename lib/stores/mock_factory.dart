@@ -8,18 +8,18 @@ class MockFactory {
   Project project1 = Project(
       name: "Residential Plumbing and Electrical Upgrade",
       id: "1",
-      startTime: "2/15/2022",
-      endTime: "3/27/2022",
+      startTime: "2/15/2022 1:00:00 PM",
+      endTime: "3/27/2022 2:00:00 PM",
       address1: "123 Main St, Anytown",
-      customer: "t1@bb.com",
+      customer: "t3@bb.com",
       latitude: "37.788022",
       longitude: "-122.399797");
 
   Project project2 = Project(
       name: "Commercial Building Renovation",
       id: "2",
-      startTime: "4/20/2022",
-      endTime: "5/15/2022",
+      startTime: "4/20/2022 3:00:00 PM",
+      endTime: "5/15/2022 4:00:00 PM",
       address1: "555 Park Ave, Cityville",
       customer: "t2@bb.com",
       latitude: "41.878114",
@@ -28,17 +28,17 @@ class MockFactory {
   Project project3 = Project(
       name: "HVAC and Plumbing Maintenance and Repair",
       id: "3",
-      startTime: "6/25/2022",
-      endTime: "7/10/2022",
+      startTime: "6/25/2022 5:00:00 PM",
+      endTime: "7/10/2022 6:00:00 PM",
       address1: "999 Elm St, Village",
       customer: "t2@bb.com",
       latitude: "40.730610",
       longitude: "-73.935242");
 
   List<UserProfile> mockUsers({String? userId}) {
-    UserProfile user1 = UserProfile("t1@bb.com", "testing@1one", "Dirk", "Liebich", "(555) 555-5201");
-    UserProfile user2 = UserProfile("t2@bb.com", "testing@1one", "David", "Williams", "(555) 555-5202");
-    UserProfile user3 = UserProfile("t3@bb.com", "testing@1one", "Robert", "Miller", "555-5203");
+    UserProfile user1 = UserProfile(email: "t1@bb.com",password: "testing@1one",firstName: "Dirk", lastName:"Liebich", mobile:"(555) 555-5201",id:"t1@bb.com");
+    UserProfile user2 = UserProfile(email: "t2@bb.com",password:  "testing@1one",firstName:  "David", lastName:"Williams",mobile: "(555) 555-5202",id:"t2@bb.com");
+    UserProfile user3 = UserProfile(email: "t3@bb.com",password:  "testing@1one",firstName:  "Robert", lastName:"Miller",mobile: "555-5203",id:"t3@bb.com");
     List<UserProfile> users = [user1, user2, user3];
     if (userId == null) {
       return users;
@@ -61,13 +61,13 @@ class MockFactory {
 
   List<ProjectAction> mockProjectActions(String? projectId) {
     ProjectAction projectAction1 =
-        ProjectAction(title: "Replace old plumbing fixtures", assignedTime: "2/16/2022", completed: false, assignedBy: "Dirk", id: "1", custrecordBbProject: "1");
+        ProjectAction(title: "Replace old plumbing fixtures", assignedTime: "2/16/2022 1:00:00 PM", completed: false, assignedBy: "Dirk", id: "1", custrecordBbProject: "1");
     ProjectAction projectAction2 = ProjectAction(
-        title: "Demolition and removal of existing walls and floors", assignedTime: "4/21/2022", completed: false, assignedBy: "Tom", id: "2", custrecordBbProject: "2");
+        title: "Demolition and removal of existing walls and floors", assignedTime: "4/21/2022 2:00:00 PM", completed: false, assignedBy: "Tom", id: "2", custrecordBbProject: "2");
     ProjectAction projectAction3 =
-        ProjectAction(title: "Inspect and maintain HVAC system", assignedTime: "4/25/2022", completed: false, assignedBy: "John", id: "3", custrecordBbProject: "2");
+        ProjectAction(title: "Inspect and maintain HVAC system", assignedTime: "4/25/2022 3:00:00 PM", completed: false, assignedBy: "John", id: "3", custrecordBbProject: "2");
     ProjectAction projectAction4 =
-        ProjectAction(title: "Roofing and Siding Replacement", assignedTime: "5/25/2022", completed: false, assignedBy: "Emily", id: "4", custrecordBbProject: "3");
+        ProjectAction(title: "Roofing and Siding Replacement", assignedTime: "5/25/2022 4:00:00 PM", completed: false, assignedBy: "Emily", id: "4", custrecordBbProject: "3");
     List<ProjectAction> actions = [projectAction1, projectAction2, projectAction3, projectAction4];
     if (projectId == null) {
       return actions;
