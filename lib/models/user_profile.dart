@@ -8,6 +8,7 @@ class UserProfile extends Decodable<UserProfile>{
   String? firstName;
   String? lastName;
   String? mobile;
+  String? role;
 
   UserProfile(
       {this.id,
@@ -15,7 +16,7 @@ class UserProfile extends Decodable<UserProfile>{
         this.password,
         this.firstName,
         this.lastName,
-        this.mobile});
+        this.mobile,this.role});
 
   UserProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,6 +25,7 @@ class UserProfile extends Decodable<UserProfile>{
     firstName = json['firstName'];
     lastName = json['lastName'];
     mobile = json['mobile'];
+    role = json['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +36,7 @@ class UserProfile extends Decodable<UserProfile>{
     data['firstName'] = firstName;
     data['lastName'] = lastName;
     data['mobile'] = mobile;
+    data['name'] = role;
     return data;
   }
 
