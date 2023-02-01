@@ -64,7 +64,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                       ),
                       Expanded(
                           child: Text(
-                            widget.timeEntry.lastmodifieddate ?? "N/A",
+                            widget.timeEntry.startTime ?? "N/A",
                             style: AppTextStyles.medium
                                 .copyWith(fontSize: 12.width, color: Colors.black),
                       ))
@@ -91,7 +91,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
                       ),
                       Expanded(
                           child: Text(
-                        widget.timeEntry.trandate ?? "N/A",
+                        widget.timeEntry.endTime ?? "N/A",
                             style: AppTextStyles.medium
                                 .copyWith(fontSize: 12.width, color: Colors.black),
                       ))

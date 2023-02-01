@@ -36,9 +36,9 @@ class MockFactory {
       longitude: "-73.935242");
 
   List<UserProfile> mockUsers({String? userId}) {
-    UserProfile user1 = UserProfile(email: "t1@bb.com",password: "testing@1one",firstName: "Dirk", lastName:"Liebich", mobile:"(555) 555-5201",id:"t1@bb.com");
-    UserProfile user2 = UserProfile(email: "t2@bb.com",password:  "testing@1one",firstName:  "David", lastName:"Williams",mobile: "(555) 555-5202",id:"t2@bb.com");
-    UserProfile user3 = UserProfile(email: "t3@bb.com",password:  "testing@1one",firstName:  "Robert", lastName:"Miller",mobile: "555-5203",id:"t3@bb.com");
+    UserProfile user1 = UserProfile(email: "t1@bb.com", password: "testing@1one", firstName: "Dirk", lastName: "Liebich", mobile: "(555) 555-5201", id: "t1@bb.com");
+    UserProfile user2 = UserProfile(email: "t2@bb.com", password: "testing@1one", firstName: "David", lastName: "Williams", mobile: "(555) 555-5202", id: "t2@bb.com");
+    UserProfile user3 = UserProfile(email: "t3@bb.com", password: "testing@1one", firstName: "Robert", lastName: "Miller", mobile: "555-5203", id: "t3@bb.com");
     List<UserProfile> users = [user1, user2, user3];
     if (userId == null) {
       return users;
@@ -120,17 +120,28 @@ class MockFactory {
           type: "Approved",
           hours: "2.50",
           employee: "t1@bb.com",
-          csegBbProject: "1"),
+          csegBbProject: "1",
+          startTime: "2/17/2022 9:00:00 AM",
+          endTime: "2/17/2022 7:00:00 PM",
+          location:"123 Main St, Anytown",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
-          trandate: "2/22/2022",
-          displayfield: "Residential Plumbing and Electrical Upgrade",
-          actionsCount: 1,
-          completeCount: 0,
-          remainingCount: 1,
-          type: "Approved",
-          hours: "3.5",
-          employee: "t1@bb.com",
-          csegBbProject: "1"),
+        trandate: "2/22/2022",
+        displayfield: "Residential Plumbing and Electrical Upgrade",
+        actionsCount: 1,
+        completeCount: 0,
+        remainingCount: 1,
+        type: "Approved",
+        hours: "3.5",
+        employee: "t1@bb.com",
+        csegBbProject: "1",
+        startTime: "2/22/2022 9:00:00 AM",
+        endTime: "2/22/2022 7:00:00 PM",
+        location:"123 Main St, Anytown",
+      ),
       TimeEntry(
           trandate: "2/25/2022",
           displayfield: "Commercial Building Renovation",
@@ -140,7 +151,14 @@ class MockFactory {
           type: "Clocked In",
           hours: "8.0",
           employee: "t2@bb.com",
-          csegBbProject: "2"),
+          csegBbProject: "2",
+          startTime: "2/25/2022 9:00:00 AM",
+          endTime: "2/25/2022 7:00:00 PM",
+          location:"555 Park Ave, Cityville",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
           trandate: "3/5/2022",
           displayfield: "Commercial Building Renovation",
@@ -150,7 +168,14 @@ class MockFactory {
           type: "Clocked In",
           hours: "8.0",
           employee: "t2@bb.com",
-          csegBbProject: "2"),
+          csegBbProject: "2",
+          startTime: "3/5/2022 9:00:00 AM",
+          endTime: "3/5/2022 7:00:00 PM",
+          location:"555 Park Ave, Cityville",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
           trandate: "4/2/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -160,7 +185,14 @@ class MockFactory {
           type: "Clocked Out",
           hours: "1.2",
           employee: "t2@bb.com",
-          csegBbProject: "3"),
+          csegBbProject: "3",
+          startTime: "4/2/2022 9:00:00 AM",
+          endTime: "4/2/2022 7:00:00 PM",
+          location:"999 Elm St, Village",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
           trandate: "4/20/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -170,7 +202,14 @@ class MockFactory {
           type: "Clocked Out",
           hours: "6.2",
           employee: "t2@bb.com",
-          csegBbProject: "3"),
+          csegBbProject: "3",
+          startTime: "4/20/2022 9:00:00 AM",
+          endTime: "4/20/2022 7:00:00 PM",
+          location:"999 Elm St, Village",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
           trandate: "5/15/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -180,7 +219,14 @@ class MockFactory {
           type: "Clocked Out",
           hours: "7.9",
           employee: "t2@bb.com",
-          csegBbProject: "3"),
+          csegBbProject: "3",
+          startTime: "5/15/2022 9:00:00 AM",
+          endTime: "5/15/2022 7:00:00 PM",
+          location:"",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
       TimeEntry(
           trandate: "6/10/2022",
           displayfield: "HVAC and Plumbing Maintenance and Repair",
@@ -190,7 +236,14 @@ class MockFactory {
           type: "Not Approved",
           hours: "8.0",
           employee: "t2@bb.com",
-          csegBbProject: "3"),
+          csegBbProject: "3",
+          startTime: "6/10/2022 9:00:00 AM",
+          endTime: "6/10/2022 7:00:00 PM",
+          location:"",
+          breaks: [
+            Break("startDate", "12:00 PM", "endDate", "1:00 PM"),
+            Break("startDate", "4:00 PM", "endDate", "5:00 PM"),
+          ]),
     ];
     if (userId == null) {
       return timeEntries;

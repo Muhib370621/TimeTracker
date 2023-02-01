@@ -153,6 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             locator<StoreServices>().setAccessToken(tokenInfo.tokenId ?? "");
                             locator<StoreServices>().setTokenSecret(tokenInfo.tokenSecret ?? "");
                             await viewModel.getUserId();
+                            await viewModel.getUserRoles();
                             debugPrint("test");
                             viewModel.setIsLoggingIn = false;
                             Get.offAll(() => const HomeScreen());
@@ -165,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           locator<StoreServices>().setAccessToken(AppUrls.token);
                           locator<StoreServices>().setTokenSecret(AppUrls.secret);
                           await locator<StoreServices>().setUserID("12");
+                         List<String> roles = await viewModel.getUserRoles();
                           Get.offAll(()=>const HomeScreen());
                         }
                         // Navigator.of(context)
