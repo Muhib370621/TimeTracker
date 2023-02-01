@@ -1,6 +1,7 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_styles.dart';
+import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/models/token_info.dart';
@@ -160,7 +161,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           viewModel.setIsLoggingIn = false;
                           Utilities.showSnack(context, e.toString());
                           debugPrint(e.toString());
-                          locator<StoreServices>().setAccessToken("dummy");
+                          await locator<StoreServices>().setAccountID(AppUrls.accountID);
+                          locator<StoreServices>().setAccessToken(AppUrls.token);
+                          locator<StoreServices>().setTokenSecret(AppUrls.secret);
+                          await locator<StoreServices>().setUserID("12");
                           Get.offAll(()=>const HomeScreen());
                         }
                         // Navigator.of(context)

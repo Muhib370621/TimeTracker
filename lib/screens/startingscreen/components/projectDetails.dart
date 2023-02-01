@@ -24,6 +24,7 @@ class ProjectDetails extends StatelessWidget {
                 child: Text(
                   bottomController.projectName.value
                       .toString(),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: AppColors.buttonBlue,
                       fontSize: 17.8.sp,

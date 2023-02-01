@@ -180,7 +180,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
               ),
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: ButtonTheme(
                     alignedDropdown: true,
                     child: DropdownButtonHideUnderline(
