@@ -8,30 +8,32 @@ import 'package:get/get.dart';
 import '../../controllers/bottomNavigationController.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-
   var data = Get.arguments;
+
   // final int index;
   CustomBottomNavigationBar({
     super.key,
   });
 
   final BottomNavController controller = Get.put(BottomNavController());
-  final StartingScreenController stController = Get.put(StartingScreenController());
+  final StartingScreenController stController =
+      Get.put(StartingScreenController());
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Obx(() => Scaffold(
-          body: IndexedStack(
-            index: controller.currentIndex.value,
-            children: controller.pages,
-          ),
-          bottomNavigationBar: Container(
-            color: Colors.transparent,
-            width: size.width,
-            height: 0.119 * size.height,
-            child: Stack(children: [
-
+    return Obx(
+      () => Scaffold(
+        body: IndexedStack(
+          index: controller.currentIndex.value,
+          children: controller.pages,
+        ),
+        bottomNavigationBar: Container(
+          color: Colors.transparent,
+          width: size.width,
+          height: 0.119 * size.height,
+          child: Stack(
+            children: [
               Positioned(
                 top: 0.036 * size.height,
                 child: Container(
@@ -218,7 +220,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
                       child: GestureDetector(
                           onTap: () {
                             if (controller.projectId.isEmpty) {
-                              Prompts.showSnackBar(msg: "Please select a project");
+                              Prompts.showSnackBar(
+                                  msg: "Please select a project");
                               return;
                             }
                             controller.locationLoading.value == false
@@ -273,14 +276,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: stController.locationLoading.value || stController.isStopSelecting.value || stController.isChecklistConfirm.value==true,
+                visible: stController.locationLoading.value ||
+                    stController.isStopSelecting.value == true,
                 child: Container(
-                  height: 0.2*size.height,
+                  height: 0.2 * size.height,
                   color: AppColors.bottomBar.withOpacity(0.7),
                 ),
               ),
-            ]),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

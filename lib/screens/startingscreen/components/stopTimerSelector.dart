@@ -43,7 +43,7 @@ class StopTimerSelector extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        SizedBox(height: 2.h),
+                        SizedBox(height: 1.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -55,19 +55,19 @@ class StopTimerSelector extends StatelessWidget {
                                 controller.isStopSelecting.value = false;
                               },
                               child: Container(
-                                height: 12.h,
-                                width: 27.w,
+                                height: 13.h,
+                                width: 29.w,
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.05),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12),
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
+                                      color: Colors.grey.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
                                       offset: const Offset(
                                           0, 2), // changes position of shadow
                                     ),
@@ -86,22 +86,28 @@ class StopTimerSelector extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 controller.isStopSelecting.value = false;
-                                controller.isChecklistConfirm.value = true;
+                                controller.stopSelector.value = "Finish Work";
+                                controller.reset();
+                                controller.stopTimer(
+                                    context: context, resets: true);
+                                // controller.isChecklistConfirm.value = false;
+                                controller.isStopSelecting.value = false;
+                                // controller.isChecklistConfirm.value = true;
                               },
                               child: Container(
-                                height: 12.h,
-                                width: 27.w,
+                                height: 13.h,
+                                width: 29.w,
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.05),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(12),
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 7,
+                                      color: Colors.grey.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
                                       offset: const Offset(
                                           0, 2), // changes position of shadow
                                     ),
@@ -112,7 +118,10 @@ class StopTimerSelector extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     SvgPicture.asset(AppAssets.finishWorkIcon),
-                                    const Text("Close Current Task",textAlign: TextAlign.center,)
+                                    const Text(
+                                      "Close\n Current Task",
+                                      textAlign: TextAlign.center,
+                                    )
                                   ],
                                 ),
                               ),

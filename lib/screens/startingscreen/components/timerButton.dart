@@ -14,9 +14,12 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../constants/app_storage.dart';
+import '../../../helpers/locator.dart';
 import '../../../models/project.dart';
 import '../../../shared/enums/view_states.dart';
 import '../../../shared/widgets/empty_view.dart';
+import '../../../stores/store_services.dart';
 import '../../../view_models/project_view_model.dart';
 
 class TimerButton extends StatelessWidget {
@@ -31,7 +34,7 @@ class TimerButton extends StatelessWidget {
     final BottomNavController bottomController = Get.put(BottomNavController());
     return Obx(() =>Stack(children: [
       GestureDetector(
-        onTap: () {
+        onTap: () async {
           controller.currentAddress.value == ""
               ? controller.getCurrentLocation()
               : null;
@@ -48,8 +51,16 @@ class TimerButton extends StatelessWidget {
                   resets: false, context: context);
               controller.isStopSelecting.value = true;
             } else {
-              if(bottomController.isSingle.value==true){
+              if(bottomController.isSingle.value==true && bottomController.projectName.value=="" ){
+                // controller.startTimer();
+                bottomController.projectName.value = bottomController.projectModel.value.projects[0].name!;
+                await locator<StoreServices>().setLocal(
+          AppStorage.projectName,
+          "userid",
+                    bottomController.projectName.value);
+                print("project model ${bottomController.projectModel.value.projects}");
                 Get.to(()=>ProjectDetailHolderScreen(viewModel: bottomController.projectModel.value));
+                controller.startTimer();
               }
               else {
                 controller.breakRunning.value == false

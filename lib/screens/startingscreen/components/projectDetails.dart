@@ -37,7 +37,7 @@ class ProjectDetails extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 0.4.h,
+          height: 0.5.h,
         ),
         Visibility(
           visible:
@@ -53,7 +53,7 @@ class ProjectDetails extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 0.4.h,
+          height: 0.5.h,
         ),
         Visibility(
           visible:

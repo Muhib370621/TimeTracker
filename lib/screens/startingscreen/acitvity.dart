@@ -40,6 +40,7 @@ class _ActivityState extends State<Activity> {
         body: Obx(
           () => Stack(
             children: [
+              
               ///whole screen
               Center(
                 child: Column(
@@ -96,94 +97,98 @@ class _ActivityState extends State<Activity> {
                                       SizedBox(
                                         height: 1.h,
                                       ),
-                                      Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Start Date",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.buttonBlue,
-                                                ),
-                                              ),
-                                              Text(
-                                                "End Date",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.buttonBlue,
-                                                ),
-                                              ),
-                                              Text(
-                                                "Start Time",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.buttonBlue,
-                                                ),
-                                              ),
-                                              Text(
-                                                "End Time",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.buttonBlue,
-                                                ),
-                                              ),
-                                            ],
+                                      // Row(
+                                      //   children: [
+                                      //     Column(
+                                      //       crossAxisAlignment:
+                                      //           CrossAxisAlignment.start,
+                                      //       children: [
+                                      //         Text(
+                                      //           "Start Date",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.buttonBlue,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           "End Date",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.buttonBlue,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           "Start Time",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.buttonBlue,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           "End Time",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.buttonBlue,
+                                      //           ),
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //     SizedBox(
+                                      //       width: 18.w,
+                                      //     ),
+                                      //     Column(
+                                      //       crossAxisAlignment:
+                                      //           CrossAxisAlignment.start,
+                                      //       children: [
+                                      //         Text(
+                                      //           controller.startDate.value,
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.timerColor,
+                                      //             fontWeight: FontWeight.bold,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           "-------",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.timerColor,
+                                      //             fontWeight: FontWeight.bold,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           controller.startTime.value,
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.timerColor,
+                                      //             fontWeight: FontWeight.bold,
+                                      //           ),
+                                      //         ),
+                                      //         Text(
+                                      //           "-------",
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             color: AppColors.timerColor,
+                                      //             fontWeight: FontWeight.bold,
+                                      //           ),
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //   ],
+                                      // ),
+                                      // SizedBox(
+                                      //   height: 2.h,
+                                      // ),
+                                      Visibility(
+                                        visible:
+                                            controller.listOfBreaks.length >= 1,
+                                        child: Text(
+                                          "Breaks",
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: AppColors.buttonBlue,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(
-                                            width: 18.w,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                controller.startDate.value,
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.timerColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                "-------",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.timerColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                controller.startTime.value,
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.timerColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                "-------",
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  color: AppColors.timerColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      Text(
-                                        "Breaks",
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: AppColors.buttonBlue,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Center(
@@ -217,15 +222,13 @@ class _ActivityState extends State<Activity> {
                                                         width: 8.w,
                                                         decoration:
                                                             const BoxDecoration(
-                                                                color: AppColors
-                                                                    .bottomBar,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          8),
-                                                                )),
+                                                          color: AppColors
+                                                              .bottomBar,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(8),
+                                                          ),
+                                                        ),
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -250,19 +253,22 @@ class _ActivityState extends State<Activity> {
                                                         Center(
                                                           child: Column(
                                                             children: [
-                                                              SizedBox(height: 1.h,),
+                                                              SizedBox(
+                                                                height: 1.h,
+                                                              ),
                                                               Container(
                                                                 height: 12.h,
                                                                 width: 72.w,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color:
-                                                                      Colors.white,
+                                                                  color: Colors
+                                                                      .white,
                                                                   borderRadius:
                                                                       const BorderRadius
                                                                           .all(
-                                                                    Radius.circular(
-                                                                        12),
+                                                                    Radius
+                                                                        .circular(
+                                                                            6),
                                                                   ),
                                                                   boxShadow: [
                                                                     BoxShadow(
@@ -272,7 +278,8 @@ class _ActivityState extends State<Activity> {
                                                                               0.3),
                                                                       spreadRadius:
                                                                           1,
-                                                                      blurRadius: 3,
+                                                                      blurRadius:
+                                                                          3,
                                                                       offset: const Offset(
                                                                           0,
                                                                           1), // changes position of shadow
@@ -282,28 +289,30 @@ class _ActivityState extends State<Activity> {
                                                                 padding:
                                                                     const EdgeInsets
                                                                             .only(
-                                                                        left: 12,
+                                                                        left:
+                                                                            12,
                                                                         top: 12,
-                                                                        right: 12),
+                                                                        right:
+                                                                            12),
                                                                 child: Column(
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
                                                                     Center(
-                                                                      child: Text(
+                                                                      child:
+                                                                          Text(
                                                                         "Break ${index + 1}",
                                                                         style: TextStyle(
-                                                                            fontSize: 15
-                                                                                .sp,
-                                                                            color: AppColors
-                                                                                .buttonBlue,
-                                                                            fontWeight:
-                                                                                FontWeight.w700),
+                                                                            fontSize:
+                                                                                15.sp,
+                                                                            color: AppColors.buttonBlue,
+                                                                            fontWeight: FontWeight.w700),
                                                                       ),
                                                                     ),
                                                                     SizedBox(
-                                                                      height: 1.h,
+                                                                      height:
+                                                                          1.h,
                                                                     ),
                                                                     Row(
                                                                       mainAxisAlignment:
@@ -312,22 +321,17 @@ class _ActivityState extends State<Activity> {
                                                                       children: [
                                                                         Column(
                                                                           crossAxisAlignment:
-                                                                              CrossAxisAlignment
-                                                                                  .center,
+                                                                              CrossAxisAlignment.center,
                                                                           children: [
                                                                             Text(
                                                                               "Start Time",
-                                                                              style:
-                                                                                  TextStyle(
-                                                                                fontSize:
-                                                                                    14.5.sp,
+                                                                              style: TextStyle(
+                                                                                fontSize: 14.5.sp,
                                                                               ),
                                                                             ),
                                                                             Container(
-                                                                              height:
-                                                                                  3.5.h,
-                                                                              width:
-                                                                                  21.w,
+                                                                              height: 3.5.h,
+                                                                              width: 21.w,
                                                                               decoration: const BoxDecoration(
                                                                                   color: AppColors.buttonBlue,
                                                                                   borderRadius: BorderRadius.all(
@@ -335,10 +339,8 @@ class _ActivityState extends State<Activity> {
                                                                                       8,
                                                                                     ),
                                                                                   )),
-                                                                              child:
-                                                                                  Center(
-                                                                                child:
-                                                                                    Text(
+                                                                              child: Center(
+                                                                                child: Text(
                                                                                   controller.listOfBreaks[index].breakStart.toString(),
                                                                                   style: TextStyle(
                                                                                     fontSize: 14.5.sp,
@@ -352,25 +354,19 @@ class _ActivityState extends State<Activity> {
                                                                         ),
                                                                         Column(
                                                                           crossAxisAlignment:
-                                                                              CrossAxisAlignment
-                                                                                  .center,
+                                                                              CrossAxisAlignment.center,
                                                                           mainAxisAlignment:
-                                                                              MainAxisAlignment
-                                                                                  .start,
+                                                                              MainAxisAlignment.start,
                                                                           children: [
                                                                             Text(
                                                                               "End Time",
-                                                                              style:
-                                                                                  TextStyle(
-                                                                                fontSize:
-                                                                                    14.5.sp,
+                                                                              style: TextStyle(
+                                                                                fontSize: 14.5.sp,
                                                                               ),
                                                                             ),
                                                                             Container(
-                                                                              height:
-                                                                                  3.5.h,
-                                                                              width:
-                                                                                  21.w,
+                                                                              height: 3.5.h,
+                                                                              width: 21.w,
                                                                               decoration: const BoxDecoration(
                                                                                   color: AppColors.buttonBlue,
                                                                                   borderRadius: BorderRadius.all(
@@ -378,10 +374,8 @@ class _ActivityState extends State<Activity> {
                                                                                       8,
                                                                                     ),
                                                                                   )),
-                                                                              child:
-                                                                                  Center(
-                                                                                child:
-                                                                                    Text(
+                                                                              child: Center(
+                                                                                child: Text(
                                                                                   controller.listOfBreaks[index].breakEnd.toString(),
                                                                                   style: TextStyle(
                                                                                     fontSize: 14.5.sp,
@@ -395,40 +389,29 @@ class _ActivityState extends State<Activity> {
                                                                         ),
                                                                         Column(
                                                                           crossAxisAlignment:
-                                                                              CrossAxisAlignment
-                                                                                  .center,
+                                                                              CrossAxisAlignment.center,
                                                                           mainAxisAlignment:
-                                                                              MainAxisAlignment
-                                                                                  .start,
+                                                                              MainAxisAlignment.start,
                                                                           children: [
                                                                             Text(
                                                                               "Total Time",
-                                                                              style:
-                                                                                  TextStyle(
-                                                                                fontSize:
-                                                                                    14.5.sp,
+                                                                              style: TextStyle(
+                                                                                fontSize: 14.5.sp,
                                                                               ),
                                                                             ),
                                                                             Container(
-                                                                              height:
-                                                                                  3.5.h,
-                                                                              width:
-                                                                                  21.w,
-                                                                              decoration:
-                                                                                  const BoxDecoration(
-                                                                                color:
-                                                                                    AppColors.buttonBlue,
-                                                                                borderRadius:
-                                                                                    BorderRadius.all(
+                                                                              height: 3.5.h,
+                                                                              width: 21.w,
+                                                                              decoration: const BoxDecoration(
+                                                                                color: AppColors.buttonBlue,
+                                                                                borderRadius: BorderRadius.all(
                                                                                   Radius.circular(
                                                                                     8,
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                              child:
-                                                                                  Center(
-                                                                                child:
-                                                                                    Text(
+                                                                              child: Center(
+                                                                                child: Text(
                                                                                   controller.listOfBreaks[index].totalBreakTime.toString(),
                                                                                   style: TextStyle(
                                                                                     fontSize: 14.5.sp,
@@ -495,23 +478,25 @@ class _ActivityState extends State<Activity> {
                                                   ],
                                                 ),
                                               ),
-                                            ]);
+                                            ],);
                                           },
                                         ),
                                       ),
-                                      SizedBox(height: 1.h,),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
                                       Visibility(
                                         visible:
-                                            controller.listOfBreaks.isEmpty,
+                                            controller.listOfBreaks.isNotEmpty,
                                         child: Column(
                                           children: [
-                                            Text(
-                                              "No Breaks Found!",
-                                              style: TextStyle(
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            // Text(
+                                            //   "No Breaks Found!",
+                                            //   style: TextStyle(
+                                            //     fontSize: 20.sp,
+                                            //     fontWeight: FontWeight.bold,
+                                            //   ),
+                                            // ),
                                             SizedBox(
                                               height: 2.h,
                                             ),
@@ -526,8 +511,8 @@ class _ActivityState extends State<Activity> {
                                           });
                                         },
                                         child: Container(
-                                          height: 4.h,
-                                          width: 25.w,
+                                          height: 5.h,
+                                          width: 27.w,
                                           decoration: BoxDecoration(
                                             color: const Color.fromRGBO(
                                                 237, 237, 237, 1),
@@ -547,7 +532,7 @@ class _ActivityState extends State<Activity> {
                                             ],
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(2.0),
+                                            padding: const EdgeInsets.all(4.0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -555,12 +540,12 @@ class _ActivityState extends State<Activity> {
                                                 Icon(
                                                   Icons.add,
                                                   color: AppColors.buttonBlue,
-                                                  size: 18.sp,
+                                                  size: 19.sp,
                                                 ),
                                                 Text(
                                                   "Add Break",
                                                   style: TextStyle(
-                                                    fontSize: 14.sp,
+                                                    fontSize: 15.sp,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
@@ -587,6 +572,7 @@ class _ActivityState extends State<Activity> {
                   ],
                 ),
               ),
+
               ///this is the container with opacity bg
               Visibility(
                 visible: isAddingBreak ||
@@ -607,6 +593,7 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
+
               ///Successfully added break
               Visibility(
                 visible: controller.addSuccess.value,
@@ -645,6 +632,7 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
+
               ///delete confirmation
               Visibility(
                 visible: controller.deletionConfirmation.value,
@@ -684,7 +672,8 @@ class _ActivityState extends State<Activity> {
                                   textColor: AppColors.buttonBlue,
                                   borderColor: Colors.white,
                                   onPressed: () {
-                                    controller.deletionConfirmation.value = false;
+                                    controller.deletionConfirmation.value =
+                                        false;
                                   },
                                 ),
                                 AppCommonButton(
@@ -697,11 +686,10 @@ class _ActivityState extends State<Activity> {
                                   onPressed: () {
                                     controller.removeBreak(
                                         controller.deleteIndex.value);
-                                    controller.deletionConfirmation.value = false;
+                                    controller.deletionConfirmation.value =
+                                        false;
                                     Prompts.showSnackBar(
-                                        msg:
-                                        "Break Deleted",
-                                        isWarning: false);
+                                        msg: "Break Deleted", isWarning: false);
                                   },
                                 ),
                               ]),
@@ -711,6 +699,7 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
+
               ///this is the complete time picker
               Visibility(
                 visible: isAddingBreak || controller.isEditting.value,
@@ -991,6 +980,7 @@ class _ActivityState extends State<Activity> {
                   ),
                 ),
               ),
+
             ],
           ),
         ));

@@ -34,7 +34,7 @@ class StartHeader extends StatelessWidget {
               padding: const EdgeInsets.all(3),
               margin:
               EdgeInsets.only(left: 0.02 * size.width),
-              height: 0.025 * size.height,
+              height: 0.03 * size.height,
               width: 0.09 * size.width,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -56,7 +56,7 @@ class StartHeader extends StatelessWidget {
                   style: TextStyle(
                       color: const Color(0xff8B8B8B),
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.sp),
+                      fontSize: 15.5.sp),
                 ),
               ),
             ),

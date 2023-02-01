@@ -57,6 +57,8 @@ class ProjectViewModel extends BaseModel {
     //projects =  await locator<StoreServices>().getLocal(AppStorage.projects, Project());
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.projects, "userid") ?? [];
     projects = jsonList.map((e) => Project().decode((Map<String, dynamic>.from(e)))).toList();
+
+
     setState(projects.isNotEmpty ? ViewState.completed : ViewState.loading);
 
     Map<String, String> body = {
@@ -67,6 +69,20 @@ class ProjectViewModel extends BaseModel {
       final result = await _queryClient.request<QueryResponse<Project>>(
           route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => Project()));
       projects = result.response?.items ?? [];
+      print("projects $projects");
+      // Obx(() => )
+      if (projects.length==1){
+        // bottomController.projectModel.value ;
+        bottomController.isSingle.value=true;
+        // bottomController.projectList.value= projects;
+        print("single : ${bottomController.isSingle.value}");
+      }
+      if(bottomController.isSingle.value=true)
+      {
+        bottomController.projectList.value = projects[0];
+        setSelectedProject = projects[0];
+        // bottomController.projectName.value= projects[0].name!;
+      }
       await locator<StoreServices>().setLocal(AppStorage.projects, "userid", projects.map((e) => e.toJson()).toList());
       setState(projects.isEmpty ? ViewState.empty : ViewState.completed);
       notifyListeners();

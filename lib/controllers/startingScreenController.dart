@@ -6,6 +6,7 @@ import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -103,7 +104,7 @@ class StartingScreenController extends GetxController {
   RxString totalBreak = ''.obs;
   RxString stopSelector = "".obs;
   RxBool isStopSelecting = false.obs;
-  RxBool isChecklistConfirm = false.obs;
+  // RxBool isChecklistConfirm = false.obs;
   RxBool isNear = false.obs;
   RxBool addSuccess = false.obs;
   RxBool isEditting = false.obs;
@@ -300,6 +301,7 @@ class StartingScreenController extends GetxController {
   void startTimer() async {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
+    FlutterBeep.beep();
     finishTime.value = "";
     totalTime.value = "";
     startDate.value = DateFormat('EEEE, MMM dd').format(today.value).toString();
@@ -433,7 +435,6 @@ class StartingScreenController extends GetxController {
       getFinishTime();
       subtractTime();
     }
-
     stopSelector.value = "";
   }
 
@@ -453,9 +454,9 @@ class StartingScreenController extends GetxController {
     List<dynamic> breakList = await locator<StoreServices>()
         .getLocal(AppStorage.listOfBreaks, "userid");
     print("list break ${breakList.toString()}");
-    Future.delayed(const Duration(seconds: 3), () {
+    // Future.delayed(const Duration(seconds: 3), () {
       breakRunning.value = false;
-    });
+    // });
   }
 
   getCurrentLocation() async {

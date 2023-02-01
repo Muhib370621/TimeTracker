@@ -125,15 +125,16 @@ class _StartingScreenState extends State<StartingScreen>
                             /// this is the header with local time and date
                             const StartHeader(),
                             SizedBox(
-                              height: 1.9.h,
+                              height: 3.h,
                             ),
                             ///this is the widget which have project name,action name and checklist item name
                             const ProjectDetails(),
+                            SizedBox(height: 1.5.h,),
                             SizedBox(
                               height: controller.clockRunning.value ||
                                       controller.breakRunning.value == true
                                   ? 0.03 * size.height
-                                  : 0.05 * size.height,
+                                  : 0.03 * size.height,
                             ),
                             ///this is the timer button with acitivity container also
                             const TimerButton(),
@@ -145,13 +146,27 @@ class _StartingScreenState extends State<StartingScreen>
                         Center(
                           child: Column(
                             children:  [
-                              ///break button with text
-                              const BreakButton(),
                               ///role text
                               // RoleText(),
                               SizedBox(height: 0.9.h,),
                               ///current address
                               const CurrentAddress(),
+                              ///break button with text
+                              SizedBox(height: 2.h,),
+
+                              const BreakButton(),
+                              SizedBox(height: 2.h,),
+                              const Center(
+                                child:
+                                // Column(
+                                  // children: const [
+                                    ///shows start time, end time and total working time
+                                    // TimerStatusWidget(),
+                                    ///shows a break timer which starts when we tap break button
+                                    BreakTimer(),
+                                  // ],
+                                // ),
+                              ),
                             ],
                           ),
                         ),
@@ -164,17 +179,7 @@ class _StartingScreenState extends State<StartingScreen>
                         //   height:
                         //       controller.clockRunning.value == true ? 0 : 0.8.h,
                         // ),
-                        SizedBox(height: 2.5.h,),
-                        Center(
-                          child: Column(
-                            children: const [
-                              ///shows start time, end time and total working time
-                              // TimerStatusWidget(),
-                              ///shows a break timer which starts when we tap break button
-                              BreakTimer(),
-                            ],
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
@@ -213,8 +218,9 @@ class _StartingScreenState extends State<StartingScreen>
 
                   ///container with a opaque bg
                   Visibility(
-                    visible: controller.isStopSelecting.value ||
-                        controller.isChecklistConfirm.value == true,
+                    visible: controller.isStopSelecting.value,
+                        // controller.isChecklistConfirm.value == true
+
                     child: Container(
                       color: AppColors.bottomBar.withOpacity(0.7),
                     ),
@@ -224,7 +230,7 @@ class _StartingScreenState extends State<StartingScreen>
                   const StopTimerSelector(),
 
                   ///checklist confirmation popup
-                  const CheckListConfirmation(),
+                  // const CheckListConfirmation(),
                 ],
               ),
             ),
