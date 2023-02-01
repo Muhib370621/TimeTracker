@@ -348,7 +348,7 @@ class Project extends Decodable<Project> {
   _getParsedDate(String date) {
     try {
       DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
-      return "${dateTime.month}/${dateTime.day}/${dateTime.year}";
+      return DateFormat.yMMMMd().format(dateTime);
     } catch (e) {
       return date;
     }

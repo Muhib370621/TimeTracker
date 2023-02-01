@@ -1,6 +1,7 @@
 import 'package:blu_time/utilities/apis/decodable.dart';
+import 'package:intl/intl.dart';
 
-class TimeEntry extends Decodable<TimeEntry>{
+class TimeEntry extends Decodable<TimeEntry> {
   String? billingsubsidiary;
   String? csegBbProject;
   String? custcolBbTimeAddedInJe;
@@ -30,32 +31,43 @@ class TimeEntry extends Decodable<TimeEntry>{
   int? completeCount;
   int? remainingCount;
   String? type;
+  List<Break>? breaks;
+  String? startTime;
+  String? endTime;
+  String? location;
   TimeEntry(
       {this.billingsubsidiary,
-        this.csegBbProject,
-        this.custcolBbTimeAddedInJe,
-        this.custcolBbTimerReplay,
-        this.custcolEnteredByPunch,
-        this.customer,
-        this.displayfield,
-        this.employee,
-        this.hours,
-        this.id,
-        this.isbillable,
-        this.isexempt,
-        this.isproductive,
-        this.isutilized,
-        this.item,
-        this.lastmodifieddate,
-        this.memo,
-        this.overriderate,
-        this.price,
-        this.subsidiary,
-        this.supervisorapproval,
-        this.timemodified,
-        this.timesheet,
-        this.timetype,
-        this.trandate,this.actionsCount,this.completeCount,this.remainingCount,this.type});
+      this.csegBbProject,
+      this.custcolBbTimeAddedInJe,
+      this.custcolBbTimerReplay,
+      this.custcolEnteredByPunch,
+      this.customer,
+      this.displayfield,
+      this.employee,
+      this.hours,
+      this.id,
+      this.isbillable,
+      this.isexempt,
+      this.isproductive,
+      this.isutilized,
+      this.item,
+      this.lastmodifieddate,
+      this.memo,
+      this.overriderate,
+      this.price,
+      this.subsidiary,
+      this.supervisorapproval,
+      this.timemodified,
+      this.timesheet,
+      this.timetype,
+      this.trandate,
+      this.actionsCount,
+      this.completeCount,
+      this.remainingCount,
+      this.type,
+      this.breaks,
+      this.startTime,
+      this.endTime,this.location});
 
   TimeEntry.fromJson(Map<String, dynamic> json) {
     billingsubsidiary = json['billingsubsidiary'];
@@ -119,4 +131,60 @@ class TimeEntry extends Decodable<TimeEntry>{
   TimeEntry decode(json) {
     return TimeEntry.fromJson(json);
   }
+
+  String get startDateParsed {
+    return _getParsedDate(startTime ?? "");
+  }
+
+  String get startTimeParsed {
+    return _getParsedTime(startTime ?? "");
+  }
+
+  String get endDateParsed {
+    return _getParsedDate(endTime ?? "");
+  }
+
+  String get endTimeParsed {
+    return _getParsedTime(endTime ?? "");
+  }
+
+  _getParsedDate(String date) {
+    try {
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+      return DateFormat.yMMMMd().format(dateTime);
+    } catch (e) {
+      return date;
+    }
+  }
+
+  _getParsedTime(String date) {
+    try {
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
+      int hour = dateTime.hour;
+      if (hour == 0 || hour == 12) {
+        hour = 12;
+      } else if (hour > 12) {
+        hour -= 12;
+      }
+      String minute = dateTime.minute.toString().padLeft(2, '0');
+      String second = dateTime.second.toString().padLeft(2, '0');
+      String time = "$hour:$minute";
+      if (second != "00") {
+        time += ":$second";
+      }
+      time += " ${dateTime.hour >= 12 ? 'PM' : 'AM'}";
+      return time;
+    } catch (e) {
+      return date;
+    }
+  }
+}
+
+class Break {
+  final String? startDate;
+  final String? startTime;
+  final String? endDate;
+  final String? endTime;
+
+  Break(this.startDate, this.startTime, this.endDate, this.endTime);
 }

@@ -82,6 +82,30 @@ class OnboardingViewModel extends BaseModel {
     }
   }
 
+  Future<List<String>> getUserRoles() async {
+    try {
+      Map<String, String> body = {
+        'q': "SELECT customrecord_bb_blutime.name as name FROM customrecord_bb_blutime WHERE customrecord_bb_blutime.custrecord_bb_entity = ${locator<StoreServices>().getUserID()}"
+      };
+      final result = await _queryClient.request<QueryResponse<UserProfile>>(
+          route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => UserProfile()));
+      List<UserProfile> users = result.response?.items ?? [];
+      return users.map((e) => e.role ?? "").toList();
+    } on ErrorResponse {
+      rethrow;
+    } on SocketException {
+      throw Get.defaultDialog(
+        title: "Internet Not Available",
+        content: Expanded(
+          child: SizedBox(
+            width: 90.w,
+            child: const Text("Please check your internet connection"),
+          ),
+        ),
+      );
+    }
+  }
+
 }
 
 
