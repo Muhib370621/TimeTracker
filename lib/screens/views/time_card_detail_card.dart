@@ -43,7 +43,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Pick Up New Through Bolt",
+                    widget.timeEntry.displayfield ?? "",
                     style: AppTextStyles.bold.copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
                   ),
                 ),
