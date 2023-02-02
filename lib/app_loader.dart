@@ -29,49 +29,60 @@ class _AppLoaderState extends State<AppLoader> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.wait([
-          isTokenValid(),
-          dummyTimer(),
-        ]),
-        builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
-          if (snapshot.hasData) {
-            if ((snapshot.data?[0] ?? true) == false) {
-              return const LoginScreen();
-            } else {
-              return  CustomBottomNavigationBar();
-            }
+      future: Future.wait([
+        isTokenValid(),
+        dummyTimer(),
+      ]),
+      builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
+        if (snapshot.hasData) {
+          if ((snapshot.data?[0] ?? true) == false) {
+            return const LoginScreen();
           } else {
-            return Scaffold(
-              backgroundColor: AppColors.background,
-              body: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 100),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                          AppAssets.appLogo,
-                          semanticsLabel: 'Acme Logo',
-                        fit: BoxFit.cover,width: 200,
-                      ),
-                     // Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 200,),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          Text.rich( TextSpan(
-                                text: "bluTime",
-                                style: AppTextStyles.bold.copyWith(fontSize: 35),
-                          ),),
-                          const SizedBox(height: 10,),
-                          const Text("Because Your Time is Valuable",style: AppTextStyles.normal,),
-                        ],
-                      )
-                    ],
-                  ),
+            return CustomBottomNavigationBar();
+          }
+        } else {
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 100),
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      AppAssets.bluLogoWhite,
+                      // semanticsLabel: 'Acme Logo',
+                      fit: BoxFit.cover, width: 200,
+                    ),
+                    // Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 200,),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        Image.asset(
+                          AppAssets.bluSplashText,
+                          width: 120,
+                        ),
+                        // Text.rich( TextSpan(
+                        //       text: "bluTime",
+                        //       style: AppTextStyles.bold.copyWith(fontSize: 35),
+                        // ),),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Because Your Time is Valuable",
+                          style: AppTextStyles.normal,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            );
-          }
-        });
+            ),
+          );
+        }
+      },
+    );
   }
 }

@@ -3,24 +3,16 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
 import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
-import 'package:blu_time/models/action_checklist.dart';
 import 'package:blu_time/screens/project/project_detail_holder_screen.dart';
-import 'package:blu_time/screens/project/project_detail_screen.dart';
 import 'package:blu_time/screens/startingscreen/acitvity.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../../../constants/app_storage.dart';
 import '../../../helpers/locator.dart';
-import '../../../models/project.dart';
-import '../../../shared/enums/view_states.dart';
-import '../../../shared/widgets/empty_view.dart';
 import '../../../stores/store_services.dart';
-import '../../../view_models/project_view_model.dart';
 
 class TimerButton extends StatelessWidget {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -58,20 +50,20 @@ class TimerButton extends StatelessWidget {
           AppStorage.projectName,
           "userid",
                     bottomController.projectName.value);
-                print("project model ${bottomController.projectModel.value.projects}");
+                // print("project model ${bottomController.projectModel.value.projects}");
                 Get.to(()=>ProjectDetailHolderScreen(viewModel: bottomController.projectModel.value));
                 controller.startTimer();
               }
               else {
-                controller.breakRunning.value == false
-                    ? controller.startTimer()
-                    : Prompts.showSnackBar(
+                if(controller.breakRunning.value == false && controller.locationLoading.value==false)
+                    {controller.startTimer();
+                    bottomController.projectName.value == ""
+                        ? bottomController
+                        .currentIndex.value = 2
+                        : null;}
+                else if (controller.breakRunning.value==true){Prompts.showSnackBar(
                     msg: "Stop the Break first!",
-                    isWarning: true);
-                bottomController.projectName.value == ""
-                    ? bottomController
-                    .currentIndex.value = 2
-                    : null;
+                    isWarning: true);}
               }
             }
             if(controller.startTime.value == ""){

@@ -59,5 +59,16 @@
 	<string>This app needs photo access to add photos on notes.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to add photos on notes.</string>
+	<key>UIUserNotificationSettings</key>
+    <dict>
+      <key>types</key>
+      <array>
+        <string>UIUserNotificationTypeSound</string>
+        <string>UIUserNotificationTypeAlert</string>
+        <string>UIUserNotificationTypeBadge</string>
+        <string>UIUserNotificationTypeCriticalAlert</string>
+        <string>UIUserNotificationTypeProvidesAppNotificationSettings</string>
+      </array>
+    </dict>
 </dict>
 </plist>

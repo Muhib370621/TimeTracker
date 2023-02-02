@@ -5,12 +5,14 @@ import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:blu_time/shared/widgets/blutime_app_header.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../../models/breakModel.dart';
 
 class Activity extends StatefulWidget {
@@ -20,6 +22,7 @@ class Activity extends StatefulWidget {
   State<Activity> createState() => _ActivityState();
 }
 
+
 class _ActivityState extends State<Activity> {
   bool isDelete = false;
   bool isEdit = false;
@@ -28,6 +31,16 @@ class _ActivityState extends State<Activity> {
   bool isAddingBreak = false;
   String startTime = "";
   String endTime = "";
+  // final scrollController = ScrollController();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     var scrollItem = scrollController.position.minScrollExtent;
+  //     scrollController.jumpTo(3);
+  //   });
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +53,7 @@ class _ActivityState extends State<Activity> {
         body: Obx(
           () => Stack(
             children: [
-              
+
               ///whole screen
               Center(
                 child: Column(
@@ -201,284 +214,287 @@ class _ActivityState extends State<Activity> {
                                               : controller.listOfBreaks.length,
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
-                                            return Stack(children: [
-                                              SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                child: Row(
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        controller.isEditting
-                                                            .value = true;
-                                                        controller.editIndex
-                                                            .value = index;
-                                                        isStartTime = false;
-                                                      },
-                                                      child: Container(
-                                                        height: 4.h,
-                                                        width: 8.w,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color: AppColors
-                                                              .bottomBar,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                            Radius.circular(8),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(7.0),
-                                                          child: SvgPicture
-                                                              .asset(AppAssets
-                                                                  .editIcon),
+                                            return SingleChildScrollView(
+                                              controller: ScrollController(initialScrollOffset: 16.0),
+                                              // reverse: true,
+                                              // clipBehavior: Clip.antiAliasWithSaveLayer,
+                                              // dragStartBehavior: DragStartBehavior.,
+                                              scrollDirection:
+                                                  Axis.horizontal,
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              child: Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      controller.isEditting
+                                                          .value = true;
+                                                      controller.editIndex
+                                                          .value = index;
+                                                      isStartTime = false;
+                                                    },
+                                                    child: Container(
+                                                      height: 4.h,
+                                                      width: 8.w,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: AppColors
+                                                            .bottomBar,
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(8),
                                                         ),
                                                       ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(7.0),
+                                                        child: SvgPicture
+                                                            .asset(AppAssets
+                                                                .editIcon),
+                                                      ),
                                                     ),
-                                                    SizedBox(
-                                                      width: 1.5.w,
-                                                    ),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Center(
-                                                          child: Column(
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 1.h,
-                                                              ),
-                                                              Container(
-                                                                height: 12.h,
-                                                                width: 72.w,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            6),
-                                                                  ),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .withOpacity(
-                                                                              0.3),
-                                                                      spreadRadius:
-                                                                          1,
-                                                                      blurRadius:
-                                                                          3,
-                                                                      offset: const Offset(
-                                                                          0,
-                                                                          1), // changes position of shadow
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            12,
-                                                                        top: 12,
-                                                                        right:
-                                                                            12),
-                                                                child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "Break ${index + 1}",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                15.sp,
-                                                                            color: AppColors.buttonBlue,
-                                                                            fontWeight: FontWeight.w700),
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height:
-                                                                          1.h,
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceAround,
-                                                                      children: [
-                                                                        Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
-                                                                              "Start Time",
-                                                                              style: TextStyle(
-                                                                                fontSize: 14.5.sp,
-                                                                              ),
-                                                                            ),
-                                                                            Container(
-                                                                              height: 3.5.h,
-                                                                              width: 21.w,
-                                                                              decoration: const BoxDecoration(
-                                                                                  color: AppColors.buttonBlue,
-                                                                                  borderRadius: BorderRadius.all(
-                                                                                    Radius.circular(
-                                                                                      8,
-                                                                                    ),
-                                                                                  )),
-                                                                              child: Center(
-                                                                                child: Text(
-                                                                                  controller.listOfBreaks[index].breakStart.toString(),
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 14.5.sp,
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            )
-                                                                          ],
-                                                                        ),
-                                                                        Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.start,
-                                                                          children: [
-                                                                            Text(
-                                                                              "End Time",
-                                                                              style: TextStyle(
-                                                                                fontSize: 14.5.sp,
-                                                                              ),
-                                                                            ),
-                                                                            Container(
-                                                                              height: 3.5.h,
-                                                                              width: 21.w,
-                                                                              decoration: const BoxDecoration(
-                                                                                  color: AppColors.buttonBlue,
-                                                                                  borderRadius: BorderRadius.all(
-                                                                                    Radius.circular(
-                                                                                      8,
-                                                                                    ),
-                                                                                  )),
-                                                                              child: Center(
-                                                                                child: Text(
-                                                                                  controller.listOfBreaks[index].breakEnd.toString(),
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 14.5.sp,
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.start,
-                                                                          children: [
-                                                                            Text(
-                                                                              "Total Time",
-                                                                              style: TextStyle(
-                                                                                fontSize: 14.5.sp,
-                                                                              ),
-                                                                            ),
-                                                                            Container(
-                                                                              height: 3.5.h,
-                                                                              width: 21.w,
-                                                                              decoration: const BoxDecoration(
-                                                                                color: AppColors.buttonBlue,
-                                                                                borderRadius: BorderRadius.all(
-                                                                                  Radius.circular(
-                                                                                    8,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              child: Center(
-                                                                                child: Text(
-                                                                                  controller.listOfBreaks[index].totalBreakTime.toString(),
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 14.5.sp,
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 0.9.h,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      width: 1.5.w,
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        controller.deleteIndex
-                                                            .value = index;
-                                                        controller
-                                                            .deletionConfirmation
-                                                            .value = true;
-                                                      },
-                                                      child: Container(
-                                                        height: 4.h,
-                                                        width: 8.w,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                color: AppColors
-                                                                    .bottomBar,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 1.5.w,
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Center(
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 1.h,
+                                                            ),
+                                                            Container(
+                                                              height: 11.h,
+                                                              width: 72.w,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
                                                                 borderRadius:
-                                                                    BorderRadius
+                                                                    const BorderRadius
                                                                         .all(
                                                                   Radius
                                                                       .circular(
-                                                                          8),
-                                                                )),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(7.0),
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            AppAssets
-                                                                .deleteIcon,
-                                                            color: AppColors
-                                                                .redAlert,
-                                                          ),
+                                                                          10),
+                                                                ),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                            0.3),
+                                                                    spreadRadius:
+                                                                        1,
+                                                                    blurRadius:
+                                                                        3,
+                                                                    offset: const Offset(
+                                                                        0,
+                                                                        1), // changes position of shadow
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          12,
+                                                                      top: 12,
+                                                                      right:
+                                                                          12),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Center(
+                                                                    child:
+                                                                        Text(
+                                                                      "Break ${index + 1}",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15.sp,
+                                                                          color: AppColors.buttonBlue,
+                                                                          fontWeight: FontWeight.w700),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height:
+                                                                        1.h,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Start Time",
+                                                                            style: TextStyle(
+                                                                              fontSize: 15.sp,
+                                                                            ),
+                                                                          ),
+                                                                          Container(
+                                                                            height: 3.5.h,
+                                                                            width: 20.w,
+                                                                            decoration: const BoxDecoration(
+                                                                                color: AppColors.buttonBlue,
+                                                                                borderRadius: BorderRadius.all(
+                                                                                  Radius.circular(
+                                                                                  5,
+                                                                                  ),
+                                                                                )),
+                                                                            child: Center(
+                                                                              child: Text(
+                                                                                controller.listOfBreaks[index].breakStart.toString().substring(0,6),
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16.5.sp,
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            "End Time",
+                                                                            style: TextStyle(
+                                                                              fontSize: 15.sp,
+                                                                            ),
+                                                                          ),
+                                                                          Container(
+                                                                            height: 3.5.h,
+                                                                            width: 20.w,
+                                                                            decoration: const BoxDecoration(
+                                                                                color: AppColors.buttonBlue,
+                                                                                borderRadius: BorderRadius.all(
+                                                                                  Radius.circular(
+                                                                                    5,
+                                                                                  ),
+                                                                                )),
+                                                                            child: Center(
+                                                                              child: Text(
+                                                                                controller.listOfBreaks[index].breakEnd.toString().substring(0,6),
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16.5.sp,
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Total Time",
+                                                                            style: TextStyle(
+                                                                              fontSize: 15.sp,
+                                                                            ),
+                                                                          ),
+                                                                          Container(
+                                                                            height: 3.5.h,
+                                                                            width: 20.w,
+                                                                            decoration: const BoxDecoration(
+                                                                              color: AppColors.buttonBlue,
+                                                                              borderRadius: BorderRadius.all(
+                                                                                Radius.circular(
+                                                                                  5,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            child: Center(
+                                                                              child: Text(
+                                                                                controller.listOfBreaks[index].totalBreakTime.toString().substring(0,6),
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16.5.sp,
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 0.9.h,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    width: 1.5.w,
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      controller.deleteIndex
+                                                          .value = index;
+                                                      controller
+                                                          .deletionConfirmation
+                                                          .value = true;
+                                                    },
+                                                    child: Container(
+                                                      height: 4.h,
+                                                      width: 8.w,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              color: AppColors
+                                                                  .bottomBar,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(
+                                                                Radius
+                                                                    .circular(
+                                                                        8),
+                                                              )),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(7.0),
+                                                        child:
+                                                            SvgPicture.asset(
+                                                          AppAssets
+                                                              .deleteIcon,
+                                                          color: AppColors
+                                                              .redAlert,
                                                         ),
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+
+                                                ],
                                               ),
-                                            ],);
+                                            );
                                           },
                                         ),
                                       ),
@@ -512,7 +528,7 @@ class _ActivityState extends State<Activity> {
                                         },
                                         child: Container(
                                           height: 5.h,
-                                          width: 27.w,
+                                          width: 30.w,
                                           decoration: BoxDecoration(
                                             color: const Color.fromRGBO(
                                                 237, 237, 237, 1),
@@ -688,8 +704,8 @@ class _ActivityState extends State<Activity> {
                                         controller.deleteIndex.value);
                                     controller.deletionConfirmation.value =
                                         false;
-                                    Prompts.showSnackBar(
-                                        msg: "Break Deleted", isWarning: false);
+                                    // Prompts.showSnackBar(
+                                    //     msg: "Break Deleted", isWarning: false);
                                   },
                                 ),
                               ]),

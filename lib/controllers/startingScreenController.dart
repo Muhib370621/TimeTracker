@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/helpers/locator.dart';
@@ -6,11 +7,12 @@ import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_beep/flutter_beep.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../constants/app_colors.dart';
 import '../shared/Prompts.dart';
 import '../stores/store_services.dart';
@@ -301,10 +303,14 @@ class StartingScreenController extends GetxController {
   void startTimer() async {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
-    FlutterBeep.beep();
+    // FlutterBeep.beep();
+    //   if (await Vibrate.canVibrate) {
+        Vibrate.vibrate();
+      // }
     finishTime.value = "";
     totalTime.value = "";
     startDate.value = DateFormat('EEEE, MMM dd').format(today.value).toString();
+    Prompts.timeTrackingStarted(msg: "Time Tracking Has Started");
     await locator<StoreServices>()
         .setLocal(AppStorage.currentDate, "userid", today.value.toString());
     await locator<StoreServices>()

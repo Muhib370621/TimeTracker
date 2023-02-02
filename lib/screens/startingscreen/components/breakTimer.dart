@@ -2,7 +2,6 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BreakTimer extends StatelessWidget {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -74,109 +73,112 @@ class BreakTimer extends StatelessWidget {
     //       SizedBox(
     //         height: 0.007 * size.height,
     //       ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 3.0, right: 3.0),
-            child:
-            // Row(
-            //   mainAxisAlignment:
-            //   MainAxisAlignment.spaceBetween,
-              // children: [
-                // Column(
-                //   children: [
-                //     const Text(
-                //       "Start Time",
-                //       style: TextStyle(
-                //           color: Colors.black,
-                //           fontSize: 13.2),
-                //     ),
-                //     Container(
-                //       height: 0.028 * size.height,
-                //       width: 0.2 * size.width,
-                //       decoration:
-                //       const BoxDecoration(
-                //         color: AppColors.buttonBlue,
-                //         borderRadius:
-                //         BorderRadius.all(
-                //           Radius.circular(4),
-                //         ),
-                //       ),
-                //       child: Center(
-                //         child: Text(
-                //           controller
-                //               .Breakstart.value,
-                //           maxLines: 1,
-                //           textAlign:
-                //           TextAlign.center,
-                //           style: TextStyle(
-                //             color: Colors.white,
-                //             fontSize:
-                //             6.2 * textsize,
-                //             fontWeight:
-                //             FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                Padding(
-                  padding:
-                  const EdgeInsets.only(top: 5),
-                  child: Text(
-                    " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
-                    style: TextStyle(
-                      fontSize: 13.5 * textsize,
-                      color: AppColors.orange,
-                      fontWeight: FontWeight.bold,
+          Visibility(
+            visible: controller.breakRunning.value==true,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 3.0, right: 3.0),
+              child:
+              // Row(
+              //   mainAxisAlignment:
+              //   MainAxisAlignment.spaceBetween,
+                // children: [
+                  // Column(
+                  //   children: [
+                  //     const Text(
+                  //       "Start Time",
+                  //       style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontSize: 13.2),
+                  //     ),
+                  //     Container(
+                  //       height: 0.028 * size.height,
+                  //       width: 0.2 * size.width,
+                  //       decoration:
+                  //       const BoxDecoration(
+                  //         color: AppColors.buttonBlue,
+                  //         borderRadius:
+                  //         BorderRadius.all(
+                  //           Radius.circular(4),
+                  //         ),
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           controller
+                  //               .Breakstart.value,
+                  //           maxLines: 1,
+                  //           textAlign:
+                  //           TextAlign.center,
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize:
+                  //             6.2 * textsize,
+                  //             fontWeight:
+                  //             FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Padding(
+                    padding:
+                    const EdgeInsets.only(top: 5),
+                    child: Text(
+                      " ${twoDigits(controller.breakDuration.value.inHours.remainder(60))}:${twoDigits(controller.breakDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.breakDuration.value.inSeconds.remainder(60))}",
+                      style: TextStyle(
+                        fontSize: 13.5 * textsize,
+                        color: AppColors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                // Column(
-                //   children: [
-                //     const Text(
-                //       "End Time",
-                //       style: TextStyle(
-                //           color: Colors.black,
-                //           fontSize: 13.2),
-                //     ),
-                //     Container(
-                //       height: 0.028 * size.height,
-                //       width: 0.2 * size.width,
-                //       decoration:
-                //       const BoxDecoration(
-                //         color: AppColors.buttonBlue,
-                //         borderRadius:
-                //         BorderRadius.all(
-                //           Radius.circular(4),
-                //         ),
-                //       ),
-                //       child: Center(
-                //         child: Text(
-                //           controller.finishBreak
-                //               .value ==
-                //               ""
-                //               ? "-----"
-                //               : controller
-                //               .finishBreak
-                //               .value,
-                //           maxLines: 1,
-                //           textAlign:
-                //           TextAlign.center,
-                //           style: TextStyle(
-                //             color: Colors.white,
-                //             fontSize:
-                //             6.2 * textsize,
-                //             fontWeight:
-                //             FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              // ],
-            ),
+                  // Column(
+                  //   children: [
+                  //     const Text(
+                  //       "End Time",
+                  //       style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontSize: 13.2),
+                  //     ),
+                  //     Container(
+                  //       height: 0.028 * size.height,
+                  //       width: 0.2 * size.width,
+                  //       decoration:
+                  //       const BoxDecoration(
+                  //         color: AppColors.buttonBlue,
+                  //         borderRadius:
+                  //         BorderRadius.all(
+                  //           Radius.circular(4),
+                  //         ),
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           controller.finishBreak
+                  //               .value ==
+                  //               ""
+                  //               ? "-----"
+                  //               : controller
+                  //               .finishBreak
+                  //               .value,
+                  //           maxLines: 1,
+                  //           textAlign:
+                  //           TextAlign.center,
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize:
+                  //             6.2 * textsize,
+                  //             fontWeight:
+                  //             FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                // ],
+              ),
+          ),
           // ),
     //       SizedBox(
     //         height: 0.01 * size.height,

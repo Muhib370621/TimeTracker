@@ -5,7 +5,6 @@ import 'package:blu_time/constants/app_urls.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/roles_response.dart';
 import 'package:blu_time/models/token_info.dart';
-import 'package:blu_time/models/user_detail.dart';
 import 'package:blu_time/models/user_profile.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:blu_time/utilities/apis/api_response.dart';

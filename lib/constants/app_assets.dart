@@ -22,9 +22,8 @@ class AppAssets {
   static const changePassword = "$_imagesPath/change_password.png";
   static const add = "$_imagesPath/add_icon.png";
   static const addImage = "$_imagesPath/add_image.png";
-
-
-
+  static const bluLogoWhite = "$_imagesPath/BluBanyanlogowhite.png";
+  static const bluSplashText = "$_imagesPath/bluTimeLogoWhite.png";
 
   static const appLogo = "$_svgsPath/app_logo.svg";
   static const back = "$_svgsPath/back.svg";
@@ -44,6 +43,7 @@ class AppAssets {
   static const pauseTimer = "$_svgsPath/pauseTimer.svg";
   static const finishWorkIcon = "$_svgsPath/finishWork.svg";
   static const thumbsUpIcon = "$_svgsPath/thumbsUp.svg";
+  static const trackingStarted = "$_svgsPath/trackingStarted.svg";
 
 
 

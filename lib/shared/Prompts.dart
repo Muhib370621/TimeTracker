@@ -1,6 +1,9 @@
+import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'widgets/app_common_button.dart';
@@ -148,6 +151,64 @@ class Prompts {
             12,
           ),
         ),
+      ),
+    );
+  }
+
+  static timeTrackingStarted({String? msg, bool? isWarning}) {
+    return Get.showSnackbar(
+      GetSnackBar(
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.transparent,
+        messageText: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 8.h,
+            width: 50.w,
+            decoration: const BoxDecoration(
+              color: AppColors.buttonBlue,
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  8,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Visibility(
+                //   visible: isWarning ?? false,
+                //   child: Icon(
+                //     Icons.warning_rounded,
+                //     color: Colors.white,
+                //     size: 32.sp,
+                //   ),
+                // ),
+                SvgPicture.asset(
+                  AppAssets.trackingStarted,
+                  color: Colors.white,
+                ),
+                // Lottie.asset("assets/animatedIcons/trackingStarted.json",),
+                SizedBox(
+                  width: 2.w,
+                ),
+                Text(
+                  msg!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        snackStyle: SnackStyle.FLOATING,
+        snackPosition: SnackPosition.TOP,
+        animationDuration: const Duration(seconds: 1),
+        forwardAnimationCurve: Curves.fastOutSlowIn,
+        reverseAnimationCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
   }
