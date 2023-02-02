@@ -79,7 +79,7 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
       title: title,
     //  width: 100,
       height: 35,
-      radius: 10,
+      radius: 6,
       elevation: 5.0,
       fontSize: 12.width,
       color:

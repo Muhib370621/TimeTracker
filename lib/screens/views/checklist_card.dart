@@ -29,7 +29,7 @@ class ChecklistCard extends StatelessWidget {
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(6),
       ),
       color: AppColors.cellBackground,
       child: GestureDetector(

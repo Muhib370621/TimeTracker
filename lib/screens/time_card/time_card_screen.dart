@@ -74,12 +74,13 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
               side: BorderSide(
                 color: AppColors.timerColor.withAlpha(50),
               ),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(4),
             ),
             elevation: 3,
             child: SizedBox(
               height: 45,
               child: AppCommonTextField(
+                radius: 4,
                 suffixIcon: const Icon(
                   Icons.search,
                   color: AppColors.buttonBlue,
@@ -126,7 +127,7 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                                         model.startDate = null;
                                         model.endDate = null;
                                         final String formatted = "${formatter.format(DateTime(2019))} - ${formatter.format(DateTime.now())}";
-                                        model.setFilterTime = formatted;
+                                        model.setFilterTime = "Choose date";
                                         Navigator.of(context).pop();
                                       },
                                     ))),
@@ -144,11 +145,11 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     elevation: 5,
                     child: Container(
-                      //height: 35,
+                      height: 30,
                       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,12 +187,13 @@ class _TimeCardScreenState extends State<TimeCardScreen> {
                     child: DropdownButtonHideUnderline(
                       child: Card(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(6),
                         ),
                         elevation: 5,
                         child: SizedBox(
-                          height: 35,
+                          height: 40,
                           child: DropdownButton(
+                            borderRadius: BorderRadius.zero,
                             isExpanded: true,
                             alignment: Alignment.centerLeft,
                             value: model.timeCardStatus,
