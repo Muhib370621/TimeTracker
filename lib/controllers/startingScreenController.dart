@@ -265,7 +265,7 @@ class StartingScreenController extends GetxController {
                                   color: isSwitched.value
                                       ? AppColors.buttonBlue
                                       : AppColors.buttonBlue.withOpacity(0.8),
-                                  borderRadius: const BorderRadius.all(
+                                  borderRadius: const BorderRadius.all( //55 +
                                     Radius.circular(10),
                                   ),
                                 ),

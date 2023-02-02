@@ -37,7 +37,7 @@ class _ActionCardState extends State<ActionCard> {
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(6),
       ),
       color: AppColors.cellBackground,
       child: Padding(
@@ -126,7 +126,7 @@ class _ActionCardState extends State<ActionCard> {
                           title: AppLocalizedStrings.checklist.tr(),
                           height: 17.width,
                           fontSize: 8.width,
-                          radius: 10,
+                          radius: 6,
                           onPressed: () async {
                             Navigator.of(context).pushNamed(
                               RouteNames.checklist,

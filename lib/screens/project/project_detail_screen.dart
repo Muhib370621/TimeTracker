@@ -48,7 +48,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   Card(
                     elevation: 5.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius: BorderRadius.circular(6)),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
