@@ -18,7 +18,7 @@ class ProjectCard extends StatelessWidget {
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
       ),
       color: controller.isNear.value==true?AppColors.buttonBlue:AppColors.cellBackground,
       child: ListTile(
@@ -32,7 +32,7 @@ class ProjectCard extends StatelessWidget {
         trailing: Container(
           decoration: BoxDecoration(
             color: controller.isNear.value==true?AppColors.cellBackground:AppColors.buttonBlue,
-            borderRadius: BorderRadius.circular(4.0)
+            borderRadius: BorderRadius.circular(2.0)
           ),
           child:  Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),

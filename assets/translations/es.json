@@ -51,5 +51,7 @@
   "logOut": "CERRAR SESIÓN",
   "enterEmailAddress": "Ingrese su dirección de correo electrónico aquí",
   "enterMobileNumber": "Ingrese su número de móvil aquí",
-  "projectTotalTime": "Tiempo total del proyecto"
+  "projectTotalTime": "Tiempo total del proyecto",
+  "customerName" :  "Nombre del cliente",
+  "phoneNumber" : "Número de teléfono"
 }

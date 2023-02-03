@@ -29,7 +29,7 @@ class ChecklistCard extends StatelessWidget {
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
       ),
       color: AppColors.cellBackground,
       child: GestureDetector(
@@ -59,31 +59,37 @@ class ChecklistCard extends StatelessWidget {
             color: (actionChecklist.completed ?? false) ? AppColors.buttonBlue : Colors.grey,
             size: 17.height,
           ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(actionChecklist.title ?? "",
-                  style: AppTextStyles.semiBold
-                      .copyWith(color: Colors.black, fontSize: 12.width)),
-              const SizedBox(
-                height: 3,
-              ),
-            ],
+          title: Transform.translate(
+            offset: const Offset(-16, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(actionChecklist.title ?? "",
+                    style: AppTextStyles.semiBold
+                        .copyWith(color: Colors.black, fontSize: 12.width)),
+                const SizedBox(
+                  height: 3,
+                ),
+              ],
+            ),
           ),
-          subtitle: Row(
-            children: [
-              Icon(
-                Icons.calendar_month,
-                color: AppColors.buttonBlue,
-                size: 15.width,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(actionChecklist.completedDate ?? "N/A",
-                  style: AppTextStyles.normal
-                      .copyWith(color: Colors.black, fontSize: 10.width)),
-            ],
+          subtitle: Transform.translate(
+            offset: const Offset(-16, 0),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.calendar_month,
+                  color: AppColors.buttonBlue,
+                  size: 15.width,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(actionChecklist.completedDate ?? "N/A",
+                    style: AppTextStyles.normal
+                        .copyWith(color: Colors.black, fontSize: 10.width)),
+              ],
+            ),
           ),
         ),
       ),

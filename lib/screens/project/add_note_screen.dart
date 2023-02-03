@@ -47,7 +47,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       Card(
                         elevation: 5,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.circular(7)),
                         child: TextField(
                           minLines: 7,
                           maxLines: 7,
@@ -167,7 +167,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       ),
                       AppCommonButton(
                         title: AppLocalizedStrings.addNote.tr(),
-                        radius: 10,
+                        radius: 4,
                         height: 40,
                         onPressed: () async {
                           List<String> paths =
@@ -186,14 +186,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                                 "notes",
                                 "userid",
                                 (note1.map((e) => e.toJson()).toList()));
-                            Prompts.showSnackBar(msg: "Note saved locally");
+                           // Prompts.showSnackBar(msg: "Note saved locally");
                             Navigator.of(context).pop();
                           } catch (e) {
                             AddNote note =
                                 AddNote(controller.text ?? "", paths, false);
                             await locator<StoreServices>()
                                 .setLocal("notes", "userid", [note.toJson()]);
-                            Prompts.showSnackBar(msg: "Note saved locally");
+                            //Prompts.showSnackBar(msg: "Note saved locally");
                             Navigator.of(context).pop();
                           }
                         },

@@ -40,7 +40,7 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
           children: [
             TimeCardDetailCard(timeEntry: widget.timeEntry,),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 5),
               child: Column(
                 children: [
                   Row(

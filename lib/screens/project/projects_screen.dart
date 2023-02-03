@@ -1,4 +1,5 @@
 import 'package:blu_time/constants/app_assets.dart';
+import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:blu_time/models/project.dart';
@@ -10,6 +11,7 @@ import 'package:blu_time/shared/widgets/empty_view.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';

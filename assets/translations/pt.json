@@ -51,5 +51,7 @@
   "logOut": "SAIR",
   "enterEmailAddress": "Insira o seu endereço de e-mail aqui",
   "enterMobileNumber": "Digite seu número de celular aqui",
-  "projectTotalTime": "Tempo Total do Projeto"
+  "projectTotalTime": "Tempo Total do Projeto",
+  "customerName" :  "Nome do cliente",
+  "phoneNumber" : "Número de telefone"
 }

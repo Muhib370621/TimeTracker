@@ -37,10 +37,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    AppLocalizedStrings.details.tr(),
-                    style: AppTextStyles.semiBold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      AppLocalizedStrings.details.tr(),
+                      style: AppTextStyles.semiBold
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -48,12 +51,46 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   Card(
                     elevation: 5.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
+                        borderRadius: BorderRadius.circular(4)),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizedStrings.customerName.tr(),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
+                              ),
+                              const SizedBox(width: 5,),
+                              const Spacer(),
+                              Text("Name Here",
+                                  style: AppTextStyles.medium.copyWith(
+                                      color: Colors.grey, fontSize: 13.width)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizedStrings.phoneNumber.tr(),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
+                              ),
+                              const SizedBox(width: 5,),
+                              const Spacer(),
+                              Text("Phone Number Here",
+                                  style: AppTextStyles.medium.copyWith(
+                                      color: Colors.grey, fontSize: 13.width)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
                           Row(
                             children: [
                               Text(
@@ -138,10 +175,14 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    AppLocalizedStrings.action.tr(),
-                    style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+
+                    child: Text(
+                      AppLocalizedStrings.action.tr(),
+                      style: AppTextStyles.bold
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

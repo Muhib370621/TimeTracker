@@ -55,7 +55,9 @@ enum AppLocalizedStrings {
   logOut,
   enterEmailAddress,
   projectTotalTime,
-  enterMobileNumber;
+  enterMobileNumber,
+  customerName,
+  phoneNumber;
 
   String tr() {
     AppLocalizedStrings.firstName.name;
