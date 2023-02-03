@@ -24,7 +24,7 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
       elevation: 10.0,
       color: AppColors.background,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
         padding: const EdgeInsets.all(15),

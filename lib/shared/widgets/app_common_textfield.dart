@@ -27,7 +27,7 @@ class AppCommonTextField extends StatelessWidget {
     this.height = 66,
     this.width,
     this.fontSize,
-    this.radius = 15,
+    this.radius = 4,
     this.color = AppColors.buttonBlue,
     this.elevation = 2.0,
     this.isLoading,

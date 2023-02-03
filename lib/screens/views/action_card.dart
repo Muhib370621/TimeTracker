@@ -7,6 +7,7 @@ import 'package:blu_time/shared/extensions.dart';
 import 'package:blu_time/shared/routes/route_names.dart';
 import 'package:blu_time/shared/widgets/app_common_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +38,7 @@ class _ActionCardState extends State<ActionCard> {
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
       ),
       color: AppColors.cellBackground,
       child: Padding(
@@ -126,7 +127,7 @@ class _ActionCardState extends State<ActionCard> {
                           title: AppLocalizedStrings.checklist.tr(),
                           height: 17.width,
                           fontSize: 8.width,
-                          radius: 6,
+                          radius: 3,
                           onPressed: () async {
                             Navigator.of(context).pushNamed(
                               RouteNames.checklist,

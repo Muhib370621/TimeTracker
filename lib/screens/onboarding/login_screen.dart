@@ -138,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     AppCommonButton(
+                      radius: 4,
                       title: "LOG IN",
                       isLoading: viewModel.isLoggingIn,
                       onPressed: () async {

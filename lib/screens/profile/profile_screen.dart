@@ -211,6 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       AppCommonButton(
                                         title: AppLocalizedStrings.saveChanges.tr(),
                                         fontSize: 16,
+                                        radius: 4,
                                       ),
                                       const Divider(
                                         color: Colors.black,
@@ -226,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Card(
                                       elevation: 5,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: SvgPicture.asset(AppAssets.aboutUs),
@@ -248,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Card(
                                       elevation: 5,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: SvgPicture.asset(AppAssets.getHelp),
@@ -268,6 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 AppCommonButton(
                                   title: AppLocalizedStrings.logOut.tr(),
+                                  radius: 4,
                                   onPressed: () async {
                                     await locator<StoreServices>().clearAll();
                                     await locator<StoreServices>().setAccessToken("");

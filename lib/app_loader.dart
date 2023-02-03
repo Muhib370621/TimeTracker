@@ -22,7 +22,7 @@ class _AppLoaderState extends State<AppLoader> {
   }
 
   Future<bool> dummyTimer() async {
-    await Future.delayed(const Duration(milliseconds: 1200));
+    await Future.delayed(const Duration(milliseconds: 1000000));
     return true;
   }
 
@@ -49,20 +49,19 @@ class _AppLoaderState extends State<AppLoader> {
                   alignment: Alignment.center,
                   child: Column(
                     children: [
-                      SvgPicture.asset(
+                      Image.asset(
                           AppAssets.appLogo,
-                          semanticsLabel: 'Acme Logo',
                         fit: BoxFit.cover,width: 200,
                       ),
                      // Image.asset(AppAssets.appLogo,fit: BoxFit.cover,width: 200,),
                       const Spacer(),
                       Column(
                         children: [
-                          Text.rich( TextSpan(
-                                text: "bluTime",
-                                style: AppTextStyles.bold.copyWith(fontSize: 35),
-                          ),),
-                          const SizedBox(height: 10,),
+                          Image.asset(
+                            AppAssets.appNameLogo,
+                            fit: BoxFit.cover,width: 117,
+                          ),
+                          const SizedBox(height: 15,),
                           const Text("Because Your Time is Valuable",style: AppTextStyles.normal,),
                         ],
                       )

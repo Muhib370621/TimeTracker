@@ -139,6 +139,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                    const Spacer(),
                     AppCommonButton(
                       title: "RESET PASSWORD",
+                      radius: 4,
                       onPressed: () async {
                         try {
                           await viewModel.getToken();

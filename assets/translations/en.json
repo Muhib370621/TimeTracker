@@ -52,5 +52,7 @@
   "getHelp": "Get Help",
   "logOut": "LOG OUT",
   "enterEmailAddress": "Enter Your Email Address Here",
-  "enterMobileNumber": "Enter Your Mobile Number Here"
+  "enterMobileNumber": "Enter Your Mobile Number Here",
+  "customerName" :  "Customer Name",
+  "phoneNumber" : "Phone Number"
 }
