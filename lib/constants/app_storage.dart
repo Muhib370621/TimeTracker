@@ -24,4 +24,5 @@ class AppStorage {
   static const String listOfBreaks = "listOf Breaks";
   static const String appPausedTime = "appPausedTime";
   static const String appResumedTime = "appResumedTime";
+  static const String currentProject = "currentProject";
 }

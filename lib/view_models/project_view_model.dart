@@ -63,7 +63,7 @@ class ProjectViewModel extends BaseModel {
 
     Map<String, String> body = {
       'q':
-          "SELECT TO_CHAR(custrecord_bt_start_date, 'DS TS') as start_time, TO_CHAR(custrecord_bt_end_date, 'DS TS') as end_time, job.entityid as name, job.custentity_bb_install_address_1_text as address_1, job.custentity_bb_install_address_2_text as address_2, job.custentity_bb_install_city_text as city, customrecord_blutime_proj_connection.id as id, job.custentity_bb_entity_longitude_text as longitude, job.custentity_bb_entity_latitude_text as latitude FROM customrecord_blutime_proj_connection INNER JOIN job ON job.id = customrecord_blutime_proj_connection.custrecord_bt_project WHERE customrecord_blutime_proj_connection.custrecord_bt_entity = ${locator<StoreServices>().getUserID()}"
+          "SELECT TO_CHAR(custrecord_bt_start_date, 'DS TS') as start_time, TO_CHAR(custrecord_bt_end_date, 'DS TS') as end_time, CONCAT(CONCAT(CONCAT(job.companyname, ' ('), job.entityid), ')') as title, job.custentity_bb_install_address_1_text as address_1, job.custentity_bb_install_address_2_text as address_2, job.custentity_bb_install_city_text as city, customrecord_blutime_proj_connection.id as id, job.custentity_bb_entity_longitude_text as longitude, job.custentity_bb_entity_latitude_text as latitude, customrecord_blutime_proj_connection.custrecord_bt_project as bluchat_id FROM customrecord_blutime_proj_connection INNER JOIN job ON job.id = customrecord_blutime_proj_connection.custrecord_bt_project WHERE customrecord_blutime_proj_connection.custrecord_bt_entity = ${locator<StoreServices>().getUserID()}"
     };
     try {
       final result = await _queryClient.request<QueryResponse<Project>>(

@@ -83,7 +83,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     model.setSelectedProject = model.projects[index];
-                    controller.projectId.value = model.selectedProject?.id ?? "";
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
@@ -92,11 +91,16 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     if (startController.clockRunning.value == true &&
                         controller.projectName.value == "") {
                       controller.projectName.value =
-                          model.projects[index].name.toString();
+                          model.projects[index].title.toString();
                       await locator<StoreServices>().setLocal(
                           AppStorage.projectName,
                           "userid",
                           controller.projectName.value);
+                      await locator<StoreServices>().setLocal(
+                          AppStorage.currentProject,
+                          "userid",
+                          model.selectedProject?.toJson());
+                      controller.currentProject.value = model.selectedProject;
                     }
                   },
                   child: ProjectCard(

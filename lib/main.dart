@@ -14,7 +14,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'models/break.dart';
 
 
-bool isMockEnabled = true;
+bool isMockEnabled = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();

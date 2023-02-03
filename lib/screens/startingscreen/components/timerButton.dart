@@ -45,11 +45,16 @@ class TimerButton extends StatelessWidget {
             } else {
               if(bottomController.isSingle.value==true && bottomController.projectName.value=="" ){
                 // controller.startTimer();
-                bottomController.projectName.value = bottomController.projectModel.value.projects[0].name!;
+                bottomController.projectName.value = bottomController.projectModel.value.projects[0].title!;
                 await locator<StoreServices>().setLocal(
           AppStorage.projectName,
           "userid",
                     bottomController.projectName.value);
+                ///To save project to storage for bluchat
+                if (bottomController.projectModel.value.projects.isNotEmpty) {
+                  await locator<StoreServices>().setLocal(AppStorage.currentProject, "userid", bottomController.projectModel.value.projects[0].toJson());
+                  bottomController.currentProject.value = bottomController.projectModel.value.projects[0];
+                }
                 // print("project model ${bottomController.projectModel.value.projects}");
                 Get.to(()=>ProjectDetailHolderScreen(viewModel: bottomController.projectModel.value));
                 controller.startTimer();

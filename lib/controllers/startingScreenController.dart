@@ -4,6 +4,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/models/breakModel.dart';
+import 'package:blu_time/models/project.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,25 +32,30 @@ class StartingScreenController extends GetxController {
     // String roles =
     //     await locator<StoreServices>().getLocal(AppStorage.role, "userid");
     String currentLoc = await locator<StoreServices>()
-        .getLocal(AppStorage.currentAddress, "userid");
+        .getLocal(AppStorage.currentAddress, "userid") ?? "";
     String timerStartTime = await locator<StoreServices>()
-        .getLocal(AppStorage.timerStartTime, "userid");
+        .getLocal(AppStorage.timerStartTime, "userid") ?? "";
     String timerFinishTime = await locator<StoreServices>()
-        .getLocal(AppStorage.timeFinishTime, "userid");
+        .getLocal(AppStorage.timeFinishTime, "userid") ?? "";
     String timerTotalTime = await locator<StoreServices>()
-        .getLocal(AppStorage.totalWorkTime, "userid");
+        .getLocal(AppStorage.totalWorkTime, "userid") ?? "";
     String project = await locator<StoreServices>()
-        .getLocal(AppStorage.projectName, "userid");
+        .getLocal(AppStorage.projectName, "userid") ?? "";
     String acitivity = await locator<StoreServices>()
-        .getLocal(AppStorage.activityName, "userid");
+        .getLocal(AppStorage.activityName, "userid") ?? "";
     String checklist = await locator<StoreServices>()
-        .getLocal(AppStorage.checkListItemName, "userid");
+        .getLocal(AppStorage.checkListItemName, "userid") ?? "";
     // List<dynamic> breakList = await locator<StoreServices>()
     //     .getLocal(AppStorage.listOfBreaks, "userid");
     final BottomNavController controller = Get.put(BottomNavController());
     controller.projectName.value = project;
     controller.activityName.value = acitivity;
     controller.checkListItem.value = checklist;
+    dynamic currentProjectJson = await locator<StoreServices>().getLocal(AppStorage.currentProject, "userid");
+    if (currentProjectJson != null) {
+      Project? currentProject = Project().decode((Map<String, dynamic>.from(currentProjectJson)));
+      controller.currentProject.value = currentProject;
+    }
     // role.value = roles;
     currentAddress.value = currentLoc;
     var res = DateFormat.jm().format(DateFormat("hh:mm:ss").parse(timerStartTime));
