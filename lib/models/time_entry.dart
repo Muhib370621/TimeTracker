@@ -136,6 +136,26 @@ class TimeEntry extends Decodable<TimeEntry> {
     return _getParsedDate(startTime ?? "");
   }
 
+  String get startDateParsedWithDay {
+     try {
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(startTime ?? "");
+      return DateFormat('EEE d MMM').format(dateTime);
+    } catch (e) {
+      return startTime ?? "";
+    }
+  }
+
+
+
+  String get startDateTimeParsed {
+    return "${_getParsedDate(startTime ?? "")}  ${_getParsedTime(startTime ?? "")}";
+  }
+
+
+  String get endDateTimeParsed {
+    return "${_getParsedDate(endTime ?? "")}  ${_getParsedTime(endTime ?? "")}";
+  }
+
   String get startTimeParsed {
     return _getParsedTime(startTime ?? "");
   }
@@ -150,10 +170,10 @@ class TimeEntry extends Decodable<TimeEntry> {
 
   _getParsedDate(String date) {
     try {
-      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(date);
-      return DateFormat.yMMMMd().format(dateTime);
+      DateTime dateTime = DateFormat('M/d/yyyy h:mm:ss a').parse(startTime ?? "");
+      return DateFormat('MMM d yyyy').format(dateTime);
     } catch (e) {
-      return date;
+      return startTime ?? "";
     }
   }
 

@@ -22,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    String chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.projectId.value}';
+    String chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.currentProject.value?.bluchatId}';
     webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -46,9 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
       )
       ..loadRequest(Uri.parse(chatURl));
 
-    ever(controller.projectId, (_) {
+    ever(controller.currentProject, (_) {
           debugPrint("$_ has been changed");
-          chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.projectId.value}';
+          chatURl = 'https://dev.blubanyan.com/bluChat/SolarSuccess/?userId=${locator<StoreServices>().getUserID()}&recordType=job&recordId=${controller.currentProject.value?.bluchatId}';
           debugPrint(chatURl);
       webController.loadRequest(Uri.parse(chatURl));
     });

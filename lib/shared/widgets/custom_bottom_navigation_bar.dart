@@ -219,7 +219,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                           top: controller.currentIndex.value == 3 ? 10 : 35),
                       child: GestureDetector(
                           onTap: () {
-                            if (controller.projectId.isEmpty) {
+                            if (controller.currentProject.value == null) {
                               Prompts.showSnackBar(
                                   msg: "Please select a project");
                               return;

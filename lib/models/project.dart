@@ -291,11 +291,13 @@ class Project extends Decodable<Project> {
   String? id;
   String? latitude;
   String? longitude;
-  String? name;
+  String? title;
   String? startTime;
   String? customer;
+  String? bluchatId;
+  String? phone;
 
-  Project({this.links, this.address1, this.city, this.endTime, this.id, this.latitude, this.longitude, this.name, this.startTime, this.customer});
+  Project({this.links, this.address1, this.city, this.endTime, this.id, this.latitude, this.longitude, this.title, this.startTime, this.customer,this.bluchatId,this.phone});
 
   Project.fromJson(Map<String, dynamic> json) {
     address1 = json['address_1'];
@@ -304,8 +306,9 @@ class Project extends Decodable<Project> {
     id = json['id'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    name = json['name'];
+    title = json['title'];
     startTime = json['start_time'];
+    bluchatId = json['bluchat_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -316,8 +319,9 @@ class Project extends Decodable<Project> {
     data['id'] = id;
     data['latitude'] = latitude;
     data['longitude'] = longitude;
-    data['name'] = name;
+    data['title'] = title;
     data['start_time'] = startTime;
+    data['bluchat_id'] = this.bluchatId;
     startTimeParsed;
     return data;
   }

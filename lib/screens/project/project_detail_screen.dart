@@ -10,6 +10,7 @@ import 'package:blu_time/view_models/project_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   final Project project;
@@ -37,10 +38,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    AppLocalizedStrings.details.tr(),
-                    style: AppTextStyles.semiBold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      AppLocalizedStrings.details.tr(),
+                      style: AppTextStyles.semiBold
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -48,12 +52,56 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   Card(
                     elevation: 5.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
+                        borderRadius: BorderRadius.circular(4)),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizedStrings.customerName.tr(),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
+                              ),
+                              const SizedBox(width: 5,),
+                              const Spacer(),
+                              Text(widget.project.customer ?? "Name Here",
+                                  style: AppTextStyles.medium.copyWith(
+                                      color: Colors.grey, fontSize: 13.width)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizedStrings.phoneNumber.tr(),
+                                style: AppTextStyles.semiBold.copyWith(
+                                    color: AppColors.buttonBlue, fontSize: 13.width),
+                              ),
+                              const SizedBox(width: 5,),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () async {
+                                  if (widget.project.phone != null ) {
+                                    String url = "tel:${widget.project.phone}";
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      launchUrl(Uri.parse(url));
+                                    }
+                                  }
+                                },
+                                child: Text(widget.project.phone ?? "Phone Number Here",
+                                    style: AppTextStyles.medium.copyWith(
+                                        color: (widget.project.phone != null )?  AppColors.buttonBlue :Colors.grey, fontSize: 13.width)),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
                           Row(
                             children: [
                               Text(
@@ -138,10 +186,14 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    AppLocalizedStrings.action.tr(),
-                    style: AppTextStyles.bold
-                        .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+
+                    child: Text(
+                      AppLocalizedStrings.action.tr(),
+                      style: AppTextStyles.bold
+                          .copyWith(color: AppColors.buttonBlue, fontSize: 12.width),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

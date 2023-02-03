@@ -40,91 +40,87 @@ class _TimeCardDetailScreenState extends State<TimeCardDetailScreen> {
           children: [
             TimeCardDetailCard(timeEntry: widget.timeEntry,),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: AppColors.textFieldBackground,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Text(AppLocalizedStrings.startDateTime.tr(),
-                              style: AppTextStyles.bold.copyWith(
-                                  fontSize: 12.width, color: AppColors.buttonBlue)),
-                        ),
+              padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 5),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                backgroundColor: AppColors.textFieldBackground,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(AppLocalizedStrings.startDateTime.tr(),
+                                  style: AppTextStyles.bold.copyWith(
+                                      fontSize: 12.width, color: AppColors.buttonBlue)),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                backgroundColor: AppColors.textFieldBackground,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(AppLocalizedStrings.endDateTime.tr(),
+                                  style: AppTextStyles.bold.copyWith(
+                                      fontSize: 12.width, color: AppColors.buttonBlue)),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                backgroundColor: AppColors.textFieldBackground,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(AppLocalizedStrings.projectTotalTime.tr(),
+                                  style: AppTextStyles.bold.copyWith(
+                                      fontSize: 12.width, color: AppColors.buttonBlue)),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Text(
-                            widget.timeEntry.startTime ?? "N/A",
+                    ),
+                    const SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.timeEntry.startDateTimeParsed ?? "N/A",
                             style: AppTextStyles.medium
                                 .copyWith(fontSize: 12.width, color: Colors.black),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: AppColors.textFieldBackground,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Text(AppLocalizedStrings.endDateTime.tr(),
-                              style: AppTextStyles.bold.copyWith(
-                                  fontSize: 12.width, color: AppColors.buttonBlue)),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Text(
-                        widget.timeEntry.endTime ?? "N/A",
+                          ),
+                          Text(
+                            widget.timeEntry.endDateTimeParsed ?? "N/A",
                             style: AppTextStyles.medium
                                 .copyWith(fontSize: 12.width, color: Colors.black),
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: AppColors.textFieldBackground,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Text(AppLocalizedStrings.projectTotalTime.tr(),
-                              style: AppTextStyles.bold.copyWith(
-                                  fontSize: 12.width, color: AppColors.buttonBlue)),
-                        ),
+                          ),
+                          Text(
+                            double.parse(widget.timeEntry.hours ?? "0.0").convertDecimalHours(),
+                            style: AppTextStyles.medium
+                                .copyWith(fontSize: 12.width, color: Colors.black),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: Text(
-                        double.parse(widget.timeEntry.hours ?? "0.0").convertDecimalHours(),
-                        style: AppTextStyles.medium
-                            .copyWith(fontSize: 12.width, color: Colors.black),
-                      ))
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],

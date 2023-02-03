@@ -62,10 +62,13 @@ class CheckListScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            action.title ?? "",
-            style: AppTextStyles.bold
-                .copyWith(color: AppColors.buttonBlue, fontSize: 15.width),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              action.title ?? "",
+              style: AppTextStyles.bold
+                  .copyWith(color: AppColors.buttonBlue, fontSize: 13.width),
+            ),
           ),
           const SizedBox(
             height: 10,

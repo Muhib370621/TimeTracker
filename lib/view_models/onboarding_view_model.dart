@@ -58,8 +58,10 @@ class OnboardingViewModel extends BaseModel {
   getUserId() async {
     try {
       Map<String, String> body = {
-        'q': "SELECT id FROM entity WHERE email = 'dev5-bbss@blubanyan.com'"
+        'q': "SELECT id FROM entity WHERE email = 'p.colliar@bb.com'"
       };
+      //p.colliar@bb.com
+      //dev5-bbss@blubanyan.com
       final result = await _queryClient.request<QueryResponse<UserProfile>>(
           route: APIRoute(APIType.suiteql, routeParams: "?limit=10"), data: body, create: () => QueryResponse(create: () => UserProfile()));
       List<UserProfile> users = result.response?.items ?? [];

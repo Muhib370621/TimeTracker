@@ -92,6 +92,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     AppCommonButton(
                       title: "CONTINUE",
+                      radius: 4,
                       onPressed: () async {
                         try {
                           await viewModel.getToken();

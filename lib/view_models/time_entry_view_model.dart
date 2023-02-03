@@ -44,7 +44,7 @@ class TimeEntryViewModel extends BaseModel{
   fetchEntries({bool refresh = false}) async {
     if (isMockEnabled){
       String userId = locator<StoreServices>().getUsername();
-      allEntries = MockFactory().mockTimeEntry(userId: (userId == "t1@bb.com") ? null : userId);
+      allEntries = MockFactory().mockTimeEntry(userId: (userId == "p.colliar@bb.com") ? null : userId);
       entries = allEntries;
       setState(entries.isNotEmpty ? ViewState.completed : ViewState.empty);
       return;

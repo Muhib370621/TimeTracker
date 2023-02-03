@@ -15,7 +15,7 @@ class TimeCard extends StatelessWidget {
       elevation: 10.0,
       color: AppColors.background,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
         padding: const EdgeInsets.all(15),
@@ -27,7 +27,7 @@ class TimeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  timeEntry.trandate ?? "N/A",
+                  timeEntry.startDateParsedWithDay ?? "N/A",
                   style: AppTextStyles.semiBold.copyWith(fontSize: 15.width),
                 ),
                 SizedBox(
@@ -36,7 +36,7 @@ class TimeCard extends StatelessWidget {
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
                       shape:  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       side: const BorderSide(width: 1.0, color: Colors.red),
                     ),
