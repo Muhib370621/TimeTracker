@@ -14,7 +14,8 @@ class MockFactory {
       customer: "t3@bb.com",
       latitude: "37.788022",
       longitude: "-122.399797",
-       bluchatId: "1045089");
+       bluchatId: "1045089",
+       phone: "+1 201-211-6080");
 
   Project project2 = Project(
       title: "Commercial Building Renovation",
@@ -25,7 +26,8 @@ class MockFactory {
       customer: "t2@bb.com",
       latitude: "41.878114",
       longitude: "-87.629798",
-      bluchatId: "1045089");
+      bluchatId: "1045089",
+      phone: "+1 202-918-2132");
 
   Project project3 = Project(
       title: "HVAC and Plumbing Maintenance and Repair",
@@ -36,7 +38,8 @@ class MockFactory {
       customer: "t2@bb.com",
       latitude: "40.730610",
       longitude: "-73.935242",
-      bluchatId: "1045089");
+      bluchatId: "1045089",
+      phone: "+1 505-646-0726");
 
   List<UserProfile> mockUsers({String? userId}) {
     UserProfile user1 = UserProfile(email: "t1@bb.com", password: "testing@1one", firstName: "Dirk", lastName: "Liebich", mobile: "(555) 555-5201", id: "t1@bb.com");

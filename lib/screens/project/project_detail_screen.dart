@@ -10,6 +10,7 @@ import 'package:blu_time/view_models/project_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   final Project project;
@@ -66,7 +67,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               ),
                               const SizedBox(width: 5,),
                               const Spacer(),
-                              Text("Name Here",
+                              Text(widget.project.customer ?? "Name Here",
                                   style: AppTextStyles.medium.copyWith(
                                       color: Colors.grey, fontSize: 13.width)),
                             ],
@@ -83,9 +84,19 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               ),
                               const SizedBox(width: 5,),
                               const Spacer(),
-                              Text("Phone Number Here",
-                                  style: AppTextStyles.medium.copyWith(
-                                      color: Colors.grey, fontSize: 13.width)),
+                              GestureDetector(
+                                onTap: () async {
+                                  if (widget.project.phone != null ) {
+                                    String url = "tel:${widget.project.phone}";
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      launchUrl(Uri.parse(url));
+                                    }
+                                  }
+                                },
+                                child: Text(widget.project.phone ?? "Phone Number Here",
+                                    style: AppTextStyles.medium.copyWith(
+                                        color: (widget.project.phone != null )?  AppColors.buttonBlue :Colors.grey, fontSize: 13.width)),
+                              ),
                             ],
                           ),
                           const SizedBox(

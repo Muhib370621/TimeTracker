@@ -295,8 +295,9 @@ class Project extends Decodable<Project> {
   String? startTime;
   String? customer;
   String? bluchatId;
+  String? phone;
 
-  Project({this.links, this.address1, this.city, this.endTime, this.id, this.latitude, this.longitude, this.title, this.startTime, this.customer,this.bluchatId});
+  Project({this.links, this.address1, this.city, this.endTime, this.id, this.latitude, this.longitude, this.title, this.startTime, this.customer,this.bluchatId,this.phone});
 
   Project.fromJson(Map<String, dynamic> json) {
     address1 = json['address_1'];
