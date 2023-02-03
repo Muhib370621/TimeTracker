@@ -40,7 +40,7 @@ class ProjectViewModel extends BaseModel {
 
     if (isMockEnabled) {
       String userId = locator<StoreServices>().getUsername();
-      projects = MockFactory().mockProjects(userId: (userId == "t1@bb.com") ? null : userId);
+      projects = MockFactory().mockProjects(userId: (userId == "p.colliar@bb.com") ? null : userId);
       print("projects ${projects.length}");
       if (projects.length==1){
         bottomController.projectList.value= projects[0];

@@ -27,8 +27,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController(text: "t1@bb.com");
-  final TextEditingController passwordController = TextEditingController(text: "testing@1one");
+  final TextEditingController emailController = TextEditingController(text: "p.colliar@bb.com");
+  final TextEditingController passwordController = TextEditingController(text: "Solar12345!");
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<OnboardingViewModel>.reactive(

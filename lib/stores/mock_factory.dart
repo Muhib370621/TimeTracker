@@ -11,7 +11,7 @@ class MockFactory {
       startTime: "2/15/2022 1:00:00 PM",
       endTime: "3/27/2022 2:00:00 PM",
       address1: "123 Main St, Anytown",
-      customer: "t3@bb.com",
+      customer: "s.fransewich@bb.com",
       latitude: "37.788022",
       longitude: "-122.399797",
        bluchatId: "1045089",
@@ -23,7 +23,7 @@ class MockFactory {
       startTime: "4/20/2022 3:00:00 PM",
       endTime: "5/15/2022 4:00:00 PM",
       address1: "555 Park Ave, Cityville",
-      customer: "t2@bb.com",
+      customer: "d.spurman@bb.com",
       latitude: "41.878114",
       longitude: "-87.629798",
       bluchatId: "1045089",
@@ -35,16 +35,16 @@ class MockFactory {
       startTime: "6/25/2022 5:00:00 PM",
       endTime: "7/10/2022 6:00:00 PM",
       address1: "999 Elm St, Village",
-      customer: "t2@bb.com",
+      customer: "d.spurman@bb.com",
       latitude: "40.730610",
       longitude: "-73.935242",
       bluchatId: "1045089",
       phone: "+1 505-646-0726");
 
   List<UserProfile> mockUsers({String? userId}) {
-    UserProfile user1 = UserProfile(email: "t1@bb.com", password: "testing@1one", firstName: "Dirk", lastName: "Liebich", mobile: "(555) 555-5201", id: "t1@bb.com");
-    UserProfile user2 = UserProfile(email: "t2@bb.com", password: "testing@1one", firstName: "David", lastName: "Williams", mobile: "(555) 555-5202", id: "t2@bb.com");
-    UserProfile user3 = UserProfile(email: "t3@bb.com", password: "testing@1one", firstName: "Robert", lastName: "Miller", mobile: "555-5203", id: "t3@bb.com");
+    UserProfile user1 = UserProfile(email: "p.colliar@bb.com", password: "testing@1one", firstName: "Dirk", lastName: "Liebich", mobile: "(555) 555-5201", id: "t1@bb.com");
+    UserProfile user2 = UserProfile(email: "d.spurman@bb.com", password: "testing@1one", firstName: "David", lastName: "Williams", mobile: "(555) 555-5202", id: "t2@bb.com");
+    UserProfile user3 = UserProfile(email: "s.fransewich@bb.com", password: "testing@1one", firstName: "Robert", lastName: "Miller", mobile: "555-5203", id: "t3@bb.com");
     List<UserProfile> users = [user1, user2, user3];
     if (userId == null) {
       return users;
@@ -125,7 +125,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Approved",
           hours: "7.5",
-          employee: "t1@bb.com",
+          employee: "p.colliar@bb.com",
           csegBbProject: "1",
           startTime: "10/17/2022 9:00:00 AM",
           endTime: "10/17/2022 6:30:00 PM",
@@ -142,7 +142,7 @@ class MockFactory {
         remainingCount: 1,
         type: "Approved",
         hours: "8.0",
-        employee: "t1@bb.com",
+        employee: "p.colliar@bb.com",
         csegBbProject: "1",
         startTime: "10/16/2022 9:00:00 AM",
         endTime: "10/16/2022 7:00:00 PM",
@@ -160,7 +160,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked In",
           hours: "8.0",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "2",
           startTime: "10/15/2022 9:00:00 AM",
           endTime: "10/15/2022 7:00:00 PM",
@@ -177,7 +177,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked In",
           hours: "6.5",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "2",
           startTime: "10/14/2022 9:00:00 AM",
           endTime: "10/14/2022 4:30:00 PM",
@@ -193,7 +193,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "4.0",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "3",
           startTime: "10/13/2022 9:00:00 AM",
           endTime: "10/13/2022 1:00:00 PM",
@@ -207,7 +207,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "8",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "3",
           startTime: "8/20/2022 9:00:00 AM",
           endTime: "8/20/2022 7:00:00 PM",
@@ -224,7 +224,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Clocked Out",
           hours: "10.5",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "3",
           startTime: "7/20/2022 9:00:00 AM",
           endTime: "7/20/2022 9:30:00 PM",
@@ -241,7 +241,7 @@ class MockFactory {
           remainingCount: 1,
           type: "Not Approved",
           hours: "8.0",
-          employee: "t2@bb.com",
+          employee: "d.spurman@bb.com",
           csegBbProject: "3",
           startTime: "6/20/2022 9:00:00 AM",
           endTime: "6/20/2022 5:00:00 PM",

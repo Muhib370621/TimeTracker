@@ -50,10 +50,10 @@ class _TimeCardDetailCardState extends State<TimeCardDetailCard> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  AppLocalizedStrings.completed.tr(),
-                  style: AppTextStyles.bold.copyWith(color: AppColors.orange, fontSize: 12),
-                )
+                // Text(
+                //   AppLocalizedStrings.completed.tr(),
+                //   style: AppTextStyles.bold.copyWith(color: AppColors.orange, fontSize: 12),
+                // )
               ],
             ),
             const SizedBox(

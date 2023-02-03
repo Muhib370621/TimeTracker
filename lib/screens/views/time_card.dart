@@ -27,7 +27,7 @@ class TimeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  timeEntry.trandate ?? "N/A",
+                  timeEntry.startDateParsedWithDay ?? "N/A",
                   style: AppTextStyles.semiBold.copyWith(fontSize: 15.width),
                 ),
                 SizedBox(
