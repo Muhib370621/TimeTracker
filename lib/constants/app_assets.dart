@@ -45,6 +45,7 @@ class AppAssets {
   static const pauseTimer = "$_svgsPath/pauseTimer.svg";
   static const finishWorkIcon = "$_svgsPath/finishWork.svg";
   static const thumbsUpIcon = "$_svgsPath/thumbsUp.svg";
+  static const trackingStarted = "$_svgsPath/trackingStarted.svg";
 
 
 

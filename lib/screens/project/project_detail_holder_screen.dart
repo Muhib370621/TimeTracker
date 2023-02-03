@@ -49,7 +49,7 @@ class _ProjectDetailHolderScreenState extends State<ProjectDetailHolderScreen>
                   child: buildBody(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 8),
                   child: DefaultTabController(
                     length: 3,
                     child: TabBar(
