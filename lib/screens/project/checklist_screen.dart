@@ -9,8 +9,11 @@ import 'package:blu_time/shared/widgets/empty_view.dart';
 import 'package:blu_time/shared/widgets/paged_list.dart';
 import 'package:blu_time/view_models/checklist_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../controllers/bottomNavigationController.dart';
 
 class CheckListScreen extends StatelessWidget {
   final ProjectAction action;
@@ -72,6 +75,14 @@ class CheckListScreen extends StatelessWidget {
                   itemCount: model.checklist.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
+                      onTap: () {
+                        final BottomNavController controller = Get.put(
+                          BottomNavController(),
+                        );
+                        // var checklistLength = model.checklist.length;
+                        controller.checklistLength.value=model.checklist.length;
+                        print("checkList length ${controller.checklistLength.value}");
+                      },
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         child: ChecklistCard(

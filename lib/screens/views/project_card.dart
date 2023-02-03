@@ -9,34 +9,60 @@ import 'package:get/get.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
+
   const ProjectCard({Key? key, required this.project}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final StartingScreenController controller =
-    Get.put(StartingScreenController());
+        Get.put(StartingScreenController());
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      color: controller.isNear.value==true?AppColors.buttonBlue:AppColors.cellBackground,
+      color: controller.isNear.value  == true || controller.projectIndex.value == project.id
+          ? AppColors.buttonBlue
+          : AppColors.cellBackground,
       child: ListTile(
         title: Row(
           children: [
-            SvgPicture.asset(AppAssets.projectIcon,color: controller.isNear.value==true?AppColors.cellBackground:AppColors.buttonBlue,),
-            const SizedBox(width: 12,),
-            Flexible(child: Text(project.name?? "",style: AppTextStyles.semiBold.copyWith(color: controller.isNear.value==true?AppColors.cellBackground:Colors.black,fontSize: 12))),
+            SvgPicture.asset(
+              AppAssets.projectIcon,
+              color: controller.isNear.value == true || controller.projectIndex.value == project.id
+                  ? AppColors.cellBackground
+                  : AppColors.buttonBlue,
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            Flexible(
+              child: Text(
+                project.name ?? "",
+                style: AppTextStyles.semiBold.copyWith(
+                  color: controller.isNear.value  == true || controller.projectIndex.value == project.id
+                      ? AppColors.cellBackground
+                      : Colors.black,
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ],
         ),
         trailing: Container(
           decoration: BoxDecoration(
-            color: controller.isNear.value==true?AppColors.cellBackground:AppColors.buttonBlue,
-            borderRadius: BorderRadius.circular(4.0)
-          ),
-          child:  Padding(
+              color: controller.isNear.value == true || controller.projectIndex.value == project.id
+                  ? AppColors.cellBackground
+                  : AppColors.buttonBlue,
+              borderRadius: BorderRadius.circular(4.0)),
+          child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Icon(Icons.arrow_forward_ios,color: controller.isNear.value==true?AppColors.buttonBlue:Colors.white,),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              color: controller.isNear.value == true || controller.projectIndex.value == project.id
+                  ? AppColors.buttonBlue
+                  : Colors.white,
+            ),
           ),
         ),
       ),

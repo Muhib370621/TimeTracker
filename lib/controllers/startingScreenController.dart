@@ -7,6 +7,7 @@ import 'package:blu_time/models/breakModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,7 +20,7 @@ import '../stores/store_services.dart';
 import 'bottomNavigationController.dart';
 
 class StartingScreenController extends GetxController {
-  ///init state os the controller
+  ///init state of the controller
   @override
   Future<void> onInit() async {
     determinePosition();
@@ -43,12 +44,15 @@ class StartingScreenController extends GetxController {
         .getLocal(AppStorage.activityName, "userid");
     String checklist = await locator<StoreServices>()
         .getLocal(AppStorage.checkListItemName, "userid");
+    String projectID = await locator<StoreServices>()
+        .getLocal(AppStorage.projectID, "userid");
     // List<dynamic> breakList = await locator<StoreServices>()
     //     .getLocal(AppStorage.listOfBreaks, "userid");
     final BottomNavController controller = Get.put(BottomNavController());
     controller.projectName.value = project;
     controller.activityName.value = acitivity;
     controller.checkListItem.value = checklist;
+    controller.projectId.value=projectID;
     // role.value = roles;
     currentAddress.value = currentLoc;
     var res = DateFormat.jm().format(DateFormat("hh:mm:ss").parse(timerStartTime));
@@ -68,6 +72,8 @@ class StartingScreenController extends GetxController {
     }
   }
 
+
+  ///dispose state of the controller
   @override
   Future<void> dispose() async {
     await locator<StoreServices>().setLocal(AppStorage.timerTime, "userid",
@@ -77,6 +83,8 @@ class StartingScreenController extends GetxController {
     super.dispose();
   }
 
+
+  ///all the variables of the controller
   String twoDigits(int n) => n.toString().padLeft(2, '0');
   Rx<DateTime> today = DateTime.now().toLocal().obs;
   List listOfBreaks = <BreakModel>[].obs;
@@ -126,9 +134,12 @@ class StartingScreenController extends GetxController {
   ).obs;
   final RxString timeString = ''.obs;
   final RxString updatedString = ''.obs;
-
   RxInt breakCounter = 0.obs;
+  RxBool projectSelected = false.obs;
+  RxString projectIndex = "".obs;
 
+
+  ///----functions of the controller----///
   ///removes the break from break list
   removeBreak(index) {
     listOfBreaks.removeAt(index);
@@ -299,11 +310,12 @@ class StartingScreenController extends GetxController {
 
 
 
-  /// triggers when you tap on start time after getting current locaiton and selecting roles
+  /// triggers when you tap on start time after getting current location
   void startTimer() async {
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     clockRunning.value = true;
-    // FlutterBeep.beep();
+    // FlutterBeep.playSysSound(AndroidSoundIDs.TONE_CDMA_EMERG);
+    FlutterBeep.beep(false);
     //   if (await Vibrate.canVibrate) {
         Vibrate.vibrate();
       // }
@@ -466,6 +478,7 @@ class StartingScreenController extends GetxController {
   }
 
   getCurrentLocation() async {
+    determinePosition();
     locationLoading.value = true;
     var position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,

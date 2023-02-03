@@ -1,5 +1,6 @@
 import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/constants/app_urls.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/helpers/locator.dart';
 import 'package:blu_time/main.dart';
 import 'package:blu_time/models/action_checklist.dart';
@@ -10,15 +11,22 @@ import 'package:blu_time/utilities/apis/api_response.dart';
 import 'package:blu_time/utilities/apis/api_routes.dart';
 import 'package:blu_time/utilities/apis/api_service.dart';
 import 'package:blu_time/view_models/base_view_model.dart';
+import 'package:get/get.dart';
 
 class ChecklistViewModel extends BaseModel {
   final _queryClient = ApiServices(baseUrl: AppUrls.path).client;
   List<ActionChecklist> checklist = [];
 
   fetchCheckList(String action) async {
+    final BottomNavController controller = Get.put(
+      BottomNavController(),
+    );
     if (isMockEnabled){
+
       checklist = MockFactory().mockActionChecklist(action);
       setState(checklist.isNotEmpty ? ViewState.completed : ViewState.empty);
+      controller.checklistLength.value=checklist.length;
+      print("checkList length ${controller.checklistLength.value}");
       return;
     }
     // final StartingScreenController controller =
@@ -26,6 +34,8 @@ class ChecklistViewModel extends BaseModel {
     List<dynamic> jsonList = await locator<StoreServices>().getLocal(AppStorage.checklist, action) ?? [];
     // controller.actions = jsonList;
     checklist = jsonList.map((e) => ActionChecklist().decode((Map<String, dynamic>.from(e)))).toList();
+    controller.checklistLength.value=checklist.length;
+    print("checkList length ${controller.checklistLength.value}");
     setState(checklist.isNotEmpty ? ViewState.completed : ViewState.loading);
     Map<String, String> body = {
       'q':
@@ -37,6 +47,8 @@ class ChecklistViewModel extends BaseModel {
           data: body,
           create: () => QueryResponse(create: () => ActionChecklist()));
       checklist = result.response?.items ?? [];
+      controller.checklistLength.value=checklist.length;
+      print("checkList length ${controller.checklistLength.value}");
       if (checklist.isNotEmpty) {
         await locator<StoreServices>().setLocal(AppStorage.checklist,action, checklist.map((e) => e.toJson()).toList());
       }

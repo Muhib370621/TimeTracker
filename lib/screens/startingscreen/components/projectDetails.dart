@@ -60,11 +60,12 @@ class ProjectDetails extends StatelessWidget {
           bottomController.checkListItem.value != "",
           child: Container(
             height: 3.h,
-            width: 45.w,
+            width: 50.w,
+            // padding: EdgeInsets.only(left: 2),
             decoration: BoxDecoration(
               color: AppColors.timerColor.withOpacity(0.2),
               borderRadius: const BorderRadius.all(
-                Radius.circular(8),
+                Radius.circular(4),
               ),
               boxShadow: [
                 BoxShadow(
@@ -79,13 +80,18 @@ class ProjectDetails extends StatelessWidget {
             child: Center(
               child: Row(
                 mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+                MainAxisAlignment.start,
                 children: [
+                  SizedBox(width: 1.w,),
                   SvgPicture.asset(
                     AppAssets.checkListItem,
                     height: 2.h,
                   ),
-                  Expanded(
+                  SizedBox(width: 1.w,),
+
+                  // SizedBox(width: 2.w,),
+                  SizedBox(
+                    width: 44.w,
                     child: Text(
                       bottomController.checkListItem.value
                           .toString(),
@@ -97,7 +103,7 @@ class ProjectDetails extends StatelessWidget {
                       maxLines: 1,
                     ),
                   ),
-                  const SizedBox()
+                  // const SizedBox()
                 ],
               ),
             ),

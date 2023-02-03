@@ -82,6 +82,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   onTap: () async {
                     model.setSelectedProject = model.projects[index];
                     controller.projectId.value = model.selectedProject?.id ?? "";
+                    await locator<StoreServices>().setLocal(
+                        AppStorage.projectID,
+                        "userid",
+                        controller.projectId.value);
                     Navigator.of(context).pushNamed(
                         RouteNames.projectDetailHolder,
                         arguments: model);
@@ -91,6 +95,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         controller.projectName.value == "") {
                       controller.projectName.value =
                           model.projects[index].name.toString();
+                      // model.projects[index].
+                      startController.projectSelected.value=true;
+                      startController.projectIndex.value=model.projects[index].id!;
+                      print("project ID ${model.projects[index].id}");
                       await locator<StoreServices>().setLocal(
                           AppStorage.projectName,
                           "userid",

@@ -15,7 +15,7 @@ class AppStorage {
   static const String breakFinishTime = "breakFinishTime";
   static const String totalWorkTime = "totalWorkTime";
   static const String totalBreakTime = "totalBreakTime";
-  static const String role = "role";
+  static const String projectID = "projectID";
   static const String currentAddress = "currentAddress";
   static const String currentDate = "currentDate";
   static const String projectName = "projectName";

@@ -1,5 +1,6 @@
 // import 'package:flutter/material.dart';
 import 'package:blu_time/models/project.dart';
+import 'package:blu_time/models/project_action.dart';
 import 'package:blu_time/view_models/project_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class BottomNavController extends GetxController{
     const TimeCardScreen(),
     const ProjectsScreen(),
     const ChatScreen(),
-  ].obs;  /// list of pages which we want show on tap of bottom navigation
+  ].obs;                                  /// list of pages which we want show on tap of bottom navigation
   RxBool roleSelected = false.obs;        /// the roles selected such as "electrician","technician" or "plumber"
   RxBool locationLoading = false.obs;     /// when we trigger get location function in starting controller
   RxString activityName = "".obs;         /// name of the activity which is selected when we start the timer
@@ -36,6 +37,10 @@ class BottomNavController extends GetxController{
   RxBool isSingle = false.obs;
   var projectModel = ProjectViewModel().obs;
   Rx<Project> projectList = Project().obs;
+  Rx<ProjectAction> actionModel = ProjectAction().obs;
+  RxInt checkListCounter = 0.obs;
+  RxInt checklistLength = 0.obs; /// it is the current index of the bottom navigation
+
 
 
   ///set bottom bar index to the desired value

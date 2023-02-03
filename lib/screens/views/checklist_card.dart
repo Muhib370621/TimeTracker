@@ -34,6 +34,8 @@ class ChecklistCard extends StatelessWidget {
       color: AppColors.cellBackground,
       child: GestureDetector(
         onTap: () async {
+          print("completed value ${actionChecklist.completed}");
+
           if (startController.clockRunning.value == true &&
               controller.checkListItem.value == "") {
             Prompts.confirmationDialog(
@@ -42,6 +44,7 @@ class ChecklistCard extends StatelessWidget {
               Get.to(
                 () => CustomBottomNavigationBar(),
               );
+              controller.checkListCounter.value++;
               controller.currentIndex.value = 0;
               controller.checkListItem.value =
                   actionChecklist.title.toString();

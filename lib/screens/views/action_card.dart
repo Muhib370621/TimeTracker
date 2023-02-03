@@ -136,6 +136,8 @@ class _ActionCardState extends State<ActionCard> {
                               final BottomNavController controller = Get.put(
                                 BottomNavController(),
                               );
+                              var actionModel = widget.projectAction;
+                              controller.actionModel.value=actionModel;
                               controller.activityName.value = widget.projectAction.title ?? "";
                               await locator<StoreServices>()
                             .setLocal(AppStorage.activityName, "userid",controller.activityName.value);

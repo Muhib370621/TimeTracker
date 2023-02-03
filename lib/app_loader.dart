@@ -6,7 +6,6 @@ import 'package:blu_time/screens/onboarding/login_screen.dart';
 import 'package:blu_time/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AppLoader extends StatefulWidget {
   const AppLoader({Key? key}) : super(key: key);
@@ -71,7 +70,7 @@ class _AppLoaderState extends State<AppLoader> {
                           height: 10,
                         ),
                         const Text(
-                          "Because Your Time is Valuable",
+                          "Your Timekeeping Buddy",
                           style: AppTextStyles.normal,
                         ),
                       ],

@@ -17,7 +17,15 @@ class BreakButton extends StatelessWidget {
     return Obx(() => Visibility(
           visible: controller.clockRunning.value == true ||
               controller.breakRunning.value == true,
-          child: GestureDetector(
+          child: InkWell(
+            splashColor: AppColors.bottomBar.withOpacity(0.9),
+            focusColor: AppColors.bottomBar.withOpacity(0.9),
+            highlightColor: AppColors.bottomBar.withOpacity(0.9),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(
+                10,
+              ),
+            ),
             onTap: () {
               controller.stopTimer(resets: false, context: context);
               if (controller.breakRunning.value == true) {

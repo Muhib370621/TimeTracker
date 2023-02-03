@@ -1,10 +1,17 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
+import 'package:blu_time/constants/app_storage.dart';
+import 'package:blu_time/controllers/bottomNavigationController.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
+import 'package:blu_time/models/action_checklist.dart';
+import 'package:blu_time/screens/project/checklist_screen.dart';
+import 'package:blu_time/stores/store_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../../helpers/locator.dart';
 
 class StopTimerSelector extends StatelessWidget {
   const StopTimerSelector({Key? key}) : super(key: key);
@@ -84,15 +91,50 @@ class StopTimerSelector extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
+                                final BottomNavController bottomController = Get.put(BottomNavController());
+                                // if(bottomController.actionModel.)
                                 controller.isStopSelecting.value = false;
                                 controller.stopSelector.value = "Finish Work";
                                 controller.reset();
                                 controller.stopTimer(
                                     context: context, resets: true);
+                                bottomController.checkListItem.value="";
+                                // Get.to(()=> ActionChecklist());
                                 // controller.isChecklistConfirm.value = false;
                                 controller.isStopSelecting.value = false;
                                 // controller.isChecklistConfirm.value = true;
+                                await locator<StoreServices>().setLocal(
+                                AppStorage.checkListItemName,
+                                "userid",
+                                "");
+                                print("length ${bottomController.checklistLength.value}");
+                                print("counter ${bottomController.checkListCounter.value}");
+
+                                if(bottomController.checklistLength.value==bottomController.checkListCounter.value)
+                                  {
+                                    print("Completed");
+                                    bottomController.projectName.value ="";
+                                    await locator<StoreServices>().setLocal(
+                                        AppStorage.projectName,
+                                        "userid",
+                                        "");
+                                    bottomController.activityName.value="";
+                                    await locator<StoreServices>()
+                                        .setLocal(AppStorage.activityName, "userid","");
+                                    controller.currentAddress.value="";
+                                    bottomController.checklistLength.value=0;
+                                    bottomController.checkListCounter.value=0;
+                                  }
+                                else
+                                {
+                                  // controller.currentAddress.value="";
+                                  Get.to(() => CheckListScreen(
+                                        action:
+                                            bottomController.actionModel.value,
+                                      ));
+                                  controller.startTimer();
+                                }
                               },
                               child: Container(
                                 height: 13.h,

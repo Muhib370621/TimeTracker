@@ -3,7 +3,6 @@ import 'package:blu_time/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'widgets/app_common_button.dart';
@@ -109,32 +108,43 @@ class Prompts {
               ),
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
             // actionsPadding: EdgeInsets.symmetric(vertical: 5),
             actions: <Widget>[
-              AppCommonButton(
-                title: "NO",
-                width: 35.w,
-                height: 4.5.h,
-                radius: 8,
-                color: Colors.white,
-                textColor: AppColors.buttonBlue,
-                borderColor: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              AppCommonButton(
-                  title: "YES",
-                  width: 35.w,
-                  height: 4.5.h,
-                  radius: 8,
-                  color: AppColors.buttonBlue,
-                  textColor: Colors.white,
-                  onPressed: onConfirmTap
-                  // borderColor: Colors.white,
+              Column(
+                children: [
+                  AppCommonButton(
+                    title: "NO",
+                    width: 35.w,
+                    height: 4.5.h,
+                    radius: 8,
+                    color: Colors.white,
+                    textColor: AppColors.buttonBlue,
+                    borderColor: Colors.white,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
+                  SizedBox(height: 0.6.h,),
+
+                ],
+              ),
+              Column(
+                children: [
+                  AppCommonButton(
+                      title: "YES",
+                      width: 35.w,
+                      height: 4.5.h,
+                      radius: 8,
+                      color: AppColors.buttonBlue,
+                      textColor: Colors.white,
+                      onPressed: onConfirmTap
+                      // borderColor: Colors.white,
+                      ),
+                  SizedBox(height: 0.6.h,),
+                ],
+              ),
             ],
           );
         });
