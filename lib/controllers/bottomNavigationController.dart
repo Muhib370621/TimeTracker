@@ -40,7 +40,7 @@ class BottomNavController extends GetxController{
   Rx<ProjectAction> actionModel = ProjectAction().obs;
   RxInt checkListCounter = 0.obs;
   RxInt checklistLength = 0.obs; /// it is the current index of the bottom navigation
-
+  Rxn<Project> currentProject = Rxn<Project>();
 
 
   ///set bottom bar index to the desired value

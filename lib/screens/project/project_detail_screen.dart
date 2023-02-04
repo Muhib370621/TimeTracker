@@ -69,7 +69,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen>
                               const Spacer(),
                               Text(widget.project.customer ?? "Name Here",
                                   style: AppTextStyles.medium.copyWith(
-                                      color: Colors.grey, fontSize: 13.width)),
+                                      color: Colors.grey, fontSize: 11.2.width)),
                             ],
                           ),
                           const SizedBox(

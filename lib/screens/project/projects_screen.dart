@@ -72,7 +72,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return Selector<ProjectViewModel, List<Project>>(
         selector: (context, model) => model.projects,
         builder: (BuildContext context, value, Widget? child) {
-          controller.projectModel.value=model;
+          controller.projectModel.value = model;
           return PagedList(
             itemCount: model.projects.length,
             itemBuilder: (context, index) {
@@ -81,7 +81,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 child: GestureDetector(
                   onTap: () async {
                     model.setSelectedProject = model.projects[index];
-                    controller.projectId.value = model.selectedProject?.id ?? "";
+                    controller.projectId.value =
+                        model.selectedProject?.id ?? "";
                     await locator<StoreServices>().setLocal(
                         AppStorage.projectID,
                         "userid",
@@ -94,10 +95,16 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     if (startController.clockRunning.value == true &&
                         controller.projectName.value == "") {
                       controller.projectName.value =
-                          model.projects[index].name.toString();
+                          model.projects[index].title.toString();
                       // model.projects[index].
-                      startController.projectSelected.value=true;
-                      startController.projectIndex.value=model.projects[index].id!;
+                      startController.projectSelected.value = true;
+                      startController.projectIndex.value =
+                          model.projects[index].id!;
+                      await locator<StoreServices>().setLocal(
+                          AppStorage.projectIndex,
+                          "userid",
+                          model.projects[index].id!);
+
                       print("project ID ${model.projects[index].id}");
                       await locator<StoreServices>().setLocal(
                           AppStorage.projectName,

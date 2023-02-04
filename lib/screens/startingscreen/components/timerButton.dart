@@ -9,6 +9,7 @@ import 'package:blu_time/shared/Prompts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../constants/app_storage.dart';
@@ -44,6 +45,11 @@ class TimerButton extends StatelessWidget {
                   resets: false, context: context);
               controller.isStopSelecting.value = true;
             } else {
+              if (bottomController.projectModel.value.projects.isNotEmpty) {
+              await locator<StoreServices>().setLocal(AppStorage.currentProject, "userid", bottomController.projectModel.value.projects[0].toJson());
+              bottomController.currentProject.value = bottomController.projectModel.value.projects[0];
+              print("blu chat id ${bottomController.currentProject.value?.bluchatId}");
+              }
               if(bottomController.isSingle.value==true && bottomController.projectName.value=="" ){
                 // controller.startTimer();
                 bottomController.projectName.value = bottomController.projectModel.value.projects[0].title!;
@@ -51,18 +57,19 @@ class TimerButton extends StatelessWidget {
           AppStorage.projectName,
           "userid",
                     bottomController.projectName.value);
+                // bottomController.projectModel.value.projects=
                 ///To save project to storage for bluchat
-                if (bottomController.projectModel.value.projects.isNotEmpty) {
-                  await locator<StoreServices>().setLocal(AppStorage.currentProject, "userid", bottomController.projectModel.value.projects[0].toJson());
-                  bottomController.currentProject.value = bottomController.projectModel.value.projects[0];
-                }
+
                 // print("project model ${bottomController.projectModel.value.projects}");
                 Get.to(()=>ProjectDetailHolderScreen(viewModel: bottomController.projectModel.value));
                 controller.startTimer();
+                controller.updatedString.value = DateFormat('hh:mm:ss').format(DateTime.now());
+
               }
               else {
                 if(controller.breakRunning.value == false && controller.locationLoading.value==false)
                     {controller.startTimer();
+                    controller.updatedString.value = DateFormat('hh:mm:ss').format(DateTime.now());
                     bottomController.projectName.value == ""
                         ? bottomController
                         .currentIndex.value = 2
@@ -169,7 +176,7 @@ class TimerButton extends StatelessWidget {
         ),
       ),
       Visibility(
-        visible: controller.breakCounter.value > 0,
+        visible: controller.listOfBreaks.isNotEmpty,
         child: Positioned(
           bottom: 0,
           right: 0,

@@ -51,7 +51,7 @@ class _AppLoaderState extends State<AppLoader> {
                 child: Column(
                   children: [
                     Image.asset(
-                      AppAssets.bluLogoWhite,
+                      AppAssets.appLogo,
                       // semanticsLabel: 'Acme Logo',
                       fit: BoxFit.cover, width: 200,
                     ),
@@ -60,7 +60,7 @@ class _AppLoaderState extends State<AppLoader> {
                     Column(
                       children: [
                         Image.asset(
-                          AppAssets.bluSplashText,
+                          AppAssets.appNameLogo,
                           width: 120,
                         ),
                         // Text.rich( TextSpan(
@@ -71,7 +71,7 @@ class _AppLoaderState extends State<AppLoader> {
                           height: 10,
                         ),
                         const Text(
-                          "Because Your Time is Valuable",
+                          "Your Timekeeping Buddy",
                           style: AppTextStyles.normal,
                         ),
                       ],

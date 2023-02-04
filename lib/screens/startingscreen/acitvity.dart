@@ -357,7 +357,7 @@ class _ActivityState extends State<Activity> {
                                                                                 )),
                                                                             child: Center(
                                                                               child: Text(
-                                                                                controller.listOfBreaks[index].breakStart.toString().substring(0,6),
+                                                                                controller.listOfBreaks[index].breakStart.toString().substring(0,5),
                                                                                 style: TextStyle(
                                                                                   fontSize: 16.5.sp,
                                                                                   color: Colors.white,
@@ -392,7 +392,7 @@ class _ActivityState extends State<Activity> {
                                                                                 )),
                                                                             child: Center(
                                                                               child: Text(
-                                                                                controller.listOfBreaks[index].breakEnd.toString().substring(0,6),
+                                                                                controller.listOfBreaks[index].breakEnd.toString().substring(0,5),
                                                                                 style: TextStyle(
                                                                                   fontSize: 16.5.sp,
                                                                                   color: Colors.white,
@@ -704,6 +704,9 @@ class _ActivityState extends State<Activity> {
                                         controller.deleteIndex.value);
                                     controller.deletionConfirmation.value =
                                         false;
+                                    if (controller.listOfBreaks.isEmpty){
+                                      Get.back();
+                                    }
                                     // Prompts.showSnackBar(
                                     //     msg: "Break Deleted", isWarning: false);
                                   },

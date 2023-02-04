@@ -38,7 +38,7 @@ class ProjectCard extends StatelessWidget {
             ),
             Flexible(
               child: Text(
-                project.name ?? "",
+                project.title ?? "",
                 style: AppTextStyles.semiBold.copyWith(
                   color: controller.isNear.value  == true || controller.projectIndex.value == project.id
                       ? AppColors.cellBackground

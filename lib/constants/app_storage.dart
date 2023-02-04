@@ -25,4 +25,9 @@ class AppStorage {
   static const String appPausedTime = "appPausedTime";
   static const String appResumedTime = "appResumedTime";
   static const String currentProject = "currentProject";
+  static const String breakPausedTime = "breakPausedTime";
+  static const String timerInstance = "timerInstance";
+  static const String projectIndex = "projectIndex";
+
+
 }

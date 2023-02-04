@@ -1,10 +1,14 @@
 import 'package:blu_time/constants/app_assets.dart';
 import 'package:blu_time/constants/app_colors.dart';
 import 'package:blu_time/constants/app_localized_strings.dart';
+import 'package:blu_time/constants/app_storage.dart';
 import 'package:blu_time/controllers/startingScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../../helpers/locator.dart';
+import '../../../stores/store_services.dart';
 
 class BreakButton extends StatelessWidget {
   const BreakButton({Key? key}) : super(key: key);
@@ -26,7 +30,9 @@ class BreakButton extends StatelessWidget {
                 10,
               ),
             ),
-            onTap: () {
+            onTap: () async {
+              await locator<StoreServices>().setLocal(
+              AppStorage.timerInstance, "userid", controller.clockDuration.value.toString());
               controller.stopTimer(resets: false, context: context);
               if (controller.breakRunning.value == true) {
                 controller.stopBreak(resets: true);

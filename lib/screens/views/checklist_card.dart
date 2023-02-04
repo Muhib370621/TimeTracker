@@ -5,6 +5,7 @@ import 'package:blu_time/models/action_checklist.dart';
 import 'package:blu_time/shared/Prompts.dart';
 import 'package:blu_time/shared/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:get/get.dart';
 
 import '../../constants/app_storage.dart';
@@ -52,6 +53,7 @@ class ChecklistCard extends StatelessWidget {
                   AppStorage.checkListItemName,
                   "userid",
                   controller.checkListItem.value);
+              FlutterBeep.beep();
             });
           }
         },

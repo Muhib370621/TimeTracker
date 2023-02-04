@@ -13,6 +13,7 @@ import 'package:blu_time/shared/widgets/blutime_app_header.dart';
 import 'package:blu_time/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
@@ -58,11 +59,10 @@ class _StartingScreenState extends State<StartingScreen>
     switch (state) {
       ///if the app is paused
       case AppLifecycleState.resumed:
-        controller.clockDuration.value + const Duration(minutes: 2);
-
+        // controller.clockDuration.value + const Duration(minutes: 2);
         ///storing resumed time to local storage
         await locator<StoreServices>().setLocal(
-            AppStorage.appResumedTime, "userid", controller.timeString.value);
+            AppStorage.appResumedTime, "userid", DateFormat("hh:mm:ss").format(DateTime.now()));
         // String roles =
         //     await locator<StoreServices>().getLocal(AppStorage.role, "userid");
 
@@ -73,8 +73,8 @@ class _StartingScreenState extends State<StartingScreen>
       case AppLifecycleState.paused:
       ///when the app is paused
       ///save the timer time to local storage
-        await locator<StoreServices>().setLocal(AppStorage.timerTime, "userid",
-            " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
+      //   await locator<StoreServices>().setLocal(AppStorage.timerTime, "userid",
+      //       " ${twoDigits(controller.clockDuration.value.inHours.remainder(60))}:${twoDigits(controller.clockDuration.value.inMinutes.remainder(60))}:${twoDigits(controller.clockDuration.value.inSeconds.remainder(60))}");
         ///save the app paused time to to the local storage
         await locator<StoreServices>().setLocal(
             AppStorage.appPausedTime, "userid", controller.timeString.value);
@@ -85,7 +85,7 @@ class _StartingScreenState extends State<StartingScreen>
         ///when the app is killed or removed from background
       ///save app resumed time
         await locator<StoreServices>().setLocal(
-            AppStorage.appResumedTime, "userid", controller.timeString.value);
+            AppStorage.appResumedTime, "userid", DateFormat("hh:mm:ss").format(DateTime.now()));
         break;
     }
   }
